@@ -1,0 +1,2 @@
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.launchpass.com https://*.launchpass.com https://*.stripe.com; style-src 'self' 'unsafe-inline' https://www.launchpass.com https://*.launchpass.com; frame-src https://*.launchpass.com https://*.stripe.com; connect-src 'self' https://*.launchpass.com https://*.stripe.com; img-src 'self' data: https://*.launchpass.com; font-src 'self' data:;
