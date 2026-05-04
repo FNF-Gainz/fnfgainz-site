@@ -189,19 +189,39 @@ img {
 }
 
 .info-link-text {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  gap: 1px;
 }
 
 .info-link-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--text-primary);
 }
 
+.edge-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  line-height: 1;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
 .info-link-sub {
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
   font-weight: 400;
 }
@@ -359,7 +379,7 @@ img {
 .banner-links {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 
 /* ========== RACING MULTI-BUTTONS ========== */
