@@ -182,6 +182,30 @@ img {
   flex-shrink: 0;
 }
 
+/* Feature variant with title + subtitle */
+.info-link--feature {
+  border-color: var(--blue-primary);
+  background: rgba(59, 130, 246, 0.06);
+}
+
+.info-link-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.info-link-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.info-link-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
 /* ========== PACKAGES ========== */
 .packages-list {
   display: flex;
