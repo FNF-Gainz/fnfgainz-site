@@ -112,25 +112,67 @@
       align-items: center;
       justify-content: center;
       padding: 16px 32px;
-      background: var(--blue-dark);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(59, 130, 246, 0.06));
       color: white;
-      border: none;
+      border: 1.5px solid rgba(96, 165, 250, 0.7);
       border-radius: var(--radius);
       font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all var(--transition);
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
       font-family: inherit;
       text-decoration: none;
       min-width: 280px;
-      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.25);
+      position: relative;
+      animation: lp-btn-glow 2.6s ease-in-out infinite;
+    }
+
+    @keyframes lp-btn-glow {
+      0%, 100% {
+        box-shadow:
+          0 0 6px rgba(59, 130, 246, 0.25),
+          0 0 18px rgba(59, 130, 246, 0.15),
+          0 4px 14px rgba(0, 0, 0, 0.2);
+        border-color: rgba(96, 165, 250, 0.6);
+      }
+      50% {
+        box-shadow:
+          0 0 14px rgba(96, 165, 250, 0.55),
+          0 0 36px rgba(59, 130, 246, 0.35),
+          0 4px 14px rgba(0, 0, 0, 0.2);
+        border-color: rgba(147, 197, 253, 0.95);
+      }
     }
 
     .lp-btn-primary:hover {
-      background: var(--blue-primary);
-      box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.28), rgba(59, 130, 246, 0.12));
+      border-color: rgba(147, 197, 253, 1);
       transform: translateY(-1px);
       color: white;
+      animation: none;
+      box-shadow:
+        0 0 20px rgba(96, 165, 250, 0.6),
+        0 0 48px rgba(59, 130, 246, 0.4),
+        0 6px 22px rgba(59, 130, 246, 0.3);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lp-btn-primary {
+        animation: none;
+      }
+    }
+
+    /* Mid-page CTA block */
+    .lp-midcta {
+      text-align: center;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    .lp-midcta-trust {
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
     }
 
     .lp-btn-secondary {
@@ -290,6 +332,16 @@
 
     .lp-tracking-chart.is-animated .lp-chart-line {
       stroke-dashoffset: 0;
+      animation: lp-chart-line-breathe 4.8s ease-in-out 3s infinite;
+    }
+
+    @keyframes lp-chart-line-breathe {
+      0%, 100% {
+        filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.35));
+      }
+      50% {
+        filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.7));
+      }
     }
 
     .lp-tracking-chart.is-animated .lp-chart-endpoint-pulse,
@@ -322,6 +374,7 @@
         stroke-dashoffset: 0;
         transition: none;
         animation: none;
+        filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.35));
       }
     }
 
@@ -371,6 +424,37 @@
 
     .lp-tracking-link:hover {
       color: var(--blue-accent);
+    }
+
+    /* Verification pill strip below the chart */
+    .lp-chart-pillars {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 22px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .lp-chart-pillar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      background: rgba(59, 130, 246, 0.05);
+      border: 1px solid rgba(59, 130, 246, 0.22);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .lp-chart-pillar-icon {
+      color: #4ade80;
+      font-weight: 700;
+      font-size: 0.8rem;
+      line-height: 1;
     }
 
     /* ===== SECTIONS ===== */
@@ -1055,16 +1139,7 @@
       <p class="lp-hero-subhead">Every bet posted to our private Discord. Staking guidance, weekly performance reports, and personal onboarding included.</p>
       <div class="lp-hero-cta-row">
         <button class="lp-btn-primary lp6640832616333312" onclick="if(window.fbq)fbq('track', 'InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL Premium &middot; $140 AUD / month</button>
-        <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="lp-btn-secondary">See the public results dashboard &rarr;</a>
       </div>
-      <div class="lp-hero-proof-strip">
-        <span><strong>5,000+</strong> tracked positions</span>
-        <span class="lp-hero-proof-divider">&middot;</span>
-        <span><strong>19%</strong> ROI</span>
-        <span class="lp-hero-proof-divider">&middot;</span>
-        <span>Publicly tracked</span>
-      </div>
-      <p class="lp-trust-line">No profit guarantees. Losing weekends happen. Cancel anytime. 18+ only.</p>
     </section>
 
     <!-- TRACKED PERFORMANCE -->
@@ -1076,7 +1151,7 @@
           <span class="lp-tracking-updated">Updated weekly</span>
         </div>
         <div class="lp-tracking-body">
-          <svg class="lp-tracking-chart" viewBox="0 0 800 280" preserveAspectRatio="xMidYMid meet" aria-label="AFL cumulative profit chart from March 2022 to May 2026, growing from $0 to $42,294">
+          <svg class="lp-tracking-chart" viewBox="0 0 800 280" preserveAspectRatio="xMidYMid meet" aria-label="AFL cumulative profit chart from March 2022 to June 2026, growing from $0 to $46,738">
             <defs>
               <linearGradient id="lp-chart-grad" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.45"/>
@@ -1086,46 +1161,48 @@
 
             <!-- Grid lines -->
             <line x1="42" y1="31" x2="790" y2="31" stroke="#1e293b" stroke-dasharray="2,4"/>
-            <line x1="42" y1="83" x2="790" y2="83" stroke="#1e293b" stroke-dasharray="2,4"/>
-            <line x1="42" y1="136" x2="790" y2="136" stroke="#1e293b" stroke-dasharray="2,4"/>
-            <line x1="42" y1="188" x2="790" y2="188" stroke="#1e293b" stroke-dasharray="2,4"/>
+            <line x1="42" y1="73" x2="790" y2="73" stroke="#1e293b" stroke-dasharray="2,4"/>
+            <line x1="42" y1="115" x2="790" y2="115" stroke="#1e293b" stroke-dasharray="2,4"/>
+            <line x1="42" y1="156" x2="790" y2="156" stroke="#1e293b" stroke-dasharray="2,4"/>
+            <line x1="42" y1="198" x2="790" y2="198" stroke="#1e293b" stroke-dasharray="2,4"/>
             <line x1="42" y1="240" x2="790" y2="240" stroke="#334155"/>
 
             <!-- Y-axis labels -->
-            <text x="38" y="35" fill="#64748b" font-size="11" text-anchor="end">$40k</text>
-            <text x="38" y="87" fill="#64748b" font-size="11" text-anchor="end">$30k</text>
-            <text x="38" y="140" fill="#64748b" font-size="11" text-anchor="end">$20k</text>
-            <text x="38" y="192" fill="#64748b" font-size="11" text-anchor="end">$10k</text>
+            <text x="38" y="35" fill="#64748b" font-size="11" text-anchor="end">$50k</text>
+            <text x="38" y="77" fill="#64748b" font-size="11" text-anchor="end">$40k</text>
+            <text x="38" y="119" fill="#64748b" font-size="11" text-anchor="end">$30k</text>
+            <text x="38" y="160" fill="#64748b" font-size="11" text-anchor="end">$20k</text>
+            <text x="38" y="202" fill="#64748b" font-size="11" text-anchor="end">$10k</text>
             <text x="38" y="244" fill="#64748b" font-size="11" text-anchor="end">$0</text>
 
             <!-- Area fill -->
-            <path class="lp-chart-area" d="M 42 235 L 66 232 L 90 216 L 115 201 L 139 201 L 163 201 L 187 190 L 212 185 L 236 177 L 260 159 L 284 141 L 308 143 L 333 128 L 357 133 L 381 128 L 405 136 L 429 125 L 454 130 L 478 128 L 502 117 L 526 109 L 550 112 L 575 104 L 599 96 L 623 83 L 647 75 L 671 68 L 696 47 L 720 31 L 744 26 L 762 22 L 776 24 L 790 14 L 790 240 L 42 240 Z" fill="url(#lp-chart-grad)"/>
+            <path class="lp-chart-area" d="M 42 236 L 63 234 L 84 221 L 106 210 L 127 210 L 149 210 L 170 201 L 192 197 L 213 191 L 234 177 L 255 163 L 276 164 L 298 153 L 319 156 L 340 153 L 361 159 L 383 150 L 405 154 L 426 153 L 447 144 L 468 138 L 489 140 L 511 134 L 532 127 L 553 117 L 574 111 L 596 106 L 618 89 L 639 77 L 660 73 L 676 70 L 688 71 L 700 63 L 706 59 L 713 56 L 719 56 L 726 56 L 732 57 L 739 58 L 745 55 L 751 55 L 758 56 L 764 50 L 771 49 L 777 50 L 784 47 L 790 45 L 790 240 L 42 240 Z" fill="url(#lp-chart-grad)"/>
 
             <!-- Line -->
-            <path class="lp-chart-line" d="M 42 235 L 66 232 L 90 216 L 115 201 L 139 201 L 163 201 L 187 190 L 212 185 L 236 177 L 260 159 L 284 141 L 308 143 L 333 128 L 357 133 L 381 128 L 405 136 L 429 125 L 454 130 L 478 128 L 502 117 L 526 109 L 550 112 L 575 104 L 599 96 L 623 83 L 647 75 L 671 68 L 696 47 L 720 31 L 744 26 L 762 22 L 776 24 L 790 14" stroke="#60a5fa" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+            <path class="lp-chart-line" d="M 42 236 L 63 234 L 84 221 L 106 210 L 127 210 L 149 210 L 170 201 L 192 197 L 213 191 L 234 177 L 255 163 L 276 164 L 298 153 L 319 156 L 340 153 L 361 159 L 383 150 L 405 154 L 426 153 L 447 144 L 468 138 L 489 140 L 511 134 L 532 127 L 553 117 L 574 111 L 596 106 L 618 89 L 639 77 L 660 73 L 676 70 L 688 71 L 700 63 L 706 59 L 713 56 L 719 56 L 726 56 L 732 57 L 739 58 L 745 55 L 751 55 L 758 56 L 764 50 L 771 49 L 777 50 L 784 47 L 790 45" stroke="#60a5fa" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
 
             <!-- End point pulse -->
-            <circle class="lp-chart-endpoint-pulse" cx="790" cy="14" r="8" fill="none" stroke="#60a5fa" stroke-opacity="0.35" stroke-width="2"/>
-            <circle class="lp-chart-endpoint-core" cx="790" cy="14" r="4" fill="#60a5fa"/>
+            <circle class="lp-chart-endpoint-pulse" cx="790" cy="45" r="8" fill="none" stroke="#60a5fa" stroke-opacity="0.35" stroke-width="2"/>
+            <circle class="lp-chart-endpoint-core" cx="790" cy="45" r="4" fill="#60a5fa"/>
 
             <!-- X-axis labels -->
             <text x="42" y="262" fill="#64748b" font-size="11" text-anchor="middle">2022</text>
-            <text x="212" y="262" fill="#64748b" font-size="11" text-anchor="middle">2023</text>
-            <text x="381" y="262" fill="#64748b" font-size="11" text-anchor="middle">2024</text>
-            <text x="575" y="262" fill="#64748b" font-size="11" text-anchor="middle">2025</text>
-            <text x="744" y="262" fill="#64748b" font-size="11" text-anchor="middle">2026</text>
+            <text x="192" y="262" fill="#64748b" font-size="11" text-anchor="middle">2023</text>
+            <text x="340" y="262" fill="#64748b" font-size="11" text-anchor="middle">2024</text>
+            <text x="511" y="262" fill="#64748b" font-size="11" text-anchor="middle">2025</text>
+            <text x="660" y="262" fill="#64748b" font-size="11" text-anchor="middle">2026</text>
           </svg>
           <div class="lp-tracking-metrics">
             <div class="lp-tracking-metric">
-              <div class="lp-tracking-value" data-stat="allTime.bets">5,704</div>
+              <div class="lp-tracking-value" data-stat="allTime.bets">6,296</div>
               <div class="lp-tracking-label-sm">Tracked bets</div>
             </div>
             <div class="lp-tracking-metric">
-              <div class="lp-tracking-value" data-stat="allTime.profit">$43,212</div>
+              <div class="lp-tracking-value" data-stat="allTime.profit">$46,737</div>
               <div class="lp-tracking-label-sm">Total profit</div>
             </div>
             <div class="lp-tracking-metric">
-              <div class="lp-tracking-value" data-stat="allTime.units">+864.3u</div>
+              <div class="lp-tracking-value" data-stat="allTime.units">+934.8u</div>
               <div class="lp-tracking-label-sm">Units profit</div>
             </div>
             <div class="lp-tracking-metric">
@@ -1134,6 +1211,12 @@
             </div>
           </div>
           <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="lp-tracking-link">View the live dashboard &rarr;</a>
+          <div class="lp-chart-pillars">
+            <div class="lp-chart-pillar"><span class="lp-chart-pillar-icon" aria-hidden="true">&#10003;</span><span>Publicly tracked</span></div>
+            <div class="lp-chart-pillar"><span class="lp-chart-pillar-icon" aria-hidden="true">&#10003;</span><span>$50 unit baseline</span></div>
+            <div class="lp-chart-pillar"><span class="lp-chart-pillar-icon" aria-hidden="true">&#10003;</span><span>All bets in Discord</span></div>
+            <div class="lp-chart-pillar"><span class="lp-chart-pillar-icon" aria-hidden="true">&#10003;</span><span>5+ seasons of data</span></div>
+          </div>
         </div>
       </div>
 
@@ -1147,19 +1230,19 @@
         <div class="lp-tracking-body">
           <div class="lp-tracking-metrics">
             <div class="lp-tracking-metric">
-              <div class="lp-tracking-value" data-stat="season2026.bets">540</div>
+              <div class="lp-tracking-value" data-stat="season2026.bets">592</div>
               <div class="lp-tracking-label-sm">Bets</div>
             </div>
             <div class="lp-tracking-metric">
-              <div class="lp-tracking-value" data-stat="season2026.profit">$3,057</div>
+              <div class="lp-tracking-value" data-stat="season2026.profit">$3,525</div>
               <div class="lp-tracking-label-sm">Profit</div>
             </div>
             <div class="lp-tracking-metric">
-              <div class="lp-tracking-value" data-stat="season2026.units">+61.1u</div>
+              <div class="lp-tracking-value" data-stat="season2026.units">+70.5u</div>
               <div class="lp-tracking-label-sm">Units profit</div>
             </div>
             <div class="lp-tracking-metric">
-              <div class="lp-tracking-value" data-stat="season2026.roi">13%</div>
+              <div class="lp-tracking-value" data-stat="season2026.roi">14%</div>
               <div class="lp-tracking-label-sm">ROI</div>
             </div>
           </div>
@@ -1173,51 +1256,20 @@
       <p class="lp-section-sub">AFL Premium runs on three principles. Every bet, every round, every season.</p>
       <div class="lp-pillars">
         <div class="lp-pillar">
-          <span class="lp-pillar-label">80%</span>
-          <h3 class="lp-pillar-title">Consistency</h3>
-          <p>Short multis built around role-based players at $1.80 to $2.50 odds. Volume, repeatability, and structural floors.</p>
+          <span class="lp-pillar-label">DISPOSALS</span>
+          <h3 class="lp-pillar-title">A decade in AFL disposal markets</h3>
+          <p>Ten years analysing player markets. Five years executing publicly. Custom data models combined with live bookmaker odds pick our best plays each week.</p>
         </div>
         <div class="lp-pillar">
-          <span class="lp-pillar-label">20%</span>
-          <h3 class="lp-pillar-title">Controlled Upside</h3>
-          <p>Larger cross-game multis when the round shapes up. Disciplined exposure, capped staking, never chasing.</p>
+          <span class="lp-pillar-label">CONSISTENT RETURNS</span>
+          <h3 class="lp-pillar-title">Built on risk management for consistent results</h3>
+          <p>80% of bets sit at $1.80 to $2.50 odds on reliable players with strong disposal floors. Steady compounding that keeps profit building.</p>
         </div>
         <div class="lp-pillar">
-          <span class="lp-pillar-label">100%</span>
-          <h3 class="lp-pillar-title">Tracked in public</h3>
-          <p>Every bet result published. No edits. No deleted losses. The full record matters more than the best screenshot.</p>
+          <span class="lp-pillar-label">CALCULATED UPSIDE</span>
+          <h3 class="lp-pillar-title">Smart, controlled upside on higher value plays</h3>
+          <p>20% of bets combine more low-odds players into multis to compound the odds. Smaller stakes, bigger upside when the legs hit.</p>
         </div>
-      </div>
-    </section>
-
-    <!-- METHODOLOGY -->
-    <section class="lp-section">
-      <h2 class="lp-section-heading">How the tracking works.</h2>
-      <p class="lp-section-sub">Four things that make the results verifiable, not just impressive.</p>
-      <div class="lp-method">
-        <div class="lp-method-card">
-          <span class="lp-method-card-label">01 &middot; Public ledger</span>
-          <h3 class="lp-method-card-title">Every position saved on a public dashboard</h3>
-          <p class="lp-method-card-desc">Results published on the Klipfolio dashboard. Anyone can view historical and current performance. No hidden picks, no private results.</p>
-        </div>
-        <div class="lp-method-card">
-          <span class="lp-method-card-label">02 &middot; Standardised units</span>
-          <h3 class="lp-method-card-title">$50 unit baseline</h3>
-          <p class="lp-method-card-desc">All tracked results reported at a $50 unit baseline so the numbers can be read honestly. Scales to your bankroll.</p>
-        </div>
-        <div class="lp-method-card">
-          <span class="lp-method-card-label">03 &middot; Timestamped</span>
-          <h3 class="lp-method-card-title">Posted in Discord before bounce</h3>
-          <p class="lp-method-card-desc">Bets posted with locked odds before games start. No after-the-fact entries, no hindsight edits, no shifting the line.</p>
-        </div>
-        <div class="lp-method-card">
-          <span class="lp-method-card-label">04 &middot; Multi-season</span>
-          <h3 class="lp-method-card-title">Five seasons of data</h3>
-          <p class="lp-method-card-desc">Built and tested across five AFL seasons and 5,000+ logged bets. Edge held across thousands of decisions, not one hot weekend.</p>
-        </div>
-      </div>
-      <div class="lp-method-link">
-        <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="lp-btn-secondary">See the full results dashboard &rarr;</a>
       </div>
     </section>
 
@@ -1237,6 +1289,12 @@
       </div>
     </section>
 
+    <!-- MID-PAGE CTA -->
+    <section class="lp-section lp-midcta">
+      <button class="lp-btn-primary lp6640832616333312" onclick="if(window.fbq)fbq('track', 'InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL Premium &middot; $140 AUD / month</button>
+      <p class="lp-midcta-trust">5 years of member trust &middot; Cancel anytime</p>
+    </section>
+
     <!-- WHAT'S INSIDE -->
     <section class="lp-section">
       <h2 class="lp-section-heading">What's inside AFL Premium</h2>
@@ -1246,7 +1304,7 @@
           <span class="lp-inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
           </span>
-          <div class="lp-inclusion-text">Every bet posted directly into your private AFL Discord channels through the round. You will be notified for all positions.</div>
+          <div class="lp-inclusion-text">Every bet posted directly into our Discord channels each round. You will be notified for all positions.</div>
         </div>
         <div class="lp-inclusion">
           <span class="lp-inclusion-icon" aria-hidden="true">
@@ -1350,7 +1408,7 @@
         </details>
         <details class="lp-faq-item">
           <summary>Do you guarantee profits?</summary>
-          <div class="lp-faq-answer">No. There are no guarantees in sports betting. AFL Premium provides systems and strategies built around long-term edge, executed with discipline and proper bankroll management. Losing weekends happen and drawdowns are part of the process.</div>
+          <div class="lp-faq-answer">Nobody can guarantee profits. However, we can confirm that we have delivered 5 years of profitable strategy for our members. AFL Premium provides systems and strategies built around long-term edge, executed with discipline and proper bankroll management. Losing weekends happen and drawdowns are part of the process. Follow our strategy, ask questions, be disciplined, and you will succeed.</div>
         </details>
         <details class="lp-faq-item">
           <summary>How much money do I need to start?</summary>
@@ -1358,11 +1416,11 @@
         </details>
         <details class="lp-faq-item">
           <summary>Do I need accounts with specific bookmakers?</summary>
-          <div class="lp-faq-answer">Ideally yes. Sportsbet, TAB, and Bet365 are the major Australian bookmakers we use. Having more bookies improves your ability to find the best odds and follow bets accurately. If you're missing an account or restricted, we'll help you organise alternatives during onboarding.</div>
+          <div class="lp-faq-answer">Ideally yes. Sportsbet, TAB, Bet365 and Ladbrokes are the major Australian bookmakers we use. Having more bookies improves your ability to find the best odds and follow bets accurately. If you're missing an account or restricted, we'll help you organise alternatives during onboarding.</div>
         </details>
         <details class="lp-faq-item">
-          <summary>What has the performance been historically?</summary>
-          <div class="lp-faq-answer">Five years of public tracking. Over 5,700 AFL bets logged. More than $43,000 in tracked profit at roughly a 19% ROI. Full historical and current performance is available on our public results dashboard.</div>
+          <summary>Where can I see the full results history?</summary>
+          <div class="lp-faq-answer">Every bet, win and loss is logged on our <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer">public results dashboard</a>. View all historical and current performance, broken down weekly and seasonally.</div>
         </details>
         <details class="lp-faq-item">
           <summary>Is this suitable for beginners?</summary>

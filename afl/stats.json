@@ -1,16 +1,16 @@
 {
   "_README": "Edit this file weekly to update the stats shown on fnfgainz.com/afl. Commit and push to deploy. Numbers update automatically across the page. If this file fails to load, the hardcoded fallback values in index.html are shown instead.",
   "allTime": {
-    "bets": 5704,
-    "profit": 43212,
-    "units": 864.3,
+    "bets": 6296,
+    "profit": 46737,
+    "units": 934.8,
     "roi": 19
   },
   "season2026": {
-    "bets": 540,
-    "profit": 3057,
-    "units": 61.1,
-    "roi": 13
+    "bets": 592,
+    "profit": 3525,
+    "units": 70.5,
+    "roi": 14
   },
-  "lastUpdated": "2026-05-17"
+  "lastUpdated": "2026-06-09"
 }
