@@ -64,6 +64,44 @@ body::before {
   z-index: 0;
 }
 
+/* Faded bull-logo watermark that subtly pulses with light */
+body::after {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(80vmin, 720px);
+  height: min(80vmin, 720px);
+  transform: translate(-50%, -50%);
+  background-image: url('assets/fnf-bull-logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.045;
+  pointer-events: none;
+  z-index: 0;
+  animation: bull-glow 9s ease-in-out infinite;
+  will-change: opacity, filter;
+}
+
+@keyframes bull-glow {
+  0%, 100% {
+    opacity: 0.035;
+    filter: drop-shadow(0 0 24px rgba(96, 165, 250, 0.18));
+  }
+  50% {
+    opacity: 0.075;
+    filter: drop-shadow(0 0 60px rgba(96, 165, 250, 0.5));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after {
+    animation: none;
+    opacity: 0.045;
+  }
+}
+
 a {
   color: var(--blue-accent);
   text-decoration: none;
