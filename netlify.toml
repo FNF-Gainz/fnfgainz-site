@@ -2,6 +2,12 @@
   functions = "netlify/functions"
   publish = "."
 
+[build.environment]
+  # Pixel IDs are public identifiers (visible in the browser pixel snippet),
+  # not secrets. Exclude META_PIXEL_ID from Netlify's secret scanner so the
+  # build doesn't fail when it spots the value in our HTML.
+  SECRETS_SCAN_OMIT_KEYS = "META_PIXEL_ID"
+
 [functions]
   node_bundler = "esbuild"
 
