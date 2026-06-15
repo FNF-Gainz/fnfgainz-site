@@ -16,7 +16,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="stylesheet" href="styles.css">
   <meta name="facebook-domain-verification" content="rvdz1dijk208hjgyhh9yvlcztyrg3p" />
-  <!-- Meta Pixel Code -->
+  <!-- Meta Pixel + CAPI dual-fire (deduplicated via shared event_id) -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -27,12 +27,62 @@
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '926315323681572');
-  fbq('track', 'PageView');
+
+  (function(){
+    function uuid(){
+      if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+        var r=Math.random()*16|0;
+        return (c==='x'?r:(r&0x3|0x8)).toString(16);
+      });
+    }
+    function getCookie(n){
+      var m=document.cookie.match(new RegExp('(?:^|; )'+n+'=([^;]*)'));
+      return m?decodeURIComponent(m[1]):null;
+    }
+    function getExternalId(){
+      var id=null;
+      try{id=localStorage.getItem('fnf_eid');}catch(e){}
+      if(!id){id=uuid();try{localStorage.setItem('fnf_eid',id);}catch(e){}}
+      return id;
+    }
+    function getFbc(){
+      var fbc=getCookie('_fbc');
+      if(fbc)return fbc;
+      var p=new URLSearchParams(window.location.search);
+      var fbclid=p.get('fbclid');
+      if(fbclid)return 'fb.1.'+Date.now()+'.'+fbclid;
+      return null;
+    }
+    window.fnfTrack=function(eventName,customData){
+      var eventId=uuid();
+      var data=customData||{};
+      if(window.fbq)window.fbq('track',eventName,data,{eventID:eventId});
+      try{
+        fetch('/api/track',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            event_name:eventName,
+            event_id:eventId,
+            event_source_url:window.location.href,
+            custom_data:data,
+            fbp:getCookie('_fbp'),
+            fbc:getFbc(),
+            external_id:getExternalId()
+          }),
+          keepalive:true
+        }).catch(function(){});
+      }catch(e){}
+    };
+  })();
+
+  fnfTrack('PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=926315323681572&ev=PageView&noscript=1"
   /></noscript>
-  <!-- End Meta Pixel Code -->
+  <!-- End Meta Pixel + CAPI -->
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -119,7 +169,7 @@
             </div>
           </div>
           <div class="package-actions">
-            <button class="btn-join lp4572582037028864" onclick="fbq('track', 'InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">Join</button>
+            <button class="btn-join lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">Join</button>
             <a href="https://www.launchpass.com/fnf-gainz/champion" target="_blank" rel="noopener noreferrer" class="btn-info">More Info</a>
           </div>
         </div>
@@ -134,7 +184,7 @@
             </div>
           </div>
           <div class="package-actions">
-            <button class="btn-join lp6640832616333312" onclick="fbq('track', 'InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join</button>
+            <button class="btn-join lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join</button>
             <a href="https://www.launchpass.com/fnf-gainz/afl" target="_blank" rel="noopener noreferrer" class="btn-info">More Info</a>
           </div>
         </div>
@@ -149,7 +199,7 @@
             </div>
           </div>
           <div class="package-actions">
-            <button class="btn-join lp6311659934711808" onclick="fbq('track', 'InitiateCheckout', { value: 109.99, currency: 'AUD', content_name: 'NRL Package' });">Join</button>
+            <button class="btn-join lp6311659934711808" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 109.99, currency: 'AUD', content_name: 'NRL Package' });">Join</button>
             <a href="https://www.launchpass.com/fnf-gainz/nrl" target="_blank" rel="noopener noreferrer" class="btn-info">More Info</a>
           </div>
         </div>
@@ -164,7 +214,7 @@
             </div>
           </div>
           <div class="package-actions">
-            <button class="btn-join lp4657629529505792" onclick="fbq('track', 'InitiateCheckout', { value: 100.00, currency: 'AUD', content_name: 'Matched Betting Package' });">Join</button>
+            <button class="btn-join lp4657629529505792" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 100.00, currency: 'AUD', content_name: 'Matched Betting Package' });">Join</button>
             <a href="https://www.launchpass.com/fnf-gainz/mb-sports" target="_blank" rel="noopener noreferrer" class="btn-info">More Info</a>
           </div>
         </div>
@@ -179,7 +229,7 @@
             </div>
           </div>
           <div class="package-actions">
-            <button class="btn-join lp6290145106329600" onclick="fbq('track', 'InitiateCheckout', { value: 25.00, currency: 'AUD', content_name: 'Community Membership' });">Join</button>
+            <button class="btn-join lp6290145106329600" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 25.00, currency: 'AUD', content_name: 'Community Membership' });">Join</button>
             <a href="https://www.launchpass.com/fnf-gainz/community" target="_blank" rel="noopener noreferrer" class="btn-info">More Info</a>
           </div>
         </div>

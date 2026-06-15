@@ -29,7 +29,7 @@
 
   <meta name="facebook-domain-verification" content="rvdz1dijk208hjgyhh9yvlcztyrg3p">
 
-  <!-- Meta Pixel Code -->
+  <!-- Meta Pixel + CAPI dual-fire (deduplicated via shared event_id) -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -40,13 +40,63 @@
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '926315323681572');
-  fbq('track', 'PageView');
-  fbq('track', 'ViewContent', { content_name: 'AFL Premium Landing Page', content_category: 'AFL Package' });
+
+  (function(){
+    function uuid(){
+      if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+        var r=Math.random()*16|0;
+        return (c==='x'?r:(r&0x3|0x8)).toString(16);
+      });
+    }
+    function getCookie(n){
+      var m=document.cookie.match(new RegExp('(?:^|; )'+n+'=([^;]*)'));
+      return m?decodeURIComponent(m[1]):null;
+    }
+    function getExternalId(){
+      var id=null;
+      try{id=localStorage.getItem('fnf_eid');}catch(e){}
+      if(!id){id=uuid();try{localStorage.setItem('fnf_eid',id);}catch(e){}}
+      return id;
+    }
+    function getFbc(){
+      var fbc=getCookie('_fbc');
+      if(fbc)return fbc;
+      var p=new URLSearchParams(window.location.search);
+      var fbclid=p.get('fbclid');
+      if(fbclid)return 'fb.1.'+Date.now()+'.'+fbclid;
+      return null;
+    }
+    window.fnfTrack=function(eventName,customData){
+      var eventId=uuid();
+      var data=customData||{};
+      if(window.fbq)window.fbq('track',eventName,data,{eventID:eventId});
+      try{
+        fetch('/api/track',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            event_name:eventName,
+            event_id:eventId,
+            event_source_url:window.location.href,
+            custom_data:data,
+            fbp:getCookie('_fbp'),
+            fbc:getFbc(),
+            external_id:getExternalId()
+          }),
+          keepalive:true
+        }).catch(function(){});
+      }catch(e){}
+    };
+  })();
+
+  fnfTrack('PageView');
+  fnfTrack('ViewContent', { content_name: 'AFL Premium Landing Page', content_category: 'AFL Package' });
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=926315323681572&ev=PageView&noscript=1"
   /></noscript>
-  <!-- End Meta Pixel Code -->
+  <!-- End Meta Pixel + CAPI -->
 
   <style>
     /* ==================== AFL LANDING PAGE ==================== */
@@ -1190,7 +1240,7 @@
       <h1 class="lp-hero-headline"><span class="lp-hero-line">A decade of AFL market analysis.</span><span class="lp-hero-line">Five years of tracked performance.</span><span class="lp-hero-line"><em>Helping thousands of members succeed.</em></span></h1>
       <p class="lp-hero-subhead">Every bet posted to our private Discord. Staking guidance, weekly performance reports, and personal onboarding included.</p>
       <div class="lp-hero-cta-row">
-        <button class="lp-btn-primary lp6640832616333312" onclick="if(window.fbq)fbq('track', 'InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL Premium &middot; $140 AUD / month</button>
+        <button class="lp-btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL Premium &middot; $140 AUD / month</button>
         <p class="lp-midcta-trust">5 years of member trust &middot; Cancel anytime</p>
       </div>
     </section>
@@ -1344,7 +1394,7 @@
 
     <!-- MID-PAGE CTA -->
     <section class="lp-section lp-midcta">
-      <button class="lp-btn-primary lp6640832616333312" onclick="if(window.fbq)fbq('track', 'InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL Premium &middot; $140 AUD / month</button>
+      <button class="lp-btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL Premium &middot; $140 AUD / month</button>
       <p class="lp-midcta-trust">5 years of member trust &middot; Cancel anytime</p>
     </section>
 
@@ -1446,7 +1496,7 @@
         <div class="lp-pricing-name">AFL Premium</div>
         <div class="lp-pricing-price">$140<span class="lp-pricing-price-period">&nbsp;AUD /mo</span></div>
         <div class="lp-pricing-cancel">Cancel anytime. No lock-in.</div>
-        <button class="lp-btn-primary lp6640832616333312" onclick="if(window.fbq)fbq('track', 'InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL Premium</button>
+        <button class="lp-btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL Premium</button>
         <p class="lp-pricing-trust">18+ only. Australian residents.</p>
       </div>
     </section>
@@ -1498,7 +1548,7 @@
     <section class="lp-final">
       <h2>AFL Premium is open now.</h2>
       <p>Join the members executing the same system this season.</p>
-      <button class="lp-btn-primary lp6640832616333312" onclick="if(window.fbq)fbq('track', 'InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL Premium &middot; $140 AUD / month</button>
+      <button class="lp-btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL Premium &middot; $140 AUD / month</button>
       <p class="lp-trust-line" style="margin-top: 16px;">Cancel anytime. 18+ only. What are you really gambling with?</p>
     </section>
 
@@ -1509,7 +1559,7 @@
         <h3 class="lp-upsell-heading">Champion is the full AFL system plus the full NRL system, run side by side.</h3>
         <p>Each system keeps its own staking and tracking. Results viewed together across the full season.</p>
         <div class="lp-upsell-price">Champion &middot; <strong>$200 AUD / month</strong></div>
-        <button class="lp-btn-outline lp4572582037028864" onclick="if(window.fbq)fbq('track', 'InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">See Champion details</button>
+        <button class="lp-btn-outline lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">See Champion details</button>
       </div>
     </section>
 
