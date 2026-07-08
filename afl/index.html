@@ -778,7 +778,7 @@
 
     /* TERMINAL */
     .terminal-wrap {
-      padding-bottom: clamp(56px, 10vh, 96px);
+      padding-bottom: 16px;
     }
 
     .terminal {
@@ -1945,8 +1945,8 @@
     /* ==================== BOOKMAKER STRIP ==================== */
     .bookies-wrap {
       max-width: 1000px;
-      margin: -32px auto clamp(56px, 8vh, 88px);
-      padding: 24px 32px;
+      margin: 0 auto clamp(56px, 8vh, 88px);
+      padding: 20px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -2102,14 +2102,15 @@
       font-size: 0.72rem;
     }
 
-    /* Discord-style card */
+    /* Discord card — based on real bet-slip format */
     .discord-card {
-      background: #1f2229;
+      background: #1a1f2e;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(88, 101, 242, 0.15);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(88, 101, 242, 0.12);
       position: relative;
+      font-family: 'Inter', sans-serif;
     }
 
     .discord-card::before {
@@ -2122,51 +2123,60 @@
       background: linear-gradient(90deg, transparent, #5865f2, transparent);
     }
 
-    .discord-header {
+    .discord-channel-bar {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       padding: 12px 18px;
-      background: rgba(0, 0, 0, 0.2);
+      background: #0f1420;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
     }
 
-    .discord-hash {
+    .discord-channel-hash {
       color: #6f7580;
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .discord-channel {
+    .discord-channel-lock {
+      color: #6f7580;
+      font-size: 0.75rem;
+    }
+
+    .discord-channel-name {
       color: #dcddde;
       font-weight: 600;
     }
 
     .discord-body {
-      padding: 20px 18px;
+      padding: 20px 18px 18px;
     }
 
     .discord-message {
       display: flex;
-      gap: 14px;
-      font-family: 'Inter', sans-serif;
+      gap: 12px;
     }
 
     .discord-avatar {
       flex-shrink: 0;
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: var(--grad-signature);
+      background: linear-gradient(135deg, #0d1728, #1a2a44);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-weight: 800;
-      font-size: 1.05rem;
-      letter-spacing: -0.03em;
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      overflow: hidden;
+    }
+
+    .discord-avatar svg {
+      width: 26px;
+      height: 26px;
     }
 
     .discord-body-content {
@@ -2176,31 +2186,34 @@
 
     .discord-meta {
       display: flex;
-      align-items: baseline;
-      gap: 10px;
+      align-items: center;
+      gap: 8px;
       margin-bottom: 6px;
+      flex-wrap: wrap;
     }
 
     .discord-username {
-      color: #f2f3f5;
+      color: #7cedff;
       font-weight: 600;
-      font-size: 0.95rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      font-size: 0.98rem;
     }
 
-    .discord-badge {
+    .discord-badge-app {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 1px 6px;
+      padding: 1px 6px 1px 4px;
       background: #5865f2;
       color: white;
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 700;
       border-radius: 4px;
       letter-spacing: 0.02em;
+    }
+
+    .discord-badge-app::before {
+      content: '\26A1';
+      font-size: 0.7rem;
     }
 
     .discord-time {
@@ -2208,107 +2221,501 @@
       font-size: 0.72rem;
     }
 
-    .discord-embed {
-      margin-top: 6px;
-      padding: 12px 14px 12px 16px;
-      background: #2b2d31;
-      border-left: 4px solid var(--cyan);
-      border-radius: 4px;
-      color: #dbdee1;
-    }
-
-    .discord-embed-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.92rem;
+    .discord-headline {
+      font-size: 1.02rem;
       font-weight: 700;
-      color: #f2f3f5;
-      margin-bottom: 8px;
+      color: #ffffff;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .discord-embed-lock {
-      color: var(--cyan);
+    .discord-headline-num {
+      color: #f2f3f5;
     }
 
-    .discord-embed-legs {
+    .discord-headline-bookie {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 8px;
+      background: #0d7f3a;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 800;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .discord-headline-unit {
+      color: #f2f3f5;
+    }
+
+    /* Bet slip card — white, tab-style */
+    .bet-slip {
+      background: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      color: #202124;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      font-size: 0.86rem;
+    }
+
+    .bet-slip-header {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 12px;
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-    }
-
-    .discord-embed-leg {
-      display: flex;
+      align-items: baseline;
       justify-content: space-between;
       gap: 12px;
-      padding: 6px 10px;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 4px;
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid #e8ebee;
     }
 
-    .discord-embed-leg-player {
-      color: #dbdee1;
+    .bet-slip-header-left {
+      min-width: 0;
     }
 
-    .discord-embed-leg-odds {
-      color: var(--green-2);
+    .bet-slip-type {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #5f6470;
+      text-transform: capitalize;
+      margin-bottom: 2px;
+    }
+
+    .bet-slip-title {
+      font-size: 1rem;
       font-weight: 700;
+      color: #1a1d24;
     }
 
-    .discord-embed-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      font-family: var(--font-mono);
-      font-size: 0.76rem;
-    }
-
-    .discord-embed-footer-label {
-      color: #949ba4;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 0.66rem;
+    .bet-slip-status {
+      font-size: 0.78rem;
       font-weight: 600;
+      color: #f5a623;
+      flex-shrink: 0;
     }
 
-    .discord-embed-footer-value {
-      color: var(--cyan-2);
+    .bet-slip-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      padding: 12px 16px 14px;
+      border-bottom: 1px solid #e8ebee;
+    }
+
+    .bet-slip-summary-cell-label {
+      font-size: 0.66rem;
+      font-weight: 500;
+      color: #5f6470;
+      margin-bottom: 2px;
+    }
+
+    .bet-slip-summary-cell-value {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #1a1d24;
+    }
+
+    .bet-slip-legs {
+      padding: 14px 16px 16px;
+    }
+
+    .bet-slip-leg {
+      margin-bottom: 14px;
+    }
+
+    .bet-slip-leg:last-child {
+      margin-bottom: 0;
+    }
+
+    .bet-slip-leg-header {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #5f6470;
+      margin-bottom: 4px;
+    }
+
+    .bet-slip-leg-desc {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: #1a1d24;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+    .bet-slip-leg-desc strong {
       font-weight: 700;
     }
 
-    .discord-embed-footer-value--green {
-      color: var(--green-2);
+    .bet-slip-leg-players {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
+    .bet-slip-leg-player {
+      font-size: 0.82rem;
+      color: #1a1d24;
+      line-height: 1.4;
+    }
+
+    .bet-slip-leg-player strong {
+      font-weight: 700;
+    }
+
+    /* Reactions row (matches real Discord reaction chips) */
     .discord-reactions {
       display: flex;
-      gap: 6px;
-      margin-top: 10px;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-top: 12px;
     }
 
     .discord-reaction {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 3px 8px;
-      background: rgba(88, 101, 242, 0.15);
-      border: 1px solid rgba(88, 101, 242, 0.4);
-      border-radius: 8px;
+      padding: 3px 7px;
+      background: rgba(88, 101, 242, 0.1);
+      border: 1px solid rgba(88, 101, 242, 0.28);
+      border-radius: 7px;
       font-size: 0.78rem;
       color: #dcddde;
+      transition: all 0.2s ease;
+    }
+
+    .discord-reaction:hover {
+      background: rgba(88, 101, 242, 0.18);
+      border-color: rgba(88, 101, 242, 0.5);
     }
 
     .discord-reaction-count {
-      color: var(--cyan-2);
+      color: #a5b9f8;
       font-weight: 700;
       font-size: 0.72rem;
       font-family: var(--font-mono);
+    }
+
+    /* ==================== NEXT ROUND COUNTDOWN PILL ==================== */
+    .hero-next-round {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      background: rgba(255, 187, 71, 0.06);
+      border: 1px solid rgba(255, 187, 71, 0.28);
+      border-radius: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--text-2);
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      animation: fade-in 0.9s var(--ease-out) 0.75s forwards;
+    }
+
+    .hero-next-round-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      animation: blink 2.4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    .hero-next-round-label {
+      font-weight: 600;
+      color: var(--gold-2);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.66rem;
+    }
+
+    .hero-next-round-round {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .hero-next-round-kickoff {
+      color: var(--text-3);
+    }
+
+    .hero-next-round-timer {
+      color: var(--gold-2);
+      font-weight: 700;
+    }
+
+    /* ==================== RECENT ACTIVITY TOAST ==================== */
+    .activity-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 90;
+      max-width: 320px;
+      padding: 14px 44px 14px 16px;
+      background: rgba(15, 20, 38, 0.95);
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 255, 157, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: translateX(-120%);
+      transition: transform 0.5s var(--ease-out);
+    }
+
+    .activity-toast.is-visible {
+      transform: translateX(0);
+    }
+
+    .activity-toast-avatar {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--tt-avatar, var(--grad-cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      border: 2px solid var(--bg);
+      position: relative;
+    }
+
+    .activity-toast-avatar::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 6px var(--green);
+    }
+
+    .activity-toast-content {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .activity-toast-text {
+      font-size: 0.86rem;
+      color: var(--text);
+      line-height: 1.35;
+      font-weight: 500;
+    }
+
+    .activity-toast-text strong {
+      color: var(--cyan-2);
+      font-weight: 700;
+    }
+
+    .activity-toast-time {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      color: var(--text-3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .activity-toast-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: transparent;
+      border: 0;
+      color: var(--text-3);
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--dur) var(--ease);
+    }
+
+    .activity-toast-close:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+    }
+
+    /* ==================== MEMBERSHIP COMPARE ==================== */
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .compare-card {
+      padding: 32px 28px 28px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 22px;
+      position: relative;
+      backdrop-filter: blur(20px);
+      transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+      overflow: hidden;
+    }
+
+    .compare-card--featured {
+      border-color: rgba(0, 212, 255, 0.4);
+      background: linear-gradient(180deg, rgba(0, 212, 255, 0.07), var(--surface));
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 212, 255, 0.12);
+    }
+
+    .compare-card--featured::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--grad-signature);
+    }
+
+    .compare-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .compare-card--featured:hover {
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 212, 255, 0.2);
+    }
+
+    .compare-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .compare-tag--recommended {
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      color: var(--cyan-2);
+    }
+
+    .compare-tag--upgrade {
+      background: var(--amber-dim);
+      border: 1px solid rgba(255, 187, 71, 0.4);
+      color: var(--gold-2);
+    }
+
+    .compare-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .compare-sub {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      line-height: 1.45;
+      margin-bottom: 20px;
+    }
+
+    .compare-price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .compare-price-amount {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .compare-price-period {
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--text-3);
+    }
+
+    .compare-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .compare-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.93rem;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+
+    .compare-feature-check {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--green-dim);
+      border: 1px solid rgba(0, 255, 157, 0.35);
+      color: var(--green-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.66rem;
+      margin-top: 2px;
+    }
+
+    .compare-feature--upgrade .compare-feature-check {
+      background: var(--amber-dim);
+      border-color: rgba(255, 187, 71, 0.35);
+      color: var(--gold-2);
+    }
+
+    .compare-cta .btn {
+      width: 100%;
+    }
+
+    .compare-note {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      text-align: center;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-top: 14px;
     }
 
     /* ==================== STICKY MOBILE CTA ==================== */
@@ -2370,11 +2777,14 @@
 
       .bookies-wrap {
         justify-content: center;
-        margin-top: -16px;
       }
 
       .bookies-list {
         justify-content: center;
+      }
+
+      .compare {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -2393,6 +2803,14 @@
 
       .hero-cta-row { flex-direction: column; align-items: stretch; }
       .hero-live-round { flex-wrap: wrap; }
+      .hero-next-round { flex-wrap: wrap; }
+
+      .activity-toast {
+        left: 12px;
+        right: 12px;
+        bottom: 84px;
+        max-width: none;
+      }
 
       .champion { padding: 24px 20px; }
       .champion-cta { flex-direction: column; align-items: stretch; }
@@ -2510,6 +2928,14 @@
             <span class="hero-live-round-value" data-stat="latestRound.profit">+$670</span>
             <span class="hero-live-round-value" data-stat="latestRound.units">+13.4u</span>
             <span class="hero-live-round-value" data-stat="latestRound.roi">36% ROI</span>
+          </div>
+
+          <div class="hero-next-round" id="next-round-pill">
+            <span class="hero-next-round-dot"></span>
+            <span class="hero-next-round-label">Next</span>
+            <span class="hero-next-round-round" data-stat="nextRound.round">R17</span>
+            <span class="hero-next-round-kickoff" data-nextround-kickoff>Thu 7:20pm</span>
+            <span class="hero-next-round-timer" data-nextround-timer>Kicks off in 2d 4h</span>
           </div>
 
           <div class="hero-cta-row">
@@ -2650,7 +3076,6 @@
         <li class="bookies-item"><span class="bookies-item-dot"></span>TAB</li>
         <li class="bookies-item"><span class="bookies-item-dot"></span>Bet365</li>
         <li class="bookies-item"><span class="bookies-item-dot"></span>Ladbrokes</li>
-        <li class="bookies-item"><span class="bookies-item-dot"></span>Neds</li>
       </ul>
     </div>
 
@@ -2806,52 +3231,88 @@
         </div>
 
         <div class="discord-card" data-reveal data-reveal-delay="1" data-tilt>
-          <div class="discord-header">
-            <span class="discord-hash">#</span>
-            <span class="discord-channel">afl-premium-bets</span>
+          <div class="discord-channel-bar">
+            <span class="discord-channel-hash"><span class="discord-channel-lock">&#128274;</span>#</span>
+            <span class="discord-channel-name">--non-promo</span>
           </div>
           <div class="discord-body">
             <div class="discord-message">
-              <div class="discord-avatar">FNF</div>
+              <div class="discord-avatar" aria-hidden="true">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <defs>
+                    <linearGradient id="bull-grad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#7cedff"/>
+                      <stop offset="100%" stop-color="#3b82f6"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M6 10 Q4 4 8 4 L11 10 L21 10 L24 4 Q28 4 26 10 Q26 13 24 14 Q24 18 20 22 L20 26 L12 26 L12 22 Q8 18 8 14 Q6 13 6 10 Z" fill="url(#bull-grad)"/>
+                  <circle cx="13" cy="15" r="1.6" fill="#050815"/>
+                  <circle cx="19" cy="15" r="1.6" fill="#050815"/>
+                </svg>
+              </div>
               <div class="discord-body-content">
                 <div class="discord-meta">
-                  <span class="discord-username">FNF Gainz Bot <span class="discord-badge">BOT</span></span>
-                  <span class="discord-time">Today at 4:35 PM</span>
+                  <span class="discord-username">FNF Gainz</span>
+                  <span class="discord-badge-app">FNF</span>
+                  <span class="discord-time">Today at 4:46 PM</span>
                 </div>
-                <div class="discord-embed">
-                  <div class="discord-embed-title">
-                    <span class="discord-embed-lock">&#128274;</span>
-                    Round 17 · Thursday Multi
+                <div class="discord-headline">
+                  <span class="discord-headline-num">30.</span>
+                  <span class="discord-headline-bookie">TAB</span>
+                  <span class="discord-headline-unit">1 unit</span>
+                </div>
+
+                <div class="bet-slip">
+                  <div class="bet-slip-header">
+                    <div class="bet-slip-header-left">
+                      <div class="bet-slip-type">Multi</div>
+                      <div class="bet-slip-title">Multibet 2 legs</div>
+                    </div>
+                    <div class="bet-slip-status">Pending</div>
                   </div>
-                  <div class="discord-embed-legs">
-                    <div class="discord-embed-leg">
-                      <span class="discord-embed-leg-player">M. Bontempelli 25+ disposals</span>
-                      <span class="discord-embed-leg-odds">$1.85</span>
-                    </div>
-                    <div class="discord-embed-leg">
-                      <span class="discord-embed-leg-player">B. Smith 20+ disposals</span>
-                      <span class="discord-embed-leg-odds">$1.90</span>
-                    </div>
-                    <div class="discord-embed-leg">
-                      <span class="discord-embed-leg-player">Z. Merrett 30+ disposals</span>
-                      <span class="discord-embed-leg-odds">$1.95</span>
-                    </div>
-                  </div>
-                  <div class="discord-embed-footer">
+
+                  <div class="bet-slip-summary">
                     <div>
-                      <div class="discord-embed-footer-label">Stake</div>
-                      <div class="discord-embed-footer-value">2u · $100</div>
+                      <div class="bet-slip-summary-cell-label">Stake</div>
+                      <div class="bet-slip-summary-cell-value">$50.00</div>
                     </div>
-                    <div style="text-align: right;">
-                      <div class="discord-embed-footer-label">To Return</div>
-                      <div class="discord-embed-footer-value discord-embed-footer-value--green">$685</div>
+                    <div>
+                      <div class="bet-slip-summary-cell-label">Odds</div>
+                      <div class="bet-slip-summary-cell-value">2.04</div>
+                    </div>
+                    <div>
+                      <div class="bet-slip-summary-cell-label">Est. Return</div>
+                      <div class="bet-slip-summary-cell-value">$102.00</div>
+                    </div>
+                  </div>
+
+                  <div class="bet-slip-legs">
+                    <div class="bet-slip-leg">
+                      <div class="bet-slip-leg-header">Leg 1 &middot; Sat 20 Jun</div>
+                      <div class="bet-slip-leg-desc">Same Game Multi, 2 props <strong>@Price: 1.36</strong></div>
+                      <div class="bet-slip-leg-players">
+                        <span class="bet-slip-leg-player">AFL GWS-Crl 20Disps <strong>Patrick Cripps</strong> (CAR)</span>
+                        <span class="bet-slip-leg-player">AFL GWS-Crl 20Disps <strong>Jagga Smith</strong> (CAR)</span>
+                      </div>
+                    </div>
+                    <div class="bet-slip-leg">
+                      <div class="bet-slip-leg-header">Leg 2 &middot; Sun 21 Jun</div>
+                      <div class="bet-slip-leg-desc">Same Game Multi, 2 props <strong>@Price: 1.50</strong></div>
+                      <div class="bet-slip-leg-players">
+                        <span class="bet-slip-leg-player">AFL StK-WBd 20Disps <strong>Max Hall</strong> (STK)</span>
+                        <span class="bet-slip-leg-player">AFL StK-WBd 15Disps <strong>Joel Freijah</strong> (WB)</span>
+                      </div>
                     </div>
                   </div>
                 </div>
+
                 <div class="discord-reactions">
-                  <span class="discord-reaction">&#128293; <span class="discord-reaction-count">24</span></span>
-                  <span class="discord-reaction">&#128293; <span class="discord-reaction-count">18</span></span>
-                  <span class="discord-reaction">&#128077; <span class="discord-reaction-count">12</span></span>
+                  <span class="discord-reaction">&#10003; <span class="discord-reaction-count">103</span></span>
+                  <span class="discord-reaction">&#10084;&#65039; <span class="discord-reaction-count">3</span></span>
+                  <span class="discord-reaction">&#128293; <span class="discord-reaction-count">12</span></span>
+                  <span class="discord-reaction">&#128293; <span class="discord-reaction-count">5</span></span>
+                  <span class="discord-reaction">&#128077; <span class="discord-reaction-count">4</span></span>
+                  <span class="discord-reaction">&#128640; <span class="discord-reaction-count">1</span></span>
                 </div>
               </div>
             </div>
@@ -2944,34 +3405,67 @@
         <div class="section-index" aria-hidden="true">06</div>
       </div>
       <div class="close">
-        <span class="close-price-inline" data-reveal>AFL Premium &middot; $140 AUD / month</span>
+        <h2 class="close-title" data-reveal>Choose your <span class="accent">system</span>.</h2>
+        <p class="close-sub" data-reveal data-reveal-delay="1">One AFL-only package. One combined AFL + NRL package. Cancel either any time.</p>
 
-        <h2 class="close-title" data-reveal data-reveal-delay="1">The <span class="accent">system</span> is open.</h2>
-        <p class="close-sub" data-reveal data-reveal-delay="2">Join the members executing the same disciplined strategy this season.</p>
+        <div class="compare" data-reveal data-reveal-delay="2">
 
-        <div data-reveal data-reveal-delay="3">
-          <button class="btn btn-primary btn-large lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
-            <span>Join AFL Premium</span>
-            <span class="btn-price">$140 AUD / mo</span>
-          </button>
+          <article class="compare-card compare-card--featured">
+            <span class="compare-tag compare-tag--recommended">Recommended</span>
+            <div class="compare-name">AFL Premium</div>
+            <p class="compare-sub">Every AFL bet posted with staking guidance and personal onboarding.</p>
+            <div class="compare-price">
+              <span class="compare-price-amount">$140</span>
+              <span class="compare-price-period">AUD / mo</span>
+            </div>
+            <ul class="compare-features">
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Every AFL bet posted live in Discord</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Full round breakdowns Thursday to Sunday</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Personal onboarding and unit sizing</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Weekly reports + public dashboard</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Cancel anytime, no lock-in</li>
+            </ul>
+            <div class="compare-cta">
+              <button class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
+                <span>Join AFL Premium</span>
+                <span class="btn-price">$140 / mo</span>
+              </button>
+            </div>
+            <div class="compare-note">5 years of member trust</div>
+          </article>
+
+          <article class="compare-card">
+            <span class="compare-tag compare-tag--upgrade">Full Coverage</span>
+            <div class="compare-name">Champion</div>
+            <p class="compare-sub">The full AFL system plus the full NRL system, run side by side.</p>
+            <div class="compare-price">
+              <span class="compare-price-amount">$200</span>
+              <span class="compare-price-period">AUD / mo</span>
+            </div>
+            <ul class="compare-features">
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Everything in AFL Premium</li>
+              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Full NRL system side-by-side</li>
+              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Separate staking + tracking per code</li>
+              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Combined season view across AFL + NRL</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Save $80/mo vs buying both individually</li>
+            </ul>
+            <div class="compare-cta">
+              <button class="btn btn-outline lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">
+                <span>Join Champion</span>
+                <span class="btn-price">$200 / mo</span>
+              </button>
+            </div>
+            <div class="compare-note">Following both codes? Best value</div>
+          </article>
+
         </div>
 
-        <div class="close-trust" data-reveal data-reveal-delay="4">
+        <div class="close-trust" data-reveal data-reveal-delay="3">
           <span>5 years of member trust</span>
           <span>&middot;</span>
           <span>Cancel anytime</span>
           <span>&middot;</span>
           <span>18+ only</span>
-        </div>
-
-        <div class="champion" data-reveal data-reveal-delay="5">
-          <span class="champion-note">Following both codes?</span>
-          <h3 class="champion-title">Champion is the full AFL system plus the full NRL system, run side by side.</h3>
-          <p class="champion-sub">Each system keeps its own staking and tracking. Results viewed together across the full season.</p>
-          <div class="champion-cta">
-            <span class="champion-price">Champion &middot; <strong>$200 AUD / mo</strong></span>
-            <button class="btn btn-outline lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">See Champion &rarr;</button>
-          </div>
         </div>
       </div>
     </section>
@@ -3008,6 +3502,18 @@
     </footer>
 
   </main>
+
+  <!-- Recent activity toast -->
+  <div class="activity-toast" id="activity-toast" role="status" aria-live="polite">
+    <div class="activity-toast-avatar" id="activity-toast-avatar" aria-hidden="true">C</div>
+    <div class="activity-toast-content">
+      <div class="activity-toast-text" id="activity-toast-text">
+        <strong>Curtis</strong> just joined AFL Premium
+      </div>
+      <div class="activity-toast-time" id="activity-toast-time">Just now</div>
+    </div>
+    <button class="activity-toast-close" id="activity-toast-close" aria-label="Dismiss">&times;</button>
+  </div>
 
   <!-- Sticky mobile CTA -->
   <div class="sticky-cta" id="sticky-cta">
@@ -3119,6 +3625,129 @@
         });
         el.addEventListener('mouseleave', function() { el.style.transform = ''; });
       });
+    })();
+  </script>
+
+  <!-- Next Round countdown -->
+  <script>
+    (function() {
+      var pill = document.getElementById('next-round-pill');
+      if (!pill) return;
+      var kickoffEl = pill.querySelector('[data-nextround-kickoff]');
+      var timerEl = pill.querySelector('[data-nextround-timer]');
+      var kickoffISO = null;
+
+      function formatKickoffLabel(date) {
+        var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        var day = days[date.getDay()];
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var suffix = h >= 12 ? 'pm' : 'am';
+        var hh = ((h + 11) % 12 + 1);
+        var mm = m < 10 ? '0' + m : String(m);
+        return day + ' ' + hh + ':' + mm + suffix;
+      }
+
+      function update() {
+        if (!kickoffISO) return;
+        var now = Date.now();
+        var kickoff = new Date(kickoffISO).getTime();
+        var diff = kickoff - now;
+        if (diff <= 0) {
+          timerEl.textContent = 'Live now';
+          return;
+        }
+        var days = Math.floor(diff / (24*60*60*1000));
+        var hrs = Math.floor((diff % (24*60*60*1000)) / (60*60*1000));
+        var mins = Math.floor((diff % (60*60*1000)) / (60*1000));
+        var text;
+        if (days > 0) {
+          text = 'Kicks off in ' + days + 'd ' + hrs + 'h';
+        } else if (hrs > 0) {
+          text = 'Kicks off in ' + hrs + 'h ' + mins + 'm';
+        } else {
+          text = 'Kicks off in ' + mins + 'm';
+        }
+        timerEl.textContent = text;
+      }
+
+      // Fetch nextRound from stats.json, then start ticking
+      fetch('stats.json', { cache: 'no-cache' })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(data) {
+          if (data && data.nextRound && data.nextRound.kickoff) {
+            kickoffISO = data.nextRound.kickoff;
+            var d = new Date(kickoffISO);
+            if (!isNaN(d.getTime())) {
+              kickoffEl.textContent = formatKickoffLabel(d);
+            }
+            update();
+            setInterval(update, 60000);
+          }
+        })
+        .catch(function() {});
+    })();
+  </script>
+
+  <!-- Recent activity toast rotator -->
+  <script>
+    (function() {
+      var toast = document.getElementById('activity-toast');
+      if (!toast) return;
+      var textEl = document.getElementById('activity-toast-text');
+      var timeEl = document.getElementById('activity-toast-time');
+      var avatarEl = document.getElementById('activity-toast-avatar');
+      var closeBtn = document.getElementById('activity-toast-close');
+      var hero = document.querySelector('.hero');
+      if (!textEl || !timeEl || !avatarEl || !hero) return;
+
+      var activities = [
+        { name: 'Curtis',       action: 'just joined AFL Premium',    time: 'Just now',        avatar: 'C', color: 'linear-gradient(135deg, #00d4ff, #3b82f6)' },
+        { name: 'James',        action: 'joined AFL Premium',         time: '4 min ago',       avatar: 'J', color: 'linear-gradient(135deg, #a78bfa, #7c3aed)' },
+        { name: 'Sarah',        action: 'joined AFL Premium',         time: '12 min ago',      avatar: 'S', color: 'linear-gradient(135deg, #ffbb47, #f97316)' },
+        { name: 'R16 result',   action: 'posted &mdash; +$670 / +13.4u', time: '2 hours ago',   avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
+        { name: 'Mitchell',     action: 'joined AFL Premium',         time: '38 min ago',      avatar: 'M', color: 'linear-gradient(135deg, #00d4ff, #3b82f6)' },
+        { name: 'Tom',          action: 'joined Champion (AFL + NRL)', time: '1 hour ago',     avatar: 'T', color: 'linear-gradient(135deg, #ffbb47, #f97316)' },
+        { name: 'Round 17',     action: 'preview posted in Discord',  time: '3 hours ago',    avatar: 'R', color: 'linear-gradient(135deg, #a78bfa, #7c3aed)' }
+      ];
+      var index = 0;
+      var dismissed = false;
+      var timer = null;
+
+      function show(activity) {
+        textEl.innerHTML = '<strong>' + activity.name + '</strong> ' + activity.action;
+        timeEl.textContent = activity.time;
+        avatarEl.textContent = activity.avatar;
+        avatarEl.style.background = activity.color;
+        toast.classList.add('is-visible');
+      }
+      function hide() {
+        toast.classList.remove('is-visible');
+      }
+      function cycle() {
+        if (dismissed) return;
+        show(activities[index]);
+        setTimeout(hide, 5500);
+        index = (index + 1) % activities.length;
+        timer = setTimeout(cycle, 12000);
+      }
+
+      closeBtn.addEventListener('click', function() {
+        dismissed = true;
+        hide();
+        if (timer) clearTimeout(timer);
+      });
+
+      // Start after hero has been scrolled past
+      function checkStart() {
+        if (dismissed) return;
+        var heroBottom = hero.getBoundingClientRect().bottom;
+        if (heroBottom < 0) {
+          window.removeEventListener('scroll', checkStart);
+          setTimeout(cycle, 800);
+        }
+      }
+      window.addEventListener('scroll', checkStart, { passive: true });
     })();
   </script>
 
