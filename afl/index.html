@@ -188,7 +188,7 @@
       height: 100%;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.55;
+      opacity: 0.35;
       mix-blend-mode: screen;
     }
 
@@ -233,13 +233,13 @@
     }
 
     .aurora::before {
-      background: radial-gradient(circle, var(--cyan) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(0, 180, 240, 0.55) 0%, transparent 65%);
       top: -10%;
       left: -10%;
     }
 
     .aurora::after {
-      background: radial-gradient(circle, var(--violet) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(30, 60, 110, 0.65) 0%, transparent 65%);
       bottom: -10%;
       right: -10%;
       animation-delay: -11s;
@@ -1059,13 +1059,15 @@
       transition: opacity 0.6s ease-out 2.9s;
     }
 
-    /* Milestones — pop in with a subtle scale/fade, staggered, after the line draws */
+    /* Milestones — bigger dramatic pop with an overshoot, staggered after the line draws */
     .chart-milestone {
       opacity: 0;
-      transform: translateY(6px) scale(0.85);
+      transform: translateY(28px) scale(0.35);
       transform-origin: center;
       transform-box: fill-box;
-      transition: opacity 0.7s var(--ease-cathedral), transform 0.7s var(--ease-cathedral);
+      transition:
+        opacity 1.1s var(--ease-cathedral),
+        transform 1.1s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .chart.is-animated .chart-milestone {
@@ -1073,19 +1075,19 @@
       transform: translateY(0) scale(1);
     }
 
-    .chart.is-animated .chart-milestone--1 { transition-delay: 2.6s; }
-    .chart.is-animated .chart-milestone--2 { transition-delay: 2.9s; }
-    .chart.is-animated .chart-milestone--3 { transition-delay: 3.2s; }
-    .chart.is-animated .chart-milestone--4 { transition-delay: 3.5s; }
+    .chart.is-animated .chart-milestone--1 { transition-delay: 2.9s; }
+    .chart.is-animated .chart-milestone--2 { transition-delay: 3.3s; }
+    .chart.is-animated .chart-milestone--3 { transition-delay: 3.7s; }
+    .chart.is-animated .chart-milestone--4 { transition-delay: 4.1s; }
 
     /* Gentle idle pulse on the milestone dots after they've appeared */
     .chart.is-animated .chart-milestone circle:first-of-type {
-      animation: milestone-breathe 3s ease-in-out 4s infinite;
+      animation: milestone-breathe 3s ease-in-out 5s infinite;
     }
 
     @keyframes milestone-breathe {
       0%, 100% { r: 4.5; }
-      50% { r: 5.5; }
+      50% { r: 5.8; }
     }
 
     .chart.is-animated .chart-area { opacity: 1; }
@@ -1300,26 +1302,6 @@
       position: relative;
     }
 
-    /* Shimmer sweep — fires when section-title scrolls into view */
-    .section-title.is-shimmer {
-      background: linear-gradient(90deg,
-                                 var(--text) 0%,
-                                 var(--text) 40%,
-                                 var(--cyan-2) 50%,
-                                 var(--text) 60%,
-                                 var(--text) 100%);
-      background-size: 250% 100%;
-      background-position: -125% 0;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer-sweep 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    }
-
-    @keyframes shimmer-sweep {
-      0% { background-position: -125% 0; }
-      100% { background-position: 125% 0; }
-    }
 
     .section-sub {
       font-size: 1.08rem;
@@ -1604,11 +1586,14 @@
     .inclusion-icon svg {
       width: 24px;
       height: 24px;
-      stroke: url(#inclusion-icon-grad);
+      stroke: #7cedff; /* fallback if gradient reference fails */
       stroke-width: 2.25;
       position: relative;
       z-index: 1;
       filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.4));
+    }
+    .inclusion-icon svg [stroke="currentColor"] {
+      stroke: url(#inclusion-icon-grad);
     }
 
     .inclusion-text {
@@ -3303,11 +3288,12 @@
               </g>
 
               <g class="chart-milestone chart-milestone--4">
-                <line x1="700" y1="72" x2="700" y2="20" stroke="rgba(255, 187, 71, 0.35)" stroke-width="1" stroke-dasharray="2,3"/>
-                <rect x="666" y="0" width="68" height="20" rx="6" fill="rgba(3, 6, 18, 0.92)" stroke="rgba(255, 187, 71, 0.55)" stroke-width="1"/>
-                <text x="700" y="14" text-anchor="middle" fill="#ffd280" font-size="10" font-family="JetBrains Mono, monospace" font-weight="700" letter-spacing="0.06em">R10 SPIKE</text>
-                <circle cx="700" cy="72" r="4.5" fill="#ffbb47"/>
-                <circle cx="700" cy="72" r="7" fill="none" stroke="rgba(255, 187, 71, 0.4)" stroke-width="1"/>
+                <line x1="706" y1="72" x2="706" y2="28" stroke="rgba(255, 187, 71, 0.35)" stroke-width="1" stroke-dasharray="2,3"/>
+                <rect x="672" y="8" width="68" height="20" rx="6" fill="rgba(3, 6, 18, 0.92)" stroke="rgba(255, 187, 71, 0.55)" stroke-width="1"/>
+                <text x="706" y="22" text-anchor="middle" fill="#ffd280" font-size="10" font-family="JetBrains Mono, monospace" font-weight="700" letter-spacing="0.06em">+$1,268</text>
+                <text x="706" y="-2" text-anchor="middle" fill="#a3aec5" font-size="7.5" font-family="JetBrains Mono, monospace" letter-spacing="0.14em">R10 BEST WEEK</text>
+                <circle cx="706" cy="72" r="4.5" fill="#ffbb47"/>
+                <circle cx="706" cy="72" r="7" fill="none" stroke="rgba(255, 187, 71, 0.4)" stroke-width="1"/>
               </g>
               <text x="42" y="262" fill="#a3aec5" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2022</text>
               <text x="192" y="262" fill="#a3aec5" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2023</text>
@@ -3449,7 +3435,12 @@
           <div class="inclusion-text">Honest round updates from Thursday through Sunday. Wins, losses, and what's coming.</div>
         </div>
         <div class="inclusion" data-reveal data-reveal-delay="4">
-          <span class="inclusion-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></svg></span>
+          <span class="inclusion-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 3v18h18" stroke="url(#inclusion-icon-grad)" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="6" y="13" width="3" height="5" rx="0.75" fill="url(#inclusion-icon-grad)"/>
+            <rect x="11" y="9" width="3" height="9" rx="0.75" fill="url(#inclusion-icon-grad)"/>
+            <rect x="16" y="5" width="3" height="13" rx="0.75" fill="url(#inclusion-icon-grad)"/>
+          </svg></span>
           <div class="inclusion-text">Weekly performance reports and live results tracking on the public dashboard.</div>
         </div>
         <div class="inclusion" data-reveal data-reveal-delay="5">
@@ -4101,13 +4092,13 @@
 
       var W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
 
-      // Professional palette — muted cyan, deep navy, soft white silver
-      // No violet. Lower opacity stops. Reads institutional, not disco.
+      // Sleek institutional palette — cool dark blues + one whisper of cyan.
+      // Zero warm tones. Zero purple. Reads as expensive, not decorative.
       var orbs = [
-        { c: [0, 160, 220],    a: 0.18, x: 0.22, y: 0.28, r: 0.55, sx: 0.00010, sy: 0.00014 },
-        { c: [30, 60, 110],    a: 0.28, x: 0.78, y: 0.72, r: 0.60, sx: -0.00012, sy: -0.00009 },
-        { c: [40, 90, 150],    a: 0.20, x: 0.62, y: 0.20, r: 0.45, sx: -0.00011, sy: 0.00013 },
-        { c: [210, 225, 245],  a: 0.08, x: 0.28, y: 0.82, r: 0.42, sx: 0.00013, sy: -0.00010 }
+        { c: [20, 40, 80],     a: 0.32, x: 0.22, y: 0.28, r: 0.60, sx: 0.00009, sy: 0.00012 },
+        { c: [12, 25, 55],     a: 0.36, x: 0.78, y: 0.72, r: 0.65, sx: -0.00010, sy: -0.00008 },
+        { c: [40, 70, 120],    a: 0.20, x: 0.62, y: 0.20, r: 0.50, sx: -0.00009, sy: 0.00011 },
+        { c: [0, 140, 200],    a: 0.10, x: 0.28, y: 0.82, r: 0.38, sx: 0.00011, sy: -0.00008 }
       ];
 
       function resize() {
@@ -4175,25 +4166,6 @@
         hero.style.setProperty('--sx', x + '%');
         hero.style.setProperty('--sy', y + '%');
       }, { passive: true });
-    })();
-  </script>
-
-  <!-- Section title shimmer sweep on scroll -->
-  <script>
-    (function() {
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced || !('IntersectionObserver' in window)) return;
-      var titles = document.querySelectorAll('.section-title, .close-title, .preview-title');
-      if (!titles.length) return;
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-shimmer');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.6 });
-      titles.forEach(function(el) { observer.observe(el); });
     })();
   </script>
 
