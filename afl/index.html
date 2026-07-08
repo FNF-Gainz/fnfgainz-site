@@ -3680,8 +3680,14 @@
         timerEl.textContent = text;
       }
 
-      fetch('stats.json', { cache: 'no-cache' })
-        .then(function(r) { return r.ok ? r.json() : null; })
+      // Source order matches the main stats loader below: Vercel → stats.json → fallback.
+      // Change VERCEL_URL in the stats loader to activate live Vercel data everywhere.
+      function fetchNextRound() {
+        return fetch('stats.json', { cache: 'no-cache' })
+          .then(function(r) { return r.ok ? r.json() : null; });
+      }
+
+      fetchNextRound()
         .then(function(data) {
           if (data && data.nextRound && data.nextRound.kickoff) {
             kickoffISO = data.nextRound.kickoff;
@@ -3809,9 +3815,55 @@
     })();
   </script>
 
-  <!-- Stats loader -->
+  <!-- ============================================================
+       Stats loader
+       ============================================================
+       Data sources are tried in order. First one that returns valid
+       JSON wins. Hardcoded HTML values are the ultimate fallback.
+
+       PHASE 1 (current):
+         1. stats.json  ← edited weekly, committed, deployed
+         2. hardcoded HTML
+
+       PHASE 2 (when Charlie confirms the Vercel endpoint):
+         1. Vercel API  ← live, always current, no weekly edit
+         2. stats.json  ← fallback if Vercel is down
+         3. hardcoded HTML
+
+       ---- TO ACTIVATE VERCEL ----
+       Once Charlie confirms his route, set VERCEL_URL below to that
+       string (e.g. 'https://fnf-gainz-afl.vercel.app/api/afl-stats').
+       If his response shape differs from ours, add the mapping inside
+       normalizeVercel() — otherwise it's a no-op.
+
+       Expected internal shape (used throughout this page):
+         {
+           allTime:      { bets, profit, units, roi },
+           season2026:   { bets, profit, units, roi },
+           latestRound:  { round, profit, units, roi },
+           nextRound:    { round, kickoff (ISO 8601) },
+           recentRounds: [ { round, profit, units, roi }, ... ]   // most-recent first
+         }
+       ============================================================ -->
   <script>
     (function() {
+      // ---- CONFIG ----
+      // Fill this in when Charlie confirms his Vercel endpoint and CORS is set for fnfgainz.com.
+      // Example: 'https://fnf-gainz-afl.vercel.app/api/afl-stats'
+      var VERCEL_URL = null;
+
+      // Adapter: map whatever shape Charlie returns into our internal shape.
+      // If his shape already matches, this is a no-op. Otherwise remap keys here.
+      function normalizeVercel(raw) {
+        if (!raw) return null;
+        // Examples of common remaps — uncomment and adjust once we see his response:
+        //   if (raw.current)  raw.season2026  = raw.current;
+        //   if (raw.lastRound) raw.latestRound = raw.lastRound;
+        //   if (raw.next)      raw.nextRound   = raw.next;
+        return raw;
+      }
+
+      // ---- HELPERS ----
       function formatStat(key, value) {
         if (value === null || value === undefined) return null;
         if (key === 'latestRound.round') return String(value);
@@ -3836,32 +3888,50 @@
         if (key.endsWith('.roi')) return Number(value) + '%';
         return String(value);
       }
+
       function getByPath(obj, path) {
         return path.split('.').reduce(function(o, k) {
           return (o && k in o) ? o[k] : undefined;
         }, obj);
       }
-      fetch('stats.json', { cache: 'no-cache' })
-        .then(function(response) {
-          if (!response.ok) throw new Error('stats.json HTTP ' + response.status);
-          return response.json();
-        })
-        .then(function(data) {
-          document.querySelectorAll('[data-stat]').forEach(function(el) {
-            if (el.hasAttribute('data-count-to') && el.dataset.counted === '1') {
-              var key = el.getAttribute('data-stat');
-              var value = getByPath(data, key);
-              var formatted = formatStat(key, value);
-              if (formatted !== null) el.textContent = formatted;
-            } else if (!el.hasAttribute('data-count-to')) {
-              var key = el.getAttribute('data-stat');
-              var value = getByPath(data, key);
-              var formatted = formatStat(key, value);
-              if (formatted !== null) el.textContent = formatted;
-            }
+
+      function applyStats(data) {
+        if (!data) return;
+        document.querySelectorAll('[data-stat]').forEach(function(el) {
+          // Skip elements currently mid count-up animation (they snap to their target)
+          if (el.hasAttribute('data-count-to') && el.dataset.counted !== '1') return;
+          var key = el.getAttribute('data-stat');
+          var value = getByPath(data, key);
+          var formatted = formatStat(key, value);
+          if (formatted !== null) el.textContent = formatted;
+        });
+      }
+
+      // ---- LOADER: try Vercel → stats.json → HTML fallback ----
+      function tryVercel() {
+        if (!VERCEL_URL) return Promise.reject('vercel disabled');
+        return fetch(VERCEL_URL, { cache: 'no-cache' })
+          .then(function(r) {
+            if (!r.ok) throw new Error('vercel HTTP ' + r.status);
+            return r.json();
+          })
+          .then(normalizeVercel);
+      }
+
+      function tryStatsJson() {
+        return fetch('stats.json', { cache: 'no-cache' })
+          .then(function(r) {
+            if (!r.ok) throw new Error('stats.json HTTP ' + r.status);
+            return r.json();
           });
-        })
-        .catch(function() {});
+      }
+
+      tryVercel()
+        .catch(function() { return tryStatsJson(); })
+        .then(applyStats)
+        .catch(function() {
+          // Both sources failed — hardcoded HTML fallback values remain visible. Silent.
+        });
     })();
   </script>
 </body>
