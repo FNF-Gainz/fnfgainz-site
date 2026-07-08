@@ -27,10 +27,10 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
   <link rel="stylesheet" href="../styles.css">
 
-  <!-- Fonts: Inter + JetBrains Mono -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
   <meta name="facebook-domain-verification" content="rvdz1dijk208hjgyhh9yvlcztyrg3p">
 
@@ -104,674 +104,1048 @@
   <!-- End Meta Pixel + CAPI -->
 
   <style>
-    /* ==================== AFL LANDING v2 — INSTITUTIONAL CONFIDENCE ==================== */
+    /* ==================== AFL v3 — EDITORIAL TERMINAL ==================== */
 
     :root {
-      --afl-bg: #0a0e17;
-      --afl-surface: rgba(14, 20, 32, 0.85);
-      --afl-elevated: rgba(18, 24, 40, 0.9);
-      --afl-border: #1f2937;
-      --afl-border-strong: #2d3748;
-      --afl-text: #f8fafc;
-      --afl-text-2: #94a3b8;
-      --afl-text-3: #64748b;
-      --afl-blue: #3b82f6;
-      --afl-blue-2: #60a5fa;
-      --afl-blue-3: #93c5fd;
-      --afl-green: #10b981;
-      --afl-green-2: #34d399;
-      --afl-gold: #fbbf24;
-      --afl-radius: 16px;
-      --afl-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-      --afl-shadow-strong: 0 12px 48px rgba(0, 0, 0, 0.55);
-      --afl-transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      --afl-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      --afl-font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      /* Palette — depth, precision, and one signature signal color */
+      --bg: #050815;
+      --bg-1: #0a0d1e;
+      --bg-2: rgba(11, 15, 30, 0.7);
+      --bg-3: rgba(18, 24, 42, 0.85);
+      --surface: rgba(15, 20, 38, 0.65);
+      --surface-strong: rgba(20, 26, 46, 0.85);
+      --border: rgba(255, 255, 255, 0.06);
+      --border-strong: rgba(255, 255, 255, 0.12);
+      --border-glow: rgba(0, 212, 255, 0.35);
+
+      --text: #f7f9fc;
+      --text-2: #a8b3cc;
+      --text-3: #6b7690;
+      --text-4: #4a5578;
+
+      --cyan: #00d4ff;
+      --cyan-2: #7cedff;
+      --cyan-dim: rgba(0, 212, 255, 0.15);
+      --blue: #3b82f6;
+      --blue-2: #60a5fa;
+
+      --green: #00ff9d;
+      --green-2: #6fffc0;
+      --green-dim: rgba(0, 255, 157, 0.15);
+
+      --gold: #ffbb47;
+      --gold-2: #ffd280;
+
+      --red: #ff5470;
+
+      --grad-signature: linear-gradient(135deg, var(--cyan) 0%, var(--blue) 60%, #7c3aed 100%);
+      --grad-text: linear-gradient(135deg, #fff 0%, var(--cyan-2) 100%);
+      --grad-glow: radial-gradient(circle at center, rgba(0, 212, 255, 0.15) 0%, transparent 60%);
+
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+      --shadow-glow: 0 0 80px rgba(0, 212, 255, 0.2);
+
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --dur: 0.4s;
+      --dur-slow: 0.8s;
+
+      --font-display: 'Bricolage Grotesque', 'Inter', -apple-system, sans-serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
     }
 
     body {
-      font-family: var(--afl-font-sans);
+      background: var(--bg);
+      font-family: var(--font-sans);
       font-feature-settings: 'ss01', 'cv11';
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* Aurora — animated mesh behind everything */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    .aurora::before,
+    .aurora::after {
+      content: '';
+      position: absolute;
+      width: 60vw;
+      height: 60vw;
+      max-width: 900px;
+      max-height: 900px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+      mix-blend-mode: screen;
+      animation: aurora-drift 22s ease-in-out infinite;
+    }
+
+    .aurora::before {
+      background: radial-gradient(circle, var(--cyan) 0%, transparent 65%);
+      top: -10%;
+      left: -10%;
+    }
+
+    .aurora::after {
+      background: radial-gradient(circle, #7c3aed 0%, transparent 65%);
+      bottom: -10%;
+      right: -10%;
+      animation-delay: -11s;
+      animation-duration: 26s;
+    }
+
+    @keyframes aurora-drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(8vw, 6vh) scale(1.1); }
+      66% { transform: translate(-6vw, 4vh) scale(0.95); }
     }
 
     /* Container */
     .afl {
-      max-width: 1080px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
       position: relative;
       z-index: 1;
     }
 
-    /* Reusable button system */
-    .afl-btn {
+    /* ==================== TICKER STRIP ==================== */
+    .ticker {
+      position: relative;
+      background: rgba(5, 8, 21, 0.75);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .ticker-inner {
+      display: flex;
+      gap: 0;
+      padding: 10px 0;
+      white-space: nowrap;
+      animation: ticker-scroll 45s linear infinite;
+    }
+
+    .ticker-item {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 16px 28px;
-      border-radius: 12px;
-      font-family: var(--afl-font-sans);
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: -0.005em;
-      cursor: pointer;
-      transition: all var(--afl-transition);
-      text-decoration: none;
-      border: 1.5px solid transparent;
-      min-height: 52px;
-    }
-
-    .afl-btn-primary {
-      background: linear-gradient(180deg, #3b82f6, #2563eb);
-      color: white;
-      border-color: rgba(96, 165, 250, 0.8);
-      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-      animation: afl-btn-pulse 2.6s ease-in-out infinite;
-    }
-
-    @keyframes afl-btn-pulse {
-      0%, 100% {
-        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        border-color: rgba(96, 165, 250, 0.8);
-      }
-      50% {
-        box-shadow: 0 12px 42px rgba(59, 130, 246, 0.55), 0 0 32px rgba(147, 197, 253, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        border-color: rgba(147, 197, 253, 1);
-      }
-    }
-
-    .afl-btn-primary:hover {
-      transform: translateY(-1px);
-      animation: none;
-      box-shadow: 0 16px 48px rgba(59, 130, 246, 0.7), 0 0 32px rgba(147, 197, 253, 0.35);
-      color: white;
-    }
-
-    .afl-btn-price {
-      opacity: 0.85;
-      padding-left: 14px;
-      border-left: 1px solid rgba(255, 255, 255, 0.28);
-      font-family: var(--afl-font-mono);
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-    }
-
-    .afl-btn-large {
-      padding: 22px 40px;
-      font-size: 1.05rem;
-      min-height: 62px;
-      border-radius: 14px;
-    }
-
-    .afl-btn-outline {
-      background: transparent;
-      color: var(--afl-text);
-      border-color: var(--afl-border-strong);
-    }
-
-    .afl-btn-outline:hover {
-      border-color: var(--afl-blue-2);
-      color: var(--afl-blue-2);
-      background: rgba(59, 130, 246, 0.06);
-    }
-
-    /* ==== HERO ==== */
-    .afl-hero {
-      padding: clamp(56px, 10vh, 96px) 0 clamp(40px, 6vh, 64px);
-      text-align: center;
-    }
-
-    .afl-hero-inner {
-      max-width: 780px;
-      margin: 0 auto;
-    }
-
-    .afl-hero-eyebrow {
-      display: inline-block;
-      font-family: var(--afl-font-mono);
+      gap: 10px;
+      padding: 0 28px;
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       font-weight: 500;
-      letter-spacing: 0.24em;
-      color: var(--afl-blue-2);
-      padding: 6px 14px;
-      border: 1px solid rgba(59, 130, 246, 0.28);
-      border-radius: 999px;
-      background: rgba(59, 130, 246, 0.06);
-      margin-bottom: 28px;
-      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--text-2);
     }
 
-    .afl-hero-title {
-      font-family: var(--afl-font-sans);
-      font-size: clamp(2rem, 5vw + 0.75rem, 3.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.035em;
-      color: var(--afl-text);
-      font-weight: 800;
-      margin: 0 auto 20px;
-      max-width: 22ch;
-      text-wrap: balance;
-    }
-
-    .afl-hero-title em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--afl-blue-3), var(--afl-blue-2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .afl-hero-sub {
-      font-size: clamp(1rem, 1vw + 0.75rem, 1.15rem);
-      line-height: 1.55;
-      color: var(--afl-text-2);
-      max-width: 560px;
-      margin: 0 auto 32px;
-      text-wrap: balance;
-    }
-
-    /* Founder credential badge */
-    .afl-hero-founder {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 18px 8px 8px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--afl-border);
-      border-radius: 999px;
-      margin-bottom: 40px;
-      backdrop-filter: blur(8px);
-    }
-
-    .afl-hero-founder-avatar {
-      width: 42px;
-      height: 42px;
+    .ticker-item::after {
+      content: '';
+      width: 4px;
+      height: 4px;
       border-radius: 50%;
-      overflow: hidden;
-      background: linear-gradient(180deg, rgba(59, 130, 246, 0.35), rgba(15, 23, 42, 0.85));
-      border: 1px solid rgba(59, 130, 246, 0.25);
-      flex-shrink: 0;
+      background: var(--text-4);
+      margin-left: 28px;
     }
 
-    .afl-hero-founder-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 20%;
-      transform: scale(1.55);
-      transform-origin: center 25%;
-      display: block;
+    .ticker-round {
+      color: var(--text-3);
+      font-weight: 400;
     }
 
-    .afl-hero-founder-text {
-      text-align: left;
-    }
-
-    .afl-hero-founder-name {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--afl-text);
-      line-height: 1.15;
-    }
-
-    .afl-hero-founder-title {
-      font-family: var(--afl-font-mono);
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      color: var(--afl-text-3);
-      text-transform: uppercase;
-      margin-top: 3px;
-    }
-
-    /* Proof strip: 4-cell scoreboard */
-    .afl-hero-proof {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--afl-border);
-      border: 1px solid var(--afl-border);
-      border-radius: 14px;
-      overflow: hidden;
-      margin: 0 auto 32px;
-      max-width: 620px;
-    }
-
-    .afl-hero-proof-item {
-      background: var(--afl-surface);
-      padding: 20px 10px;
-      text-align: center;
-      backdrop-filter: blur(8px);
-    }
-
-    .afl-hero-proof-value {
-      font-family: var(--afl-font-mono);
-      font-size: clamp(1.15rem, 1.6vw + 0.4rem, 1.55rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--afl-text);
-      line-height: 1.1;
-    }
-
-    .afl-hero-proof-value--positive {
-      color: var(--afl-green-2);
-    }
-
-    .afl-hero-proof-label {
-      font-family: var(--afl-font-mono);
-      font-size: 0.6rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      color: var(--afl-text-3);
-      text-transform: uppercase;
-      margin-top: 6px;
-    }
-
-    .afl-hero-cta {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .afl-hero-trust {
-      font-family: var(--afl-font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.14em;
-      color: var(--afl-text-3);
-      text-transform: uppercase;
-    }
-
-    /* ==== TERMINAL: THE LIVE CHART ==== */
-    .afl-terminal-wrap {
-      padding-bottom: clamp(56px, 10vh, 96px);
-    }
-
-    .afl-terminal {
-      max-width: 960px;
-      margin: 0 auto;
-      background: var(--afl-surface);
-      border: 1px solid var(--afl-border);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: var(--afl-shadow-strong);
-      backdrop-filter: blur(20px);
-    }
-
-    .afl-terminal-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 14px 20px;
-      background: var(--afl-elevated);
-      border-bottom: 1px solid var(--afl-border);
-      font-family: var(--afl-font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .afl-terminal-signal {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--afl-green-2);
+    .ticker-value--pos {
+      color: var(--green-2);
       font-weight: 700;
     }
 
-    .afl-terminal-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--afl-green);
-      box-shadow: 0 0 8px var(--afl-green);
-      animation: afl-signal-blink 2s ease-in-out infinite;
+    .ticker-value--neg {
+      color: var(--red);
+      font-weight: 700;
     }
 
-    @keyframes afl-signal-blink {
-      0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--afl-green); }
-      50% { opacity: 0.4; box-shadow: 0 0 14px var(--afl-green); }
-    }
-
-    .afl-terminal-title {
-      color: var(--afl-text-2);
-      font-weight: 500;
-      flex: 1;
-    }
-
-    .afl-terminal-title strong {
-      color: var(--afl-text);
-      font-weight: 600;
-    }
-
-    .afl-terminal-updated {
-      color: var(--afl-text-3);
-      font-weight: 500;
-    }
-
-    .afl-terminal-body {
-      padding: 32px 28px 28px;
-    }
-
-    /* Chart */
-    .afl-chart {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 800 / 280;
-      display: block;
-      margin-bottom: 28px;
-    }
-
-    .afl-chart-area {
-      opacity: 0;
-      transition: opacity 1.2s ease-out 0.2s;
-    }
-
-    .afl-chart-line {
-      stroke-dasharray: 1400;
-      stroke-dashoffset: 1400;
-      transition: stroke-dashoffset 2.4s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
-      filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.4));
-    }
-
-    .afl-chart-endpoint-pulse,
-    .afl-chart-endpoint-core {
-      opacity: 0;
-      transition: opacity 0.6s ease-out 2.5s;
-    }
-
-    .afl-chart.is-animated .afl-chart-area {
-      opacity: 1;
-    }
-
-    .afl-chart.is-animated .afl-chart-line {
-      stroke-dashoffset: 0;
-      animation: afl-chart-breathe 4.8s ease-in-out 3s infinite;
-    }
-
-    @keyframes afl-chart-breathe {
-      0%, 100% { filter: drop-shadow(0 0 3px rgba(96, 165, 250, 0.4)); }
-      50% { filter: drop-shadow(0 0 9px rgba(96, 165, 250, 0.75)); }
-    }
-
-    .afl-chart.is-animated .afl-chart-endpoint-pulse,
-    .afl-chart.is-animated .afl-chart-endpoint-core {
-      opacity: 1;
-    }
-
-    .afl-chart.is-animated .afl-chart-endpoint-pulse {
-      animation: afl-endpoint-pulse 2.4s ease-in-out 3s infinite;
-    }
-
-    @keyframes afl-endpoint-pulse {
-      0%, 100% { r: 8; stroke-opacity: 0.35; }
-      50% { r: 14; stroke-opacity: 0; }
-    }
-
-    /* Stats grid: All-time + 2026 side by side */
-    .afl-terminal-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      padding-top: 24px;
-      border-top: 1px solid var(--afl-border);
-      margin-bottom: 20px;
-    }
-
-    .afl-terminal-stats-group + .afl-terminal-stats-group {
-      padding-left: 24px;
-      border-left: 1px solid var(--afl-border);
-    }
-
-    .afl-terminal-stats-label {
-      display: flex;
+    .ticker-live {
+      color: var(--green);
+      font-weight: 700;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-family: var(--afl-font-mono);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      color: var(--afl-text-3);
-      text-transform: uppercase;
-      margin-bottom: 16px;
+      gap: 6px;
     }
 
-    .afl-terminal-stats-label--live::before {
+    .ticker-live::before {
       content: '';
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--afl-gold);
-      box-shadow: 0 0 6px var(--afl-gold);
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: blink 1.6s ease-in-out infinite;
     }
 
-    .afl-terminal-stats-row {
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--green); }
+      50% { opacity: 0.35; box-shadow: 0 0 14px var(--green); }
+    }
+
+    /* ==================== BUTTON SYSTEM ==================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 18px 32px;
+      border-radius: 14px;
+      font-family: var(--font-sans);
+      font-size: 0.98rem;
+      font-weight: 600;
+      letter-spacing: -0.005em;
+      cursor: pointer;
+      transition: all var(--dur) var(--ease);
+      text-decoration: none;
+      border: 1.5px solid transparent;
+      min-height: 56px;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--grad-signature);
+      color: white;
+      border-color: transparent;
+      box-shadow:
+        0 10px 30px rgba(0, 212, 255, 0.3),
+        0 0 60px rgba(0, 212, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      font-weight: 600;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: var(--grad-signature);
+      border-radius: 14px;
+      filter: blur(16px);
+      opacity: 0.55;
+      z-index: -1;
+      animation: btn-glow-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes btn-glow-pulse {
+      0%, 100% { opacity: 0.4; filter: blur(16px); }
+      50% { opacity: 0.7; filter: blur(24px); }
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      transition: left 0.7s var(--ease-out);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 16px 42px rgba(0, 212, 255, 0.4),
+        0 0 80px rgba(0, 212, 255, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      color: white;
+    }
+
+    .btn-primary:hover::after {
+      left: 100%;
+    }
+
+    .btn-price {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 500;
+      opacity: 0.9;
+      padding-left: 14px;
+      border-left: 1px solid rgba(255, 255, 255, 0.32);
+      letter-spacing: 0.02em;
+    }
+
+    .btn-large {
+      padding: 24px 44px;
+      font-size: 1.08rem;
+      min-height: 68px;
+      border-radius: 16px;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--border-strong);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan-dim);
+      box-shadow: 0 0 24px rgba(0, 212, 255, 0.2);
+    }
+
+    /* ==================== HERO ==================== */
+    .hero {
+      padding: clamp(64px, 10vh, 120px) 0 clamp(48px, 8vh, 96px);
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      color: var(--cyan-2);
+      padding: 8px 16px;
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 999px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    .hero-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: center;
+      max-width: 1120px;
+      margin: 0 auto;
     }
 
-    .afl-stat {
+    @media (min-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1.15fr 1fr;
+        gap: 72px;
+      }
+    }
+
+    .hero-text {
       min-width: 0;
     }
 
-    .afl-stat-value {
-      font-family: var(--afl-font-mono);
-      font-size: clamp(0.95rem, 1.4vw, 1.25rem);
+    .hero-title {
+      font-family: var(--font-display);
+      font-optical-sizing: auto;
+      font-variation-settings: 'wdth' 100, 'opsz' 96;
+      font-size: clamp(2.5rem, 6vw + 0.5rem, 5rem);
+      line-height: 0.95;
+      letter-spacing: -0.045em;
+      color: var(--text);
       font-weight: 700;
-      color: var(--afl-blue-2);
-      line-height: 1.1;
+      margin: 0 0 24px;
+      text-wrap: balance;
+    }
+
+    .hero-title .accent {
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--blue-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-style: italic;
+      font-variation-settings: 'wdth' 90, 'opsz' 96;
+    }
+
+    /* Word-by-word reveal */
+    .hero-title .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: word-in 0.9s var(--ease-out) forwards;
+    }
+
+    .hero-title .word:nth-child(1) { animation-delay: 0.05s; }
+    .hero-title .word:nth-child(2) { animation-delay: 0.12s; }
+    .hero-title .word:nth-child(3) { animation-delay: 0.19s; }
+    .hero-title .word:nth-child(4) { animation-delay: 0.26s; }
+    .hero-title .word:nth-child(5) { animation-delay: 0.33s; }
+    .hero-title .word:nth-child(6) { animation-delay: 0.40s; }
+    .hero-title .word:nth-child(7) { animation-delay: 0.47s; }
+
+    @keyframes word-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-sub {
+      font-size: clamp(1.05rem, 1vw + 0.85rem, 1.2rem);
+      line-height: 1.55;
+      color: var(--text-2);
+      max-width: 540px;
+      margin: 0 0 40px;
+      text-wrap: pretty;
+      opacity: 0;
+      animation: fade-in 0.9s var(--ease-out) 0.55s forwards;
+    }
+
+    @keyframes fade-in {
+      to { opacity: 1; }
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fade-in 0.9s var(--ease-out) 0.75s forwards;
+    }
+
+    .hero-trust {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fade-in 0.9s var(--ease-out) 0.9s forwards;
+    }
+
+    /* Hero portrait card */
+    .hero-portrait {
+      position: relative;
+      max-width: 480px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fade-in-scale 1.1s var(--ease-out) 0.3s forwards;
+    }
+
+    @keyframes fade-in-scale {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .hero-portrait-card {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(0, 212, 255, 0.2), rgba(10, 13, 30, 0.9));
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow), 0 0 60px rgba(0, 212, 255, 0.1);
+    }
+
+    .hero-portrait-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 20%, rgba(0, 212, 255, 0.25), transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-portrait-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      transform: scale(1.15);
+      transform-origin: center 25%;
+      display: block;
+    }
+
+    .hero-portrait-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(5, 8, 21, 0.9) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-portrait-caption {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      z-index: 2;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .hero-portrait-name {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .hero-portrait-title {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: var(--cyan-2);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .hero-portrait-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      text-align: right;
+    }
+
+    .hero-portrait-badge strong {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--green-2);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    /* Live scoreboard (below hero content on mobile, alongside portrait on desktop) */
+    .scoreboard {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      margin-top: 32px;
+      opacity: 0;
+      animation: fade-in 0.9s var(--ease-out) 1.05s forwards;
+    }
+
+    .scoreboard-cell {
+      background: rgba(10, 13, 30, 0.75);
+      padding: 22px 12px 20px;
+      text-align: center;
+      position: relative;
+      transition: background var(--dur) var(--ease);
+    }
+
+    .scoreboard-cell:hover {
+      background: rgba(0, 212, 255, 0.06);
+    }
+
+    .scoreboard-value {
+      font-family: var(--font-mono);
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: var(--text);
+    }
+
+    .scoreboard-value--pos {
+      color: var(--green-2);
+    }
+
+    .scoreboard-value--cyan {
+      color: var(--cyan-2);
+    }
+
+    .scoreboard-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ==================== TERMINAL / CHART ==================== */
+    .terminal-wrap {
+      padding-bottom: clamp(56px, 10vh, 96px);
+    }
+
+    .terminal {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: var(--surface-strong);
+      border: 1px solid var(--border-strong);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow), 0 0 100px rgba(0, 212, 255, 0.08);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      position: relative;
+    }
+
+    .terminal::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 16px 24px;
+      background: rgba(5, 8, 21, 0.5);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+    }
+
+    .terminal-signal {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green-2);
+    }
+
+    .terminal-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    .terminal-title {
+      color: var(--text-2);
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .terminal-title strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .terminal-updated {
+      color: var(--text-3);
+      font-weight: 500;
+    }
+
+    .terminal-body {
+      padding: 40px 32px 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Chart */
+    .chart-wrap {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .chart {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 800 / 280;
+      display: block;
+    }
+
+    .chart-area {
+      opacity: 0;
+      transition: opacity 1.4s ease-out 0.2s;
+    }
+
+    .chart-line {
+      stroke-dasharray: 1600;
+      stroke-dashoffset: 1600;
+      transition: stroke-dashoffset 2.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+      filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.5));
+    }
+
+    .chart-endpoint-pulse,
+    .chart-endpoint-core {
+      opacity: 0;
+      transition: opacity 0.6s ease-out 2.9s;
+    }
+
+    .chart.is-animated .chart-area { opacity: 1; }
+    .chart.is-animated .chart-line {
+      stroke-dashoffset: 0;
+      animation: chart-breathe 5s ease-in-out 3.2s infinite;
+    }
+
+    @keyframes chart-breathe {
+      0%, 100% { filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.5)); }
+      50% { filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.85)); }
+    }
+
+    .chart.is-animated .chart-endpoint-pulse,
+    .chart.is-animated .chart-endpoint-core {
+      opacity: 1;
+    }
+
+    .chart.is-animated .chart-endpoint-pulse {
+      animation: endpoint-pulse 2.4s ease-in-out 3.2s infinite;
+    }
+
+    @keyframes endpoint-pulse {
+      0%, 100% { r: 8; stroke-opacity: 0.35; }
+      50% { r: 14; stroke-opacity: 0; }
+    }
+
+    /* Stats grid */
+    .terminal-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .stats-group + .stats-group {
+      padding-left: 32px;
+      border-left: 1px solid var(--border);
+    }
+
+    .stats-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .stats-label--live::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      animation: blink 1.8s ease-in-out infinite;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      min-width: 0;
+    }
+
+    .stat-value {
+      font-family: var(--font-mono);
+      font-size: clamp(1rem, 1.5vw, 1.35rem);
+      font-weight: 700;
+      color: var(--cyan-2);
+      line-height: 1.05;
       letter-spacing: -0.02em;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .afl-stat-label {
-      font-family: var(--afl-font-mono);
+    .stat-label {
+      font-family: var(--font-mono);
       font-size: 0.58rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      color: var(--afl-text-3);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--text-3);
       text-transform: uppercase;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
-    /* Verification pill row */
-    .afl-terminal-verified {
+    /* Verification pills */
+    .verified {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       justify-content: center;
       padding: 20px 0 4px;
-      border-top: 1px solid var(--afl-border);
+      border-top: 1px solid var(--border);
     }
 
-    .afl-verify {
+    .verify {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      background: rgba(16, 185, 129, 0.05);
-      border: 1px solid rgba(16, 185, 129, 0.22);
+      gap: 8px;
+      padding: 7px 14px;
+      background: var(--green-dim);
+      border: 1px solid rgba(0, 255, 157, 0.22);
       border-radius: 999px;
-      font-family: var(--afl-font-mono);
+      font-family: var(--font-mono);
       font-size: 0.7rem;
       font-weight: 500;
-      color: var(--afl-text-2);
+      color: var(--text-2);
       white-space: nowrap;
     }
 
-    .afl-verify-check {
-      color: var(--afl-green-2);
+    .verify-check {
+      color: var(--green-2);
       font-weight: 700;
-      font-size: 0.78rem;
-      line-height: 1;
     }
 
-    .afl-terminal-link {
+    .terminal-link {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 16px 0 0;
-      margin-top: 20px;
-      border-top: 1px solid var(--afl-border);
-      color: var(--afl-blue-2);
-      font-family: var(--afl-font-mono);
-      font-size: 0.78rem;
+      gap: 10px;
+      padding: 18px 0 0;
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--cyan-2);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
       letter-spacing: 0.06em;
       text-decoration: none;
-      transition: color var(--afl-transition);
+      transition: color var(--dur) var(--ease);
     }
 
-    .afl-terminal-link:hover {
-      color: var(--afl-blue-3);
+    .terminal-link:hover {
+      color: var(--cyan);
     }
 
-    .afl-terminal-link .arrow {
-      transition: transform var(--afl-transition);
+    .terminal-link .arrow {
+      transition: transform var(--dur) var(--ease);
     }
 
-    .afl-terminal-link:hover .arrow {
-      transform: translateX(4px);
+    .terminal-link:hover .arrow {
+      transform: translateX(6px);
     }
 
-    /* ==== SECTIONS ==== */
-    .afl-section {
-      padding: clamp(48px, 7vh, 80px) 0;
+    /* ==================== SECTIONS ==================== */
+    .section {
+      padding: clamp(64px, 10vh, 112px) 0;
+      position: relative;
     }
 
-    .afl-section-head {
+    .section-head {
+      position: relative;
       text-align: center;
-      margin-bottom: clamp(32px, 5vh, 48px);
-      max-width: 760px;
+      margin-bottom: clamp(40px, 6vh, 64px);
+      max-width: 800px;
       margin-left: auto;
       margin-right: auto;
     }
 
-    .afl-section-eyebrow {
-      display: inline-block;
-      font-family: var(--afl-font-mono);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.24em;
-      color: var(--afl-blue-2);
-      text-transform: uppercase;
-      padding: 5px 12px;
-      border: 1px solid rgba(59, 130, 246, 0.25);
-      border-radius: 999px;
-      background: rgba(59, 130, 246, 0.06);
-      margin-bottom: 20px;
+    .section-index {
+      font-family: var(--font-display);
+      font-optical-sizing: auto;
+      font-variation-settings: 'wdth' 100, 'opsz' 96;
+      font-size: clamp(8rem, 20vw, 16rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.06em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(0, 212, 255, 0.12);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: -1;
+      user-select: none;
+      opacity: 0.5;
     }
 
-    .afl-section-title {
-      font-family: var(--afl-font-sans);
-      font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
-      line-height: 1.1;
-      letter-spacing: -0.025em;
-      color: var(--afl-text);
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      color: var(--cyan-2);
+      text-transform: uppercase;
+      padding: 6px 14px;
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 999px;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-optical-sizing: auto;
+      font-variation-settings: 'wdth' 100, 'opsz' 72;
+      font-size: clamp(1.85rem, 3.5vw + 0.5rem, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      color: var(--text);
       font-weight: 700;
       margin: 0;
       text-wrap: balance;
     }
 
-    /* Pillars — three cards */
-    .afl-pillars {
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      line-height: 1.55;
+      max-width: 620px;
+      margin: 20px auto 0;
+      text-wrap: pretty;
+    }
+
+    /* Pillars */
+    .pillars {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
-      max-width: 1040px;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
-    .afl-pillar {
-      padding: 32px 24px;
-      background: var(--afl-surface);
-      border: 1px solid var(--afl-border);
-      border-radius: 18px;
-      transition: all var(--afl-transition);
+    .pillar {
+      padding: 36px 28px 32px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 20px;
+      transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
       position: relative;
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      overflow: hidden;
     }
 
-    .afl-pillar:hover {
-      border-color: rgba(59, 130, 246, 0.4);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(59, 130, 246, 0.15);
+    .pillar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0;
+      transition: opacity var(--dur) var(--ease);
     }
 
-    .afl-pillar-head {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .pillar:hover {
+      border-color: rgba(0, 212, 255, 0.35);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(0, 212, 255, 0.12);
+    }
+
+    .pillar:hover::before {
+      opacity: 1;
+    }
+
+    .pillar-index {
+      font-family: var(--font-display);
+      font-size: 3.25rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      background: var(--grad-signature);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 0.9;
       margin-bottom: 20px;
     }
 
-    .afl-pillar-index {
-      font-family: var(--afl-font-mono);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: var(--afl-text-3);
-    }
-
-    .afl-pillar-label {
+    .pillar-label {
       display: inline-block;
-      font-family: var(--afl-font-mono);
-      font-size: 0.64rem;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
       font-weight: 700;
-      letter-spacing: 0.16em;
-      color: var(--afl-blue-3);
+      letter-spacing: 0.18em;
+      color: var(--cyan-2);
       text-transform: uppercase;
       padding: 4px 10px;
-      background: rgba(59, 130, 246, 0.1);
-      border: 1px solid rgba(59, 130, 246, 0.25);
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0, 212, 255, 0.25);
       border-radius: 999px;
+      margin-bottom: 16px;
     }
 
-    .afl-pillar-title {
-      font-family: var(--afl-font-sans);
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--afl-text);
-      line-height: 1.3;
-      letter-spacing: -0.015em;
-      margin: 0 0 12px;
+    .pillar-title {
+      font-family: var(--font-display);
+      font-optical-sizing: auto;
+      font-variation-settings: 'opsz' 24;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
     }
 
-    .afl-pillar p {
-      color: var(--afl-text-2);
+    .pillar p {
+      color: var(--text-2);
       font-size: 0.95rem;
       line-height: 1.65;
       margin: 0;
     }
 
-    /* Founder block — asymmetric portrait + quote */
-    .afl-founder {
+    /* Founder */
+    .founder {
       display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: 56px;
+      grid-template-columns: 320px 1fr;
+      gap: 72px;
       align-items: center;
-      max-width: 1000px;
+      max-width: 1080px;
       margin: 0 auto;
     }
 
-    .afl-founder-portrait {
-      width: 100%;
-      aspect-ratio: 1;
+    .founder-portrait {
+      position: relative;
+      aspect-ratio: 4 / 5;
       border-radius: 24px;
       overflow: hidden;
       background: linear-gradient(180deg, #e2e8f0, #cbd5e1);
-      border: 1px solid rgba(59, 130, 246, 0.15);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(59, 130, 246, 0.08);
-      position: relative;
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow), 0 0 0 1px rgba(0, 212, 255, 0.08);
     }
 
-    .afl-founder-portrait img {
+    .founder-portrait img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -779,299 +1153,444 @@
       display: block;
     }
 
-    .afl-founder-content {
+    .founder-portrait::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(0, 20, 40, 0.4) 100%);
+      pointer-events: none;
+    }
+
+    .founder-tag {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--cyan-2);
+      text-transform: uppercase;
+      padding: 8px 12px;
+      background: rgba(0, 20, 40, 0.6);
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      backdrop-filter: blur(10px);
+      z-index: 1;
+    }
+
+    .founder-content {
       min-width: 0;
     }
 
-    .afl-founder-mark {
-      font-family: var(--afl-font-sans);
-      font-size: 4rem;
-      font-weight: 800;
-      color: rgba(96, 165, 250, 0.3);
-      line-height: 0.8;
-      margin-bottom: -8px;
+    .founder-mark {
+      font-family: var(--font-display);
+      font-size: 6rem;
+      font-weight: 700;
+      background: var(--grad-signature);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 0.75;
+      margin-bottom: -20px;
+      opacity: 0.6;
     }
 
-    .afl-founder-quote {
-      font-family: var(--afl-font-sans);
-      font-size: clamp(1.35rem, 1.6vw + 0.75rem, 1.75rem);
+    .founder-quote {
+      font-family: var(--font-display);
+      font-optical-sizing: auto;
+      font-variation-settings: 'wdth' 100, 'opsz' 72;
+      font-size: clamp(1.5rem, 2vw + 0.75rem, 2rem);
       font-weight: 600;
-      color: var(--afl-text);
-      line-height: 1.25;
-      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.2;
+      letter-spacing: -0.025em;
       margin: 0 0 24px;
       text-wrap: balance;
     }
 
-    .afl-founder-content p {
-      color: var(--afl-text-2);
-      font-size: 1rem;
+    .founder-content p {
+      color: var(--text-2);
+      font-size: 1.02rem;
       line-height: 1.7;
-      margin: 0 0 16px;
+      margin: 0 0 18px;
     }
 
-    .afl-founder-sig {
+    .founder-sig {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      font-family: var(--afl-font-mono);
+      gap: 14px;
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       font-weight: 600;
-      letter-spacing: 0.14em;
-      color: var(--afl-text-3);
+      letter-spacing: 0.16em;
+      color: var(--text-3);
       text-transform: uppercase;
-      margin-top: 24px;
-      padding-top: 20px;
-      border-top: 1px solid var(--afl-border);
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
     }
 
-    .afl-founder-sig::before {
+    .founder-sig::before {
       content: '';
-      width: 20px;
+      width: 32px;
       height: 1px;
-      background: var(--afl-blue-2);
+      background: linear-gradient(90deg, var(--cyan), transparent);
     }
 
-    /* Inclusions grid */
-    .afl-inclusions {
+    /* Inclusions */
+    .inclusions {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      max-width: 900px;
+      gap: 14px;
+      max-width: 960px;
       margin: 0 auto;
     }
 
-    .afl-inclusion {
+    .inclusion {
       display: flex;
-      gap: 16px;
-      padding: 20px;
-      background: var(--afl-surface);
-      border: 1px solid var(--afl-border);
-      border-radius: 14px;
-      transition: all var(--afl-transition);
-      backdrop-filter: blur(8px);
+      gap: 18px;
+      padding: 22px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
-    .afl-inclusion:hover {
-      border-color: rgba(59, 130, 246, 0.3);
+    .inclusion:hover {
+      border-color: rgba(0, 212, 255, 0.3);
       transform: translateY(-2px);
     }
 
-    .afl-inclusion-icon {
+    .inclusion-icon {
       flex-shrink: 0;
-      width: 40px;
-      height: 40px;
-      background: rgba(59, 130, 246, 0.1);
-      border: 1px solid rgba(59, 130, 246, 0.22);
-      border-radius: 10px;
-      color: var(--afl-blue-2);
+      width: 44px;
+      height: 44px;
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 12px;
+      color: var(--cyan-2);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .afl-inclusion-icon svg {
-      width: 20px;
-      height: 20px;
+    .inclusion-icon svg {
+      width: 22px;
+      height: 22px;
     }
 
-    .afl-inclusion-text {
-      font-size: 0.94rem;
-      color: var(--afl-text-2);
-      line-height: 1.55;
+    .inclusion-text {
+      font-size: 0.95rem;
+      color: var(--text-2);
+      line-height: 1.6;
       align-self: center;
     }
 
-    /* Testimonials */
-    .afl-testimonials {
+    /* Testimonials — marquee */
+    .receipts-marquee {
+      margin: 0 -24px 40px;
+      padding: 20px 0;
+      background: rgba(5, 8, 21, 0.5);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .receipts-marquee::before,
+    .receipts-marquee::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .receipts-marquee::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
+    }
+
+    .receipts-marquee::after {
+      right: 0;
+      background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%);
+    }
+
+    .receipts-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 40s linear infinite;
+      white-space: nowrap;
+    }
+
+    .receipts-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 32px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-2);
+    }
+
+    .receipts-item::after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-4);
+      margin-left: 32px;
+    }
+
+    .receipts-name {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .receipts-value {
+      color: var(--green-2);
+      font-weight: 700;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .testimonials {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      max-width: 900px;
+      gap: 18px;
+      max-width: 960px;
       margin: 0 auto;
     }
 
-    .afl-testimonial {
-      padding: 26px;
-      background: var(--afl-surface);
-      border: 1px solid var(--afl-border);
-      border-radius: 16px;
+    .testimonial {
+      padding: 28px 26px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 18px;
       position: relative;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(12px);
+      transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
     }
 
-    .afl-testimonial-quote {
-      font-family: var(--afl-font-sans);
-      font-size: 1.02rem;
+    .testimonial:hover {
+      border-color: rgba(0, 212, 255, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .testimonial-quote {
+      font-family: var(--font-display);
+      font-optical-sizing: auto;
+      font-variation-settings: 'opsz' 20;
+      font-size: 1.05rem;
       font-weight: 500;
-      color: var(--afl-text);
-      line-height: 1.55;
-      letter-spacing: -0.005em;
-      margin: 0 0 18px;
+      color: var(--text);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      margin: 0 0 20px;
     }
 
-    .afl-testimonial-author {
+    .testimonial-author {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      font-family: var(--afl-font-mono);
+      gap: 12px;
+      font-family: var(--font-mono);
       font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      color: var(--afl-text-3);
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--text-3);
       text-transform: uppercase;
       margin: 0;
     }
 
-    .afl-testimonial-author::before {
+    .testimonial-author::before {
       content: '';
-      width: 16px;
+      width: 20px;
       height: 1px;
-      background: var(--afl-blue-2);
+      background: var(--cyan);
     }
 
-    .afl-testimonials-disclaimer {
+    .testimonials-disclaimer {
       font-size: 0.8rem;
-      color: var(--afl-text-3);
+      color: var(--text-3);
       text-align: center;
-      max-width: 620px;
-      margin: 32px auto 0;
-      line-height: 1.55;
+      max-width: 640px;
+      margin: 40px auto 0;
+      line-height: 1.6;
     }
 
-    /* Close section — pricing + final CTA + upsell */
-    .afl-close {
-      max-width: 720px;
+    /* Close */
+    .close {
+      max-width: 760px;
       margin: 0 auto;
       text-align: center;
     }
 
-    .afl-close-price {
+    .close-price {
       display: inline-block;
-      padding: 28px 44px;
-      background: var(--afl-surface);
-      border: 1px solid var(--afl-border);
-      border-radius: 20px;
-      margin-bottom: 40px;
-      backdrop-filter: blur(12px);
+      padding: 32px 52px;
+      background: var(--surface-strong);
+      border: 1px solid var(--border-strong);
+      border-radius: 24px;
+      margin-bottom: 44px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
     }
 
-    .afl-close-price-label {
-      font-family: var(--afl-font-mono);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      color: var(--afl-blue-2);
+    .close-price::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    }
+
+    .close-price-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      color: var(--cyan-2);
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
-    .afl-close-price-amount {
-      font-family: var(--afl-font-sans);
-      font-size: 3.5rem;
+    .close-price-amount {
+      font-family: var(--font-display);
+      font-optical-sizing: auto;
+      font-variation-settings: 'wdth' 100, 'opsz' 96;
+      font-size: 4rem;
       font-weight: 800;
-      color: var(--afl-text);
+      color: var(--text);
       line-height: 1;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.045em;
     }
 
-    .afl-close-price-amount .period {
-      font-family: var(--afl-font-mono);
-      font-size: 1.15rem;
+    .close-price-amount .period {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
       font-weight: 500;
-      color: var(--afl-text-3);
-      margin-left: 4px;
+      color: var(--text-3);
+      margin-left: 6px;
       letter-spacing: 0;
     }
 
-    .afl-close-price-note {
-      font-family: var(--afl-font-mono);
+    .close-price-note {
+      font-family: var(--font-mono);
       font-size: 0.68rem;
       font-weight: 500;
       letter-spacing: 0.14em;
-      color: var(--afl-text-3);
-      margin-top: 10px;
+      color: var(--text-3);
+      margin-top: 12px;
       text-transform: uppercase;
     }
 
-    .afl-close-title {
-      font-family: var(--afl-font-sans);
-      font-size: clamp(1.85rem, 3vw + 0.5rem, 2.75rem);
+    .close-title {
+      font-family: var(--font-display);
+      font-optical-sizing: auto;
+      font-variation-settings: 'wdth' 100, 'opsz' 96;
+      font-size: clamp(2rem, 3.5vw + 0.5rem, 3rem);
       font-weight: 700;
-      color: var(--afl-text);
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin: 0 0 14px;
+      color: var(--text);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin: 0 0 16px;
       text-wrap: balance;
     }
 
-    .afl-close-sub {
+    .close-sub {
       font-size: 1.1rem;
-      color: var(--afl-text-2);
-      margin: 0 0 32px;
+      color: var(--text-2);
+      margin: 0 0 36px;
       text-wrap: balance;
     }
 
-    .afl-close-trust {
+    .close-trust {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
-      font-family: var(--afl-font-mono);
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       font-weight: 500;
-      letter-spacing: 0.1em;
-      color: var(--afl-text-3);
+      letter-spacing: 0.12em;
+      color: var(--text-3);
       text-transform: uppercase;
-      margin-top: 20px;
+      margin-top: 24px;
     }
 
-    /* Champion upsell */
-    .afl-champion {
-      margin: 72px auto 0;
-      padding: 28px 28px 32px;
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.06), rgba(15, 23, 42, 0.5));
-      border: 1px solid rgba(251, 191, 36, 0.22);
-      border-radius: 18px;
+    /* Champion */
+    .champion {
+      margin: 80px auto 0;
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(255, 187, 71, 0.08) 0%, rgba(15, 20, 38, 0.5) 100%);
+      border: 1px solid rgba(255, 187, 71, 0.2);
+      border-radius: 20px;
       text-align: left;
-      max-width: 640px;
-      backdrop-filter: blur(8px);
+      max-width: 680px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
     }
 
-    .afl-champion-note {
+    .champion::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .champion-note {
       display: inline-block;
-      font-family: var(--afl-font-mono);
+      font-family: var(--font-mono);
       font-size: 0.65rem;
       font-weight: 700;
-      letter-spacing: 0.18em;
-      color: var(--afl-gold);
+      letter-spacing: 0.2em;
+      color: var(--gold);
       text-transform: uppercase;
-      padding: 4px 10px;
-      background: rgba(251, 191, 36, 0.08);
-      border: 1px solid rgba(251, 191, 36, 0.25);
+      padding: 5px 12px;
+      background: rgba(255, 187, 71, 0.1);
+      border: 1px solid rgba(255, 187, 71, 0.25);
       border-radius: 999px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
-    .afl-champion-title {
-      font-family: var(--afl-font-sans);
-      font-size: 1.1rem;
+    .champion-title {
+      font-family: var(--font-display);
+      font-optical-sizing: auto;
+      font-variation-settings: 'opsz' 24;
+      font-size: 1.2rem;
       font-weight: 600;
-      color: var(--afl-text);
+      color: var(--text);
       line-height: 1.35;
-      letter-spacing: -0.01em;
-      margin: 0 0 6px;
+      letter-spacing: -0.015em;
+      margin: 0 0 8px;
     }
 
-    .afl-champion-sub {
-      font-size: 0.9rem;
-      color: var(--afl-text-2);
+    .champion-sub {
+      font-size: 0.92rem;
+      color: var(--text-2);
       line-height: 1.55;
-      margin: 0 0 20px;
+      margin: 0 0 22px;
     }
 
-    .afl-champion-cta {
+    .champion-cta {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1079,183 +1598,179 @@
       flex-wrap: wrap;
     }
 
-    .afl-champion-price {
-      font-family: var(--afl-font-mono);
-      font-size: 0.95rem;
+    .champion-price {
+      font-family: var(--font-mono);
+      font-size: 0.98rem;
       font-weight: 600;
-      color: var(--afl-gold);
+      color: var(--gold-2);
       letter-spacing: -0.01em;
     }
 
-    .afl-champion-price strong {
-      color: var(--afl-text);
+    .champion-price strong {
+      color: var(--text);
       font-weight: 700;
+      font-size: 1.05rem;
     }
 
     /* FAQ */
-    .afl-faq {
-      max-width: 720px;
+    .faq {
+      max-width: 760px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .afl-faq-item {
-      background: var(--afl-surface);
-      border: 1px solid var(--afl-border);
-      border-radius: 12px;
-      transition: all var(--afl-transition);
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      transition: all var(--dur) var(--ease);
       backdrop-filter: blur(8px);
+      overflow: hidden;
     }
 
-    .afl-faq-item[open] {
-      border-color: rgba(59, 130, 246, 0.3);
-      background: rgba(14, 20, 32, 0.95);
+    .faq-item[open] {
+      border-color: rgba(0, 212, 255, 0.3);
+      background: rgba(15, 20, 38, 0.85);
     }
 
-    .afl-faq-item summary {
-      padding: 18px 22px;
+    .faq-item summary {
+      padding: 20px 24px;
       cursor: pointer;
       font-weight: 500;
-      color: var(--afl-text);
-      font-size: 0.98rem;
+      color: var(--text);
+      font-size: 1rem;
       list-style: none;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      transition: color var(--afl-transition);
+      transition: color var(--dur) var(--ease);
     }
 
-    .afl-faq-item summary:hover {
-      color: var(--afl-blue-2);
+    .faq-item summary:hover {
+      color: var(--cyan-2);
     }
 
-    .afl-faq-item summary::-webkit-details-marker {
+    .faq-item summary::-webkit-details-marker {
       display: none;
     }
 
-    .afl-faq-item summary::after {
+    .faq-item summary::after {
       content: '+';
-      font-family: var(--afl-font-mono);
-      font-size: 1.35rem;
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
       font-weight: 400;
-      color: var(--afl-text-3);
-      transition: all var(--afl-transition);
+      color: var(--text-3);
+      transition: all var(--dur) var(--ease);
       flex-shrink: 0;
       line-height: 1;
     }
 
-    .afl-faq-item[open] summary::after {
+    .faq-item[open] summary::after {
       content: '−';
-      color: var(--afl-blue-2);
+      color: var(--cyan);
     }
 
-    .afl-faq-answer {
-      padding: 0 22px 22px;
-      color: var(--afl-text-2);
-      font-size: 0.94rem;
-      line-height: 1.65;
+    .faq-answer {
+      padding: 0 24px 22px;
+      color: var(--text-2);
+      font-size: 0.95rem;
+      line-height: 1.7;
     }
 
-    .afl-faq-answer a {
-      color: var(--afl-blue-2);
+    .faq-answer a {
+      color: var(--cyan-2);
       text-decoration: underline;
       text-underline-offset: 3px;
     }
 
     /* Footer */
-    .afl-footer {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 48px 24px 32px;
+    .footer {
+      max-width: 760px;
+      margin: 40px auto 0;
+      padding: 56px 24px 40px;
       text-align: center;
-      border-top: 1px solid var(--afl-border);
-      margin-top: 32px;
+      border-top: 1px solid var(--border);
     }
 
-    .afl-footer-rg {
+    .footer-rg {
       font-size: 0.8rem;
-      color: var(--afl-text-3);
-      line-height: 1.65;
-      margin-bottom: 22px;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 24px;
     }
 
-    .afl-footer-rg a {
-      color: var(--afl-text-2);
+    .footer-rg a {
+      color: var(--text-2);
     }
 
-    .afl-footer-links {
-      margin-bottom: 14px;
+    .footer-links {
+      margin-bottom: 16px;
     }
 
-    .afl-footer-links a {
-      font-family: var(--afl-font-mono);
+    .footer-links a {
+      font-family: var(--font-mono);
       font-size: 0.72rem;
       font-weight: 500;
-      letter-spacing: 0.12em;
-      color: var(--afl-text-3);
+      letter-spacing: 0.16em;
+      color: var(--text-3);
       text-transform: uppercase;
       text-decoration: none;
-      transition: color var(--afl-transition);
+      transition: color var(--dur) var(--ease);
     }
 
-    .afl-footer-links a:hover {
-      color: var(--afl-blue-2);
+    .footer-links a:hover {
+      color: var(--cyan-2);
     }
 
-    .afl-footer-copy {
-      font-family: var(--afl-font-mono);
+    .footer-copy {
+      font-family: var(--font-mono);
       font-size: 0.68rem;
       font-weight: 500;
-      letter-spacing: 0.1em;
-      color: var(--afl-text-3);
+      letter-spacing: 0.12em;
+      color: var(--text-3);
       text-transform: uppercase;
       margin: 0;
     }
 
-    /* ============ RESPONSIVE ============ */
+    /* ==================== RESPONSIVE ==================== */
 
     @media (max-width: 900px) {
-      .afl-pillars {
+      .pillars {
         grid-template-columns: 1fr;
-        gap: 12px;
       }
 
-      .afl-founder {
+      .founder {
         grid-template-columns: 1fr;
-        gap: 32px;
+        gap: 40px;
         text-align: center;
       }
 
-      .afl-founder-portrait {
-        max-width: 220px;
+      .founder-portrait {
+        max-width: 260px;
         margin: 0 auto;
       }
 
-      .afl-founder-mark {
-        text-align: center;
-      }
-
-      .afl-founder-sig {
+      .founder-sig {
         justify-content: center;
       }
 
-      .afl-terminal-stats {
+      .terminal-stats {
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 28px;
       }
 
-      .afl-terminal-stats-group + .afl-terminal-stats-group {
+      .stats-group + .stats-group {
         padding-left: 0;
-        padding-top: 24px;
+        padding-top: 28px;
         border-left: none;
-        border-top: 1px solid var(--afl-border);
+        border-top: 1px solid var(--border);
       }
 
-      .afl-inclusions,
-      .afl-testimonials {
+      .inclusions,
+      .testimonials {
         grid-template-columns: 1fr;
       }
     }
@@ -1265,70 +1780,107 @@
         padding: 0 16px;
       }
 
-      .afl-hero-proof {
+      .scoreboard {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .afl-terminal-stats-row {
+      .stats-row {
         grid-template-columns: repeat(2, 1fr);
-        gap: 16px 12px;
+        gap: 18px 14px;
       }
 
-      .afl-terminal-body {
-        padding: 24px 16px 20px;
+      .terminal-body {
+        padding: 28px 18px 24px;
       }
 
-      .afl-terminal-header {
+      .terminal-header {
         padding: 12px 16px;
-        font-size: 0.65rem;
+        font-size: 0.62rem;
         gap: 12px;
       }
 
-      .afl-btn {
+      .btn {
         width: 100%;
       }
 
-      .afl-btn-price {
-        padding-left: 10px;
+      .btn-price {
+        padding-left: 12px;
       }
 
-      .afl-champion {
-        padding: 22px 20px 26px;
-      }
-
-      .afl-champion-cta {
+      .hero-cta-row {
         flex-direction: column;
         align-items: stretch;
       }
 
-      .afl-champion-cta .afl-btn {
+      .champion {
+        padding: 24px 20px;
+      }
+
+      .champion-cta {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .champion-cta .btn {
         width: 100%;
       }
 
-      .afl-close-price {
-        padding: 22px 32px;
+      .close-price {
+        padding: 24px 32px;
       }
 
-      .afl-close-price-amount {
-        font-size: 2.75rem;
+      .close-price-amount {
+        font-size: 3rem;
+      }
+
+      .founder-mark {
+        font-size: 4rem;
+      }
+
+      .receipts-marquee {
+        margin-left: -16px;
+        margin-right: -16px;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .afl-btn-primary,
-      .afl-terminal-dot,
-      .afl-chart-line,
-      .afl-chart-area,
-      .afl-chart-endpoint-pulse,
-      .afl-chart-endpoint-core {
+      .btn-primary::before,
+      .terminal-dot,
+      .ticker-live::before,
+      .stats-label--live::before,
+      .hero-eyebrow-dot,
+      .chart-line,
+      .chart-area,
+      .chart-endpoint-pulse,
+      .chart-endpoint-core,
+      .ticker-inner,
+      .receipts-track,
+      .aurora::before,
+      .aurora::after,
+      .hero-title .word,
+      .hero-sub,
+      .hero-cta-row,
+      .hero-trust,
+      .hero-portrait,
+      .scoreboard {
         animation: none !important;
         transition: none !important;
       }
 
-      .afl-chart-line { stroke-dashoffset: 0; }
-      .afl-chart-area,
-      .afl-chart-endpoint-pulse,
-      .afl-chart-endpoint-core { opacity: 1; }
+      .hero-title .word,
+      .hero-sub,
+      .hero-cta-row,
+      .hero-trust,
+      .hero-portrait,
+      .scoreboard {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .chart-line { stroke-dashoffset: 0; }
+      .chart-area,
+      .chart-endpoint-pulse,
+      .chart-endpoint-core { opacity: 1; }
     }
   </style>
 </head>
@@ -1338,171 +1890,205 @@
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WGR2M6NF"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
+  <div class="aurora" aria-hidden="true"></div>
   <canvas id="particles" class="particles-canvas"></canvas>
+
+  <!-- LIVE TICKER STRIP -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span class="ticker-item"><span class="ticker-live">Live</span></span>
+      <span class="ticker-item"><span class="ticker-round">R16</span><span class="ticker-value--pos">+$670</span><span>+13.4u</span><span>36% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">R15</span><span class="ticker-value--pos">+$839</span><span>+16.8u</span><span>47% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">R14</span><span class="ticker-value--pos">+$468</span><span>+9.4u</span><span>22% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">R13</span><span class="ticker-value--pos">+$828</span><span>+16.6u</span><span>40% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">R10</span><span class="ticker-value--pos">+$1,268</span><span>+25.4u</span><span>64% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">Season 2026</span><span class="ticker-value--pos">+$5,034</span><span>+100.7u</span><span>18% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">All-time</span><span class="ticker-value--pos">+$45,189</span><span>+903.8u</span><span>19% ROI</span></span>
+      <!-- Duplicate for seamless loop -->
+      <span class="ticker-item"><span class="ticker-live">Live</span></span>
+      <span class="ticker-item"><span class="ticker-round">R16</span><span class="ticker-value--pos">+$670</span><span>+13.4u</span><span>36% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">R15</span><span class="ticker-value--pos">+$839</span><span>+16.8u</span><span>47% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">R14</span><span class="ticker-value--pos">+$468</span><span>+9.4u</span><span>22% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">R13</span><span class="ticker-value--pos">+$828</span><span>+16.6u</span><span>40% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">R10</span><span class="ticker-value--pos">+$1,268</span><span>+25.4u</span><span>64% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">Season 2026</span><span class="ticker-value--pos">+$5,034</span><span>+100.7u</span><span>18% ROI</span></span>
+      <span class="ticker-item"><span class="ticker-round">All-time</span><span class="ticker-value--pos">+$45,189</span><span>+903.8u</span><span>19% ROI</span></span>
+    </div>
+  </div>
 
   <main class="afl">
 
     <!-- HERO -->
-    <section class="afl-hero">
-      <div class="afl-hero-inner">
-        <span class="afl-hero-eyebrow">AFL Premium &middot; Since 2022</span>
+    <section class="hero">
+      <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>AFL Premium &middot; Since 2022</span>
 
-        <h1 class="afl-hero-title">
-          Australia's most disciplined <em>AFL disposals system</em>.
-        </h1>
+      <div class="hero-grid">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            <span class="word">Australia's</span> <span class="word">most</span> <span class="word">disciplined</span> <span class="word accent">AFL</span> <span class="word accent">disposals</span> <span class="word">system.</span>
+          </h1>
 
-        <p class="afl-hero-sub">
-          Ten years analysing markets. Five years publicly tracked. Every bet posted to our private Discord with staking guidance and personal onboarding.
-        </p>
+          <p class="hero-sub">
+            Ten years analysing markets. Five years publicly tracked. Every bet posted to our private Discord with staking guidance and personal onboarding.
+          </p>
 
-        <div class="afl-hero-founder">
-          <div class="afl-hero-founder-avatar">
+          <div class="hero-cta-row">
+            <button class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
+              <span>Join AFL Premium</span>
+              <span class="btn-price">$140 AUD / mo</span>
+            </button>
+            <span class="hero-trust">5 years of member trust &middot; Cancel anytime</span>
+          </div>
+
+          <div class="scoreboard">
+            <div class="scoreboard-cell">
+              <div class="scoreboard-value scoreboard-value--pos" data-count-to="19" data-suffix="%" data-stat="allTime.roi">19%</div>
+              <div class="scoreboard-label">ROI</div>
+            </div>
+            <div class="scoreboard-cell">
+              <div class="scoreboard-value" data-count-to="5840" data-format="int" data-stat="allTime.bets">5,840</div>
+              <div class="scoreboard-label">Bets</div>
+            </div>
+            <div class="scoreboard-cell">
+              <div class="scoreboard-value scoreboard-value--pos" data-count-to="45189" data-format="currency" data-stat="allTime.profit">$45,189</div>
+              <div class="scoreboard-label">Profit</div>
+            </div>
+            <div class="scoreboard-cell">
+              <div class="scoreboard-value scoreboard-value--cyan" data-count-to="5">5</div>
+              <div class="scoreboard-label">Seasons</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-portrait" data-tilt>
+          <div class="hero-portrait-card">
             <img src="../assets/jordan-portrait-hero.png" alt="Jordan, FNF Gainz founder" decoding="async">
+            <div class="hero-portrait-caption">
+              <div>
+                <div class="hero-portrait-name">Jordan</div>
+                <div class="hero-portrait-title">FNF Gainz Founder</div>
+              </div>
+              <div class="hero-portrait-badge">
+                <strong>10 yrs</strong>
+                <span>Analysis</span>
+              </div>
+            </div>
           </div>
-          <div class="afl-hero-founder-text">
-            <div class="afl-hero-founder-name">Jordan</div>
-            <div class="afl-hero-founder-title">FNF Gainz Founder</div>
-          </div>
-        </div>
-
-        <div class="afl-hero-proof">
-          <div class="afl-hero-proof-item">
-            <div class="afl-hero-proof-value afl-hero-proof-value--positive" data-stat="allTime.roi">19%</div>
-            <div class="afl-hero-proof-label">ROI</div>
-          </div>
-          <div class="afl-hero-proof-item">
-            <div class="afl-hero-proof-value" data-stat="allTime.bets">5,840</div>
-            <div class="afl-hero-proof-label">Bets tracked</div>
-          </div>
-          <div class="afl-hero-proof-item">
-            <div class="afl-hero-proof-value afl-hero-proof-value--positive" data-stat="allTime.profit">$45,189</div>
-            <div class="afl-hero-proof-label">Profit</div>
-          </div>
-          <div class="afl-hero-proof-item">
-            <div class="afl-hero-proof-value">5</div>
-            <div class="afl-hero-proof-label">Seasons</div>
-          </div>
-        </div>
-
-        <div class="afl-hero-cta">
-          <button class="afl-btn afl-btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
-            <span>Join AFL Premium</span>
-            <span class="afl-btn-price">$140 AUD / mo</span>
-          </button>
-          <div class="afl-hero-trust">5 years of member trust &middot; Cancel anytime</div>
         </div>
       </div>
     </section>
 
     <!-- LIVE TERMINAL / CHART -->
-    <div class="afl-terminal-wrap">
-      <div class="afl-terminal">
-        <div class="afl-terminal-header">
-          <div class="afl-terminal-signal">
-            <span class="afl-terminal-dot"></span>
+    <div class="terminal-wrap">
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-signal">
+            <span class="terminal-dot"></span>
             <span>Live</span>
           </div>
-          <div class="afl-terminal-title"><strong>AFL Cumulative Profit</strong> &middot; Since 2022</div>
-          <div class="afl-terminal-updated">Updated weekly</div>
+          <div class="terminal-title"><strong>AFL Cumulative Profit</strong> &middot; Since 2022</div>
+          <div class="terminal-updated">Updated weekly</div>
         </div>
 
-        <div class="afl-terminal-body">
-          <svg class="afl-chart" viewBox="0 0 800 280" preserveAspectRatio="xMidYMid meet" aria-label="AFL cumulative profit chart from March 2022 to June 2026, growing from $0 to $45,189">
-            <defs>
-              <linearGradient id="afl-chart-grad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.5"/>
-                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
+        <div class="terminal-body">
+          <div class="chart-wrap">
+            <svg class="chart" viewBox="0 0 800 280" preserveAspectRatio="xMidYMid meet" aria-label="AFL cumulative profit chart from March 2022 to June 2026, growing from $0 to $45,189">
+              <defs>
+                <linearGradient id="chart-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.55"/>
+                  <stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
 
-            <!-- Grid lines -->
-            <line x1="42" y1="31" x2="790" y2="31" stroke="#1e293b" stroke-dasharray="2,4"/>
-            <line x1="42" y1="73" x2="790" y2="73" stroke="#1e293b" stroke-dasharray="2,4"/>
-            <line x1="42" y1="115" x2="790" y2="115" stroke="#1e293b" stroke-dasharray="2,4"/>
-            <line x1="42" y1="156" x2="790" y2="156" stroke="#1e293b" stroke-dasharray="2,4"/>
-            <line x1="42" y1="198" x2="790" y2="198" stroke="#1e293b" stroke-dasharray="2,4"/>
-            <line x1="42" y1="240" x2="790" y2="240" stroke="#334155"/>
+              <!-- Grid lines -->
+              <line x1="42" y1="31" x2="790" y2="31" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
+              <line x1="42" y1="73" x2="790" y2="73" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
+              <line x1="42" y1="115" x2="790" y2="115" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
+              <line x1="42" y1="156" x2="790" y2="156" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
+              <line x1="42" y1="198" x2="790" y2="198" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
+              <line x1="42" y1="240" x2="790" y2="240" stroke="rgba(255,255,255,0.12)"/>
 
-            <!-- Y-axis labels -->
-            <text x="38" y="35" fill="#64748b" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$50k</text>
-            <text x="38" y="77" fill="#64748b" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$40k</text>
-            <text x="38" y="119" fill="#64748b" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$30k</text>
-            <text x="38" y="160" fill="#64748b" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$20k</text>
-            <text x="38" y="202" fill="#64748b" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$10k</text>
-            <text x="38" y="244" fill="#64748b" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$0</text>
+              <!-- Y-axis labels -->
+              <text x="38" y="35" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$50k</text>
+              <text x="38" y="77" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$40k</text>
+              <text x="38" y="119" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$30k</text>
+              <text x="38" y="160" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$20k</text>
+              <text x="38" y="202" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$10k</text>
+              <text x="38" y="244" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$0</text>
 
-            <!-- Area fill -->
-            <path class="afl-chart-area" d="M 42 236 L 63 234 L 84 221 L 106 210 L 127 210 L 149 210 L 170 201 L 192 197 L 213 191 L 234 177 L 255 163 L 276 164 L 298 153 L 319 156 L 340 153 L 361 159 L 383 150 L 405 154 L 426 153 L 447 144 L 468 138 L 489 140 L 511 135 L 532 129 L 553 120 L 574 114 L 596 110 L 618 95 L 639 84 L 660 81 L 676 78 L 688 79 L 700 72 L 706 72 L 713 68 L 719 69 L 726 69 L 732 70 L 739 70 L 745 68 L 751 68 L 758 69 L 764 63 L 771 62 L 777 57 L 784 54 L 790 51 L 790 240 L 42 240 Z" fill="url(#afl-chart-grad)"/>
+              <!-- Area fill -->
+              <path class="chart-area" d="M 42 236 L 63 234 L 84 221 L 106 210 L 127 210 L 149 210 L 170 201 L 192 197 L 213 191 L 234 177 L 255 163 L 276 164 L 298 153 L 319 156 L 340 153 L 361 159 L 383 150 L 405 154 L 426 153 L 447 144 L 468 138 L 489 140 L 511 135 L 532 129 L 553 120 L 574 114 L 596 110 L 618 95 L 639 84 L 660 81 L 676 78 L 688 79 L 700 72 L 706 72 L 713 68 L 719 69 L 726 69 L 732 70 L 739 70 L 745 68 L 751 68 L 758 69 L 764 63 L 771 62 L 777 57 L 784 54 L 790 51 L 790 240 L 42 240 Z" fill="url(#chart-grad)"/>
 
-            <!-- Line -->
-            <path class="afl-chart-line" d="M 42 236 L 63 234 L 84 221 L 106 210 L 127 210 L 149 210 L 170 201 L 192 197 L 213 191 L 234 177 L 255 163 L 276 164 L 298 153 L 319 156 L 340 153 L 361 159 L 383 150 L 405 154 L 426 153 L 447 144 L 468 138 L 489 140 L 511 135 L 532 129 L 553 120 L 574 114 L 596 110 L 618 95 L 639 84 L 660 81 L 676 78 L 688 79 L 700 72 L 706 72 L 713 68 L 719 69 L 726 69 L 732 70 L 739 70 L 745 68 L 751 68 L 758 69 L 764 63 L 771 62 L 777 57 L 784 54 L 790 51" stroke="#60a5fa" stroke-width="2.25" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+              <!-- Line -->
+              <path class="chart-line" d="M 42 236 L 63 234 L 84 221 L 106 210 L 127 210 L 149 210 L 170 201 L 192 197 L 213 191 L 234 177 L 255 163 L 276 164 L 298 153 L 319 156 L 340 153 L 361 159 L 383 150 L 405 154 L 426 153 L 447 144 L 468 138 L 489 140 L 511 135 L 532 129 L 553 120 L 574 114 L 596 110 L 618 95 L 639 84 L 660 81 L 676 78 L 688 79 L 700 72 L 706 72 L 713 68 L 719 69 L 726 69 L 732 70 L 739 70 L 745 68 L 751 68 L 758 69 L 764 63 L 771 62 L 777 57 L 784 54 L 790 51" stroke="#00d4ff" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
 
-            <!-- End point pulse -->
-            <circle class="afl-chart-endpoint-pulse" cx="790" cy="51" r="8" fill="none" stroke="#60a5fa" stroke-opacity="0.35" stroke-width="2"/>
-            <circle class="afl-chart-endpoint-core" cx="790" cy="51" r="4" fill="#60a5fa"/>
+              <!-- End point pulse -->
+              <circle class="chart-endpoint-pulse" cx="790" cy="51" r="8" fill="none" stroke="#00d4ff" stroke-opacity="0.35" stroke-width="2"/>
+              <circle class="chart-endpoint-core" cx="790" cy="51" r="4" fill="#00d4ff"/>
 
-            <!-- X-axis labels -->
-            <text x="42" y="262" fill="#64748b" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2022</text>
-            <text x="192" y="262" fill="#64748b" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2023</text>
-            <text x="340" y="262" fill="#64748b" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2024</text>
-            <text x="511" y="262" fill="#64748b" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2025</text>
-            <text x="660" y="262" fill="#64748b" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2026</text>
-          </svg>
+              <!-- X-axis labels -->
+              <text x="42" y="262" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2022</text>
+              <text x="192" y="262" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2023</text>
+              <text x="340" y="262" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2024</text>
+              <text x="511" y="262" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2025</text>
+              <text x="660" y="262" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2026</text>
+            </svg>
+          </div>
 
-          <div class="afl-terminal-stats">
-            <div class="afl-terminal-stats-group">
-              <div class="afl-terminal-stats-label">All-time</div>
-              <div class="afl-terminal-stats-row">
-                <div class="afl-stat">
-                  <div class="afl-stat-value" data-stat="allTime.bets">5,840</div>
-                  <div class="afl-stat-label">Bets</div>
+          <div class="terminal-stats">
+            <div class="stats-group">
+              <div class="stats-label">All-time</div>
+              <div class="stats-row">
+                <div class="stat">
+                  <div class="stat-value" data-stat="allTime.bets">5,840</div>
+                  <div class="stat-label">Bets</div>
                 </div>
-                <div class="afl-stat">
-                  <div class="afl-stat-value" data-stat="allTime.profit">$45,189</div>
-                  <div class="afl-stat-label">Profit</div>
+                <div class="stat">
+                  <div class="stat-value" data-stat="allTime.profit">$45,189</div>
+                  <div class="stat-label">Profit</div>
                 </div>
-                <div class="afl-stat">
-                  <div class="afl-stat-value" data-stat="allTime.units">+903.8</div>
-                  <div class="afl-stat-label">Units</div>
+                <div class="stat">
+                  <div class="stat-value" data-stat="allTime.units">+903.8</div>
+                  <div class="stat-label">Units</div>
                 </div>
-                <div class="afl-stat">
-                  <div class="afl-stat-value" data-stat="allTime.roi">19%</div>
-                  <div class="afl-stat-label">ROI</div>
+                <div class="stat">
+                  <div class="stat-value" data-stat="allTime.roi">19%</div>
+                  <div class="stat-label">ROI</div>
                 </div>
               </div>
             </div>
 
-            <div class="afl-terminal-stats-group">
-              <div class="afl-terminal-stats-label afl-terminal-stats-label--live">2026 Season · In progress</div>
-              <div class="afl-terminal-stats-row">
-                <div class="afl-stat">
-                  <div class="afl-stat-value" data-stat="season2026.bets">676</div>
-                  <div class="afl-stat-label">Bets</div>
+            <div class="stats-group">
+              <div class="stats-label stats-label--live">2026 Season · In progress</div>
+              <div class="stats-row">
+                <div class="stat">
+                  <div class="stat-value" data-stat="season2026.bets">676</div>
+                  <div class="stat-label">Bets</div>
                 </div>
-                <div class="afl-stat">
-                  <div class="afl-stat-value" data-stat="season2026.profit">$5,034</div>
-                  <div class="afl-stat-label">Profit</div>
+                <div class="stat">
+                  <div class="stat-value" data-stat="season2026.profit">$5,034</div>
+                  <div class="stat-label">Profit</div>
                 </div>
-                <div class="afl-stat">
-                  <div class="afl-stat-value" data-stat="season2026.units">+100.7</div>
-                  <div class="afl-stat-label">Units</div>
+                <div class="stat">
+                  <div class="stat-value" data-stat="season2026.units">+100.7</div>
+                  <div class="stat-label">Units</div>
                 </div>
-                <div class="afl-stat">
-                  <div class="afl-stat-value" data-stat="season2026.roi">18%</div>
-                  <div class="afl-stat-label">ROI</div>
+                <div class="stat">
+                  <div class="stat-value" data-stat="season2026.roi">18%</div>
+                  <div class="stat-label">ROI</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="afl-terminal-verified">
-            <span class="afl-verify"><span class="afl-verify-check">&#10003;</span>Publicly tracked</span>
-            <span class="afl-verify"><span class="afl-verify-check">&#10003;</span>$50 unit baseline</span>
-            <span class="afl-verify"><span class="afl-verify-check">&#10003;</span>All bets in Discord</span>
-            <span class="afl-verify"><span class="afl-verify-check">&#10003;</span>5+ seasons of data</span>
+          <div class="verified">
+            <span class="verify"><span class="verify-check">&#10003;</span>Publicly tracked</span>
+            <span class="verify"><span class="verify-check">&#10003;</span>$50 unit baseline</span>
+            <span class="verify"><span class="verify-check">&#10003;</span>All bets in Discord</span>
+            <span class="verify"><span class="verify-check">&#10003;</span>5+ seasons of data</span>
           </div>
 
-          <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="afl-terminal-link">
+          <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="terminal-link">
             <span>Open full results dashboard</span>
             <span class="arrow">&rarr;</span>
           </a>
@@ -1511,150 +2097,172 @@
     </div>
 
     <!-- SYSTEM -->
-    <section class="afl-section">
-      <div class="afl-section-head">
-        <span class="afl-section-eyebrow">The System</span>
-        <h2 class="afl-section-title">Three principles. Every bet, every round, every season.</h2>
+    <section class="section">
+      <div class="section-head">
+        <div class="section-index" aria-hidden="true">01</div>
+        <span class="section-eyebrow">The System</span>
+        <h2 class="section-title">Three principles. Every bet, every round, every season.</h2>
       </div>
 
-      <div class="afl-pillars">
-        <div class="afl-pillar">
-          <div class="afl-pillar-head">
-            <span class="afl-pillar-index">01</span>
-            <span class="afl-pillar-label">Disposals</span>
-          </div>
-          <h3 class="afl-pillar-title">A decade in AFL disposal markets</h3>
+      <div class="pillars">
+        <div class="pillar" data-tilt>
+          <div class="pillar-index">01</div>
+          <div class="pillar-label">Disposals</div>
+          <h3 class="pillar-title">A decade in AFL disposal markets</h3>
           <p>Ten years analysing player markets. Five years executing publicly. Custom data models combined with live bookmaker odds pick our best plays each week.</p>
         </div>
-        <div class="afl-pillar">
-          <div class="afl-pillar-head">
-            <span class="afl-pillar-index">02</span>
-            <span class="afl-pillar-label">Consistent Returns</span>
-          </div>
-          <h3 class="afl-pillar-title">Built on risk management for consistent results</h3>
+        <div class="pillar" data-tilt>
+          <div class="pillar-index">02</div>
+          <div class="pillar-label">Consistent</div>
+          <h3 class="pillar-title">Built on risk management for consistent results</h3>
           <p>80% of bets sit at $1.80 to $2.50 odds on reliable players with strong disposal floors. Steady compounding that keeps profit building.</p>
         </div>
-        <div class="afl-pillar">
-          <div class="afl-pillar-head">
-            <span class="afl-pillar-index">03</span>
-            <span class="afl-pillar-label">Calculated Upside</span>
-          </div>
-          <h3 class="afl-pillar-title">Smart, controlled upside on higher value plays</h3>
+        <div class="pillar" data-tilt>
+          <div class="pillar-index">03</div>
+          <div class="pillar-label">Upside</div>
+          <h3 class="pillar-title">Smart, controlled upside on higher value plays</h3>
           <p>20% of bets combine more low-odds players into multis to compound the odds. Smaller stakes, bigger upside when the legs hit.</p>
         </div>
       </div>
     </section>
 
     <!-- FOUNDER -->
-    <section class="afl-section">
-      <div class="afl-founder">
-        <div class="afl-founder-portrait">
+    <section class="section">
+      <div class="section-head" style="text-align: left; max-width: 1080px;">
+        <div class="section-index" aria-hidden="true">02</div>
+      </div>
+      <div class="founder">
+        <div class="founder-portrait">
+          <span class="founder-tag">Founder</span>
           <img src="../assets/jordan-portrait.png" alt="Jordan, FNF Gainz founder" decoding="async">
         </div>
-        <div class="afl-founder-content">
-          <div class="afl-founder-mark" aria-hidden="true">&ldquo;</div>
-          <h2 class="afl-founder-quote">This isn't a tipping service. It's a structured system.</h2>
+        <div class="founder-content">
+          <div class="founder-mark" aria-hidden="true">&ldquo;</div>
+          <h2 class="founder-quote">This isn't a tipping service. It's a structured system.</h2>
           <p>I've been analysing AFL markets every day for ten years. Five years ago I started sharing the strategy publicly, and we've been at the front of the industry ever since.</p>
           <p>Built around consistency, risk management, and disposal markets I've obsessed over for a decade. Every bet I share is logged. Every result is public. Wins, losses, drawdowns. That's the standard I hold the service to.</p>
-          <div class="afl-founder-sig">Jordan &middot; FNF Gainz Founder</div>
+          <div class="founder-sig">Jordan &middot; FNF Gainz Founder</div>
         </div>
       </div>
     </section>
 
     <!-- WHAT'S INCLUDED -->
-    <section class="afl-section">
-      <div class="afl-section-head">
-        <span class="afl-section-eyebrow">What's Included</span>
-        <h2 class="afl-section-title">Everything for a full season of disciplined execution.</h2>
+    <section class="section">
+      <div class="section-head">
+        <div class="section-index" aria-hidden="true">03</div>
+        <span class="section-eyebrow">What's Included</span>
+        <h2 class="section-title">Everything for a full season of disciplined execution.</h2>
       </div>
 
-      <div class="afl-inclusions">
-        <div class="afl-inclusion">
-          <span class="afl-inclusion-icon" aria-hidden="true">
+      <div class="inclusions">
+        <div class="inclusion">
+          <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
           </span>
-          <div class="afl-inclusion-text">Every bet posted directly into our Discord channels each round. Notified for all positions.</div>
+          <div class="inclusion-text">Every bet posted directly into our Discord channels each round. Notified for all positions.</div>
         </div>
-        <div class="afl-inclusion">
-          <span class="afl-inclusion-icon" aria-hidden="true">
+        <div class="inclusion">
+          <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
           </span>
-          <div class="afl-inclusion-text">Categorised streams: non-promotion, promotion, high-value plays, alt-bookies, and bonus bet conversions.</div>
+          <div class="inclusion-text">Categorised streams: non-promotion, promotion, high-value plays, alt-bookies, and bonus bet conversions.</div>
         </div>
-        <div class="afl-inclusion">
-          <span class="afl-inclusion-icon" aria-hidden="true">
+        <div class="inclusion">
+          <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </span>
-          <div class="afl-inclusion-text">Honest round updates from Thursday through Sunday. Wins, losses, and what's coming.</div>
+          <div class="inclusion-text">Honest round updates from Thursday through Sunday. Wins, losses, and what's coming.</div>
         </div>
-        <div class="afl-inclusion">
-          <span class="afl-inclusion-icon" aria-hidden="true">
+        <div class="inclusion">
+          <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></svg>
           </span>
-          <div class="afl-inclusion-text">Weekly performance reports and live results tracking on the public dashboard.</div>
+          <div class="inclusion-text">Weekly performance reports and live results tracking on the public dashboard.</div>
         </div>
-        <div class="afl-inclusion">
-          <span class="afl-inclusion-icon" aria-hidden="true">
+        <div class="inclusion">
+          <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
           </span>
-          <div class="afl-inclusion-text">Personal onboarding to confirm your unit sizing and set you up for success.</div>
+          <div class="inclusion-text">Personal onboarding to confirm your unit sizing and set you up for success.</div>
         </div>
-        <div class="afl-inclusion">
-          <span class="afl-inclusion-icon" aria-hidden="true">
+        <div class="inclusion">
+          <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </span>
-          <div class="afl-inclusion-text">Account safety guidance to protect your bookmaker accounts long term.</div>
+          <div class="inclusion-text">Account safety guidance to protect your bookmaker accounts long term.</div>
         </div>
       </div>
     </section>
 
     <!-- MEMBER RECEIPTS -->
-    <section class="afl-section">
-      <div class="afl-section-head">
-        <span class="afl-section-eyebrow">Member Receipts</span>
-        <h2 class="afl-section-title">Five years of members. Real results, real names.</h2>
+    <section class="section">
+      <div class="section-head">
+        <div class="section-index" aria-hidden="true">04</div>
+        <span class="section-eyebrow">Member Receipts</span>
+        <h2 class="section-title">Five years of members. Real results, real names.</h2>
       </div>
 
-      <div class="afl-testimonials">
-        <div class="afl-testimonial">
-          <p class="afl-testimonial-quote">"Following the system through a full season completely changed how I approach betting. Been able to grow my own business and move into a bigger house off the back of it."</p>
-          <p class="afl-testimonial-author">Curtis</p>
-        </div>
-        <div class="afl-testimonial">
-          <p class="afl-testimonial-quote">"So much confidence in the picks knowing the high level of research and analysis done beforehand."</p>
-          <p class="afl-testimonial-author">iiDooblay</p>
-        </div>
-        <div class="afl-testimonial">
-          <p class="afl-testimonial-quote">"Personally around $8k profit for the season. Couldn't recommend the AFL package more."</p>
-          <p class="afl-testimonial-author">Lorelius</p>
-        </div>
-        <div class="afl-testimonial">
-          <p class="afl-testimonial-quote">"With the mountain of work FNF puts in I was easily able to scale to exponentially profitable levels."</p>
-          <p class="afl-testimonial-author">Vitamin_GG</p>
+      <div class="receipts-marquee" aria-hidden="true">
+        <div class="receipts-track">
+          <span class="receipts-item"><span class="receipts-name">Curtis</span><span class="receipts-value">+$27,500</span><span>Mar–Sep season</span></span>
+          <span class="receipts-item"><span class="receipts-name">Lorelius</span><span class="receipts-value">+$8,000</span><span>Full season</span></span>
+          <span class="receipts-item"><span class="receipts-name">Vitamin_GG</span><span class="receipts-value">Scaled up</span><span>Multiple seasons</span></span>
+          <span class="receipts-item"><span class="receipts-name">iiDooblay</span><span>Consistent picks</span><span>Ongoing</span></span>
+          <span class="receipts-item"><span class="receipts-name">Season 2026</span><span class="receipts-value">+$5,034</span><span>+18% ROI</span></span>
+          <span class="receipts-item"><span class="receipts-name">All-time</span><span class="receipts-value">+$45,189</span><span>+19% ROI</span></span>
+          <!-- Duplicate for seamless loop -->
+          <span class="receipts-item"><span class="receipts-name">Curtis</span><span class="receipts-value">+$27,500</span><span>Mar–Sep season</span></span>
+          <span class="receipts-item"><span class="receipts-name">Lorelius</span><span class="receipts-value">+$8,000</span><span>Full season</span></span>
+          <span class="receipts-item"><span class="receipts-name">Vitamin_GG</span><span class="receipts-value">Scaled up</span><span>Multiple seasons</span></span>
+          <span class="receipts-item"><span class="receipts-name">iiDooblay</span><span>Consistent picks</span><span>Ongoing</span></span>
+          <span class="receipts-item"><span class="receipts-name">Season 2026</span><span class="receipts-value">+$5,034</span><span>+18% ROI</span></span>
+          <span class="receipts-item"><span class="receipts-name">All-time</span><span class="receipts-value">+$45,189</span><span>+19% ROI</span></span>
         </div>
       </div>
 
-      <p class="afl-testimonials-disclaimer">Individual results vary. Past performance does not guarantee future results. AFL betting carries risk and losing periods are part of the process.</p>
+      <div class="testimonials">
+        <div class="testimonial" data-tilt>
+          <p class="testimonial-quote">"Following the system through a full season completely changed how I approach betting. Been able to grow my own business and move into a bigger house off the back of it."</p>
+          <p class="testimonial-author">Curtis</p>
+        </div>
+        <div class="testimonial" data-tilt>
+          <p class="testimonial-quote">"So much confidence in the picks knowing the high level of research and analysis done beforehand."</p>
+          <p class="testimonial-author">iiDooblay</p>
+        </div>
+        <div class="testimonial" data-tilt>
+          <p class="testimonial-quote">"Personally around $8k profit for the season. Couldn't recommend the AFL package more."</p>
+          <p class="testimonial-author">Lorelius</p>
+        </div>
+        <div class="testimonial" data-tilt>
+          <p class="testimonial-quote">"With the mountain of work FNF puts in I was easily able to scale to exponentially profitable levels."</p>
+          <p class="testimonial-author">Vitamin_GG</p>
+        </div>
+      </div>
+
+      <p class="testimonials-disclaimer">Individual results vary. Past performance does not guarantee future results. AFL betting carries risk and losing periods are part of the process.</p>
     </section>
 
     <!-- CLOSE — Pricing + Final CTA + Champion upsell -->
-    <section class="afl-section">
-      <div class="afl-close">
-        <div class="afl-close-price">
-          <div class="afl-close-price-label">AFL Premium</div>
-          <div class="afl-close-price-amount">$140<span class="period">/mo</span></div>
-          <div class="afl-close-price-note">AUD &middot; Cancel anytime &middot; No lock-in</div>
+    <section class="section">
+      <div class="section-head">
+        <div class="section-index" aria-hidden="true">05</div>
+      </div>
+      <div class="close">
+        <div class="close-price">
+          <div class="close-price-label">AFL Premium</div>
+          <div class="close-price-amount">$140<span class="period">/mo</span></div>
+          <div class="close-price-note">AUD &middot; Cancel anytime &middot; No lock-in</div>
         </div>
 
-        <h2 class="afl-close-title">AFL Premium is open now.</h2>
-        <p class="afl-close-sub">Join the members executing the same system this season.</p>
+        <h2 class="close-title">The system is open now.</h2>
+        <p class="close-sub">Join the members executing the same system this season.</p>
 
-        <button class="afl-btn afl-btn-primary afl-btn-large lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
+        <button class="btn btn-primary btn-large lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
           <span>Join AFL Premium</span>
-          <span class="afl-btn-price">$140 AUD / mo</span>
+          <span class="btn-price">$140 AUD / mo</span>
         </button>
 
-        <div class="afl-close-trust">
+        <div class="close-trust">
           <span>5 years of member trust</span>
           <span>&middot;</span>
           <span>Cancel anytime</span>
@@ -1662,74 +2270,75 @@
           <span>18+ only</span>
         </div>
 
-        <div class="afl-champion">
-          <span class="afl-champion-note">Following both codes?</span>
-          <h3 class="afl-champion-title">Champion is the full AFL system plus the full NRL system, run side by side.</h3>
-          <p class="afl-champion-sub">Each system keeps its own staking and tracking. Results viewed together across the full season.</p>
-          <div class="afl-champion-cta">
-            <span class="afl-champion-price">Champion &middot; <strong>$200 AUD / mo</strong></span>
-            <button class="afl-btn afl-btn-outline lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">See Champion &rarr;</button>
+        <div class="champion">
+          <span class="champion-note">Following both codes?</span>
+          <h3 class="champion-title">Champion is the full AFL system plus the full NRL system, run side by side.</h3>
+          <p class="champion-sub">Each system keeps its own staking and tracking. Results viewed together across the full season.</p>
+          <div class="champion-cta">
+            <span class="champion-price">Champion &middot; <strong>$200 AUD / mo</strong></span>
+            <button class="btn btn-outline lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">See Champion &rarr;</button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- FAQ -->
-    <section class="afl-section">
-      <div class="afl-section-head">
-        <span class="afl-section-eyebrow">FAQ</span>
-        <h2 class="afl-section-title">Common questions.</h2>
+    <section class="section">
+      <div class="section-head">
+        <div class="section-index" aria-hidden="true">06</div>
+        <span class="section-eyebrow">FAQ</span>
+        <h2 class="section-title">Common questions.</h2>
       </div>
 
-      <div class="afl-faq">
-        <details class="afl-faq-item">
+      <div class="faq">
+        <details class="faq-item">
           <summary>How do I get access after I join?</summary>
-          <div class="afl-faq-answer">Checkout runs through LaunchPass. Once payment is processed, your Discord account is automatically linked to your AFL Premium membership and the private bet channels unlock in our server. You'll get a welcome message with onboarding instructions, and you can open a personal onboarding ticket so the team can confirm your unit sizing and bookmaker setup.</div>
+          <div class="faq-answer">Checkout runs through LaunchPass. Once payment is processed, your Discord account is automatically linked to your AFL Premium membership and the private bet channels unlock in our server. You'll get a welcome message with onboarding instructions, and you can open a personal onboarding ticket so the team can confirm your unit sizing and bookmaker setup.</div>
         </details>
-        <details class="afl-faq-item">
+        <details class="faq-item">
           <summary>Do you guarantee profits?</summary>
-          <div class="afl-faq-answer">Nobody can guarantee profits. However, we can confirm that we have delivered 5 years of profitable strategy for our members. AFL Premium provides systems and strategies built around long-term edge, executed with discipline and proper bankroll management. Losing weekends happen and drawdowns are part of the process. Follow our strategy, ask questions, be disciplined, and you will succeed.</div>
+          <div class="faq-answer">Nobody can guarantee profits. However, we can confirm that we have delivered 5 years of profitable strategy for our members. AFL Premium provides systems and strategies built around long-term edge, executed with discipline and proper bankroll management. Losing weekends happen and drawdowns are part of the process. Follow our strategy, ask questions, be disciplined, and you will succeed.</div>
         </details>
-        <details class="afl-faq-item">
+        <details class="faq-item">
           <summary>How much money do I need to start?</summary>
-          <div class="afl-faq-answer">There's no fixed minimum. We recommend 1 unit equals roughly 1% of your bankroll. Our tracked bets use $50 units, so a $5,000 bankroll matches our tracked results 1:1. Smaller bankrolls scale down proportionally (e.g. $1 units on a $100 bankroll). If you're unsure, our onboarding team helps you size correctly.</div>
+          <div class="faq-answer">There's no fixed minimum. We recommend 1 unit equals roughly 1% of your bankroll. Our tracked bets use $50 units, so a $5,000 bankroll matches our tracked results 1:1. Smaller bankrolls scale down proportionally (e.g. $1 units on a $100 bankroll). If you're unsure, our onboarding team helps you size correctly.</div>
         </details>
-        <details class="afl-faq-item">
+        <details class="faq-item">
           <summary>Do I need accounts with specific bookmakers?</summary>
-          <div class="afl-faq-answer">Ideally yes. Sportsbet, TAB, Bet365 and Ladbrokes are the major Australian bookmakers we use. Having more bookies improves your ability to find the best odds and follow bets accurately. If you're missing an account or restricted, we'll help you organise alternatives during onboarding.</div>
+          <div class="faq-answer">Ideally yes. Sportsbet, TAB, Bet365 and Ladbrokes are the major Australian bookmakers we use. Having more bookies improves your ability to find the best odds and follow bets accurately. If you're missing an account or restricted, we'll help you organise alternatives during onboarding.</div>
         </details>
-        <details class="afl-faq-item">
+        <details class="faq-item">
           <summary>Where can I see the full results history?</summary>
-          <div class="afl-faq-answer">Every bet, win and loss is logged on our <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer">public results dashboard</a>. View all historical and current performance, broken down weekly and seasonally.</div>
+          <div class="faq-answer">Every bet, win and loss is logged on our <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer">public results dashboard</a>. View all historical and current performance, broken down weekly and seasonally.</div>
         </details>
-        <details class="afl-faq-item">
+        <details class="faq-item">
           <summary>Is this suitable for beginners?</summary>
-          <div class="afl-faq-answer">Yes, provided you're willing to follow instructions and manage your bankroll properly. We recommend beginners start with smaller units and work closely with our team during onboarding. This isn't a get-rich-quick service. It's a long-term, disciplined system.</div>
+          <div class="faq-answer">Yes, provided you're willing to follow instructions and manage your bankroll properly. We recommend beginners start with smaller units and work closely with our team during onboarding. This isn't a get-rich-quick service. It's a long-term, disciplined system.</div>
         </details>
-        <details class="afl-faq-item">
+        <details class="faq-item">
           <summary>What happens during a losing streak?</summary>
-          <div class="afl-faq-answer">Losing streaks are part of the process. Short-term variance is normal, even with strong edges. The system works because we don't change strategy after a bad round. We hold the line, track everything, and let the edge play out across the full season.</div>
+          <div class="faq-answer">Losing streaks are part of the process. Short-term variance is normal, even with strong edges. The system works because we don't change strategy after a bad round. We hold the line, track everything, and let the edge play out across the full season.</div>
         </details>
-        <details class="afl-faq-item">
+        <details class="faq-item">
           <summary>Can I cancel my membership?</summary>
-          <div class="afl-faq-answer">Yes, anytime. You can manage your subscription through your LaunchPass portal. Once cancelled, access remains active until the end of your current billing period. No lock-in.</div>
+          <div class="faq-answer">Yes, anytime. You can manage your subscription through your LaunchPass portal. Once cancelled, access remains active until the end of your current billing period. No lock-in.</div>
         </details>
-        <details class="afl-faq-item">
+        <details class="faq-item">
           <summary>What support is available?</summary>
-          <div class="afl-faq-answer">Personal onboarding is included for every new member. Our team helps you set your unit sizing, organise your bookmaker accounts, and understand how to follow the package correctly from day one. Ongoing support is available through tickets and the active member community.</div>
+          <div class="faq-answer">Personal onboarding is included for every new member. Our team helps you set your unit sizing, organise your bookmaker accounts, and understand how to follow the package correctly from day one. Ongoing support is available through tickets and the active member community.</div>
         </details>
       </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="afl-footer">
-      <div class="afl-footer-rg">
+    <footer class="footer">
+      <div class="footer-rg">
         FNF Gainz promotes responsible gambling. Please only bet what you can afford to lose. If you or someone you know has a gambling problem, contact Gambling Help Online at <strong>1800 858 858</strong> or visit <a href="https://www.gamblinghelponline.org.au" target="_blank" rel="noopener noreferrer">gamblinghelponline.org.au</a>.
       </div>
-      <div class="afl-footer-links">
+      <div class="footer-links">
         <a href="../">&larr; Back to main site</a>
       </div>
-      <p class="afl-footer-copy">&copy; 2026 FNF Gainz. All rights reserved.</p>
+      <p class="footer-copy">&copy; 2026 FNF Gainz. All rights reserved.</p>
     </footer>
 
   </main>
@@ -1744,7 +2353,7 @@
   <!-- Chart entrance animation trigger -->
   <script>
     (function() {
-      var chart = document.querySelector('.afl-chart');
+      var chart = document.querySelector('.chart');
       if (!chart) return;
 
       if (!('IntersectionObserver' in window)) {
@@ -1765,10 +2374,89 @@
     })();
   </script>
 
-  <!-- Load stats from stats.json and inject into the page.
-       If fetch fails (e.g. local file:// preview), the hardcoded
-       fallback values stay in place. To update stats, edit
-       afl/stats.json and push. -->
+  <!-- Number count-up on scroll (respects prefers-reduced-motion) -->
+  <script>
+    (function() {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced || !('IntersectionObserver' in window)) return;
+
+      function formatNum(n, format, suffix) {
+        var rounded = Math.round(n);
+        if (format === 'currency') {
+          return '+$' + rounded.toLocaleString('en-AU');
+        }
+        if (format === 'int') {
+          return rounded.toLocaleString('en-AU');
+        }
+        return rounded + (suffix || '');
+      }
+
+      function animate(el) {
+        if (el.dataset.counted === '1') return;
+        el.dataset.counted = '1';
+
+        var target = parseFloat(el.dataset.countTo);
+        var format = el.dataset.format;
+        var suffix = el.dataset.suffix || '';
+        var duration = 1400;
+        var start = performance.now();
+
+        function tick(now) {
+          var t = Math.min((now - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - t, 3);
+          var current = target * eased;
+          el.textContent = formatNum(current, format, suffix);
+          if (t < 1) requestAnimationFrame(tick);
+          else el.textContent = formatNum(target, format, suffix);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            animate(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      document.querySelectorAll('[data-count-to]').forEach(function(el) {
+        observer.observe(el);
+      });
+    })();
+  </script>
+
+  <!-- 3D tilt on cards (desktop-only, hover devices) -->
+  <script>
+    (function() {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var canHover = window.matchMedia('(hover: hover)').matches;
+      if (reduced || !canHover) return;
+
+      var tiltEls = document.querySelectorAll('[data-tilt]');
+
+      tiltEls.forEach(function(el) {
+        el.style.transformStyle = 'preserve-3d';
+        el.style.willChange = 'transform';
+
+        el.addEventListener('mousemove', function(e) {
+          var rect = el.getBoundingClientRect();
+          var x = (e.clientX - rect.left) / rect.width;
+          var y = (e.clientY - rect.top) / rect.height;
+          var rx = (0.5 - y) * 6;
+          var ry = (x - 0.5) * 6;
+          el.style.transform = 'perspective(1000px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-4px)';
+        });
+
+        el.addEventListener('mouseleave', function() {
+          el.style.transform = '';
+        });
+      });
+    })();
+  </script>
+
+  <!-- Load stats from stats.json and inject into the page. -->
   <script>
     (function() {
       function formatStat(key, value) {
@@ -1803,17 +2491,23 @@
         })
         .then(function(data) {
           document.querySelectorAll('[data-stat]').forEach(function(el) {
-            var key = el.getAttribute('data-stat');
-            var value = getByPath(data, key);
-            var formatted = formatStat(key, value);
-            if (formatted !== null) {
-              el.textContent = formatted;
+            // Skip elements that are actively count-up animating (they use data-count-to)
+            if (el.hasAttribute('data-count-to') && el.dataset.counted === '1') {
+              // Update the value but preserve current display for count-to elements
+              var key = el.getAttribute('data-stat');
+              var value = getByPath(data, key);
+              var formatted = formatStat(key, value);
+              if (formatted !== null) el.textContent = formatted;
+            } else if (!el.hasAttribute('data-count-to')) {
+              // Standard stat replacement
+              var key = el.getAttribute('data-stat');
+              var value = getByPath(data, key);
+              var formatted = formatStat(key, value);
+              if (formatted !== null) el.textContent = formatted;
             }
           });
         })
-        .catch(function(err) {
-          // Silent failure — hardcoded fallback values remain.
-        });
+        .catch(function() {});
     })();
   </script>
 </body>
