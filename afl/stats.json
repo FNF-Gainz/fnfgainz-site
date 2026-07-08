@@ -12,5 +12,11 @@
     "units": 100.7,
     "roi": 18
   },
+  "latestRound": {
+    "round": "R16",
+    "profit": 670,
+    "units": 13.4,
+    "roi": 36
+  },
   "lastUpdated": "2026-06-22"
 }

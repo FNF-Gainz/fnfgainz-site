@@ -1942,6 +1942,375 @@
       margin: 0;
     }
 
+    /* ==================== BOOKMAKER STRIP ==================== */
+    .bookies-wrap {
+      max-width: 1000px;
+      margin: -32px auto clamp(56px, 8vh, 88px);
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      background: rgba(15, 20, 38, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+    }
+
+    .bookies-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .bookies-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+    }
+
+    .bookies-list {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    .bookies-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: rgba(0, 212, 255, 0.04);
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--text-2);
+      transition: all var(--dur) var(--ease);
+    }
+
+    .bookies-item:hover {
+      border-color: rgba(0, 212, 255, 0.35);
+      color: var(--cyan-2);
+      background: rgba(0, 212, 255, 0.08);
+    }
+
+    .bookies-item-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+    }
+
+    /* ==================== DISCORD PREVIEW ==================== */
+    .preview {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 56px;
+      align-items: center;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .preview-content {
+      min-width: 0;
+    }
+
+    .preview-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--cyan-2);
+      text-transform: uppercase;
+      padding: 8px 16px;
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 999px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .preview-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.65rem, 3vw + 0.5rem, 2.35rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      font-weight: 700;
+      margin: 0 0 18px;
+      text-wrap: balance;
+    }
+
+    .preview-desc {
+      color: var(--text-2);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin: 0 0 24px;
+    }
+
+    .preview-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .preview-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.98rem;
+      color: var(--text-2);
+    }
+
+    .preview-feature-check {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--green-dim);
+      border: 1px solid rgba(0, 255, 157, 0.35);
+      color: var(--green-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+
+    /* Discord-style card */
+    .discord-card {
+      background: #1f2229;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(88, 101, 242, 0.15);
+      position: relative;
+    }
+
+    .discord-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #5865f2, transparent);
+    }
+
+    .discord-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 18px;
+      background: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+    }
+
+    .discord-hash {
+      color: #6f7580;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .discord-channel {
+      color: #dcddde;
+      font-weight: 600;
+    }
+
+    .discord-body {
+      padding: 20px 18px;
+    }
+
+    .discord-message {
+      display: flex;
+      gap: 14px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .discord-avatar {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--grad-signature);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.03em;
+    }
+
+    .discord-body-content {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .discord-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .discord-username {
+      color: #f2f3f5;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .discord-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 1px 6px;
+      background: #5865f2;
+      color: white;
+      font-size: 0.62rem;
+      font-weight: 700;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .discord-time {
+      color: #949ba4;
+      font-size: 0.72rem;
+    }
+
+    .discord-embed {
+      margin-top: 6px;
+      padding: 12px 14px 12px 16px;
+      background: #2b2d31;
+      border-left: 4px solid var(--cyan);
+      border-radius: 4px;
+      color: #dbdee1;
+    }
+
+    .discord-embed-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #f2f3f5;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .discord-embed-lock {
+      color: var(--cyan);
+    }
+
+    .discord-embed-legs {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    .discord-embed-leg {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 6px 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 4px;
+    }
+
+    .discord-embed-leg-player {
+      color: #dbdee1;
+    }
+
+    .discord-embed-leg-odds {
+      color: var(--green-2);
+      font-weight: 700;
+    }
+
+    .discord-embed-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+    }
+
+    .discord-embed-footer-label {
+      color: #949ba4;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.66rem;
+      font-weight: 600;
+    }
+
+    .discord-embed-footer-value {
+      color: var(--cyan-2);
+      font-weight: 700;
+    }
+
+    .discord-embed-footer-value--green {
+      color: var(--green-2);
+    }
+
+    .discord-reactions {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .discord-reaction {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      background: rgba(88, 101, 242, 0.15);
+      border: 1px solid rgba(88, 101, 242, 0.4);
+      border-radius: 8px;
+      font-size: 0.78rem;
+      color: #dcddde;
+    }
+
+    .discord-reaction-count {
+      color: var(--cyan-2);
+      font-weight: 700;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+    }
+
     /* ==================== STICKY MOBILE CTA ==================== */
     .sticky-cta {
       position: fixed;
@@ -1993,6 +2362,20 @@
 
       .journey { grid-template-columns: repeat(2, 1fr); }
       .journey::before { display: none; }
+
+      .preview {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .bookies-wrap {
+        justify-content: center;
+        margin-top: -16px;
+      }
+
+      .bookies-list {
+        justify-content: center;
+      }
     }
 
     @media (max-width: 640px) {
@@ -2113,7 +2496,7 @@
       <div class="hero-grid">
         <div class="hero-text">
           <h1 class="hero-title">
-            <span class="word">Australia's</span> <span class="word">most</span> <span class="word">disciplined</span> <span class="word accent">AFL</span> <span class="word accent">disposals</span> <span class="word">system.</span>
+            <span class="word">The</span> <span class="word accent">AFL</span> <span class="word accent">system</span> <span class="word">that</span> <span class="word">just</span> <span class="word">works.</span>
           </h1>
 
           <p class="hero-sub">
@@ -2123,10 +2506,10 @@
           <div class="hero-live-round">
             <span class="hero-live-round-dot"></span>
             <span class="hero-live-round-label">Last Round</span>
-            <span class="hero-live-round-round">R16</span>
-            <span class="hero-live-round-value">+$670</span>
-            <span class="hero-live-round-value">+13.4u</span>
-            <span class="hero-live-round-value">36% ROI</span>
+            <span class="hero-live-round-round" data-stat="latestRound.round">R16</span>
+            <span class="hero-live-round-value" data-stat="latestRound.profit">+$670</span>
+            <span class="hero-live-round-value" data-stat="latestRound.units">+13.4u</span>
+            <span class="hero-live-round-value" data-stat="latestRound.roi">36% ROI</span>
           </div>
 
           <div class="hero-cta-row">
@@ -2259,6 +2642,18 @@
       </div>
     </div>
 
+    <!-- BOOKMAKER STRIP -->
+    <div class="bookies-wrap" data-reveal>
+      <span class="bookies-label">Tracked across</span>
+      <ul class="bookies-list">
+        <li class="bookies-item"><span class="bookies-item-dot"></span>Sportsbet</li>
+        <li class="bookies-item"><span class="bookies-item-dot"></span>TAB</li>
+        <li class="bookies-item"><span class="bookies-item-dot"></span>Bet365</li>
+        <li class="bookies-item"><span class="bookies-item-dot"></span>Ladbrokes</li>
+        <li class="bookies-item"><span class="bookies-item-dot"></span>Neds</li>
+      </ul>
+    </div>
+
     <!-- SYSTEM -->
     <section class="section">
       <div class="section-head" data-reveal>
@@ -2388,6 +2783,79 @@
           <span class="journey-step-number">Step 04</span>
           <h3 class="journey-title">Track every result</h3>
           <p class="journey-desc">Every win and loss logged on the public dashboard. Weekly performance reports drop each round.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DISCORD BET PREVIEW -->
+    <section class="section">
+      <div class="preview">
+        <div class="preview-content" data-reveal>
+          <span class="preview-eyebrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity: 0.9;"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.865-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.045-.319 13.58.099 18.058a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.105c-.653-.248-1.274-.55-1.872-.892a.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.1.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+            Inside your Discord
+          </span>
+          <h2 class="preview-title">Every bet posted with locked odds and full breakdown.</h2>
+          <p class="preview-desc">No screenshots after the fact. No cryptic tips. Every bet drops into your private AFL Premium channel with the exact stake, odds, and rationale, before the games start.</p>
+          <ul class="preview-features">
+            <li class="preview-feature"><span class="preview-feature-check">&#10003;</span>Locked odds captured at post time</li>
+            <li class="preview-feature"><span class="preview-feature-check">&#10003;</span>Unit-sized stake guidance</li>
+            <li class="preview-feature"><span class="preview-feature-check">&#10003;</span>Push notifications for every bet</li>
+            <li class="preview-feature"><span class="preview-feature-check">&#10003;</span>Full round breakdowns Thursday to Sunday</li>
+          </ul>
+        </div>
+
+        <div class="discord-card" data-reveal data-reveal-delay="1" data-tilt>
+          <div class="discord-header">
+            <span class="discord-hash">#</span>
+            <span class="discord-channel">afl-premium-bets</span>
+          </div>
+          <div class="discord-body">
+            <div class="discord-message">
+              <div class="discord-avatar">FNF</div>
+              <div class="discord-body-content">
+                <div class="discord-meta">
+                  <span class="discord-username">FNF Gainz Bot <span class="discord-badge">BOT</span></span>
+                  <span class="discord-time">Today at 4:35 PM</span>
+                </div>
+                <div class="discord-embed">
+                  <div class="discord-embed-title">
+                    <span class="discord-embed-lock">&#128274;</span>
+                    Round 17 · Thursday Multi
+                  </div>
+                  <div class="discord-embed-legs">
+                    <div class="discord-embed-leg">
+                      <span class="discord-embed-leg-player">M. Bontempelli 25+ disposals</span>
+                      <span class="discord-embed-leg-odds">$1.85</span>
+                    </div>
+                    <div class="discord-embed-leg">
+                      <span class="discord-embed-leg-player">B. Smith 20+ disposals</span>
+                      <span class="discord-embed-leg-odds">$1.90</span>
+                    </div>
+                    <div class="discord-embed-leg">
+                      <span class="discord-embed-leg-player">Z. Merrett 30+ disposals</span>
+                      <span class="discord-embed-leg-odds">$1.95</span>
+                    </div>
+                  </div>
+                  <div class="discord-embed-footer">
+                    <div>
+                      <div class="discord-embed-footer-label">Stake</div>
+                      <div class="discord-embed-footer-value">2u · $100</div>
+                    </div>
+                    <div style="text-align: right;">
+                      <div class="discord-embed-footer-label">To Return</div>
+                      <div class="discord-embed-footer-value discord-embed-footer-value--green">$685</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="discord-reactions">
+                  <span class="discord-reaction">&#128293; <span class="discord-reaction-count">24</span></span>
+                  <span class="discord-reaction">&#128293; <span class="discord-reaction-count">18</span></span>
+                  <span class="discord-reaction">&#128077; <span class="discord-reaction-count">12</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -2706,6 +3174,18 @@
     (function() {
       function formatStat(key, value) {
         if (value === null || value === undefined) return null;
+        if (key === 'latestRound.round') return String(value);
+        if (key === 'latestRound.profit') {
+          var v = Number(value);
+          var prefix = v >= 0 ? '+$' : '-$';
+          return prefix + Math.abs(v).toLocaleString('en-AU');
+        }
+        if (key === 'latestRound.units') {
+          var v = Number(value);
+          var prefix = v >= 0 ? '+' : '';
+          return prefix + v + 'u';
+        }
+        if (key === 'latestRound.roi') return Number(value) + '% ROI';
         if (key.endsWith('.bets')) return Number(value).toLocaleString('en-AU');
         if (key.endsWith('.profit')) return '$' + Number(value).toLocaleString('en-AU');
         if (key.endsWith('.units')) {
