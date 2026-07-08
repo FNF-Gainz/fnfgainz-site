@@ -180,6 +180,270 @@
       overflow-x: hidden;
     }
 
+    /* ==================== MILESTONE STORY OVERLAY ==================== */
+    .milestone-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 6, 18, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s var(--ease-cathedral);
+    }
+
+    .milestone-overlay.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .milestone-story {
+      max-width: 540px;
+      width: 100%;
+      background: linear-gradient(180deg, rgba(20, 30, 55, 0.98), rgba(3, 6, 18, 0.98));
+      border: 1px solid rgba(124, 237, 255, 0.35);
+      border-radius: 24px;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.75), 0 0 60px rgba(0, 212, 255, 0.15);
+      overflow: hidden;
+      transform: scale(0.9) translateY(24px);
+      transition: transform 0.5s var(--ease-cathedral);
+      position: relative;
+    }
+
+    .milestone-overlay.is-visible .milestone-story {
+      transform: scale(1) translateY(0);
+    }
+
+    .milestone-story::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan-2), transparent);
+    }
+
+    .milestone-story-head {
+      padding: 28px 32px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 20px;
+    }
+
+    .milestone-story-eyebrow {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--cyan-2);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      background: var(--cyan-dim);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 999px;
+    }
+
+    .milestone-story-title {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+
+    .milestone-story-close {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border-strong);
+      background: transparent;
+      color: var(--text-3);
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      line-height: 1;
+      transition: all var(--dur) var(--ease);
+      font-family: var(--font-sans);
+    }
+
+    .milestone-story-close:hover {
+      color: var(--text);
+      border-color: var(--cyan-2);
+      background: var(--cyan-dim);
+    }
+
+    .milestone-story-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .milestone-story-metric {
+      background: rgba(3, 6, 18, 0.85);
+      padding: 20px 16px;
+      text-align: center;
+    }
+
+    .milestone-story-metric-value {
+      font-family: var(--font-mono);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .milestone-story-metric-value--pos { color: var(--green-2); }
+    .milestone-story-metric-value--cyan { color: var(--cyan-2); }
+    .milestone-story-metric-value--gold { color: var(--gold-2); }
+
+    .milestone-story-metric-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .milestone-story-body {
+      padding: 24px 32px 28px;
+    }
+
+    .milestone-story-body p {
+      color: var(--text-2);
+      font-size: 0.98rem;
+      line-height: 1.65;
+      margin: 0 0 14px;
+    }
+
+    .milestone-story-body p:last-child { margin-bottom: 0; }
+
+    .milestone-story-quote {
+      margin: 16px 0 0;
+      padding: 14px 18px;
+      background: rgba(0, 212, 255, 0.06);
+      border-left: 2px solid var(--cyan-2);
+      border-radius: 4px;
+      font-style: italic;
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .milestone-story-quote-author {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      margin-top: 8px;
+      font-style: normal;
+    }
+
+    /* ==================== CUSTOM CURSOR SYSTEM ==================== */
+    /* Only enabled on hover-capable (desktop) devices; touch devices see nothing */
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+      a, button, input, select, textarea, [data-cursor], [data-tilt] { cursor: none; }
+    }
+
+    .cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ffffff;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate3d(-50%, -50%, 0);
+      transition: width 0.2s var(--ease-cathedral), height 0.2s var(--ease-cathedral), background 0.2s var(--ease-cathedral), opacity 0.2s ease;
+      mix-blend-mode: difference;
+      opacity: 0;
+      will-change: transform;
+    }
+
+    .cursor-dot.is-ready { opacity: 1; }
+
+    .cursor-orb {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(124, 237, 255, 0.4);
+      border-radius: 999px;
+      background: transparent;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate3d(-50%, -50%, 0);
+      transition: width 0.4s var(--ease-cathedral), height 0.4s var(--ease-cathedral), background 0.4s var(--ease-cathedral), border-color 0.4s var(--ease-cathedral), opacity 0.2s ease;
+      opacity: 0;
+      will-change: transform;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cursor-orb.is-ready { opacity: 0.6; }
+
+    .cursor-orb.is-interactive {
+      width: 88px;
+      height: 88px;
+      background: rgba(0, 212, 255, 0.08);
+      border-color: rgba(124, 237, 255, 0.7);
+      opacity: 1;
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.15);
+    }
+
+    .cursor-orb.is-cta {
+      width: 110px;
+      height: 110px;
+      background: rgba(0, 212, 255, 0.15);
+      border-color: rgba(124, 237, 255, 1);
+      opacity: 1;
+      box-shadow: 0 0 60px rgba(0, 212, 255, 0.35);
+    }
+
+    .cursor-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: #ffffff;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.2s ease 0.1s;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .cursor-orb.is-interactive .cursor-label,
+    .cursor-orb.is-cta .cursor-label {
+      opacity: 1;
+    }
+
     /* Cathedral mesh canvas — animated gradient blobs, screen-blended for a shader-like feel */
     .mesh-canvas {
       position: fixed;
@@ -1069,6 +1333,15 @@
       transition:
         opacity 1.1s var(--ease-cathedral),
         transform 1.1s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .chart-milestone rect {
+      transition: filter var(--dur) var(--ease);
+    }
+
+    .chart-milestone:hover rect {
+      filter: brightness(1.25);
     }
 
     .chart.is-animated .chart-milestone {
@@ -1403,22 +1676,42 @@
     /* FOUNDER — Documentary chapter */
     .founder {
       display: grid;
-      grid-template-columns: 400px 1fr;
-      gap: 88px;
-      align-items: center;
-      max-width: 1180px;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 0;
+      align-items: stretch;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 24px 0;
+      padding: 0;
+      border: 1px solid var(--border-strong);
+      border-radius: 32px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(15, 20, 38, 0.55), rgba(3, 6, 18, 0.85));
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+    }
+
+    @media (max-width: 900px) {
+      .founder { grid-template-columns: 1fr; }
     }
 
     .founder-portrait {
       position: relative;
-      aspect-ratio: 4 / 5;
-      border-radius: 28px;
+      min-height: 620px;
+      border-radius: 0;
       overflow: hidden;
-      background: linear-gradient(180deg, #e2e8f0, #cbd5e1);
-      border: 1px solid var(--border-strong);
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 212, 255, 0.12), 0 0 80px rgba(0, 212, 255, 0.08);
+      background: linear-gradient(180deg, #1a2338, #0a0d1e);
+      border: 0;
+      box-shadow: none;
+      border-right: 1px solid var(--border-strong);
+    }
+
+    @media (max-width: 900px) {
+      .founder-portrait {
+        min-height: 460px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border-strong);
+      }
     }
 
     /* Subtle film-grain overlay on the portrait for documentary feel */
@@ -1438,8 +1731,17 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 20%;
+      object-position: center 18%;
       display: block;
+      filter: brightness(0.92) contrast(1.05);
+    }
+
+    .founder-content {
+      padding: clamp(40px, 6vh, 72px) clamp(32px, 5vw, 64px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
     }
 
     .founder-portrait::after {
@@ -1466,10 +1768,6 @@
       border-radius: 999px;
       backdrop-filter: blur(10px);
       z-index: 1;
-    }
-
-    .founder-content {
-      min-width: 0;
     }
 
     .founder-mark {
@@ -3176,7 +3474,7 @@
           </div>
 
           <div class="hero-cta-row">
-            <button class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
+            <button data-cursor="Join AFL" class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
               <span>Join AFL Premium</span>
               <span class="btn-price">$140 AUD / mo</span>
             </button>
@@ -3706,7 +4004,7 @@
               <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Cancel anytime, no lock-in</li>
             </ul>
             <div class="compare-cta">
-              <button class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
+              <button data-cursor="Join AFL" class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
                 <span>Join AFL Premium</span>
                 <span class="btn-price">$140 / mo</span>
               </button>
@@ -3730,7 +4028,7 @@
               <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Save $80/mo vs both separately</li>
             </ul>
             <div class="compare-cta">
-              <button class="btn btn-outline lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">
+              <button data-cursor="See Champion" class="btn btn-outline lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">
                 <span>Join Champion</span>
                 <span class="btn-price">$200 / mo</span>
               </button>
@@ -3783,6 +4081,21 @@
 
   </main>
 
+  <!-- Milestone story overlay — populated by JS when a milestone is clicked -->
+  <div class="milestone-overlay" id="milestone-overlay" aria-hidden="true">
+    <article class="milestone-story" role="dialog" aria-modal="true">
+      <div class="milestone-story-head">
+        <div>
+          <span class="milestone-story-eyebrow" id="milestone-story-eyebrow">Milestone</span>
+          <h3 class="milestone-story-title" id="milestone-story-title">Milestone title</h3>
+        </div>
+        <button class="milestone-story-close" id="milestone-story-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="milestone-story-metrics" id="milestone-story-metrics"></div>
+      <div class="milestone-story-body" id="milestone-story-body"></div>
+    </article>
+  </div>
+
   <!-- Recent activity toast -->
   <div class="activity-toast" id="activity-toast" role="status" aria-live="polite">
     <div class="activity-toast-avatar" id="activity-toast-avatar" aria-hidden="true">C</div>
@@ -3797,7 +4110,7 @@
 
   <!-- Sticky mobile CTA -->
   <div class="sticky-cta" id="sticky-cta">
-    <button class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
+    <button data-cursor="Join AFL" class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
       <span>Join AFL Premium</span>
       <span class="btn-price">$140 AUD / mo</span>
     </button>
@@ -4082,6 +4395,102 @@
     })();
   </script>
 
+  <!-- Custom cursor system (desktop hover devices only) -->
+  <script>
+    (function() {
+      var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      if (!canHover) return;
+
+      var dot = document.createElement('div');
+      dot.className = 'cursor-dot';
+      var orb = document.createElement('div');
+      orb.className = 'cursor-orb';
+      var label = document.createElement('span');
+      label.className = 'cursor-label';
+      orb.appendChild(label);
+      document.body.appendChild(dot);
+      document.body.appendChild(orb);
+
+      var mx = window.innerWidth / 2, my = window.innerHeight / 2;
+      var ox = mx, oy = my;
+      var shown = false;
+
+      window.addEventListener('mousemove', function(e) {
+        mx = e.clientX;
+        my = e.clientY;
+        dot.style.transform = 'translate3d(' + mx + 'px, ' + my + 'px, 0) translate(-50%, -50%)';
+        if (!shown) {
+          shown = true;
+          dot.classList.add('is-ready');
+          orb.classList.add('is-ready');
+        }
+      }, { passive: true });
+
+      // Hide on leaving viewport
+      document.addEventListener('mouseleave', function() {
+        dot.style.opacity = '0';
+        orb.style.opacity = '0';
+      });
+      document.addEventListener('mouseenter', function() {
+        if (shown) {
+          dot.style.opacity = '';
+          orb.style.opacity = '';
+        }
+      });
+
+      // Smooth follow for the orb
+      function tick() {
+        ox += (mx - ox) * 0.18;
+        oy += (my - oy) * 0.18;
+        orb.style.transform = 'translate3d(' + ox + 'px, ' + oy + 'px, 0) translate(-50%, -50%)';
+        requestAnimationFrame(tick);
+      }
+      tick();
+
+      // Attach interactive listeners lazily so late-added elements still bind
+      function bind(el) {
+        if (el.dataset.cursorBound) return;
+        el.dataset.cursorBound = '1';
+
+        var text = el.getAttribute('data-cursor');
+        var isCta = el.classList.contains('btn-primary') || el.classList.contains('btn-large');
+        if (!text) {
+          if (isCta) text = 'Join';
+          else if (el.tagName === 'BUTTON') text = 'Click';
+          else if (el.tagName === 'A') text = 'View';
+          else if (el.classList.contains('faq-item') || el.tagName === 'DETAILS') text = 'Open';
+          else if (el.classList.contains('pillar') || el.classList.contains('testimonial') || el.classList.contains('journey-step')) text = 'View';
+          else if (el.classList.contains('inclusion')) text = '';
+          else text = '';
+        }
+
+        el.addEventListener('mouseenter', function() {
+          orb.classList.add(isCta ? 'is-cta' : 'is-interactive');
+          label.textContent = text || '';
+        });
+        el.addEventListener('mouseleave', function() {
+          orb.classList.remove('is-interactive');
+          orb.classList.remove('is-cta');
+        });
+      }
+
+      var interactiveSelector = 'a, button, [data-tilt], details, summary, .pillar, .testimonial, .journey-step, .inclusion, .compare-card, .faq-item, .verify, .compare-cta, .close-price-inline, .bookies-item';
+      document.querySelectorAll(interactiveSelector).forEach(bind);
+
+      // Watch for future additions (activity toast, sticky CTA, etc.)
+      var mo = new MutationObserver(function(records) {
+        records.forEach(function(r) {
+          r.addedNodes.forEach(function(n) {
+            if (n.nodeType !== 1) return;
+            if (n.matches && n.matches(interactiveSelector)) bind(n);
+            if (n.querySelectorAll) n.querySelectorAll(interactiveSelector).forEach(bind);
+          });
+        });
+      });
+      mo.observe(document.body, { childList: true, subtree: true });
+    })();
+  </script>
+
   <!-- Cathedral mesh gradient background — animated color orbs, screen-blended -->
   <script>
     (function() {
@@ -4214,6 +4623,103 @@
           if (frame) cancelAnimationFrame(frame);
           btn.style.transform = '';
         });
+      });
+    })();
+  </script>
+
+  <!-- Milestone story cards — click any milestone to open its story -->
+  <script>
+    (function() {
+      var overlay = document.getElementById('milestone-overlay');
+      if (!overlay) return;
+      var story = overlay.querySelector('.milestone-story');
+      var eyebrow = document.getElementById('milestone-story-eyebrow');
+      var title = document.getElementById('milestone-story-title');
+      var metrics = document.getElementById('milestone-story-metrics');
+      var body = document.getElementById('milestone-story-body');
+      var closeBtn = document.getElementById('milestone-story-close');
+
+      var stories = {
+        '1': {
+          eyebrow: 'Milestone · Sep 2023',
+          title: 'First $10K profit banked.',
+          metrics: [
+            { v: '$10,285', l: 'Cumulative', cls: 'milestone-story-metric-value--cyan' },
+            { v: '+55u', l: 'Total units', cls: 'milestone-story-metric-value--pos' },
+            { v: 'S2 2023', l: 'When', cls: '' }
+          ],
+          html: '<p>Eighteen months in. The system had produced its first $10,000 in publicly-tracked profit across the AFL season. This wasn\'t the flashy moment — it was the proof-of-concept moment.</p><p>The bets that got here weren\'t glamorous. Consistent $50-unit stakes at $1.80-$2.50 odds on players with reliable disposal floors. Steady compounding, no chasing.</p><p class="milestone-story-quote">"By this point I knew the model held. Everything after has just been iteration on the same foundation."<span class="milestone-story-quote-author">Jordan · FNF Gainz Founder</span></p>'
+        },
+        '2': {
+          eyebrow: 'Milestone · Jan 2025',
+          title: '$20K crossed. The system was durable.',
+          metrics: [
+            { v: '$20,570', l: 'Cumulative', cls: 'milestone-story-metric-value--cyan' },
+            { v: '+110u', l: 'Total units', cls: 'milestone-story-metric-value--pos' },
+            { v: '2023-24', l: 'Two seasons', cls: '' }
+          ],
+          html: '<p>The second $10k took just as long as the first — deliberate. Two full seasons of executing the same disciplined approach, holding the line through the drawdowns, letting the edge play out.</p><p>Members who joined at the $10K milestone were now walking with two seasons of proof under their belt. Word started spreading.</p><p class="milestone-story-quote">"Following the system through a full season completely changed how I approach betting."<span class="milestone-story-quote-author">Curtis · Member since 2022</span></p>'
+        },
+        '3': {
+          eyebrow: 'Milestone · 2026 R3',
+          title: '$30K broken. Strongest year on record.',
+          metrics: [
+            { v: '$30,855', l: 'Cumulative', cls: 'milestone-story-metric-value--pos' },
+            { v: '+165u', l: 'Total units', cls: 'milestone-story-metric-value--pos' },
+            { v: 'R3 2026', l: 'When', cls: '' }
+          ],
+          html: '<p>Three rounds into the 2026 season, cumulative profit crossed $30K. The year was pacing to be the strongest on record, and the entire member base felt it.</p><p>Structural floors were producing above expectation, and the 20% higher-value plays were converting at rate. Nothing was changed. Nothing needed to be.</p>'
+        },
+        '4': {
+          eyebrow: 'Round 10 · The best week ever',
+          title: '+$1,268 in a single round.',
+          metrics: [
+            { v: '+$1,268', l: 'Profit', cls: 'milestone-story-metric-value--pos' },
+            { v: '+25.4u', l: 'Units', cls: 'milestone-story-metric-value--pos' },
+            { v: '64%', l: 'ROI', cls: 'milestone-story-metric-value--gold' }
+          ],
+          html: '<p>Round 10 2026 was the single biggest weekly return in five years of tracking. Every leg landed. Every higher-value structure paid.</p><p>The most important thing about R10 wasn\'t the size of the win — it was that nothing in the process changed to produce it. Same unit sizes, same odds bands, same disciplined selections. The math was just on our side that weekend.</p><p class="milestone-story-quote">"Weeks like this are why you stay disciplined through the boring ones."<span class="milestone-story-quote-author">Jordan · FNF Gainz Founder</span></p>'
+        }
+      };
+
+      function open(id) {
+        var s = stories[id];
+        if (!s) return;
+        eyebrow.textContent = s.eyebrow;
+        title.textContent = s.title;
+        metrics.innerHTML = s.metrics.map(function(m) {
+          return '<div class="milestone-story-metric"><div class="milestone-story-metric-value ' + m.cls + '">' + m.v + '</div><div class="milestone-story-metric-label">' + m.l + '</div></div>';
+        }).join('');
+        body.innerHTML = s.html;
+        overlay.classList.add('is-visible');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        overlay.classList.remove('is-visible');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      // Bind milestone clicks
+      document.querySelectorAll('.chart-milestone').forEach(function(el, idx) {
+        var id = String(idx + 1);
+        el.setAttribute('role', 'button');
+        el.setAttribute('tabindex', '0');
+        el.setAttribute('aria-label', 'View milestone story');
+        el.addEventListener('click', function() { open(id); });
+        el.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(id); }
+        });
+      });
+
+      closeBtn.addEventListener('click', close);
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) close();
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('is-visible')) close();
       });
     })();
   </script>
