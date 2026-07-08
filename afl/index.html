@@ -459,6 +459,33 @@
       position: relative;
     }
 
+    /* Cursor spotlight — follows the mouse inside hero, desktop only */
+    .hero-spotlight {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(560px circle at var(--sx, 50%) var(--sy, 30%),
+                                 rgba(0, 212, 255, 0.14),
+                                 rgba(59, 130, 246, 0.06) 30%,
+                                 transparent 60%);
+      opacity: 0;
+      transition: opacity 0.5s var(--ease);
+      z-index: 0;
+      mix-blend-mode: screen;
+    }
+
+    @media (hover: hover) {
+      .hero:hover .hero-spotlight {
+        opacity: 1;
+      }
+    }
+
+    .hero > .afl,
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
     .hero-eyebrow {
       display: inline-flex;
       align-items: center;
@@ -894,6 +921,61 @@
       margin-bottom: 32px;
     }
 
+    /* Chart hover tooltip */
+    .chart-tooltip {
+      position: absolute;
+      transform: translate(-50%, -100%);
+      padding: 10px 14px;
+      background: rgba(5, 8, 21, 0.95);
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      border-radius: 10px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 24px rgba(0, 212, 255, 0.2);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      z-index: 5;
+      white-space: nowrap;
+    }
+
+    .chart-tooltip.is-visible { opacity: 1; }
+
+    .chart-tooltip::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 8px;
+      height: 8px;
+      background: rgba(5, 8, 21, 0.95);
+      border-right: 1px solid rgba(0, 212, 255, 0.4);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.4);
+    }
+
+    .chart-tooltip-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .chart-tooltip-value {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--cyan-2);
+      letter-spacing: -0.01em;
+    }
+
+    .chart-hover-dot {
+      filter: drop-shadow(0 0 6px #00d4ff);
+    }
+
     .chart {
       width: 100%;
       height: auto;
@@ -1128,6 +1210,28 @@
       font-weight: 700;
       margin: 0;
       text-wrap: balance;
+      position: relative;
+    }
+
+    /* Shimmer sweep — fires when section-title scrolls into view */
+    .section-title.is-shimmer {
+      background: linear-gradient(90deg,
+                                 var(--text) 0%,
+                                 var(--text) 40%,
+                                 var(--cyan-2) 50%,
+                                 var(--text) 60%,
+                                 var(--text) 100%);
+      background-size: 250% 100%;
+      background-position: -125% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer-sweep 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes shimmer-sweep {
+      0% { background-position: -125% 0; }
+      100% { background-position: 125% 0; }
     }
 
     .section-sub {
@@ -1397,7 +1501,7 @@
       position: relative;
     }
 
-    /* Connecting line (desktop) */
+    /* Connecting line (desktop) — draws itself when the section enters view */
     .journey::before {
       content: '';
       position: absolute;
@@ -1405,8 +1509,15 @@
       left: 12%;
       right: 12%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), rgba(167, 139, 250, 0.3), rgba(255, 187, 71, 0.3), rgba(0, 255, 157, 0.3), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.4), rgba(167, 139, 250, 0.4), rgba(255, 187, 71, 0.4), rgba(0, 255, 157, 0.4), transparent);
       z-index: 0;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+    }
+
+    .journey.is-drawn::before {
+      transform: scaleX(1);
     }
 
     .journey-step {
@@ -2916,6 +3027,7 @@
 
     <!-- HERO -->
     <section class="hero">
+      <div class="hero-spotlight" aria-hidden="true"></div>
       <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>AFL Premium &middot; Since 2022</span>
 
       <div class="hero-grid">
@@ -3800,6 +3912,178 @@
       window.addEventListener('scroll', updateVisibility, { passive: true });
       window.addEventListener('resize', updateVisibility);
       updateVisibility();
+    })();
+  </script>
+
+  <!-- Cursor spotlight in hero (desktop) -->
+  <script>
+    (function() {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var canHover = window.matchMedia('(hover: hover)').matches;
+      if (reduced || !canHover) return;
+      var hero = document.querySelector('.hero');
+      if (!hero) return;
+      hero.addEventListener('mousemove', function(e) {
+        var rect = hero.getBoundingClientRect();
+        var x = ((e.clientX - rect.left) / rect.width) * 100;
+        var y = ((e.clientY - rect.top) / rect.height) * 100;
+        hero.style.setProperty('--sx', x + '%');
+        hero.style.setProperty('--sy', y + '%');
+      }, { passive: true });
+    })();
+  </script>
+
+  <!-- Section title shimmer sweep on scroll -->
+  <script>
+    (function() {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced || !('IntersectionObserver' in window)) return;
+      var titles = document.querySelectorAll('.section-title, .close-title, .preview-title');
+      if (!titles.length) return;
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-shimmer');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.6 });
+      titles.forEach(function(el) { observer.observe(el); });
+    })();
+  </script>
+
+  <!-- Journey connector line draw on scroll -->
+  <script>
+    (function() {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var journey = document.querySelector('.journey');
+      if (!journey) return;
+      if (reduced || !('IntersectionObserver' in window)) {
+        journey.classList.add('is-drawn');
+        return;
+      }
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-drawn');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      observer.observe(journey);
+    })();
+  </script>
+
+  <!-- Magnetic primary CTAs — subtly pull toward cursor -->
+  <script>
+    (function() {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var canHover = window.matchMedia('(hover: hover)').matches;
+      if (reduced || !canHover) return;
+      var btns = document.querySelectorAll('.btn-primary');
+      btns.forEach(function(btn) {
+        var frame = null;
+        btn.addEventListener('mousemove', function(e) {
+          if (frame) cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(function() {
+            var rect = btn.getBoundingClientRect();
+            var x = (e.clientX - rect.left - rect.width / 2) * 0.18;
+            var y = (e.clientY - rect.top - rect.height / 2) * 0.18;
+            btn.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+          });
+        });
+        btn.addEventListener('mouseleave', function() {
+          if (frame) cancelAnimationFrame(frame);
+          btn.style.transform = '';
+        });
+      });
+    })();
+  </script>
+
+  <!-- Chart hover tooltip — shows week + cumulative value at cursor position -->
+  <script>
+    (function() {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var canHover = window.matchMedia('(hover: hover)').matches;
+      if (reduced || !canHover) return;
+      var chartSvg = document.querySelector('.chart');
+      if (!chartSvg) return;
+
+      var points = [
+        {x:42,y:236,label:'Mar 2022',value:'$0'},
+        {x:106,y:210,label:'Sep 2022',value:'$3.5k'},
+        {x:170,y:201,label:'Mar 2023',value:'$4.7k'},
+        {x:234,y:177,label:'Sep 2023',value:'$8.2k'},
+        {x:298,y:153,label:'Mar 2024',value:'$11.8k'},
+        {x:361,y:159,label:'Sep 2024',value:'$10.9k'},
+        {x:426,y:153,label:'Mar 2025',value:'$11.8k'},
+        {x:489,y:140,label:'Sep 2025',value:'$13.8k'},
+        {x:553,y:120,label:'Feb 2026',value:'$16.9k'},
+        {x:618,y:95, label:'Round 3',value:'$20.7k'},
+        {x:660,y:81, label:'Round 6',value:'$22.9k'},
+        {x:700,y:72, label:'Round 9',value:'$25.6k'},
+        {x:706,y:72, label:'R10',value:'$26.9k · +$1,268 · 64% ROI'},
+        {x:745,y:68, label:'R13',value:'$27.4k · +$828 · 40% ROI'},
+        {x:758,y:69, label:'R14',value:'$27.9k · +$468 · 22% ROI'},
+        {x:771,y:62, label:'R15',value:'$37.4k · +$839 · 47% ROI'},
+        {x:790,y:51, label:'R16',value:'$45,189 · +$670 · 36% ROI'}
+      ];
+
+      var wrap = chartSvg.parentElement;
+      wrap.style.position = 'relative';
+
+      var tip = document.createElement('div');
+      tip.className = 'chart-tooltip';
+      tip.setAttribute('aria-hidden', 'true');
+      wrap.appendChild(tip);
+
+      var hoverDot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      hoverDot.setAttribute('class', 'chart-hover-dot');
+      hoverDot.setAttribute('r', '5');
+      hoverDot.setAttribute('fill', '#00d4ff');
+      hoverDot.style.opacity = '0';
+      hoverDot.style.pointerEvents = 'none';
+      hoverDot.style.transition = 'opacity 0.2s ease';
+      chartSvg.appendChild(hoverDot);
+
+      function findNearest(vbx) {
+        var nearest = points[0], minDist = Math.abs(points[0].x - vbx);
+        for (var i = 1; i < points.length; i++) {
+          var d = Math.abs(points[i].x - vbx);
+          if (d < minDist) { minDist = d; nearest = points[i]; }
+        }
+        return nearest;
+      }
+
+      chartSvg.addEventListener('mousemove', function(e) {
+        var rect = chartSvg.getBoundingClientRect();
+        var relX = e.clientX - rect.left;
+        var vbx = (relX / rect.width) * 800;
+        if (vbx < 42 || vbx > 790) {
+          tip.classList.remove('is-visible');
+          hoverDot.style.opacity = '0';
+          return;
+        }
+        var p = findNearest(vbx);
+        var sx = (p.x / 800) * rect.width;
+        var sy = (p.y / 280) * rect.height;
+
+        hoverDot.setAttribute('cx', p.x);
+        hoverDot.setAttribute('cy', p.y);
+        hoverDot.style.opacity = '1';
+
+        tip.innerHTML =
+          '<div class="chart-tooltip-label">' + p.label + '</div>' +
+          '<div class="chart-tooltip-value">' + p.value + '</div>';
+        tip.style.left = sx + 'px';
+        tip.style.top = (sy - 12) + 'px';
+        tip.classList.add('is-visible');
+      });
+
+      chartSvg.addEventListener('mouseleave', function() {
+        tip.classList.remove('is-visible');
+        hoverDot.style.opacity = '0';
+      });
     })();
   </script>
 
