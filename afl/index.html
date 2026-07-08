@@ -188,7 +188,7 @@
       height: 100%;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.65;
+      opacity: 0.55;
       mix-blend-mode: screen;
     }
 
@@ -545,55 +545,6 @@
       100% { opacity: 1; transform: translateY(0) skewY(0); }
     }
 
-    /* Signature scroll indicator */
-    .hero-scroll-indicator {
-      position: absolute;
-      bottom: clamp(20px, 4vh, 40px);
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      opacity: 0;
-      animation: fade-in 1.2s var(--ease-cathedral) 1.6s forwards;
-      pointer-events: none;
-    }
-
-    .hero-scroll-label {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.32em;
-      color: var(--text-3);
-      text-transform: uppercase;
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      padding-bottom: 8px;
-    }
-
-    .hero-scroll-line {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(180deg, transparent, var(--cyan-2));
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-scroll-line::after {
-      content: '';
-      position: absolute;
-      top: -48px;
-      left: 0;
-      width: 100%;
-      height: 48px;
-      background: linear-gradient(180deg, transparent, var(--cyan));
-      animation: scroll-pulse 2.4s ease-in-out infinite;
-    }
-
-    @keyframes scroll-pulse {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(96px); }
-    }
 
     /* Cursor spotlight — follows the mouse inside hero, desktop only */
     .hero-spotlight {
@@ -1108,6 +1059,35 @@
       transition: opacity 0.6s ease-out 2.9s;
     }
 
+    /* Milestones — pop in with a subtle scale/fade, staggered, after the line draws */
+    .chart-milestone {
+      opacity: 0;
+      transform: translateY(6px) scale(0.85);
+      transform-origin: center;
+      transform-box: fill-box;
+      transition: opacity 0.7s var(--ease-cathedral), transform 0.7s var(--ease-cathedral);
+    }
+
+    .chart.is-animated .chart-milestone {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .chart.is-animated .chart-milestone--1 { transition-delay: 2.6s; }
+    .chart.is-animated .chart-milestone--2 { transition-delay: 2.9s; }
+    .chart.is-animated .chart-milestone--3 { transition-delay: 3.2s; }
+    .chart.is-animated .chart-milestone--4 { transition-delay: 3.5s; }
+
+    /* Gentle idle pulse on the milestone dots after they've appeared */
+    .chart.is-animated .chart-milestone circle:first-of-type {
+      animation: milestone-breathe 3s ease-in-out 4s infinite;
+    }
+
+    @keyframes milestone-breathe {
+      0%, 100% { r: 4.5; }
+      50% { r: 5.5; }
+    }
+
     .chart.is-animated .chart-area { opacity: 1; }
     .chart.is-animated .chart-line {
       stroke-dashoffset: 0;
@@ -1593,20 +1573,42 @@
 
     .inclusion-icon {
       flex-shrink: 0;
-      width: 44px;
-      height: 44px;
-      background: var(--cyan-dim);
-      border: 1px solid rgba(0, 212, 255, 0.25);
-      border-radius: 12px;
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.18), rgba(0, 90, 180, 0.28));
+      border: 1px solid rgba(124, 237, 255, 0.35);
+      border-radius: 14px;
       color: var(--cyan-2);
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 4px 20px rgba(0, 212, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+    }
+
+    .inclusion-icon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.18), transparent 60%);
+      pointer-events: none;
+    }
+
+    .inclusion:hover .inclusion-icon {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 8px 32px rgba(0, 212, 255, 0.28);
     }
 
     .inclusion-icon svg {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
+      stroke: url(#inclusion-icon-grad);
+      stroke-width: 2.25;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.4));
     }
 
     .inclusion-text {
@@ -3154,7 +3156,7 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero-spotlight" aria-hidden="true"></div>
-      <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>AFL Premium &middot; Since 2022</span>
+      <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>AFL Premium &middot; Helping Punters Succeed Since 2022</span>
 
       <div class="hero-grid">
         <div class="hero-text">
@@ -3232,10 +3234,6 @@
         </div>
       </div>
 
-      <div class="hero-scroll-indicator" aria-hidden="true">
-        <span class="hero-scroll-label">Scroll</span>
-        <span class="hero-scroll-line"></span>
-      </div>
     </section>
 
     <!-- TERMINAL -->
@@ -3275,6 +3273,42 @@
               <path class="chart-line" d="M 42 236 L 63 234 L 84 221 L 106 210 L 127 210 L 149 210 L 170 201 L 192 197 L 213 191 L 234 177 L 255 163 L 276 164 L 298 153 L 319 156 L 340 153 L 361 159 L 383 150 L 405 154 L 426 153 L 447 144 L 468 138 L 489 140 L 511 135 L 532 129 L 553 120 L 574 114 L 596 110 L 618 95 L 639 84 L 660 81 L 676 78 L 688 79 L 700 72 L 706 72 L 713 68 L 719 69 L 726 69 L 732 70 L 739 70 L 745 68 L 751 68 L 758 69 L 764 63 L 771 62 L 777 57 L 784 54 L 790 51" stroke="#00d4ff" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
               <circle class="chart-endpoint-pulse" cx="790" cy="51" r="8" fill="none" stroke="#00d4ff" stroke-opacity="0.35" stroke-width="2"/>
               <circle class="chart-endpoint-core" cx="790" cy="51" r="4" fill="#00d4ff"/>
+
+              <!-- Milestones — dot on the line + callout badge above it -->
+              <g class="chart-milestone chart-milestone--1">
+                <line x1="234" y1="177" x2="234" y2="128" stroke="rgba(0, 212, 255, 0.35)" stroke-width="1" stroke-dasharray="2,3"/>
+                <rect x="200" y="108" width="68" height="20" rx="6" fill="rgba(3, 6, 18, 0.92)" stroke="rgba(0, 212, 255, 0.55)" stroke-width="1"/>
+                <text x="234" y="122" text-anchor="middle" fill="#7cedff" font-size="10" font-family="JetBrains Mono, monospace" font-weight="700" letter-spacing="0.06em">$10K</text>
+                <text x="234" y="98" text-anchor="middle" fill="#a3aec5" font-size="7.5" font-family="JetBrains Mono, monospace" letter-spacing="0.14em">SEP 2023</text>
+                <circle cx="234" cy="177" r="4.5" fill="#00d4ff"/>
+                <circle cx="234" cy="177" r="7" fill="none" stroke="rgba(0, 212, 255, 0.4)" stroke-width="1"/>
+              </g>
+
+              <g class="chart-milestone chart-milestone--2">
+                <line x1="405" y1="154" x2="405" y2="104" stroke="rgba(0, 212, 255, 0.35)" stroke-width="1" stroke-dasharray="2,3"/>
+                <rect x="371" y="84" width="68" height="20" rx="6" fill="rgba(3, 6, 18, 0.92)" stroke="rgba(0, 212, 255, 0.55)" stroke-width="1"/>
+                <text x="405" y="98" text-anchor="middle" fill="#7cedff" font-size="10" font-family="JetBrains Mono, monospace" font-weight="700" letter-spacing="0.06em">$20K</text>
+                <text x="405" y="74" text-anchor="middle" fill="#a3aec5" font-size="7.5" font-family="JetBrains Mono, monospace" letter-spacing="0.14em">JAN 2025</text>
+                <circle cx="405" cy="154" r="4.5" fill="#00d4ff"/>
+                <circle cx="405" cy="154" r="7" fill="none" stroke="rgba(0, 212, 255, 0.4)" stroke-width="1"/>
+              </g>
+
+              <g class="chart-milestone chart-milestone--3">
+                <line x1="618" y1="95" x2="618" y2="56" stroke="rgba(0, 255, 157, 0.35)" stroke-width="1" stroke-dasharray="2,3"/>
+                <rect x="584" y="36" width="68" height="20" rx="6" fill="rgba(3, 6, 18, 0.92)" stroke="rgba(0, 255, 157, 0.55)" stroke-width="1"/>
+                <text x="618" y="50" text-anchor="middle" fill="#6fffc0" font-size="10" font-family="JetBrains Mono, monospace" font-weight="700" letter-spacing="0.06em">$30K</text>
+                <text x="618" y="26" text-anchor="middle" fill="#a3aec5" font-size="7.5" font-family="JetBrains Mono, monospace" letter-spacing="0.14em">2026 R3</text>
+                <circle cx="618" cy="95" r="4.5" fill="#00ff9d"/>
+                <circle cx="618" cy="95" r="7" fill="none" stroke="rgba(0, 255, 157, 0.4)" stroke-width="1"/>
+              </g>
+
+              <g class="chart-milestone chart-milestone--4">
+                <line x1="700" y1="72" x2="700" y2="20" stroke="rgba(255, 187, 71, 0.35)" stroke-width="1" stroke-dasharray="2,3"/>
+                <rect x="666" y="0" width="68" height="20" rx="6" fill="rgba(3, 6, 18, 0.92)" stroke="rgba(255, 187, 71, 0.55)" stroke-width="1"/>
+                <text x="700" y="14" text-anchor="middle" fill="#ffd280" font-size="10" font-family="JetBrains Mono, monospace" font-weight="700" letter-spacing="0.06em">R10 SPIKE</text>
+                <circle cx="700" cy="72" r="4.5" fill="#ffbb47"/>
+                <circle cx="700" cy="72" r="7" fill="none" stroke="rgba(255, 187, 71, 0.4)" stroke-width="1"/>
+              </g>
               <text x="42" y="262" fill="#a3aec5" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2022</text>
               <text x="192" y="262" fill="#a3aec5" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2023</text>
               <text x="340" y="262" fill="#a3aec5" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2024</text>
@@ -3390,6 +3424,16 @@
         <span class="section-eyebrow">What's Included</span>
         <h2 class="section-title">Everything for a full season of disciplined execution.</h2>
       </div>
+
+      <!-- Shared SVG gradient for inclusion icon strokes — dropped in once, referenced by every icon -->
+      <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+        <defs>
+          <linearGradient id="inclusion-icon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#7cedff"/>
+            <stop offset="100%" stop-color="#3b82f6"/>
+          </linearGradient>
+        </defs>
+      </svg>
 
       <div class="inclusions">
         <div class="inclusion" data-reveal data-reveal-delay="1">
@@ -4057,12 +4101,13 @@
 
       var W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
 
-      // Signature palette — echoes site palette
+      // Professional palette — muted cyan, deep navy, soft white silver
+      // No violet. Lower opacity stops. Reads institutional, not disco.
       var orbs = [
-        { c: [0, 212, 255],   x: 0.22, y: 0.28, r: 0.55, sx: 0.00012, sy: 0.00018 },
-        { c: [167, 139, 250], x: 0.78, y: 0.72, r: 0.60, sx: -0.00016, sy: -0.00011 },
-        { c: [59, 130, 246],  x: 0.62, y: 0.20, r: 0.45, sx: -0.00013, sy: 0.00019 },
-        { c: [124, 237, 255], x: 0.28, y: 0.82, r: 0.40, sx: 0.00017, sy: -0.00013 }
+        { c: [0, 160, 220],    a: 0.18, x: 0.22, y: 0.28, r: 0.55, sx: 0.00010, sy: 0.00014 },
+        { c: [30, 60, 110],    a: 0.28, x: 0.78, y: 0.72, r: 0.60, sx: -0.00012, sy: -0.00009 },
+        { c: [40, 90, 150],    a: 0.20, x: 0.62, y: 0.20, r: 0.45, sx: -0.00011, sy: 0.00013 },
+        { c: [210, 225, 245],  a: 0.08, x: 0.28, y: 0.82, r: 0.42, sx: 0.00013, sy: -0.00010 }
       ];
 
       function resize() {
@@ -4098,9 +4143,10 @@
           var rad = Math.min(W, H) * o.r;
           var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
           var col = o.c;
-          g.addColorStop(0, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0.35)');
-          g.addColorStop(0.4, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0.12)');
-          g.addColorStop(1, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
+          var a = o.a;
+          g.addColorStop(0,   'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + a + ')');
+          g.addColorStop(0.5, 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (a * 0.4) + ')');
+          g.addColorStop(1,   'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',0)');
           ctx.fillStyle = g;
           ctx.fillRect(cx - rad, cy - rad, rad * 2, rad * 2);
         }
