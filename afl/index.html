@@ -101,10 +101,10 @@
   /></noscript>
 
   <style>
-    /* ==================== AFL v5 — POLISHED WORLD-CLASS ==================== */
+    /* ==================== AFL v5. POLISHED WORLD-CLASS ==================== */
 
     :root {
-      /* Cathedral shift — deeper darks, more atmosphere */
+      /* Cathedral shift. deeper darks, more atmosphere */
       --bg: #030612;
       --bg-1: #070b1a;
       --surface: rgba(15, 20, 38, 0.6);
@@ -112,13 +112,13 @@
       --border: rgba(255, 255, 255, 0.07);
       --border-strong: rgba(255, 255, 255, 0.14);
 
-      /* Signature type scale — dramatic, cinematic */
-      --type-cathedral: clamp(3.5rem, 9vw + 0.5rem, 8rem);
-      --type-monumental: clamp(2.5rem, 5vw + 0.75rem, 4.5rem);
-      --type-editorial: clamp(2rem, 3.5vw + 0.5rem, 3.25rem);
+      /* Type scale. refined, contained */
+      --type-cathedral: clamp(2.5rem, 6vw + 0.5rem, 5rem);
+      --type-monumental: clamp(2rem, 3.5vw + 0.5rem, 3rem);
+      --type-editorial: clamp(1.5rem, 2vw + 0.75rem, 2.15rem);
       --type-chapter: clamp(1.5rem, 2vw + 0.75rem, 2.15rem);
 
-      /* Signature easing — used across every cathedral animation for coherence */
+      /* Signature easing. used across every cathedral animation for coherence */
       --ease-cathedral: cubic-bezier(0.19, 1, 0.22, 1);
       --ease-slow: cubic-bezier(0.4, 0, 0.15, 1);
 
@@ -129,7 +129,7 @@
       /* Legacy tokens kept for backwards compat */
       --_bg-old: #050815;
 
-      /* Text — brighter for real readability */
+      /* Text. brighter for real readability */
       --text: #ffffff;
       --text-2: #dbe1ee;
       --text-3: #a3aec5;
@@ -360,91 +360,7 @@
       font-style: normal;
     }
 
-    /* ==================== CUSTOM CURSOR SYSTEM ==================== */
-    /* Only enabled on hover-capable (desktop) devices; touch devices see nothing */
-    @media (hover: hover) and (pointer: fine) {
-      body { cursor: none; }
-      a, button, input, select, textarea, [data-cursor], [data-tilt] { cursor: none; }
-    }
-
-    .cursor-dot {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #ffffff;
-      pointer-events: none;
-      z-index: 10000;
-      transform: translate3d(-50%, -50%, 0);
-      transition: width 0.2s var(--ease-cathedral), height 0.2s var(--ease-cathedral), background 0.2s var(--ease-cathedral), opacity 0.2s ease;
-      mix-blend-mode: difference;
-      opacity: 0;
-      will-change: transform;
-    }
-
-    .cursor-dot.is-ready { opacity: 1; }
-
-    .cursor-orb {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgba(124, 237, 255, 0.4);
-      border-radius: 999px;
-      background: transparent;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate3d(-50%, -50%, 0);
-      transition: width 0.4s var(--ease-cathedral), height 0.4s var(--ease-cathedral), background 0.4s var(--ease-cathedral), border-color 0.4s var(--ease-cathedral), opacity 0.2s ease;
-      opacity: 0;
-      will-change: transform;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .cursor-orb.is-ready { opacity: 0.6; }
-
-    .cursor-orb.is-interactive {
-      width: 88px;
-      height: 88px;
-      background: rgba(0, 212, 255, 0.08);
-      border-color: rgba(124, 237, 255, 0.7);
-      opacity: 1;
-      box-shadow: 0 0 40px rgba(0, 212, 255, 0.15);
-    }
-
-    .cursor-orb.is-cta {
-      width: 110px;
-      height: 110px;
-      background: rgba(0, 212, 255, 0.15);
-      border-color: rgba(124, 237, 255, 1);
-      opacity: 1;
-      box-shadow: 0 0 60px rgba(0, 212, 255, 0.35);
-    }
-
-    .cursor-label {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      color: #ffffff;
-      text-transform: uppercase;
-      opacity: 0;
-      transition: opacity 0.2s ease 0.1s;
-      white-space: nowrap;
-      pointer-events: none;
-    }
-
-    .cursor-orb.is-interactive .cursor-label,
-    .cursor-orb.is-cta .cursor-label {
-      opacity: 1;
-    }
-
-    /* Cathedral mesh canvas — animated gradient blobs, screen-blended for a shader-like feel */
+    /* Cathedral mesh canvas. animated gradient blobs, screen-blended for a shader-like feel */
     .mesh-canvas {
       position: fixed;
       inset: 0;
@@ -456,7 +372,7 @@
       mix-blend-mode: screen;
     }
 
-    /* Scan lines overlay — very subtle, gives the whole page a monitor/terminal feel */
+    /* Scan lines overlay. very subtle, gives the whole page a monitor/terminal feel */
     body::before {
       content: '';
       position: fixed;
@@ -605,24 +521,148 @@
       50% { opacity: 0.35; box-shadow: 0 0 14px currentColor; }
     }
 
-    /* Reveal */
+    /* ==========================================================
+       Cinematic Reveal System
+       ==========================================================
+       Every scroll-triggered element animates in with a distinct
+       feel. up, left, right, scale, or a "develop" fade. so the
+       page reads like a sequence of shots, not one long fade.
+       ========================================================== */
     [data-reveal] {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+      transform: translateY(32px);
+      transition: opacity 1.0s var(--ease-out), transform 1.0s var(--ease-out);
+      will-change: opacity, transform;
     }
 
     [data-reveal].is-visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) translateX(0) scale(1) rotate(0deg);
     }
 
-    [data-reveal-delay="1"] { transition-delay: 0.08s; }
-    [data-reveal-delay="2"] { transition-delay: 0.16s; }
-    [data-reveal-delay="3"] { transition-delay: 0.24s; }
-    [data-reveal-delay="4"] { transition-delay: 0.32s; }
-    [data-reveal-delay="5"] { transition-delay: 0.40s; }
-    [data-reveal-delay="6"] { transition-delay: 0.48s; }
+    /* Direction variants */
+    [data-reveal="up"]    { transform: translateY(48px); }
+    [data-reveal="left"]  { transform: translateX(-56px); }
+    [data-reveal="right"] { transform: translateX(56px); }
+    [data-reveal="down"]  { transform: translateY(-32px); }
+    [data-reveal="scale"] { transform: scale(0.88); }
+
+    /* Cinema variants. softer, longer, dramatic */
+    [data-reveal="rise"]      { transform: translateY(64px) scale(0.96); transition-duration: 1.2s; }
+    [data-reveal="develop"]   { filter: blur(14px) saturate(0.4); transform: scale(1.04); transition: opacity 1.4s var(--ease-out), transform 1.4s var(--ease-out), filter 1.4s var(--ease-out); }
+    [data-reveal="develop"].is-visible { filter: blur(0) saturate(1); transform: scale(1); }
+
+    /* Card deal. like a hand being dealt onto the table */
+    [data-reveal="deal"]      { transform: translateY(60px) rotate(-4deg) scale(0.94); transition: opacity 1.05s var(--ease-out), transform 1.05s cubic-bezier(0.34, 1.32, 0.64, 1); }
+    [data-reveal="deal-right"] { transform: translateY(60px) rotate(4deg) scale(0.94); transition: opacity 1.05s var(--ease-out), transform 1.05s cubic-bezier(0.34, 1.32, 0.64, 1); }
+
+    /* Text drop. for hero-title style entrances */
+    [data-reveal="drop"]      { transform: translateY(-24px); transition: opacity 1.1s var(--ease-out), transform 1.1s cubic-bezier(0.16, 1.2, 0.3, 1); }
+
+    /* Delay ladder. extends the previous 6-step ramp with finer grain */
+    [data-reveal-delay="1"]  { transition-delay: 0.10s; }
+    [data-reveal-delay="2"]  { transition-delay: 0.22s; }
+    [data-reveal-delay="3"]  { transition-delay: 0.34s; }
+    [data-reveal-delay="4"]  { transition-delay: 0.46s; }
+    [data-reveal-delay="5"]  { transition-delay: 0.58s; }
+    [data-reveal-delay="6"]  { transition-delay: 0.70s; }
+    [data-reveal-delay="7"]  { transition-delay: 0.82s; }
+    [data-reveal-delay="8"]  { transition-delay: 0.94s; }
+
+    /* ==========================================================
+       Per-word title reveal
+       ==========================================================
+       On any element with data-reveal-words the JS splits it into
+       <span class="rw-word"> pieces (each wrapped in an inner span
+       for the transform). Words rise + fade in sequence.
+       ========================================================== */
+    .rw-word {
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: baseline;
+      line-height: 1;
+    }
+    .rw-word > span {
+      display: inline-block;
+      transform: translateY(110%);
+      opacity: 0;
+      transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.7s ease-out;
+    }
+    [data-reveal-words].is-visible .rw-word > span {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    /* Fallback if JS never runs. show the text without animation */
+    [data-reveal-words]:not(.rw-ready) { opacity: 1 !important; }
+    [data-reveal-words]:not(.rw-ready) .rw-word > span {
+      transform: none;
+      opacity: 1;
+      transition: none;
+    }
+
+    /* Pill eyebrow. a small snappy scale-in above section titles. */
+    [data-reveal="pill"] {
+      transform: translateX(-18px) scale(0.94);
+      transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    [data-reveal="pill"].is-visible {
+      transform: translateX(0) scale(1);
+    }
+
+    /* Discord card. inner rows cascade in like messages appearing */
+    .discord-body .discord-row,
+    .discord-message,
+    .discord-line {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.55s ease-out, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .discord-card.is-visible .discord-row,
+    .discord-card.is-visible .discord-message,
+    .discord-card.is-visible .discord-line {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .discord-card.is-visible .discord-row:nth-child(1),
+    .discord-card.is-visible .discord-message:nth-child(1),
+    .discord-card.is-visible .discord-line:nth-child(1) { transition-delay: 0.15s; }
+    .discord-card.is-visible .discord-row:nth-child(2),
+    .discord-card.is-visible .discord-message:nth-child(2),
+    .discord-card.is-visible .discord-line:nth-child(2) { transition-delay: 0.35s; }
+    .discord-card.is-visible .discord-row:nth-child(3),
+    .discord-card.is-visible .discord-message:nth-child(3),
+    .discord-card.is-visible .discord-line:nth-child(3) { transition-delay: 0.55s; }
+    .discord-card.is-visible .discord-row:nth-child(4),
+    .discord-card.is-visible .discord-message:nth-child(4),
+    .discord-card.is-visible .discord-line:nth-child(4) { transition-delay: 0.75s; }
+    .discord-card.is-visible .discord-row:nth-child(5),
+    .discord-card.is-visible .discord-message:nth-child(5),
+    .discord-card.is-visible .discord-line:nth-child(5) { transition-delay: 0.95s; }
+    .discord-card.is-visible .discord-row:nth-child(6),
+    .discord-card.is-visible .discord-message:nth-child(6),
+    .discord-card.is-visible .discord-line:nth-child(6) { transition-delay: 1.15s; }
+
+    /* Founder portrait develop. grayscale to color, subtle scale */
+    .founder-portrait[data-reveal="develop"] {
+      filter: grayscale(1) blur(10px) contrast(1.05);
+      transform: scale(1.06);
+      transition: opacity 1.4s var(--ease-out), transform 1.6s var(--ease-out), filter 1.6s var(--ease-out);
+    }
+    .founder-portrait[data-reveal="develop"].is-visible {
+      filter: grayscale(0) blur(0) contrast(1);
+      transform: scale(1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal], .rw-word > span, .discord-body .discord-row,
+      .discord-message, .discord-line {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+      }
+    }
 
     /* Buttons */
     .btn {
@@ -733,6 +773,36 @@
       box-shadow: 0 0 24px rgba(0, 212, 255, 0.2);
     }
 
+    /* Champion CTA. warm gold to differentiate from AFL Premium cyan.
+       Sizing MUST mirror .btn-primary exactly so the two compare-card CTAs
+       land at the same y-position and share dimensions. */
+    .btn-gold {
+      background: linear-gradient(135deg, #ffbb47 0%, #ff9500 100%);
+      color: #1a1000;
+      border-color: transparent;
+      padding: 22px 36px;
+      font-size: 1.02rem;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      min-height: 60px;
+      border-radius: 16px;
+      box-shadow:
+        0 14px 36px rgba(255, 149, 0, 0.32),
+        0 0 80px rgba(255, 187, 71, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    }
+    .btn-gold .btn-price {
+      color: rgba(26, 16, 0, 0.72);
+      border-left-color: rgba(26, 16, 0, 0.32);
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 18px 44px rgba(255, 149, 0, 0.42),
+        0 0 80px rgba(255, 187, 71, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
     .btn-link {
       display: inline-flex;
       align-items: center;
@@ -767,7 +837,7 @@
       transform: translateX(4px);
     }
 
-    /* HERO — Cathedral */
+    /* HERO. Cathedral */
     .hero {
       padding: clamp(72px, 12vh, 128px) 0 clamp(48px, 8vh, 88px);
       min-height: clamp(720px, 92vh, 960px);
@@ -777,7 +847,7 @@
       position: relative;
     }
 
-    /* Kinetic title — larger, more expressive */
+    /* Kinetic title. larger, more expressive */
     .hero-title {
       font-family: var(--font-display);
       font-size: var(--type-cathedral);
@@ -811,7 +881,7 @@
     }
 
 
-    /* Cursor spotlight — follows the mouse inside hero, desktop only */
+    /* Cursor spotlight. follows the mouse inside hero, desktop only */
     .hero-spotlight {
       position: absolute;
       inset: 0;
@@ -885,7 +955,7 @@
       min-width: 0;
     }
 
-    /* Stagger the word reveals — inherits the cathedral definitions above */
+    /* Stagger the word reveals. inherits the cathedral definitions above */
     .hero-title .word:nth-child(1) { animation-delay: 0.05s; }
     .hero-title .word:nth-child(2) { animation-delay: 0.15s; }
     .hero-title .word:nth-child(3) { animation-delay: 0.25s; }
@@ -909,7 +979,7 @@
       to { opacity: 1; }
     }
 
-    /* Round status row — Last + Next paired */
+    /* Round status row. Last + Next paired */
     .hero-rounds {
       display: flex;
       flex-wrap: wrap;
@@ -1277,6 +1347,17 @@
       border-bottom: 1px solid rgba(0, 212, 255, 0.4);
     }
 
+    /* Flipped tooltip (arrow points up instead of down) */
+    .chart-tooltip.is-flipped { transform: translate(-50%, 0); }
+    .chart-tooltip.is-flipped::after {
+      bottom: auto;
+      top: -5px;
+      border-right: 0;
+      border-bottom: 0;
+      border-left: 1px solid rgba(0, 212, 255, 0.4);
+      border-top: 1px solid rgba(0, 212, 255, 0.4);
+    }
+
     .chart-tooltip-label {
       font-family: var(--font-mono);
       font-size: 0.62rem;
@@ -1324,7 +1405,7 @@
       transition: opacity 0.6s ease-out 2.9s;
     }
 
-    /* Milestones — bigger dramatic pop with an overshoot, staggered after the line draws */
+    /* Milestones. bigger dramatic pop with an overshoot, staggered after the line draws */
     .chart-milestone {
       opacity: 0;
       transform: translateY(28px) scale(0.35);
@@ -1354,15 +1435,22 @@
     .chart.is-animated .chart-milestone--3 { transition-delay: 3.7s; }
     .chart.is-animated .chart-milestone--4 { transition-delay: 4.1s; }
 
-    /* Gentle idle pulse on the milestone dots after they've appeared */
-    .chart.is-animated .chart-milestone circle:first-of-type {
-      animation: milestone-breathe 3s ease-in-out 5s infinite;
+    /* Milestone dot. short intro pulse (3 rings), then settle.
+       No infinite animation, no filter drop-shadow. keeps the GPU quiet. */
+    .chart.is-animated .chart-milestone circle:last-of-type {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: milestone-pulse 1.4s cubic-bezier(0.16, 1, 0.3, 1) 1s 3;
     }
 
-    @keyframes milestone-breathe {
-      0%, 100% { r: 4.5; }
-      50% { r: 5.8; }
+    @keyframes milestone-pulse {
+      0%   { r: 6;  opacity: 1;   stroke-width: 2; }
+      100% { r: 24; opacity: 0;   stroke-width: 0.5; }
     }
+
+    /* Hover. a simple scale so users clearly see the milestone is interactive. */
+    .chart-milestone { cursor: pointer; transition: transform 0.2s ease-out; transform-origin: center; transform-box: fill-box; }
+    .chart-milestone:hover { transform: scale(1.08); }
 
     .chart.is-animated .chart-area { opacity: 1; }
     .chart.is-animated .chart-line {
@@ -1389,7 +1477,7 @@
       50% { r: 14; stroke-opacity: 0; }
     }
 
-    /* Stats — color hierarchy */
+    /* Stats. color hierarchy */
     .terminal-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1673,22 +1761,22 @@
       margin: 0;
     }
 
-    /* FOUNDER — Documentary chapter */
+    /* FOUNDER. Documentary chapter */
     .founder {
       display: grid;
-      grid-template-columns: 1.15fr 1fr;
+      grid-template-columns: 1fr 1.05fr;
       gap: 0;
       align-items: stretch;
-      max-width: 1280px;
+      max-width: 1080px;
       margin: 0 auto;
       padding: 0;
       border: 1px solid var(--border-strong);
-      border-radius: 32px;
+      border-radius: 28px;
       overflow: hidden;
       background: linear-gradient(135deg, rgba(15, 20, 38, 0.55), rgba(3, 6, 18, 0.85));
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
     }
 
     @media (max-width: 900px) {
@@ -1697,7 +1785,7 @@
 
     .founder-portrait {
       position: relative;
-      min-height: 620px;
+      min-height: 480px;
       border-radius: 0;
       overflow: hidden;
       background: linear-gradient(180deg, #1a2338, #0a0d1e);
@@ -1708,7 +1796,7 @@
 
     @media (max-width: 900px) {
       .founder-portrait {
-        min-height: 460px;
+        min-height: 380px;
         border-right: 0;
         border-bottom: 1px solid var(--border-strong);
       }
@@ -1737,7 +1825,7 @@
     }
 
     .founder-content {
-      padding: clamp(40px, 6vh, 72px) clamp(32px, 5vw, 64px);
+      padding: clamp(32px, 4.5vh, 56px) clamp(28px, 4vw, 48px);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1772,25 +1860,25 @@
 
     .founder-mark {
       font-family: var(--font-display);
-      font-size: 9rem;
+      font-size: 5.5rem;
       font-weight: 700;
       background: var(--grad-signature);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
       line-height: 0.7;
-      margin-bottom: -36px;
+      margin-bottom: -18px;
       opacity: 0.75;
     }
 
     .founder-quote {
       font-family: var(--font-display);
-      font-size: var(--type-editorial);
+      font-size: clamp(1.35rem, 1.4vw + 0.75rem, 1.75rem);
       font-weight: 600;
       color: var(--text);
-      line-height: 1.05;
-      letter-spacing: -0.035em;
-      margin: 0 0 32px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 22px;
       text-wrap: balance;
       background: linear-gradient(180deg, var(--text) 0%, var(--text-2) 100%);
       -webkit-background-clip: text;
@@ -1800,9 +1888,9 @@
 
     .founder-content p {
       color: var(--text-2);
-      font-size: 1.05rem;
-      line-height: 1.7;
-      margin: 0 0 18px;
+      font-size: 0.98rem;
+      line-height: 1.65;
+      margin: 0 0 14px;
     }
 
     .founder-sig {
@@ -1912,7 +2000,7 @@
       position: relative;
     }
 
-    /* Connecting line (desktop) — draws itself when the section enters view */
+    /* Connecting line (desktop). draws itself when the section enters view */
     .journey::before {
       content: '';
       position: absolute;
@@ -2026,7 +2114,7 @@
       margin: 0;
     }
 
-    /* Testimonials — REDESIGNED */
+    /* Testimonials. REDESIGNED */
     .receipts-marquee {
       margin: 0 -24px 48px;
       padding: 20px 0;
@@ -2190,7 +2278,7 @@
       border-top: 1px solid var(--border);
     }
 
-    /* Avatar — letter + gradient */
+    /* Avatar. letter + gradient */
     .testimonial-avatar {
       flex-shrink: 0;
       width: 44px;
@@ -2666,7 +2754,7 @@
       font-size: 0.72rem;
     }
 
-    /* Discord card — based on real bet-slip format */
+    /* Discord card. based on real bet-slip format */
     .discord-card {
       background: #1a1f2e;
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -2815,7 +2903,7 @@
       color: #f2f3f5;
     }
 
-    /* Bet slip card — white, tab-style */
+    /* Bet slip card. white, tab-style */
     .bet-slip {
       background: #ffffff;
       border-radius: 10px;
@@ -3228,7 +3316,7 @@
       color: var(--gold-2);
     }
 
-    /* CTA pinned to bottom via margin-top: auto — both cards match */
+    /* CTA pinned to bottom via margin-top: auto. both cards match */
     .compare-cta {
       margin-top: auto;
     }
@@ -3345,7 +3433,7 @@
       .champion-cta { flex-direction: column; align-items: stretch; }
       .champion-cta .btn { width: 100%; }
 
-      .founder-mark { font-size: 4rem; }
+      .founder-mark { font-size: 3.5rem; margin-bottom: -12px; }
 
       .receipts-marquee { margin-left: -16px; margin-right: -16px; }
 
@@ -3558,7 +3646,7 @@
               <circle class="chart-endpoint-pulse" cx="790" cy="51" r="8" fill="none" stroke="#00d4ff" stroke-opacity="0.35" stroke-width="2"/>
               <circle class="chart-endpoint-core" cx="790" cy="51" r="4" fill="#00d4ff"/>
 
-              <!-- Milestones — dot on the line + callout badge above it -->
+              <!-- Milestones. dot on the line + callout badge above it -->
               <g class="chart-milestone chart-milestone--1">
                 <line x1="234" y1="177" x2="234" y2="128" stroke="rgba(0, 212, 255, 0.35)" stroke-width="1" stroke-dasharray="2,3"/>
                 <rect x="200" y="108" width="68" height="20" rx="6" fill="rgba(3, 6, 18, 0.92)" stroke="rgba(0, 212, 255, 0.55)" stroke-width="1"/>
@@ -3587,12 +3675,12 @@
               </g>
 
               <g class="chart-milestone chart-milestone--4">
-                <line x1="706" y1="72" x2="706" y2="28" stroke="rgba(255, 187, 71, 0.35)" stroke-width="1" stroke-dasharray="2,3"/>
-                <rect x="672" y="8" width="68" height="20" rx="6" fill="rgba(3, 6, 18, 0.92)" stroke="rgba(255, 187, 71, 0.55)" stroke-width="1"/>
-                <text x="706" y="22" text-anchor="middle" fill="#ffd280" font-size="10" font-family="JetBrains Mono, monospace" font-weight="700" letter-spacing="0.06em">+$1,268</text>
-                <text x="706" y="-2" text-anchor="middle" fill="#a3aec5" font-size="7.5" font-family="JetBrains Mono, monospace" letter-spacing="0.14em">R10 BEST WEEK</text>
-                <circle cx="706" cy="72" r="4.5" fill="#ffbb47"/>
-                <circle cx="706" cy="72" r="7" fill="none" stroke="rgba(255, 187, 71, 0.4)" stroke-width="1"/>
+                <line x1="213" y1="191" x2="134" y2="60" stroke="rgba(255, 187, 71, 0.35)" stroke-width="1" stroke-dasharray="2,3"/>
+                <rect x="90" y="40" width="88" height="20" rx="6" fill="rgba(3, 6, 18, 0.92)" stroke="rgba(255, 187, 71, 0.55)" stroke-width="1"/>
+                <text x="134" y="54" text-anchor="middle" fill="#ffd280" font-size="10" font-family="JetBrains Mono, monospace" font-weight="700" letter-spacing="0.06em">+$2,034</text>
+                <text x="134" y="30" text-anchor="middle" fill="#a3aec5" font-size="7.5" font-family="JetBrains Mono, monospace" letter-spacing="0.14em">BIGGEST WEEK</text>
+                <circle cx="213" cy="191" r="4.5" fill="#ffbb47"/>
+                <circle cx="213" cy="191" r="7" fill="none" stroke="rgba(255, 187, 71, 0.4)" stroke-width="1"/>
               </g>
               <text x="42" y="262" fill="#a3aec5" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2022</text>
               <text x="192" y="262" fill="#a3aec5" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2023</text>
@@ -3654,26 +3742,26 @@
 
     <!-- SYSTEM -->
     <section class="section">
-      <div class="section-head" data-reveal>
-        <div class="section-index" aria-hidden="true">01</div>
-        <span class="section-eyebrow">The System</span>
-        <h2 class="section-title">Three principles. Every bet, every round, every season.</h2>
+      <div class="section-head">
+        <div class="section-index" data-reveal="down" aria-hidden="true">01</div>
+        <span class="section-eyebrow" data-reveal="pill">The System</span>
+        <h2 class="section-title" data-reveal-words>Three principles. Every bet, every round, every season.</h2>
       </div>
 
       <div class="pillars">
-        <div class="pillar" data-tilt data-reveal data-reveal-delay="1">
+        <div class="pillar" data-tilt data-reveal="rise" data-reveal-delay="1">
           <div class="pillar-index">01</div>
           <div class="pillar-label">Disposals</div>
           <h3 class="pillar-title">A decade in AFL disposal markets</h3>
           <p>Ten years analysing player markets. Five years executing publicly. Custom data models combined with live bookmaker odds pick our best plays each week.</p>
         </div>
-        <div class="pillar" data-tilt data-reveal data-reveal-delay="2">
+        <div class="pillar" data-tilt data-reveal="rise" data-reveal-delay="3">
           <div class="pillar-index">02</div>
           <div class="pillar-label">Consistent</div>
           <h3 class="pillar-title">Built on risk management for consistent results</h3>
           <p>80% of bets sit at $1.80 to $2.50 odds on reliable players with strong disposal floors. Steady compounding that keeps profit building.</p>
         </div>
-        <div class="pillar" data-tilt data-reveal data-reveal-delay="3">
+        <div class="pillar" data-tilt data-reveal="rise" data-reveal-delay="5">
           <div class="pillar-index">03</div>
           <div class="pillar-label">Upside</div>
           <h3 class="pillar-title">Smart, controlled upside on higher value plays</h3>
@@ -3688,29 +3776,29 @@
         <div class="section-index" aria-hidden="true">02</div>
       </div>
       <div class="founder">
-        <div class="founder-portrait" data-reveal>
+        <div class="founder-portrait" data-reveal="develop">
           <span class="founder-tag">Founder</span>
           <img src="../assets/jordan-portrait.png" alt="Jordan, FNF Gainz founder" decoding="async">
         </div>
-        <div class="founder-content" data-reveal data-reveal-delay="1">
+        <div class="founder-content" data-reveal="right" data-reveal-delay="2">
           <div class="founder-mark" aria-hidden="true">&ldquo;</div>
-          <h2 class="founder-quote">This isn't a tipping service. It's a structured system.</h2>
-          <p>I've been analysing AFL markets every day for ten years. Five years ago I started sharing the strategy publicly, and we've been at the front of the industry ever since.</p>
-          <p>Built around consistency, risk management, and disposal markets I've obsessed over for a decade. Every bet I share is logged. Every result is public. Wins, losses, drawdowns. That's the standard I hold the service to.</p>
-          <div class="founder-sig">Jordan &middot; FNF Gainz Founder</div>
+          <h2 class="founder-quote" data-reveal-words data-rw-step="0.07" data-reveal-delay="3">This isn't a tipping service. It's a structured system.</h2>
+          <p data-reveal="up" data-reveal-delay="5">I've been analysing AFL markets every day for ten years. Five years ago I started sharing the strategy publicly, and we've been at the front of the industry ever since.</p>
+          <p data-reveal="up" data-reveal-delay="6">Built around consistency, risk management, and disposal markets I've obsessed over for a decade. Every bet I share is logged. Every result is public. Wins, losses, drawdowns. That's the standard I hold the service to.</p>
+          <div class="founder-sig" data-reveal="up" data-reveal-delay="7">Jordan &middot; FNF Gainz Founder</div>
         </div>
       </div>
     </section>
 
     <!-- WHAT'S INCLUDED -->
     <section class="section">
-      <div class="section-head" data-reveal>
-        <div class="section-index" aria-hidden="true">03</div>
-        <span class="section-eyebrow">What's Included</span>
-        <h2 class="section-title">Everything for a full season of disciplined execution.</h2>
+      <div class="section-head">
+        <div class="section-index" data-reveal="down" aria-hidden="true">03</div>
+        <span class="section-eyebrow" data-reveal="pill">What's Included</span>
+        <h2 class="section-title" data-reveal-words>Everything for a full season of disciplined execution.</h2>
       </div>
 
-      <!-- Shared SVG gradient for inclusion icon strokes — dropped in once, referenced by every icon -->
+      <!-- Shared SVG gradient for inclusion icon strokes. dropped in once, referenced by every icon -->
       <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
         <defs>
           <linearGradient id="inclusion-icon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -3721,19 +3809,19 @@
       </svg>
 
       <div class="inclusions">
-        <div class="inclusion" data-reveal data-reveal-delay="1">
+        <div class="inclusion" data-reveal="left" data-reveal-delay="1">
           <span class="inclusion-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span>
           <div class="inclusion-text">Every bet posted directly into our Discord channels each round. Notified for all positions.</div>
         </div>
-        <div class="inclusion" data-reveal data-reveal-delay="2">
+        <div class="inclusion" data-reveal="right" data-reveal-delay="1">
           <span class="inclusion-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
           <div class="inclusion-text">Categorised streams: non-promotion, promotion, high-value plays, alt-bookies, and bonus bet conversions.</div>
         </div>
-        <div class="inclusion" data-reveal data-reveal-delay="3">
+        <div class="inclusion" data-reveal="left" data-reveal-delay="2">
           <span class="inclusion-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
           <div class="inclusion-text">Honest round updates from Thursday through Sunday. Wins, losses, and what's coming.</div>
         </div>
-        <div class="inclusion" data-reveal data-reveal-delay="4">
+        <div class="inclusion" data-reveal="right" data-reveal-delay="2">
           <span class="inclusion-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 3v18h18" stroke="url(#inclusion-icon-grad)" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
             <rect x="6" y="13" width="3" height="5" rx="0.75" fill="url(#inclusion-icon-grad)"/>
@@ -3742,11 +3830,11 @@
           </svg></span>
           <div class="inclusion-text">Weekly performance reports and live results tracking on the public dashboard.</div>
         </div>
-        <div class="inclusion" data-reveal data-reveal-delay="5">
+        <div class="inclusion" data-reveal="left" data-reveal-delay="3">
           <span class="inclusion-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></span>
           <div class="inclusion-text">Personal onboarding to confirm your unit sizing and set you up for success.</div>
         </div>
-        <div class="inclusion" data-reveal data-reveal-delay="6">
+        <div class="inclusion" data-reveal="right" data-reveal-delay="3">
           <span class="inclusion-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
           <div class="inclusion-text">Account safety guidance to protect your bookmaker accounts long term.</div>
         </div>
@@ -3755,14 +3843,14 @@
 
     <!-- HOW IT WORKS -->
     <section class="section">
-      <div class="section-head" data-reveal>
-        <div class="section-index" aria-hidden="true">04</div>
-        <span class="section-eyebrow">How It Works</span>
-        <h2 class="section-title">From sign-up to your first winning weekend.</h2>
+      <div class="section-head">
+        <div class="section-index" data-reveal="down" aria-hidden="true">04</div>
+        <span class="section-eyebrow" data-reveal="pill">How It Works</span>
+        <h2 class="section-title" data-reveal-words>From sign-up to your first winning weekend.</h2>
       </div>
 
       <div class="journey">
-        <div class="journey-step journey-step--1" data-reveal data-reveal-delay="1">
+        <div class="journey-step journey-step--1" data-reveal="rise" data-reveal-delay="1">
           <div class="journey-icon-wrap">
             <img src="../assets/icons/journey-signup.png" alt="" decoding="async" loading="lazy">
           </div>
@@ -3771,7 +3859,7 @@
           <p class="journey-desc">Checkout through LaunchPass. Your Discord account is instantly linked and private channels unlock.</p>
         </div>
 
-        <div class="journey-step journey-step--2" data-reveal data-reveal-delay="2">
+        <div class="journey-step journey-step--2" data-reveal="rise" data-reveal-delay="3">
           <div class="journey-icon-wrap">
             <img src="../assets/icons/journey-onboarding.png" alt="" decoding="async" loading="lazy">
           </div>
@@ -3780,7 +3868,7 @@
           <p class="journey-desc">Team confirms your unit sizing, bookmaker setup, and answers every question before Round 1.</p>
         </div>
 
-        <div class="journey-step journey-step--3" data-reveal data-reveal-delay="3">
+        <div class="journey-step journey-step--3" data-reveal="rise" data-reveal-delay="5">
           <div class="journey-icon-wrap">
             <img src="../assets/icons/journey-notifications.png" alt="" decoding="async" loading="lazy">
           </div>
@@ -3789,7 +3877,7 @@
           <p class="journey-desc">Every bet posted live with staking guidance, locked odds, and a full breakdown each round.</p>
         </div>
 
-        <div class="journey-step journey-step--4" data-reveal data-reveal-delay="4">
+        <div class="journey-step journey-step--4" data-reveal="rise" data-reveal-delay="7">
           <div class="journey-icon-wrap">
             <img src="../assets/icons/journey-results.png" alt="" decoding="async" loading="lazy">
           </div>
@@ -3803,22 +3891,22 @@
     <!-- DISCORD BET PREVIEW -->
     <section class="section">
       <div class="preview">
-        <div class="preview-content" data-reveal>
-          <span class="preview-eyebrow">
+        <div class="preview-content" data-reveal="left">
+          <span class="preview-eyebrow" data-reveal="pill">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="opacity: 0.9;"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.865-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.045-.319 13.58.099 18.058a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.105c-.653-.248-1.274-.55-1.872-.892a.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.1.246.198.373.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
             Inside your Discord
           </span>
-          <h2 class="preview-title">Every bet posted with locked odds and full breakdown.</h2>
-          <p class="preview-desc">No screenshots after the fact. No cryptic tips. Every bet drops into your private AFL Premium channel with the exact stake, odds, and rationale, before the games start.</p>
+          <h2 class="preview-title" data-reveal-words>Every bet posted with locked odds and full breakdown.</h2>
+          <p class="preview-desc" data-reveal="up" data-reveal-delay="3">No screenshots after the fact. No cryptic tips. Every bet drops into your private AFL Premium channel with the exact stake, odds, and rationale, before the games start.</p>
           <ul class="preview-features">
-            <li class="preview-feature"><span class="preview-feature-check">&#10003;</span>Locked odds captured at post time</li>
-            <li class="preview-feature"><span class="preview-feature-check">&#10003;</span>Unit-sized stake guidance</li>
-            <li class="preview-feature"><span class="preview-feature-check">&#10003;</span>Push notifications for every bet</li>
-            <li class="preview-feature"><span class="preview-feature-check">&#10003;</span>Full round breakdowns Thursday to Sunday</li>
+            <li class="preview-feature" data-reveal="left" data-reveal-delay="4"><span class="preview-feature-check">&#10003;</span>Locked odds captured at post time</li>
+            <li class="preview-feature" data-reveal="left" data-reveal-delay="5"><span class="preview-feature-check">&#10003;</span>Unit-sized stake guidance</li>
+            <li class="preview-feature" data-reveal="left" data-reveal-delay="6"><span class="preview-feature-check">&#10003;</span>Push notifications for every bet</li>
+            <li class="preview-feature" data-reveal="left" data-reveal-delay="7"><span class="preview-feature-check">&#10003;</span>Full round breakdowns Thursday to Sunday</li>
           </ul>
         </div>
 
-        <div class="discord-card" data-reveal data-reveal-delay="1" data-tilt>
+        <div class="discord-card" data-reveal="right" data-reveal-delay="1" data-tilt>
           <div class="discord-channel-bar">
             <span class="discord-channel-hash"><span class="discord-channel-lock">&#128274;</span>#</span>
             <span class="discord-channel-name">--non-promo</span>
@@ -3899,12 +3987,12 @@
       </div>
     </section>
 
-    <!-- MEMBER RECEIPTS — REDESIGNED -->
+    <!-- MEMBER RECEIPTS. REDESIGNED -->
     <section class="section">
-      <div class="section-head" data-reveal>
-        <div class="section-index" aria-hidden="true">05</div>
-        <span class="section-eyebrow">Member Receipts</span>
-        <h2 class="section-title">Real members. Real results.</h2>
+      <div class="section-head">
+        <div class="section-index" data-reveal="down" aria-hidden="true">05</div>
+        <span class="section-eyebrow" data-reveal="pill">Member Receipts</span>
+        <h2 class="section-title" data-reveal-words>Real members. Real results.</h2>
       </div>
 
       <div class="receipts-marquee" aria-hidden="true">
@@ -3925,7 +4013,7 @@
       </div>
 
       <div class="testimonials">
-        <article class="testimonial testimonial--cyan" data-tilt data-reveal data-reveal-delay="1">
+        <article class="testimonial testimonial--cyan" data-tilt data-reveal="deal" data-reveal-delay="1">
           <span class="testimonial-badge"><span class="testimonial-badge-value">+$27,500</span> March – September</span>
           <p class="testimonial-quote">"Following the system through a full season completely changed how I approach betting. Been able to grow my own business and move into a bigger house off the back of it."</p>
           <div class="testimonial-author">
@@ -3937,7 +4025,7 @@
           </div>
         </article>
 
-        <article class="testimonial testimonial--violet" data-tilt data-reveal data-reveal-delay="2">
+        <article class="testimonial testimonial--violet" data-tilt data-reveal="deal-right" data-reveal-delay="3">
           <span class="testimonial-badge"><span class="testimonial-badge-value">Multiple Seasons</span> Consistent</span>
           <p class="testimonial-quote">"So much confidence in the picks knowing the high level of research and analysis done beforehand."</p>
           <div class="testimonial-author">
@@ -3949,7 +4037,7 @@
           </div>
         </article>
 
-        <article class="testimonial testimonial--gold" data-tilt data-reveal data-reveal-delay="3">
+        <article class="testimonial testimonial--gold" data-tilt data-reveal="deal" data-reveal-delay="5">
           <span class="testimonial-badge"><span class="testimonial-badge-value">+$8,000</span> Full season</span>
           <p class="testimonial-quote">"Personally around $8k profit for the season. Couldn't recommend the AFL package more."</p>
           <div class="testimonial-author">
@@ -3961,7 +4049,7 @@
           </div>
         </article>
 
-        <article class="testimonial testimonial--green" data-tilt data-reveal data-reveal-delay="4">
+        <article class="testimonial testimonial--green" data-tilt data-reveal="deal-right" data-reveal-delay="7">
           <span class="testimonial-badge"><span class="testimonial-badge-value">Scaled Up</span> Multiple seasons</span>
           <p class="testimonial-quote">"With the mountain of work FNF puts in I was easily able to scale to exponentially profitable levels."</p>
           <div class="testimonial-author">
@@ -3979,16 +4067,16 @@
 
     <!-- CLOSE -->
     <section class="section section--tight-top">
-      <div class="section-head" data-reveal>
-        <div class="section-index" aria-hidden="true">06</div>
+      <div class="section-head">
+        <div class="section-index" data-reveal="down" aria-hidden="true">06</div>
       </div>
       <div class="close">
-        <h2 class="close-title" data-reveal>Choose your <span class="accent">system</span>.</h2>
-        <p class="close-sub" data-reveal data-reveal-delay="1">One AFL-only package. One combined AFL + NRL package. Cancel either any time.</p>
+        <h2 class="close-title" data-reveal="rise">Choose your <span class="accent">system</span>.</h2>
+        <p class="close-sub" data-reveal="up" data-reveal-delay="3">One AFL-only package. One combined AFL + NRL package. Cancel either any time.</p>
 
-        <div class="compare" data-reveal data-reveal-delay="2">
+        <div class="compare">
 
-          <article class="compare-card compare-card--featured">
+          <article class="compare-card compare-card--featured" data-reveal="left" data-reveal-delay="4">
             <span class="compare-tag compare-tag--recommended">Recommended</span>
             <div class="compare-name">AFL Premium</div>
             <p class="compare-sub">The full AFL system in your private Discord.</p>
@@ -4012,7 +4100,7 @@
             <div class="compare-note">5 years of member trust</div>
           </article>
 
-          <article class="compare-card">
+          <article class="compare-card" data-reveal="right" data-reveal-delay="5">
             <span class="compare-tag compare-tag--upgrade">Full Coverage</span>
             <div class="compare-name">Champion</div>
             <p class="compare-sub">The full AFL system + the full NRL system.</p>
@@ -4028,7 +4116,7 @@
               <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Save $80/mo vs both separately</li>
             </ul>
             <div class="compare-cta">
-              <button data-cursor="See Champion" class="btn btn-outline lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">
+              <button data-cursor="See Champion" class="btn btn-gold lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">
                 <span>Join Champion</span>
                 <span class="btn-price">$200 / mo</span>
               </button>
@@ -4038,7 +4126,7 @@
 
         </div>
 
-        <div class="close-trust" data-reveal data-reveal-delay="3">
+        <div class="close-trust" data-reveal="up" data-reveal-delay="7">
           <span>5 years of member trust</span>
           <span>&middot;</span>
           <span>Cancel anytime</span>
@@ -4050,10 +4138,10 @@
 
     <!-- FAQ -->
     <section class="section">
-      <div class="section-head" data-reveal>
-        <div class="section-index" aria-hidden="true">07</div>
-        <span class="section-eyebrow">FAQ</span>
-        <h2 class="section-title">Common questions.</h2>
+      <div class="section-head">
+        <div class="section-index" data-reveal="down" aria-hidden="true">07</div>
+        <span class="section-eyebrow" data-reveal="pill">FAQ</span>
+        <h2 class="section-title" data-reveal-words>Common questions.</h2>
       </div>
 
       <div class="faq">
@@ -4081,7 +4169,7 @@
 
   </main>
 
-  <!-- Milestone story overlay — populated by JS when a milestone is clicked -->
+  <!-- Milestone story overlay. populated by JS when a milestone is clicked -->
   <div class="milestone-overlay" id="milestone-overlay" aria-hidden="true">
     <article class="milestone-story" role="dialog" aria-modal="true">
       <div class="milestone-story-head">
@@ -4137,14 +4225,65 @@
     })();
   </script>
 
-  <!-- Reveal animations -->
+  <!-- Reveal animations + kinetic word split -->
   <script>
     (function() {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ==========================================================
+      // Word-splitter for [data-reveal-words] headings.
+      // Wraps every word in <span class="rw-word"><span>word</span></span>
+      // and staggers per-word transition-delay on the inner span so
+      // words rise sequentially like a movie title reveal.
+      // ==========================================================
+      function splitWords(el) {
+        if (el.dataset.rwReady === '1') return;
+        var perWord = parseFloat(el.dataset.rwStep || '0.06');
+        var baseDelay = parseFloat(el.dataset.rwDelay || '0');
+        // Walk direct children; preserve inline markup like <span class="accent">.
+        var idx = 0;
+        function processNode(node) {
+          if (node.nodeType === 3) { // text node
+            var parent = node.parentNode;
+            var text = node.textContent;
+            var parts = text.split(/(\s+)/);
+            var frag = document.createDocumentFragment();
+            parts.forEach(function(part) {
+              if (/^\s+$/.test(part)) {
+                frag.appendChild(document.createTextNode(part));
+              } else if (part.length) {
+                var outer = document.createElement('span');
+                outer.className = 'rw-word';
+                var inner = document.createElement('span');
+                inner.textContent = part;
+                inner.style.transitionDelay = (baseDelay + idx * perWord) + 's';
+                idx++;
+                outer.appendChild(inner);
+                frag.appendChild(outer);
+              }
+            });
+            parent.replaceChild(frag, node);
+          } else if (node.nodeType === 1 && !node.classList.contains('rw-word')) {
+            // Recurse into inline wrappers like <span class="accent">
+            Array.prototype.slice.call(node.childNodes).forEach(processNode);
+          }
+        }
+        Array.prototype.slice.call(el.childNodes).forEach(processNode);
+        el.dataset.rwReady = '1';
+        el.classList.add('rw-ready');
+      }
+
       if (reduced || !('IntersectionObserver' in window)) {
         document.querySelectorAll('[data-reveal]').forEach(function(el) { el.classList.add('is-visible'); });
+        document.querySelectorAll('[data-reveal-words]').forEach(function(el) {
+          splitWords(el);
+          el.classList.add('is-visible');
+        });
         return;
       }
+
+      document.querySelectorAll('[data-reveal-words]').forEach(splitWords);
+
       var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
@@ -4153,7 +4292,25 @@
           }
         });
       }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
       document.querySelectorAll('[data-reveal]').forEach(function(el) { observer.observe(el); });
+      document.querySelectorAll('[data-reveal-words]').forEach(function(el) { observer.observe(el); });
+
+      // Discord card. sequenced message reveal keyed off .is-visible on the card.
+      // The CSS handles the per-child stagger; here we just make sure the card
+      // gets its own observer even when nested inside another data-reveal.
+      var discord = document.querySelector('.discord-card');
+      if (discord) {
+        var discObs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              discObs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.35 });
+        discObs.observe(discord);
+      }
     })();
   </script>
 
@@ -4260,7 +4417,7 @@
         var kickoff = new Date(kickoffISO).getTime();
         var diff = kickoff - now;
         if (diff <= 0) {
-          // Games underway — hide the timer text but keep kickoff label visible
+          // Games underway. hide the timer text but keep kickoff label visible
           timerEl.textContent = '';
           timerEl.style.display = 'none';
           return;
@@ -4395,103 +4552,7 @@
     })();
   </script>
 
-  <!-- Custom cursor system (desktop hover devices only) -->
-  <script>
-    (function() {
-      var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-      if (!canHover) return;
-
-      var dot = document.createElement('div');
-      dot.className = 'cursor-dot';
-      var orb = document.createElement('div');
-      orb.className = 'cursor-orb';
-      var label = document.createElement('span');
-      label.className = 'cursor-label';
-      orb.appendChild(label);
-      document.body.appendChild(dot);
-      document.body.appendChild(orb);
-
-      var mx = window.innerWidth / 2, my = window.innerHeight / 2;
-      var ox = mx, oy = my;
-      var shown = false;
-
-      window.addEventListener('mousemove', function(e) {
-        mx = e.clientX;
-        my = e.clientY;
-        dot.style.transform = 'translate3d(' + mx + 'px, ' + my + 'px, 0) translate(-50%, -50%)';
-        if (!shown) {
-          shown = true;
-          dot.classList.add('is-ready');
-          orb.classList.add('is-ready');
-        }
-      }, { passive: true });
-
-      // Hide on leaving viewport
-      document.addEventListener('mouseleave', function() {
-        dot.style.opacity = '0';
-        orb.style.opacity = '0';
-      });
-      document.addEventListener('mouseenter', function() {
-        if (shown) {
-          dot.style.opacity = '';
-          orb.style.opacity = '';
-        }
-      });
-
-      // Smooth follow for the orb
-      function tick() {
-        ox += (mx - ox) * 0.18;
-        oy += (my - oy) * 0.18;
-        orb.style.transform = 'translate3d(' + ox + 'px, ' + oy + 'px, 0) translate(-50%, -50%)';
-        requestAnimationFrame(tick);
-      }
-      tick();
-
-      // Attach interactive listeners lazily so late-added elements still bind
-      function bind(el) {
-        if (el.dataset.cursorBound) return;
-        el.dataset.cursorBound = '1';
-
-        var text = el.getAttribute('data-cursor');
-        var isCta = el.classList.contains('btn-primary') || el.classList.contains('btn-large');
-        if (!text) {
-          if (isCta) text = 'Join';
-          else if (el.tagName === 'BUTTON') text = 'Click';
-          else if (el.tagName === 'A') text = 'View';
-          else if (el.classList.contains('faq-item') || el.tagName === 'DETAILS') text = 'Open';
-          else if (el.classList.contains('pillar') || el.classList.contains('testimonial') || el.classList.contains('journey-step')) text = 'View';
-          else if (el.classList.contains('inclusion')) text = '';
-          else text = '';
-        }
-
-        el.addEventListener('mouseenter', function() {
-          orb.classList.add(isCta ? 'is-cta' : 'is-interactive');
-          label.textContent = text || '';
-        });
-        el.addEventListener('mouseleave', function() {
-          orb.classList.remove('is-interactive');
-          orb.classList.remove('is-cta');
-        });
-      }
-
-      var interactiveSelector = 'a, button, [data-tilt], details, summary, .pillar, .testimonial, .journey-step, .inclusion, .compare-card, .faq-item, .verify, .compare-cta, .close-price-inline, .bookies-item';
-      document.querySelectorAll(interactiveSelector).forEach(bind);
-
-      // Watch for future additions (activity toast, sticky CTA, etc.)
-      var mo = new MutationObserver(function(records) {
-        records.forEach(function(r) {
-          r.addedNodes.forEach(function(n) {
-            if (n.nodeType !== 1) return;
-            if (n.matches && n.matches(interactiveSelector)) bind(n);
-            if (n.querySelectorAll) n.querySelectorAll(interactiveSelector).forEach(bind);
-          });
-        });
-      });
-      mo.observe(document.body, { childList: true, subtree: true });
-    })();
-  </script>
-
-  <!-- Cathedral mesh gradient background — animated color orbs, screen-blended -->
+  <!-- Cathedral mesh gradient background. animated color orbs, screen-blended -->
   <script>
     (function() {
       var canvas = document.getElementById('mesh-canvas');
@@ -4502,7 +4563,7 @@
 
       var W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
 
-      // Sleek institutional palette — cool dark blues + one whisper of cyan.
+      // Sleek institutional palette. cool dark blues + one whisper of cyan.
       // Zero warm tones. Zero purple. Reads as expensive, not decorative.
       var orbs = [
         { c: [20, 40, 80],     a: 0.32, x: 0.22, y: 0.28, r: 0.60, sx: 0.00009, sy: 0.00012 },
@@ -4601,33 +4662,8 @@
     })();
   </script>
 
-  <!-- Magnetic primary CTAs — subtly pull toward cursor -->
-  <script>
-    (function() {
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var canHover = window.matchMedia('(hover: hover)').matches;
-      if (reduced || !canHover) return;
-      var btns = document.querySelectorAll('.btn-primary');
-      btns.forEach(function(btn) {
-        var frame = null;
-        btn.addEventListener('mousemove', function(e) {
-          if (frame) cancelAnimationFrame(frame);
-          frame = requestAnimationFrame(function() {
-            var rect = btn.getBoundingClientRect();
-            var x = (e.clientX - rect.left - rect.width / 2) * 0.18;
-            var y = (e.clientY - rect.top - rect.height / 2) * 0.18;
-            btn.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
-          });
-        });
-        btn.addEventListener('mouseleave', function() {
-          if (frame) cancelAnimationFrame(frame);
-          btn.style.transform = '';
-        });
-      });
-    })();
-  </script>
 
-  <!-- Milestone story cards — click any milestone to open its story -->
+  <!-- Milestone story cards. click any milestone to open its story -->
   <script>
     (function() {
       var overlay = document.getElementById('milestone-overlay');
@@ -4646,9 +4682,9 @@
           metrics: [
             { v: '$10,285', l: 'Cumulative', cls: 'milestone-story-metric-value--cyan' },
             { v: '+55u', l: 'Total units', cls: 'milestone-story-metric-value--pos' },
-            { v: 'S2 2023', l: 'When', cls: '' }
+            { v: 'Sep 2023', l: 'When', cls: '' }
           ],
-          html: '<p>Eighteen months in. The system had produced its first $10,000 in publicly-tracked profit across the AFL season. This wasn\'t the flashy moment — it was the proof-of-concept moment.</p><p>The bets that got here weren\'t glamorous. Consistent $50-unit stakes at $1.80-$2.50 odds on players with reliable disposal floors. Steady compounding, no chasing.</p><p class="milestone-story-quote">"By this point I knew the model held. Everything after has just been iteration on the same foundation."<span class="milestone-story-quote-author">Jordan · FNF Gainz Founder</span></p>'
+          html: '<p>Eighteen months in. The system had produced its first $10,000 in publicly-tracked profit across the AFL season. This wasn\'t the flashy moment. It was the proof-of-concept moment.</p><p>The bets that got here weren\'t glamorous. Consistent $50-unit stakes at $1.80 to $2.50 odds on players with reliable disposal floors. Steady compounding, no chasing.</p><p class="milestone-story-quote">"By this point I knew the model held. Everything after has just been iteration on the same foundation."<span class="milestone-story-quote-author">Jordan · FNF Gainz Founder</span></p>'
         },
         '2': {
           eyebrow: 'Milestone · Jan 2025',
@@ -4658,7 +4694,7 @@
             { v: '+110u', l: 'Total units', cls: 'milestone-story-metric-value--pos' },
             { v: '2023-24', l: 'Two seasons', cls: '' }
           ],
-          html: '<p>The second $10k took just as long as the first — deliberate. Two full seasons of executing the same disciplined approach, holding the line through the drawdowns, letting the edge play out.</p><p>Members who joined at the $10K milestone were now walking with two seasons of proof under their belt. Word started spreading.</p><p class="milestone-story-quote">"Following the system through a full season completely changed how I approach betting."<span class="milestone-story-quote-author">Curtis · Member since 2022</span></p>'
+          html: '<p>The second $10k took just as long as the first. Deliberate. Two full seasons of executing the same disciplined approach, holding the line through the drawdowns, letting the edge play out.</p><p>Members who joined at the $10K milestone were now walking with two seasons of proof under their belt. Word started spreading.</p><p class="milestone-story-quote">"Following the system through a full season completely changed how I approach betting."<span class="milestone-story-quote-author">Curtis · Member since 2022</span></p>'
         },
         '3': {
           eyebrow: 'Milestone · 2026 R3',
@@ -4671,14 +4707,14 @@
           html: '<p>Three rounds into the 2026 season, cumulative profit crossed $30K. The year was pacing to be the strongest on record, and the entire member base felt it.</p><p>Structural floors were producing above expectation, and the 20% higher-value plays were converting at rate. Nothing was changed. Nothing needed to be.</p>'
         },
         '4': {
-          eyebrow: 'Round 10 · The best week ever',
-          title: '+$1,268 in a single round.',
+          eyebrow: 'Biggest week · AFL R13 2023',
+          title: '+$2,034 in a single round.',
           metrics: [
-            { v: '+$1,268', l: 'Profit', cls: 'milestone-story-metric-value--pos' },
-            { v: '+25.4u', l: 'Units', cls: 'milestone-story-metric-value--pos' },
-            { v: '64%', l: 'ROI', cls: 'milestone-story-metric-value--gold' }
+            { v: '+$2,034', l: 'Profit', cls: 'milestone-story-metric-value--gold' },
+            { v: '+40.7u', l: 'Units', cls: 'milestone-story-metric-value--pos' },
+            { v: 'AFL R13 2023', l: 'When', cls: '' }
           ],
-          html: '<p>Round 10 2026 was the single biggest weekly return in five years of tracking. Every leg landed. Every higher-value structure paid.</p><p>The most important thing about R10 wasn\'t the size of the win — it was that nothing in the process changed to produce it. Same unit sizes, same odds bands, same disciplined selections. The math was just on our side that weekend.</p><p class="milestone-story-quote">"Weeks like this are why you stay disciplined through the boring ones."<span class="milestone-story-quote-author">Jordan · FNF Gainz Founder</span></p>'
+          html: '<p>The single biggest weekly return in the history of the service came in AFL Round 13, 2023. Every structure landed. Every disciplined selection paid.</p><p>The most important thing about that round wasn\'t the size of the win. It was that nothing in the process was changed to produce it. Same unit sizes, same odds bands, same disciplined selections. The math was just on our side that weekend.</p><p class="milestone-story-quote">"Rounds like this are why you stay disciplined through the boring ones."<span class="milestone-story-quote-author">Jordan · FNF Gainz Founder</span></p>'
         }
       };
 
@@ -4724,7 +4760,7 @@
     })();
   </script>
 
-  <!-- Chart hover tooltip — shows week + cumulative value at cursor position -->
+  <!-- Chart hover tooltip. shows week + cumulative value at cursor position -->
   <script>
     (function() {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -4779,6 +4815,12 @@
         return nearest;
       }
 
+      // X-coordinates (viewBox units) of the four permanent milestone labels.
+      // When the mouse is within MILESTONE_GUARD of any of these, we suppress
+      // the floating tooltip so it doesn't overlap the static label.
+      var MILESTONE_XS = [213, 234, 405, 618];
+      var MILESTONE_GUARD = 22;
+
       chartSvg.addEventListener('mousemove', function(e) {
         var rect = chartSvg.getBoundingClientRect();
         var relX = e.clientX - rect.left;
@@ -4787,6 +4829,14 @@
           tip.classList.remove('is-visible');
           hoverDot.style.opacity = '0';
           return;
+        }
+        // Skip if this X is close to a permanent milestone label.
+        for (var mi = 0; mi < MILESTONE_XS.length; mi++) {
+          if (Math.abs(vbx - MILESTONE_XS[mi]) < MILESTONE_GUARD) {
+            tip.classList.remove('is-visible');
+            hoverDot.style.opacity = '0';
+            return;
+          }
         }
         var p = findNearest(vbx);
         var sx = (p.x / 800) * rect.width;
@@ -4799,8 +4849,15 @@
         tip.innerHTML =
           '<div class="chart-tooltip-label">' + p.label + '</div>' +
           '<div class="chart-tooltip-value">' + p.value + '</div>';
+
+        // Measure once we've set content so height reflects reality
+        var tipH = tip.offsetHeight || 60;
+        // If the dot is close to the top of the chart, flip the tooltip
+        // to appear BELOW the dot so it doesn't overflow into the buttons above.
+        var flip = sy < (tipH + 20);
+        tip.classList.toggle('is-flipped', flip);
         tip.style.left = sx + 'px';
-        tip.style.top = (sy - 12) + 'px';
+        tip.style.top = (flip ? (sy + 14) : (sy - 12)) + 'px';
         tip.classList.add('is-visible');
       });
 
@@ -4850,7 +4907,7 @@
        Once Charlie confirms his route, set VERCEL_URL below to that
        string (e.g. 'https://fnf-gainz-afl.vercel.app/api/afl-stats').
        If his response shape differs from ours, add the mapping inside
-       normalizeVercel() — otherwise it's a no-op.
+       normalizeVercel(). otherwise it's a no-op.
 
        Expected internal shape (used throughout this page):
          {
@@ -4872,7 +4929,7 @@
       // If his shape already matches, this is a no-op. Otherwise remap keys here.
       function normalizeVercel(raw) {
         if (!raw) return null;
-        // Examples of common remaps — uncomment and adjust once we see his response:
+        // Examples of common remaps. uncomment and adjust once we see his response:
         //   if (raw.current)  raw.season2026  = raw.current;
         //   if (raw.lastRound) raw.latestRound = raw.lastRound;
         //   if (raw.next)      raw.nextRound   = raw.next;
@@ -4946,7 +5003,7 @@
         .catch(function() { return tryStatsJson(); })
         .then(applyStats)
         .catch(function() {
-          // Both sources failed — hardcoded HTML fallback values remain visible. Silent.
+          // Both sources failed. hardcoded HTML fallback values remain visible. Silent.
         });
     })();
   </script>

@@ -310,7 +310,7 @@ img {
   opacity: 0.75;
 }
 
-/* Single-line variant — emoji + external link flank centered text */
+/* Single-line variant. emoji + external link flank centered text */
 .info-link--centered {
   position: relative;
 }
@@ -371,7 +371,7 @@ img {
   font-weight: 400;
 }
 
-/* Compact variant — used for Read Before You Join under packages heading */
+/* Compact variant. used for Read Before You Join under packages heading */
 .read-before-wrap {
   display: flex;
   justify-content: center;
