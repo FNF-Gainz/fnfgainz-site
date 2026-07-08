@@ -27,14 +27,14 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
   <link rel="stylesheet" href="../styles.css">
 
-  <!-- Fonts -->
+  <!-- Fonts: Space Grotesk (display), Inter (body), JetBrains Mono (data) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
   <meta name="facebook-domain-verification" content="rvdz1dijk208hjgyhh9yvlcztyrg3p">
 
-  <!-- Meta Pixel + CAPI dual-fire (deduplicated via shared event_id) -->
+  <!-- Meta Pixel + CAPI dual-fire -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -101,26 +101,21 @@
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=926315323681572&ev=PageView&noscript=1"
   /></noscript>
-  <!-- End Meta Pixel + CAPI -->
 
   <style>
-    /* ==================== AFL v3 — EDITORIAL TERMINAL ==================== */
+    /* ==================== AFL v4 — REFINED EDITORIAL TERMINAL ==================== */
 
     :root {
-      /* Palette — depth, precision, and one signature signal color */
       --bg: #050815;
       --bg-1: #0a0d1e;
-      --bg-2: rgba(11, 15, 30, 0.7);
-      --bg-3: rgba(18, 24, 42, 0.85);
       --surface: rgba(15, 20, 38, 0.65);
       --surface-strong: rgba(20, 26, 46, 0.85);
-      --border: rgba(255, 255, 255, 0.06);
-      --border-strong: rgba(255, 255, 255, 0.12);
-      --border-glow: rgba(0, 212, 255, 0.35);
+      --border: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(255, 255, 255, 0.14);
 
       --text: #f7f9fc;
-      --text-2: #a8b3cc;
-      --text-3: #6b7690;
+      --text-2: #b6c0d4;
+      --text-3: #7a869e;
       --text-4: #4a5578;
 
       --cyan: #00d4ff;
@@ -135,22 +130,21 @@
 
       --gold: #ffbb47;
       --gold-2: #ffd280;
+      --amber-dim: rgba(255, 187, 71, 0.15);
 
       --red: #ff5470;
+      --violet: #a78bfa;
 
-      --grad-signature: linear-gradient(135deg, var(--cyan) 0%, var(--blue) 60%, #7c3aed 100%);
+      --grad-signature: linear-gradient(135deg, var(--cyan) 0%, var(--blue) 55%, #a78bfa 100%);
       --grad-text: linear-gradient(135deg, #fff 0%, var(--cyan-2) 100%);
-      --grad-glow: radial-gradient(circle at center, rgba(0, 212, 255, 0.15) 0%, transparent 60%);
 
       --shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
-      --shadow-glow: 0 0 80px rgba(0, 212, 255, 0.2);
 
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       --dur: 0.4s;
-      --dur-slow: 0.8s;
 
-      --font-display: 'Bricolage Grotesque', 'Inter', -apple-system, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
     }
@@ -165,13 +159,14 @@
       overflow-x: hidden;
     }
 
-    /* Aurora — animated mesh behind everything */
+    /* ==================== AURORA ==================== */
     .aurora {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.7;
+      opacity: 0.65;
+      overflow: hidden;
     }
 
     .aurora::before,
@@ -184,9 +179,10 @@
       max-height: 900px;
       border-radius: 50%;
       filter: blur(120px);
-      opacity: 0.35;
+      opacity: 0.32;
       mix-blend-mode: screen;
       animation: aurora-drift 22s ease-in-out infinite;
+      will-change: transform;
     }
 
     .aurora::before {
@@ -196,7 +192,7 @@
     }
 
     .aurora::after {
-      background: radial-gradient(circle, #7c3aed 0%, transparent 65%);
+      background: radial-gradient(circle, var(--violet) 0%, transparent 65%);
       bottom: -10%;
       right: -10%;
       animation-delay: -11s;
@@ -218,7 +214,7 @@
       z-index: 1;
     }
 
-    /* ==================== TICKER STRIP ==================== */
+    /* ==================== TICKER ==================== */
     .ticker {
       position: relative;
       background: rgba(5, 8, 21, 0.75);
@@ -233,18 +229,19 @@
     .ticker-inner {
       display: flex;
       gap: 0;
-      padding: 10px 0;
+      padding: 11px 0;
       white-space: nowrap;
       animation: ticker-scroll 45s linear infinite;
+      will-change: transform;
     }
 
     .ticker-item {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       padding: 0 28px;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 500;
       letter-spacing: 0.02em;
       color: var(--text-2);
@@ -269,17 +266,12 @@
       font-weight: 700;
     }
 
-    .ticker-value--neg {
-      color: var(--red);
-      font-weight: 700;
-    }
-
     .ticker-live {
       color: var(--green);
       font-weight: 700;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .ticker-live::before {
@@ -298,11 +290,31 @@
     }
 
     @keyframes blink {
-      0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--green); }
-      50% { opacity: 0.35; box-shadow: 0 0 14px var(--green); }
+      0%, 100% { opacity: 1; box-shadow: 0 0 8px currentColor; }
+      50% { opacity: 0.35; box-shadow: 0 0 14px currentColor; }
     }
 
-    /* ==================== BUTTON SYSTEM ==================== */
+    /* ==================== REVEAL ANIMATIONS ==================== */
+    /* Elements marked [data-reveal] start hidden, animate in when visible */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    [data-reveal-delay="1"] { transition-delay: 0.08s; }
+    [data-reveal-delay="2"] { transition-delay: 0.16s; }
+    [data-reveal-delay="3"] { transition-delay: 0.24s; }
+    [data-reveal-delay="4"] { transition-delay: 0.32s; }
+    [data-reveal-delay="5"] { transition-delay: 0.40s; }
+    [data-reveal-delay="6"] { transition-delay: 0.48s; }
+
+    /* ==================== BUTTONS ==================== */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -332,7 +344,6 @@
         0 10px 30px rgba(0, 212, 255, 0.3),
         0 0 60px rgba(0, 212, 255, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.25);
-      font-weight: 600;
     }
 
     .btn-primary::before {
@@ -349,7 +360,7 @@
 
     @keyframes btn-glow-pulse {
       0%, 100% { opacity: 0.4; filter: blur(16px); }
-      50% { opacity: 0.7; filter: blur(24px); }
+      50% { opacity: 0.72; filter: blur(24px); }
     }
 
     .btn-primary::after {
@@ -359,7 +370,7 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
       transition: left 0.7s var(--ease-out);
     }
 
@@ -382,7 +393,7 @@
       font-weight: 500;
       opacity: 0.9;
       padding-left: 14px;
-      border-left: 1px solid rgba(255, 255, 255, 0.32);
+      border-left: 1px solid rgba(255, 255, 255, 0.35);
       letter-spacing: 0.02em;
     }
 
@@ -406,9 +417,44 @@
       box-shadow: 0 0 24px rgba(0, 212, 255, 0.2);
     }
 
+    /* Bordered link button (for dashboard link) */
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 14px 24px;
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--cyan-2);
+      text-decoration: none;
+      transition: all var(--dur) var(--ease);
+    }
+
+    .btn-link:hover {
+      background: rgba(0, 212, 255, 0.1);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(0, 212, 255, 0.15);
+    }
+
+    .btn-link .arrow {
+      transition: transform var(--dur) var(--ease);
+    }
+
+    .btn-link:hover .arrow {
+      transform: translateX(4px);
+    }
+
     /* ==================== HERO ==================== */
     .hero {
-      padding: clamp(64px, 10vh, 120px) 0 clamp(48px, 8vh, 96px);
+      padding: clamp(56px, 8vh, 96px) 0 clamp(40px, 6vh, 72px);
       position: relative;
     }
 
@@ -417,11 +463,11 @@
       align-items: center;
       gap: 10px;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-weight: 600;
       letter-spacing: 0.24em;
       color: var(--cyan-2);
-      padding: 8px 16px;
+      padding: 10px 18px;
       background: var(--cyan-dim);
       border: 1px solid rgba(0, 212, 255, 0.3);
       border-radius: 999px;
@@ -431,8 +477,8 @@
     }
 
     .hero-eyebrow-dot {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--cyan);
       box-shadow: 0 0 8px var(--cyan);
@@ -444,13 +490,13 @@
       grid-template-columns: 1fr;
       gap: 48px;
       align-items: center;
-      max-width: 1120px;
+      max-width: 1160px;
       margin: 0 auto;
     }
 
     @media (min-width: 900px) {
       .hero-grid {
-        grid-template-columns: 1.15fr 1fr;
+        grid-template-columns: 1.35fr 1fr;
         gap: 72px;
       }
     }
@@ -461,11 +507,9 @@
 
     .hero-title {
       font-family: var(--font-display);
-      font-optical-sizing: auto;
-      font-variation-settings: 'wdth' 100, 'opsz' 96;
-      font-size: clamp(2.5rem, 6vw + 0.5rem, 5rem);
-      line-height: 0.95;
-      letter-spacing: -0.045em;
+      font-size: clamp(2.5rem, 6vw + 0.5rem, 5.25rem);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
       color: var(--text);
       font-weight: 700;
       margin: 0 0 24px;
@@ -477,16 +521,14 @@
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      font-style: italic;
-      font-variation-settings: 'wdth' 90, 'opsz' 96;
+      font-weight: 700;
     }
 
-    /* Word-by-word reveal */
     .hero-title .word {
       display: inline-block;
       opacity: 0;
       transform: translateY(24px);
-      animation: word-in 0.9s var(--ease-out) forwards;
+      animation: word-in 0.85s var(--ease-out) forwards;
     }
 
     .hero-title .word:nth-child(1) { animation-delay: 0.05s; }
@@ -536,37 +578,33 @@
       animation: fade-in 0.9s var(--ease-out) 0.9s forwards;
     }
 
-    /* Hero portrait card */
+    /* Hero portrait — smaller, softer treatment */
     .hero-portrait {
       position: relative;
-      max-width: 480px;
+      max-width: 340px;
       margin: 0 auto;
       opacity: 0;
-      animation: fade-in-scale 1.1s var(--ease-out) 0.3s forwards;
+      animation: fade-in-scale 1.1s var(--ease-out) 0.3s forwards, portrait-float 6s ease-in-out infinite 1.5s;
     }
 
     @keyframes fade-in-scale {
-      from { opacity: 0; transform: scale(0.96); }
-      to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: scale(0.96) translateY(0); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes portrait-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     .hero-portrait-card {
       position: relative;
       aspect-ratio: 4 / 5;
-      border-radius: 24px;
+      border-radius: 22px;
       overflow: hidden;
-      background: linear-gradient(180deg, rgba(0, 212, 255, 0.2), rgba(10, 13, 30, 0.9));
+      background: linear-gradient(180deg, rgba(15, 25, 45, 0.6), rgba(10, 13, 30, 0.9));
       border: 1px solid var(--border-strong);
-      box-shadow: var(--shadow), 0 0 60px rgba(0, 212, 255, 0.1);
-    }
-
-    .hero-portrait-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 20%, rgba(0, 212, 255, 0.25), transparent 60%);
-      pointer-events: none;
-      z-index: 1;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 212, 255, 0.08);
     }
 
     .hero-portrait-card img {
@@ -583,26 +621,26 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, transparent 40%, rgba(5, 8, 21, 0.9) 100%);
+      background: linear-gradient(180deg, transparent 45%, rgba(5, 8, 21, 0.95) 100%);
       pointer-events: none;
       z-index: 1;
     }
 
     .hero-portrait-caption {
       position: absolute;
-      left: 24px;
-      right: 24px;
-      bottom: 24px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
       z-index: 2;
       display: flex;
       align-items: end;
       justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
     }
 
     .hero-portrait-name {
       font-family: var(--font-display);
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: var(--text);
@@ -611,7 +649,7 @@
 
     .hero-portrait-title {
       font-family: var(--font-mono);
-      font-size: 0.68rem;
+      font-size: 0.63rem;
       font-weight: 500;
       letter-spacing: 0.16em;
       color: var(--cyan-2);
@@ -624,7 +662,7 @@
       flex-direction: column;
       align-items: end;
       font-family: var(--font-mono);
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       letter-spacing: 0.1em;
       color: var(--text-3);
       text-transform: uppercase;
@@ -633,15 +671,15 @@
 
     .hero-portrait-badge strong {
       font-family: var(--font-display);
-      font-size: 1.3rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--green-2);
       letter-spacing: -0.02em;
       line-height: 1;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
-    /* Live scoreboard (below hero content on mobile, alongside portrait on desktop) */
+    /* Scoreboard */
     .scoreboard {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -652,13 +690,13 @@
       overflow: hidden;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      margin-top: 32px;
+      margin-top: 8px;
       opacity: 0;
       animation: fade-in 0.9s var(--ease-out) 1.05s forwards;
     }
 
     .scoreboard-cell {
-      background: rgba(10, 13, 30, 0.75);
+      background: rgba(10, 13, 30, 0.7);
       padding: 22px 12px 20px;
       text-align: center;
       position: relative;
@@ -671,24 +709,20 @@
 
     .scoreboard-value {
       font-family: var(--font-mono);
-      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      font-size: clamp(1.25rem, 2vw, 1.7rem);
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 1.05;
       color: var(--text);
     }
 
-    .scoreboard-value--pos {
-      color: var(--green-2);
-    }
-
-    .scoreboard-value--cyan {
-      color: var(--cyan-2);
-    }
+    .scoreboard-value--green { color: var(--green-2); }
+    .scoreboard-value--cyan { color: var(--cyan-2); }
+    .scoreboard-value--gold { color: var(--gold-2); }
 
     .scoreboard-label {
       font-family: var(--font-mono);
-      font-size: 0.58rem;
+      font-size: 0.6rem;
       font-weight: 600;
       letter-spacing: 0.16em;
       color: var(--text-3);
@@ -726,11 +760,11 @@
       display: flex;
       align-items: center;
       gap: 20px;
-      padding: 16px 24px;
+      padding: 18px 26px;
       background: rgba(5, 8, 21, 0.5);
       border-bottom: 1px solid var(--border);
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -832,7 +866,7 @@
       50% { r: 14; stroke-opacity: 0; }
     }
 
-    /* Stats grid */
+    /* Stats — differentiated color hierarchy */
     .terminal-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -884,7 +918,7 @@
       font-family: var(--font-mono);
       font-size: clamp(1rem, 1.5vw, 1.35rem);
       font-weight: 700;
-      color: var(--cyan-2);
+      color: var(--text);
       line-height: 1.05;
       letter-spacing: -0.02em;
       white-space: nowrap;
@@ -892,9 +926,14 @@
       text-overflow: ellipsis;
     }
 
+    /* Color hierarchy: profit + units = green, ROI = cyan (headline), bets = white */
+    .stat-value--profit { color: var(--green-2); }
+    .stat-value--units { color: var(--green-2); }
+    .stat-value--roi { color: var(--cyan-2); }
+
     .stat-label {
       font-family: var(--font-mono);
-      font-size: 0.58rem;
+      font-size: 0.6rem;
       font-weight: 600;
       letter-spacing: 0.14em;
       color: var(--text-3);
@@ -902,13 +941,13 @@
       margin-top: 6px;
     }
 
-    /* Verification pills */
+    /* Verified pills */
     .verified {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       justify-content: center;
-      padding: 20px 0 4px;
+      padding: 22px 0 4px;
       border-top: 1px solid var(--border);
     }
 
@@ -916,12 +955,12 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 7px 14px;
+      padding: 8px 14px;
       background: var(--green-dim);
       border: 1px solid rgba(0, 255, 157, 0.22);
       border-radius: 999px;
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 500;
       color: var(--text-2);
       white-space: nowrap;
@@ -932,39 +971,24 @@
       font-weight: 700;
     }
 
-    .terminal-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 18px 0 0;
-      margin-top: 24px;
+    /* Dashboard link — now a proper bordered button */
+    .terminal-link-wrap {
+      padding-top: 24px;
+      margin-top: 22px;
       border-top: 1px solid var(--border);
-      color: var(--cyan-2);
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-decoration: none;
-      transition: color var(--dur) var(--ease);
-    }
-
-    .terminal-link:hover {
-      color: var(--cyan);
-    }
-
-    .terminal-link .arrow {
-      transition: transform var(--dur) var(--ease);
-    }
-
-    .terminal-link:hover .arrow {
-      transform: translateX(6px);
+      display: flex;
+      justify-content: center;
     }
 
     /* ==================== SECTIONS ==================== */
     .section {
-      padding: clamp(64px, 10vh, 112px) 0;
+      padding: clamp(48px, 7vh, 88px) 0;
       position: relative;
+    }
+
+    /* Tighter transition between testimonials and close */
+    .section--tight-top {
+      padding-top: clamp(24px, 4vh, 40px);
     }
 
     .section-head {
@@ -978,8 +1002,6 @@
 
     .section-index {
       font-family: var(--font-display);
-      font-optical-sizing: auto;
-      font-variation-settings: 'wdth' 100, 'opsz' 96;
       font-size: clamp(8rem, 20vw, 16rem);
       font-weight: 700;
       line-height: 1;
@@ -996,30 +1018,39 @@
       opacity: 0.5;
     }
 
+    /* Bigger, more prominent eyebrow */
     .section-eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.24em;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
       color: var(--cyan-2);
       text-transform: uppercase;
-      padding: 6px 14px;
+      padding: 10px 20px;
       background: var(--cyan-dim);
-      border: 1px solid rgba(0, 212, 255, 0.25);
+      border: 1px solid rgba(0, 212, 255, 0.3);
       border-radius: 999px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      backdrop-filter: blur(10px);
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
     }
 
     .section-title {
       font-family: var(--font-display);
-      font-optical-sizing: auto;
-      font-variation-settings: 'wdth' 100, 'opsz' 72;
       font-size: clamp(1.85rem, 3.5vw + 0.5rem, 3rem);
       line-height: 1.05;
-      letter-spacing: -0.035em;
+      letter-spacing: -0.03em;
       color: var(--text);
       font-weight: 700;
       margin: 0;
@@ -1080,9 +1111,9 @@
 
     .pillar-index {
       font-family: var(--font-display);
-      font-size: 3.25rem;
+      font-size: 3.5rem;
       font-weight: 700;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.05em;
       background: var(--grad-signature);
       -webkit-background-clip: text;
       background-clip: text;
@@ -1094,12 +1125,12 @@
     .pillar-label {
       display: inline-block;
       font-family: var(--font-mono);
-      font-size: 0.62rem;
+      font-size: 0.66rem;
       font-weight: 700;
       letter-spacing: 0.18em;
       color: var(--cyan-2);
       text-transform: uppercase;
-      padding: 4px 10px;
+      padding: 5px 11px;
       background: var(--cyan-dim);
       border: 1px solid rgba(0, 212, 255, 0.25);
       border-radius: 999px;
@@ -1108,9 +1139,7 @@
 
     .pillar-title {
       font-family: var(--font-display);
-      font-optical-sizing: auto;
-      font-variation-settings: 'opsz' 24;
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: 600;
       color: var(--text);
       line-height: 1.25;
@@ -1120,7 +1149,7 @@
 
     .pillar p {
       color: var(--text-2);
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       line-height: 1.65;
       margin: 0;
     }
@@ -1166,7 +1195,7 @@
       left: 20px;
       bottom: 20px;
       font-family: var(--font-mono);
-      font-size: 0.62rem;
+      font-size: 0.64rem;
       font-weight: 600;
       letter-spacing: 0.18em;
       color: var(--cyan-2);
@@ -1198,9 +1227,7 @@
 
     .founder-quote {
       font-family: var(--font-display);
-      font-optical-sizing: auto;
-      font-variation-settings: 'wdth' 100, 'opsz' 72;
-      font-size: clamp(1.5rem, 2vw + 0.75rem, 2rem);
+      font-size: clamp(1.5rem, 2vw + 0.75rem, 2.15rem);
       font-weight: 600;
       color: var(--text);
       line-height: 1.2;
@@ -1221,7 +1248,7 @@
       align-items: center;
       gap: 14px;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.16em;
       color: var(--text-3);
@@ -1283,13 +1310,13 @@
     }
 
     .inclusion-text {
-      font-size: 0.95rem;
+      font-size: 0.97rem;
       color: var(--text-2);
       line-height: 1.6;
       align-self: center;
     }
 
-    /* Testimonials — marquee */
+    /* Receipts marquee */
     .receipts-marquee {
       margin: 0 -24px 40px;
       padding: 20px 0;
@@ -1326,6 +1353,7 @@
       gap: 0;
       animation: marquee 40s linear infinite;
       white-space: nowrap;
+      will-change: transform;
     }
 
     .receipts-item {
@@ -1387,13 +1415,11 @@
 
     .testimonial-quote {
       font-family: var(--font-display);
-      font-optical-sizing: auto;
-      font-variation-settings: 'opsz' 20;
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       font-weight: 500;
       color: var(--text);
       line-height: 1.5;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.005em;
       margin: 0 0 20px;
     }
 
@@ -1402,7 +1428,7 @@
       align-items: center;
       gap: 12px;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 700;
       letter-spacing: 0.16em;
       color: var(--text-3);
@@ -1418,7 +1444,7 @@
     }
 
     .testimonials-disclaimer {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--text-3);
       text-align: center;
       max-width: 640px;
@@ -1426,93 +1452,78 @@
       line-height: 1.6;
     }
 
-    /* Close */
+    /* Close — redesigned, less imposing */
     .close {
       max-width: 760px;
       margin: 0 auto;
       text-align: center;
     }
 
-    .close-price {
-      display: inline-block;
-      padding: 32px 52px;
-      background: var(--surface-strong);
-      border: 1px solid var(--border-strong);
-      border-radius: 24px;
-      margin-bottom: 44px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .close-price::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-    }
-
-    .close-price-label {
+    /* Compact inline price presentation instead of a heavy card */
+    .close-price-inline {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 20px;
+      padding: 8px 20px;
+      background: rgba(0, 212, 255, 0.06);
+      border: 1px solid rgba(0, 212, 255, 0.25);
+      border-radius: 999px;
       font-family: var(--font-mono);
       font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.24em;
+      font-weight: 600;
+      letter-spacing: 0.2em;
       color: var(--cyan-2);
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    .close-price-amount {
-      font-family: var(--font-display);
-      font-optical-sizing: auto;
-      font-variation-settings: 'wdth' 100, 'opsz' 96;
-      font-size: 4rem;
-      font-weight: 800;
-      color: var(--text);
-      line-height: 1;
-      letter-spacing: -0.045em;
-    }
-
-    .close-price-amount .period {
-      font-family: var(--font-mono);
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: var(--text-3);
-      margin-left: 6px;
-      letter-spacing: 0;
-    }
-
-    .close-price-note {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      color: var(--text-3);
-      margin-top: 12px;
       text-transform: uppercase;
     }
 
     .close-title {
       font-family: var(--font-display);
-      font-optical-sizing: auto;
-      font-variation-settings: 'wdth' 100, 'opsz' 96;
-      font-size: clamp(2rem, 3.5vw + 0.5rem, 3rem);
+      font-size: clamp(2.25rem, 4vw + 0.5rem, 3.5rem);
       font-weight: 700;
       color: var(--text);
       line-height: 1.05;
-      letter-spacing: -0.04em;
-      margin: 0 0 16px;
+      letter-spacing: -0.035em;
+      margin: 0 0 20px;
       text-wrap: balance;
+    }
+
+    .close-title .accent {
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--blue-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .close-price-hero {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 6px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .close-price-hero-amount {
+      font-size: clamp(3rem, 5vw + 1rem, 4.5rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .close-price-hero-period {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--text-3);
+      letter-spacing: 0;
     }
 
     .close-sub {
       font-size: 1.1rem;
       color: var(--text-2);
-      margin: 0 0 36px;
+      margin: 0 0 32px;
       text-wrap: balance;
     }
 
@@ -1523,7 +1534,7 @@
       gap: 14px;
       flex-wrap: wrap;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       font-weight: 500;
       letter-spacing: 0.12em;
       color: var(--text-3);
@@ -1533,10 +1544,10 @@
 
     /* Champion */
     .champion {
-      margin: 80px auto 0;
+      margin: 72px auto 0;
       padding: 32px;
       background: linear-gradient(135deg, rgba(255, 187, 71, 0.08) 0%, rgba(15, 20, 38, 0.5) 100%);
-      border: 1px solid rgba(255, 187, 71, 0.2);
+      border: 1px solid rgba(255, 187, 71, 0.22);
       border-radius: 20px;
       text-align: left;
       max-width: 680px;
@@ -1559,7 +1570,7 @@
     .champion-note {
       display: inline-block;
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.2em;
       color: var(--gold);
@@ -1573,9 +1584,7 @@
 
     .champion-title {
       font-family: var(--font-display);
-      font-optical-sizing: auto;
-      font-variation-settings: 'opsz' 24;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       font-weight: 600;
       color: var(--text);
       line-height: 1.35;
@@ -1584,7 +1593,7 @@
     }
 
     .champion-sub {
-      font-size: 0.92rem;
+      font-size: 0.94rem;
       color: var(--text-2);
       line-height: 1.55;
       margin: 0 0 22px;
@@ -1600,7 +1609,7 @@
 
     .champion-price {
       font-family: var(--font-mono);
-      font-size: 0.98rem;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--gold-2);
       letter-spacing: -0.01em;
@@ -1609,7 +1618,7 @@
     .champion-price strong {
       color: var(--text);
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 1.08rem;
     }
 
     /* FAQ */
@@ -1636,7 +1645,7 @@
     }
 
     .faq-item summary {
-      padding: 20px 24px;
+      padding: 22px 26px;
       cursor: pointer;
       font-weight: 500;
       color: var(--text);
@@ -1674,9 +1683,9 @@
     }
 
     .faq-answer {
-      padding: 0 24px 22px;
+      padding: 0 26px 24px;
       color: var(--text-2);
-      font-size: 0.95rem;
+      font-size: 0.96rem;
       line-height: 1.7;
     }
 
@@ -1696,7 +1705,7 @@
     }
 
     .footer-rg {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--text-3);
       line-height: 1.7;
       margin-bottom: 24px;
@@ -1712,7 +1721,7 @@
 
     .footer-links a {
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 500;
       letter-spacing: 0.16em;
       color: var(--text-3);
@@ -1727,7 +1736,7 @@
 
     .footer-copy {
       font-family: var(--font-mono);
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       font-weight: 500;
       letter-spacing: 0.12em;
       color: var(--text-3);
@@ -1749,7 +1758,7 @@
       }
 
       .founder-portrait {
-        max-width: 260px;
+        max-width: 280px;
         margin: 0 auto;
       }
 
@@ -1794,8 +1803,8 @@
       }
 
       .terminal-header {
-        padding: 12px 16px;
-        font-size: 0.62rem;
+        padding: 14px 18px;
+        font-size: 0.64rem;
         gap: 12px;
       }
 
@@ -1825,14 +1834,6 @@
         width: 100%;
       }
 
-      .close-price {
-        padding: 24px 32px;
-      }
-
-      .close-price-amount {
-        font-size: 3rem;
-      }
-
       .founder-mark {
         font-size: 4rem;
       }
@@ -1840,6 +1841,11 @@
       .receipts-marquee {
         margin-left: -16px;
         margin-right: -16px;
+      }
+
+      .section-eyebrow {
+        font-size: 0.78rem;
+        padding: 8px 16px;
       }
     }
 
@@ -1849,6 +1855,7 @@
       .ticker-live::before,
       .stats-label--live::before,
       .hero-eyebrow-dot,
+      .section-eyebrow::before,
       .chart-line,
       .chart-area,
       .chart-endpoint-pulse,
@@ -1862,7 +1869,8 @@
       .hero-cta-row,
       .hero-trust,
       .hero-portrait,
-      .scoreboard {
+      .scoreboard,
+      [data-reveal] {
         animation: none !important;
         transition: none !important;
       }
@@ -1872,7 +1880,8 @@
       .hero-cta-row,
       .hero-trust,
       .hero-portrait,
-      .scoreboard {
+      .scoreboard,
+      [data-reveal] {
         opacity: 1 !important;
         transform: none !important;
       }
@@ -1893,7 +1902,7 @@
   <div class="aurora" aria-hidden="true"></div>
   <canvas id="particles" class="particles-canvas"></canvas>
 
-  <!-- LIVE TICKER STRIP -->
+  <!-- LIVE TICKER -->
   <div class="ticker" aria-hidden="true">
     <div class="ticker-inner">
       <span class="ticker-item"><span class="ticker-live">Live</span></span>
@@ -1942,7 +1951,7 @@
 
           <div class="scoreboard">
             <div class="scoreboard-cell">
-              <div class="scoreboard-value scoreboard-value--pos" data-count-to="19" data-suffix="%" data-stat="allTime.roi">19%</div>
+              <div class="scoreboard-value scoreboard-value--cyan" data-count-to="19" data-suffix="%" data-stat="allTime.roi">19%</div>
               <div class="scoreboard-label">ROI</div>
             </div>
             <div class="scoreboard-cell">
@@ -1950,11 +1959,11 @@
               <div class="scoreboard-label">Bets</div>
             </div>
             <div class="scoreboard-cell">
-              <div class="scoreboard-value scoreboard-value--pos" data-count-to="45189" data-format="currency" data-stat="allTime.profit">$45,189</div>
+              <div class="scoreboard-value scoreboard-value--green" data-count-to="45189" data-format="currency" data-stat="allTime.profit">$45,189</div>
               <div class="scoreboard-label">Profit</div>
             </div>
             <div class="scoreboard-cell">
-              <div class="scoreboard-value scoreboard-value--cyan" data-count-to="5">5</div>
+              <div class="scoreboard-value scoreboard-value--gold" data-count-to="5">5</div>
               <div class="scoreboard-label">Seasons</div>
             </div>
           </div>
@@ -1978,8 +1987,8 @@
       </div>
     </section>
 
-    <!-- LIVE TERMINAL / CHART -->
-    <div class="terminal-wrap">
+    <!-- LIVE TERMINAL -->
+    <div class="terminal-wrap" data-reveal>
       <div class="terminal">
         <div class="terminal-header">
           <div class="terminal-signal">
@@ -2000,7 +2009,6 @@
                 </linearGradient>
               </defs>
 
-              <!-- Grid lines -->
               <line x1="42" y1="31" x2="790" y2="31" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
               <line x1="42" y1="73" x2="790" y2="73" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
               <line x1="42" y1="115" x2="790" y2="115" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
@@ -2008,30 +2016,25 @@
               <line x1="42" y1="198" x2="790" y2="198" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
               <line x1="42" y1="240" x2="790" y2="240" stroke="rgba(255,255,255,0.12)"/>
 
-              <!-- Y-axis labels -->
-              <text x="38" y="35" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$50k</text>
-              <text x="38" y="77" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$40k</text>
-              <text x="38" y="119" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$30k</text>
-              <text x="38" y="160" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$20k</text>
-              <text x="38" y="202" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$10k</text>
-              <text x="38" y="244" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$0</text>
+              <text x="38" y="35" fill="#7a869e" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$50k</text>
+              <text x="38" y="77" fill="#7a869e" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$40k</text>
+              <text x="38" y="119" fill="#7a869e" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$30k</text>
+              <text x="38" y="160" fill="#7a869e" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$20k</text>
+              <text x="38" y="202" fill="#7a869e" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$10k</text>
+              <text x="38" y="244" fill="#7a869e" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">$0</text>
 
-              <!-- Area fill -->
               <path class="chart-area" d="M 42 236 L 63 234 L 84 221 L 106 210 L 127 210 L 149 210 L 170 201 L 192 197 L 213 191 L 234 177 L 255 163 L 276 164 L 298 153 L 319 156 L 340 153 L 361 159 L 383 150 L 405 154 L 426 153 L 447 144 L 468 138 L 489 140 L 511 135 L 532 129 L 553 120 L 574 114 L 596 110 L 618 95 L 639 84 L 660 81 L 676 78 L 688 79 L 700 72 L 706 72 L 713 68 L 719 69 L 726 69 L 732 70 L 739 70 L 745 68 L 751 68 L 758 69 L 764 63 L 771 62 L 777 57 L 784 54 L 790 51 L 790 240 L 42 240 Z" fill="url(#chart-grad)"/>
 
-              <!-- Line -->
               <path class="chart-line" d="M 42 236 L 63 234 L 84 221 L 106 210 L 127 210 L 149 210 L 170 201 L 192 197 L 213 191 L 234 177 L 255 163 L 276 164 L 298 153 L 319 156 L 340 153 L 361 159 L 383 150 L 405 154 L 426 153 L 447 144 L 468 138 L 489 140 L 511 135 L 532 129 L 553 120 L 574 114 L 596 110 L 618 95 L 639 84 L 660 81 L 676 78 L 688 79 L 700 72 L 706 72 L 713 68 L 719 69 L 726 69 L 732 70 L 739 70 L 745 68 L 751 68 L 758 69 L 764 63 L 771 62 L 777 57 L 784 54 L 790 51" stroke="#00d4ff" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
 
-              <!-- End point pulse -->
               <circle class="chart-endpoint-pulse" cx="790" cy="51" r="8" fill="none" stroke="#00d4ff" stroke-opacity="0.35" stroke-width="2"/>
               <circle class="chart-endpoint-core" cx="790" cy="51" r="4" fill="#00d4ff"/>
 
-              <!-- X-axis labels -->
-              <text x="42" y="262" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2022</text>
-              <text x="192" y="262" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2023</text>
-              <text x="340" y="262" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2024</text>
-              <text x="511" y="262" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2025</text>
-              <text x="660" y="262" fill="#6b7690" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2026</text>
+              <text x="42" y="262" fill="#7a869e" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2022</text>
+              <text x="192" y="262" fill="#7a869e" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2023</text>
+              <text x="340" y="262" fill="#7a869e" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2024</text>
+              <text x="511" y="262" fill="#7a869e" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2025</text>
+              <text x="660" y="262" fill="#7a869e" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2026</text>
             </svg>
           </div>
 
@@ -2044,15 +2047,15 @@
                   <div class="stat-label">Bets</div>
                 </div>
                 <div class="stat">
-                  <div class="stat-value" data-stat="allTime.profit">$45,189</div>
+                  <div class="stat-value stat-value--profit" data-stat="allTime.profit">$45,189</div>
                   <div class="stat-label">Profit</div>
                 </div>
                 <div class="stat">
-                  <div class="stat-value" data-stat="allTime.units">+903.8</div>
+                  <div class="stat-value stat-value--units" data-stat="allTime.units">+903.8</div>
                   <div class="stat-label">Units</div>
                 </div>
                 <div class="stat">
-                  <div class="stat-value" data-stat="allTime.roi">19%</div>
+                  <div class="stat-value stat-value--roi" data-stat="allTime.roi">19%</div>
                   <div class="stat-label">ROI</div>
                 </div>
               </div>
@@ -2066,15 +2069,15 @@
                   <div class="stat-label">Bets</div>
                 </div>
                 <div class="stat">
-                  <div class="stat-value" data-stat="season2026.profit">$5,034</div>
+                  <div class="stat-value stat-value--profit" data-stat="season2026.profit">$5,034</div>
                   <div class="stat-label">Profit</div>
                 </div>
                 <div class="stat">
-                  <div class="stat-value" data-stat="season2026.units">+100.7</div>
+                  <div class="stat-value stat-value--units" data-stat="season2026.units">+100.7</div>
                   <div class="stat-label">Units</div>
                 </div>
                 <div class="stat">
-                  <div class="stat-value" data-stat="season2026.roi">18%</div>
+                  <div class="stat-value stat-value--roi" data-stat="season2026.roi">18%</div>
                   <div class="stat-label">ROI</div>
                 </div>
               </div>
@@ -2088,36 +2091,38 @@
             <span class="verify"><span class="verify-check">&#10003;</span>5+ seasons of data</span>
           </div>
 
-          <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="terminal-link">
-            <span>Open full results dashboard</span>
-            <span class="arrow">&rarr;</span>
-          </a>
+          <div class="terminal-link-wrap">
+            <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="btn-link">
+              <span>Open full results dashboard</span>
+              <span class="arrow">&rarr;</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- SYSTEM -->
     <section class="section">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <div class="section-index" aria-hidden="true">01</div>
         <span class="section-eyebrow">The System</span>
         <h2 class="section-title">Three principles. Every bet, every round, every season.</h2>
       </div>
 
       <div class="pillars">
-        <div class="pillar" data-tilt>
+        <div class="pillar" data-tilt data-reveal data-reveal-delay="1">
           <div class="pillar-index">01</div>
           <div class="pillar-label">Disposals</div>
           <h3 class="pillar-title">A decade in AFL disposal markets</h3>
           <p>Ten years analysing player markets. Five years executing publicly. Custom data models combined with live bookmaker odds pick our best plays each week.</p>
         </div>
-        <div class="pillar" data-tilt>
+        <div class="pillar" data-tilt data-reveal data-reveal-delay="2">
           <div class="pillar-index">02</div>
           <div class="pillar-label">Consistent</div>
           <h3 class="pillar-title">Built on risk management for consistent results</h3>
           <p>80% of bets sit at $1.80 to $2.50 odds on reliable players with strong disposal floors. Steady compounding that keeps profit building.</p>
         </div>
-        <div class="pillar" data-tilt>
+        <div class="pillar" data-tilt data-reveal data-reveal-delay="3">
           <div class="pillar-index">03</div>
           <div class="pillar-label">Upside</div>
           <h3 class="pillar-title">Smart, controlled upside on higher value plays</h3>
@@ -2132,11 +2137,11 @@
         <div class="section-index" aria-hidden="true">02</div>
       </div>
       <div class="founder">
-        <div class="founder-portrait">
+        <div class="founder-portrait" data-reveal>
           <span class="founder-tag">Founder</span>
           <img src="../assets/jordan-portrait.png" alt="Jordan, FNF Gainz founder" decoding="async">
         </div>
-        <div class="founder-content">
+        <div class="founder-content" data-reveal data-reveal-delay="1">
           <div class="founder-mark" aria-hidden="true">&ldquo;</div>
           <h2 class="founder-quote">This isn't a tipping service. It's a structured system.</h2>
           <p>I've been analysing AFL markets every day for ten years. Five years ago I started sharing the strategy publicly, and we've been at the front of the industry ever since.</p>
@@ -2148,44 +2153,44 @@
 
     <!-- WHAT'S INCLUDED -->
     <section class="section">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <div class="section-index" aria-hidden="true">03</div>
         <span class="section-eyebrow">What's Included</span>
         <h2 class="section-title">Everything for a full season of disciplined execution.</h2>
       </div>
 
       <div class="inclusions">
-        <div class="inclusion">
+        <div class="inclusion" data-reveal data-reveal-delay="1">
           <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
           </span>
           <div class="inclusion-text">Every bet posted directly into our Discord channels each round. Notified for all positions.</div>
         </div>
-        <div class="inclusion">
+        <div class="inclusion" data-reveal data-reveal-delay="2">
           <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
           </span>
           <div class="inclusion-text">Categorised streams: non-promotion, promotion, high-value plays, alt-bookies, and bonus bet conversions.</div>
         </div>
-        <div class="inclusion">
+        <div class="inclusion" data-reveal data-reveal-delay="3">
           <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </span>
           <div class="inclusion-text">Honest round updates from Thursday through Sunday. Wins, losses, and what's coming.</div>
         </div>
-        <div class="inclusion">
+        <div class="inclusion" data-reveal data-reveal-delay="4">
           <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/></svg>
           </span>
           <div class="inclusion-text">Weekly performance reports and live results tracking on the public dashboard.</div>
         </div>
-        <div class="inclusion">
+        <div class="inclusion" data-reveal data-reveal-delay="5">
           <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
           </span>
           <div class="inclusion-text">Personal onboarding to confirm your unit sizing and set you up for success.</div>
         </div>
-        <div class="inclusion">
+        <div class="inclusion" data-reveal data-reveal-delay="6">
           <span class="inclusion-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </span>
@@ -2196,10 +2201,10 @@
 
     <!-- MEMBER RECEIPTS -->
     <section class="section">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <div class="section-index" aria-hidden="true">04</div>
         <span class="section-eyebrow">Member Receipts</span>
-        <h2 class="section-title">Five years of members. Real results, real names.</h2>
+        <h2 class="section-title">Real members. Real results.</h2>
       </div>
 
       <div class="receipts-marquee" aria-hidden="true">
@@ -2221,19 +2226,19 @@
       </div>
 
       <div class="testimonials">
-        <div class="testimonial" data-tilt>
+        <div class="testimonial" data-tilt data-reveal data-reveal-delay="1">
           <p class="testimonial-quote">"Following the system through a full season completely changed how I approach betting. Been able to grow my own business and move into a bigger house off the back of it."</p>
           <p class="testimonial-author">Curtis</p>
         </div>
-        <div class="testimonial" data-tilt>
+        <div class="testimonial" data-tilt data-reveal data-reveal-delay="2">
           <p class="testimonial-quote">"So much confidence in the picks knowing the high level of research and analysis done beforehand."</p>
           <p class="testimonial-author">iiDooblay</p>
         </div>
-        <div class="testimonial" data-tilt>
+        <div class="testimonial" data-tilt data-reveal data-reveal-delay="3">
           <p class="testimonial-quote">"Personally around $8k profit for the season. Couldn't recommend the AFL package more."</p>
           <p class="testimonial-author">Lorelius</p>
         </div>
-        <div class="testimonial" data-tilt>
+        <div class="testimonial" data-tilt data-reveal data-reveal-delay="4">
           <p class="testimonial-quote">"With the mountain of work FNF puts in I was easily able to scale to exponentially profitable levels."</p>
           <p class="testimonial-author">Vitamin_GG</p>
         </div>
@@ -2242,27 +2247,25 @@
       <p class="testimonials-disclaimer">Individual results vary. Past performance does not guarantee future results. AFL betting carries risk and losing periods are part of the process.</p>
     </section>
 
-    <!-- CLOSE — Pricing + Final CTA + Champion upsell -->
-    <section class="section">
-      <div class="section-head">
+    <!-- CLOSE — redesigned, tighter, less imposing -->
+    <section class="section section--tight-top">
+      <div class="section-head" data-reveal>
         <div class="section-index" aria-hidden="true">05</div>
       </div>
       <div class="close">
-        <div class="close-price">
-          <div class="close-price-label">AFL Premium</div>
-          <div class="close-price-amount">$140<span class="period">/mo</span></div>
-          <div class="close-price-note">AUD &middot; Cancel anytime &middot; No lock-in</div>
+        <span class="close-price-inline" data-reveal>AFL Premium &middot; $140 AUD / month</span>
+
+        <h2 class="close-title" data-reveal data-reveal-delay="1">The <span class="accent">system</span> is open.</h2>
+        <p class="close-sub" data-reveal data-reveal-delay="2">Join the members executing the same disciplined strategy this season.</p>
+
+        <div data-reveal data-reveal-delay="3">
+          <button class="btn btn-primary btn-large lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
+            <span>Join AFL Premium</span>
+            <span class="btn-price">$140 AUD / mo</span>
+          </button>
         </div>
 
-        <h2 class="close-title">The system is open now.</h2>
-        <p class="close-sub">Join the members executing the same system this season.</p>
-
-        <button class="btn btn-primary btn-large lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
-          <span>Join AFL Premium</span>
-          <span class="btn-price">$140 AUD / mo</span>
-        </button>
-
-        <div class="close-trust">
+        <div class="close-trust" data-reveal data-reveal-delay="4">
           <span>5 years of member trust</span>
           <span>&middot;</span>
           <span>Cancel anytime</span>
@@ -2270,7 +2273,7 @@
           <span>18+ only</span>
         </div>
 
-        <div class="champion">
+        <div class="champion" data-reveal data-reveal-delay="5">
           <span class="champion-note">Following both codes?</span>
           <h3 class="champion-title">Champion is the full AFL system plus the full NRL system, run side by side.</h3>
           <p class="champion-sub">Each system keeps its own staking and tracking. Results viewed together across the full season.</p>
@@ -2284,49 +2287,22 @@
 
     <!-- FAQ -->
     <section class="section">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <div class="section-index" aria-hidden="true">06</div>
         <span class="section-eyebrow">FAQ</span>
         <h2 class="section-title">Common questions.</h2>
       </div>
 
       <div class="faq">
-        <details class="faq-item">
-          <summary>How do I get access after I join?</summary>
-          <div class="faq-answer">Checkout runs through LaunchPass. Once payment is processed, your Discord account is automatically linked to your AFL Premium membership and the private bet channels unlock in our server. You'll get a welcome message with onboarding instructions, and you can open a personal onboarding ticket so the team can confirm your unit sizing and bookmaker setup.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Do you guarantee profits?</summary>
-          <div class="faq-answer">Nobody can guarantee profits. However, we can confirm that we have delivered 5 years of profitable strategy for our members. AFL Premium provides systems and strategies built around long-term edge, executed with discipline and proper bankroll management. Losing weekends happen and drawdowns are part of the process. Follow our strategy, ask questions, be disciplined, and you will succeed.</div>
-        </details>
-        <details class="faq-item">
-          <summary>How much money do I need to start?</summary>
-          <div class="faq-answer">There's no fixed minimum. We recommend 1 unit equals roughly 1% of your bankroll. Our tracked bets use $50 units, so a $5,000 bankroll matches our tracked results 1:1. Smaller bankrolls scale down proportionally (e.g. $1 units on a $100 bankroll). If you're unsure, our onboarding team helps you size correctly.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Do I need accounts with specific bookmakers?</summary>
-          <div class="faq-answer">Ideally yes. Sportsbet, TAB, Bet365 and Ladbrokes are the major Australian bookmakers we use. Having more bookies improves your ability to find the best odds and follow bets accurately. If you're missing an account or restricted, we'll help you organise alternatives during onboarding.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Where can I see the full results history?</summary>
-          <div class="faq-answer">Every bet, win and loss is logged on our <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer">public results dashboard</a>. View all historical and current performance, broken down weekly and seasonally.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Is this suitable for beginners?</summary>
-          <div class="faq-answer">Yes, provided you're willing to follow instructions and manage your bankroll properly. We recommend beginners start with smaller units and work closely with our team during onboarding. This isn't a get-rich-quick service. It's a long-term, disciplined system.</div>
-        </details>
-        <details class="faq-item">
-          <summary>What happens during a losing streak?</summary>
-          <div class="faq-answer">Losing streaks are part of the process. Short-term variance is normal, even with strong edges. The system works because we don't change strategy after a bad round. We hold the line, track everything, and let the edge play out across the full season.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Can I cancel my membership?</summary>
-          <div class="faq-answer">Yes, anytime. You can manage your subscription through your LaunchPass portal. Once cancelled, access remains active until the end of your current billing period. No lock-in.</div>
-        </details>
-        <details class="faq-item">
-          <summary>What support is available?</summary>
-          <div class="faq-answer">Personal onboarding is included for every new member. Our team helps you set your unit sizing, organise your bookmaker accounts, and understand how to follow the package correctly from day one. Ongoing support is available through tickets and the active member community.</div>
-        </details>
+        <details class="faq-item" data-reveal><summary>How do I get access after I join?</summary><div class="faq-answer">Checkout runs through LaunchPass. Once payment is processed, your Discord account is automatically linked to your AFL Premium membership and the private bet channels unlock in our server. You'll get a welcome message with onboarding instructions, and you can open a personal onboarding ticket so the team can confirm your unit sizing and bookmaker setup.</div></details>
+        <details class="faq-item" data-reveal><summary>Do you guarantee profits?</summary><div class="faq-answer">Nobody can guarantee profits. However, we can confirm that we have delivered 5 years of profitable strategy for our members. AFL Premium provides systems and strategies built around long-term edge, executed with discipline and proper bankroll management. Losing weekends happen and drawdowns are part of the process. Follow our strategy, ask questions, be disciplined, and you will succeed.</div></details>
+        <details class="faq-item" data-reveal><summary>How much money do I need to start?</summary><div class="faq-answer">There's no fixed minimum. We recommend 1 unit equals roughly 1% of your bankroll. Our tracked bets use $50 units, so a $5,000 bankroll matches our tracked results 1:1. Smaller bankrolls scale down proportionally (e.g. $1 units on a $100 bankroll). If you're unsure, our onboarding team helps you size correctly.</div></details>
+        <details class="faq-item" data-reveal><summary>Do I need accounts with specific bookmakers?</summary><div class="faq-answer">Ideally yes. Sportsbet, TAB, Bet365 and Ladbrokes are the major Australian bookmakers we use. Having more bookies improves your ability to find the best odds and follow bets accurately. If you're missing an account or restricted, we'll help you organise alternatives during onboarding.</div></details>
+        <details class="faq-item" data-reveal><summary>Where can I see the full results history?</summary><div class="faq-answer">Every bet, win and loss is logged on our <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer">public results dashboard</a>. View all historical and current performance, broken down weekly and seasonally.</div></details>
+        <details class="faq-item" data-reveal><summary>Is this suitable for beginners?</summary><div class="faq-answer">Yes, provided you're willing to follow instructions and manage your bankroll properly. We recommend beginners start with smaller units and work closely with our team during onboarding. This isn't a get-rich-quick service. It's a long-term, disciplined system.</div></details>
+        <details class="faq-item" data-reveal><summary>What happens during a losing streak?</summary><div class="faq-answer">Losing streaks are part of the process. Short-term variance is normal, even with strong edges. The system works because we don't change strategy after a bad round. We hold the line, track everything, and let the edge play out across the full season.</div></details>
+        <details class="faq-item" data-reveal><summary>Can I cancel my membership?</summary><div class="faq-answer">Yes, anytime. You can manage your subscription through your LaunchPass portal. Once cancelled, access remains active until the end of your current billing period. No lock-in.</div></details>
+        <details class="faq-item" data-reveal><summary>What support is available?</summary><div class="faq-answer">Personal onboarding is included for every new member. Our team helps you set your unit sizing, organise your bookmaker accounts, and understand how to follow the package correctly from day one. Ongoing support is available through tickets and the active member community.</div></details>
       </div>
     </section>
 
@@ -2374,7 +2350,33 @@
     })();
   </script>
 
-  <!-- Number count-up on scroll (respects prefers-reduced-motion) -->
+  <!-- Scroll-triggered reveal animations for [data-reveal] elements -->
+  <script>
+    (function() {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced || !('IntersectionObserver' in window)) {
+        document.querySelectorAll('[data-reveal]').forEach(function(el) {
+          el.classList.add('is-visible');
+        });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
+      document.querySelectorAll('[data-reveal]').forEach(function(el) {
+        observer.observe(el);
+      });
+    })();
+  </script>
+
+  <!-- Number count-up on scroll -->
   <script>
     (function() {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2382,19 +2384,14 @@
 
       function formatNum(n, format, suffix) {
         var rounded = Math.round(n);
-        if (format === 'currency') {
-          return '+$' + rounded.toLocaleString('en-AU');
-        }
-        if (format === 'int') {
-          return rounded.toLocaleString('en-AU');
-        }
+        if (format === 'currency') return '+$' + rounded.toLocaleString('en-AU');
+        if (format === 'int') return rounded.toLocaleString('en-AU');
         return rounded + (suffix || '');
       }
 
       function animate(el) {
         if (el.dataset.counted === '1') return;
         el.dataset.counted = '1';
-
         var target = parseFloat(el.dataset.countTo);
         var format = el.dataset.format;
         var suffix = el.dataset.suffix || '';
@@ -2427,7 +2424,7 @@
     })();
   </script>
 
-  <!-- 3D tilt on cards (desktop-only, hover devices) -->
+  <!-- 3D tilt on cards (desktop hover only) -->
   <script>
     (function() {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2435,7 +2432,6 @@
       if (reduced || !canHover) return;
 
       var tiltEls = document.querySelectorAll('[data-tilt]');
-
       tiltEls.forEach(function(el) {
         el.style.transformStyle = 'preserve-3d';
         el.style.willChange = 'transform';
@@ -2444,8 +2440,8 @@
           var rect = el.getBoundingClientRect();
           var x = (e.clientX - rect.left) / rect.width;
           var y = (e.clientY - rect.top) / rect.height;
-          var rx = (0.5 - y) * 6;
-          var ry = (x - 0.5) * 6;
+          var rx = (0.5 - y) * 5;
+          var ry = (x - 0.5) * 5;
           el.style.transform = 'perspective(1000px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-4px)';
         });
 
@@ -2456,25 +2452,45 @@
     })();
   </script>
 
-  <!-- Load stats from stats.json and inject into the page. -->
+  <!-- Subtle parallax on aurora + hero portrait as page scrolls -->
+  <script>
+    (function() {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) return;
+
+      var aurora = document.querySelector('.aurora');
+      var portrait = document.querySelector('.hero-portrait');
+      var ticking = false;
+
+      function update() {
+        var y = window.scrollY;
+        if (aurora) aurora.style.transform = 'translateY(' + (y * 0.15) + 'px)';
+        if (portrait) portrait.style.setProperty('--parallax', (y * -0.05) + 'px');
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      }, { passive: true });
+    })();
+  </script>
+
+  <!-- Load stats from stats.json -->
   <script>
     (function() {
       function formatStat(key, value) {
         if (value === null || value === undefined) return null;
-        if (key.endsWith('.bets')) {
-          return Number(value).toLocaleString('en-AU');
-        }
-        if (key.endsWith('.profit')) {
-          return '$' + Number(value).toLocaleString('en-AU');
-        }
+        if (key.endsWith('.bets')) return Number(value).toLocaleString('en-AU');
+        if (key.endsWith('.profit')) return '$' + Number(value).toLocaleString('en-AU');
         if (key.endsWith('.units')) {
           var v = Number(value);
           var prefix = v >= 0 ? '+' : '';
           return prefix + v;
         }
-        if (key.endsWith('.roi')) {
-          return Number(value) + '%';
-        }
+        if (key.endsWith('.roi')) return Number(value) + '%';
         return String(value);
       }
 
@@ -2491,15 +2507,12 @@
         })
         .then(function(data) {
           document.querySelectorAll('[data-stat]').forEach(function(el) {
-            // Skip elements that are actively count-up animating (they use data-count-to)
             if (el.hasAttribute('data-count-to') && el.dataset.counted === '1') {
-              // Update the value but preserve current display for count-to elements
               var key = el.getAttribute('data-stat');
               var value = getByPath(data, key);
               var formatted = formatStat(key, value);
               if (formatted !== null) el.textContent = formatted;
             } else if (!el.hasAttribute('data-count-to')) {
-              // Standard stat replacement
               var key = el.getAttribute('data-stat');
               var value = getByPath(data, key);
               var formatted = formatStat(key, value);
