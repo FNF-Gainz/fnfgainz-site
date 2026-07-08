@@ -559,51 +559,85 @@
       to { opacity: 1; }
     }
 
-    /* Live recent round badge — NEW */
-    .hero-live-round {
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 18px;
-      background: rgba(0, 255, 157, 0.06);
-      border: 1px solid rgba(0, 255, 157, 0.25);
-      border-radius: 12px;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--text-2);
-      margin-bottom: 32px;
+    /* Round status row — Last + Next paired */
+    .hero-rounds {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
       opacity: 0;
       animation: fade-in 0.9s var(--ease-out) 0.7s forwards;
-      backdrop-filter: blur(10px);
     }
 
-    .hero-live-round-dot {
-      width: 8px;
-      height: 8px;
+    .round-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: var(--text-2);
+      line-height: 1.2;
+    }
+
+    .round-pill--last {
+      background: rgba(0, 255, 157, 0.06);
+      border: 1px solid rgba(0, 255, 157, 0.28);
+    }
+
+    .round-pill--next {
+      background: rgba(255, 187, 71, 0.06);
+      border: 1px solid rgba(255, 187, 71, 0.28);
+    }
+
+    .round-pill-dot {
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 10px var(--green);
-      animation: blink 2s ease-in-out infinite;
       flex-shrink: 0;
     }
 
-    .hero-live-round-label {
-      font-weight: 600;
-      color: var(--green-2);
-      letter-spacing: 0.14em;
+    .round-pill--last .round-pill-dot {
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    .round-pill--next .round-pill-dot {
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      animation: blink 2.4s ease-in-out infinite;
+    }
+
+    .round-pill-label {
+      font-weight: 700;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      font-size: 0.68rem;
+      font-size: 0.62rem;
+      padding-right: 8px;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .hero-live-round-round {
-      color: var(--text-3);
-      font-weight: 500;
+    .round-pill--last .round-pill-label { color: var(--green-2); }
+    .round-pill--next .round-pill-label { color: var(--gold-2); }
+
+    .round-pill-values {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .hero-live-round-value {
-      color: var(--green-2);
+    .round-pill-round {
+      color: var(--text);
       font-weight: 700;
     }
+
+    .round-pill-value--pos { color: var(--green-2); font-weight: 700; }
+    .round-pill-kickoff { color: var(--text-3); }
+    .round-pill-timer { color: var(--gold-2); font-weight: 700; }
 
     .hero-cta-row {
       display: flex;
@@ -2163,20 +2197,18 @@
 
     .discord-avatar {
       flex-shrink: 0;
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #0d1728, #1a2a44);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(96, 165, 250, 0.3);
       overflow: hidden;
+      background: #050815;
     }
 
-    .discord-avatar svg {
-      width: 26px;
-      height: 26px;
+    .discord-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .discord-body-content {
@@ -2398,56 +2430,6 @@
       font-family: var(--font-mono);
     }
 
-    /* ==================== NEXT ROUND COUNTDOWN PILL ==================== */
-    .hero-next-round {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 16px;
-      background: rgba(255, 187, 71, 0.06);
-      border: 1px solid rgba(255, 187, 71, 0.28);
-      border-radius: 12px;
-      font-family: var(--font-mono);
-      font-size: 0.76rem;
-      color: var(--text-2);
-      margin-bottom: 16px;
-      backdrop-filter: blur(10px);
-      opacity: 0;
-      animation: fade-in 0.9s var(--ease-out) 0.75s forwards;
-    }
-
-    .hero-next-round-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--gold);
-      box-shadow: 0 0 8px var(--gold);
-      animation: blink 2.4s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-
-    .hero-next-round-label {
-      font-weight: 600;
-      color: var(--gold-2);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-size: 0.66rem;
-    }
-
-    .hero-next-round-round {
-      color: var(--text);
-      font-weight: 700;
-    }
-
-    .hero-next-round-kickoff {
-      color: var(--text-3);
-    }
-
-    .hero-next-round-timer {
-      color: var(--gold-2);
-      font-weight: 700;
-    }
-
     /* ==================== RECENT ACTIVITY TOAST ==================== */
     .activity-toast {
       position: fixed;
@@ -2559,11 +2541,13 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
-      max-width: 900px;
+      max-width: 920px;
       margin: 0 auto;
     }
 
     .compare-card {
+      display: flex;
+      flex-direction: column;
       padding: 32px 28px 28px;
       background: var(--surface);
       border: 1px solid var(--border-strong);
@@ -2572,6 +2556,7 @@
       backdrop-filter: blur(20px);
       transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
       overflow: hidden;
+      text-align: center;
     }
 
     .compare-card--featured {
@@ -2599,15 +2584,16 @@
     }
 
     .compare-tag {
+      align-self: center;
       display: inline-block;
       font-family: var(--font-mono);
-      font-size: 0.62rem;
+      font-size: 0.64rem;
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 999px;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
     }
 
     .compare-tag--recommended {
@@ -2624,33 +2610,40 @@
 
     .compare-name {
       font-family: var(--font-display);
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 700;
       color: var(--text);
       letter-spacing: -0.03em;
       line-height: 1;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
+    /* Fixed height on the sub so both cards land at exactly the same y-position for price */
     .compare-sub {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       color: var(--text-2);
-      line-height: 1.45;
-      margin-bottom: 20px;
+      line-height: 1.5;
+      margin: 0 0 22px;
+      min-height: calc(0.9rem * 1.5 * 2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-wrap: balance;
     }
 
     .compare-price {
       display: flex;
       align-items: baseline;
+      justify-content: center;
       gap: 6px;
-      margin-bottom: 20px;
-      padding-bottom: 20px;
+      margin-bottom: 22px;
+      padding-bottom: 22px;
       border-bottom: 1px solid var(--border);
     }
 
     .compare-price-amount {
       font-family: var(--font-display);
-      font-size: 2.5rem;
+      font-size: 2.75rem;
       font-weight: 800;
       color: var(--text);
       letter-spacing: -0.04em;
@@ -2670,22 +2663,24 @@
       margin: 0 0 24px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
+      flex: 1;
+      text-align: left;
     }
 
     .compare-feature {
       display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 0.93rem;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.92rem;
       color: var(--text-2);
       line-height: 1.4;
     }
 
     .compare-feature-check {
       flex-shrink: 0;
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background: var(--green-dim);
       border: 1px solid rgba(0, 255, 157, 0.35);
@@ -2694,14 +2689,18 @@
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 0.66rem;
-      margin-top: 2px;
+      font-size: 0.68rem;
     }
 
     .compare-feature--upgrade .compare-feature-check {
       background: var(--amber-dim);
       border-color: rgba(255, 187, 71, 0.35);
       color: var(--gold-2);
+    }
+
+    /* CTA pinned to bottom via margin-top: auto — both cards match */
+    .compare-cta {
+      margin-top: auto;
     }
 
     .compare-cta .btn {
@@ -2802,8 +2801,8 @@
       .btn-price { padding-left: 12px; }
 
       .hero-cta-row { flex-direction: column; align-items: stretch; }
-      .hero-live-round { flex-wrap: wrap; }
-      .hero-next-round { flex-wrap: wrap; }
+      .round-pill { flex-wrap: wrap; }
+      .round-pill-values { flex-wrap: wrap; gap: 6px 10px; }
 
       .activity-toast {
         left: 12px;
@@ -2921,21 +2920,25 @@
             Ten years analysing markets. Five years publicly tracked. Every bet posted to our private Discord with staking guidance and personal onboarding.
           </p>
 
-          <div class="hero-live-round">
-            <span class="hero-live-round-dot"></span>
-            <span class="hero-live-round-label">Last Round</span>
-            <span class="hero-live-round-round" data-stat="latestRound.round">R16</span>
-            <span class="hero-live-round-value" data-stat="latestRound.profit">+$670</span>
-            <span class="hero-live-round-value" data-stat="latestRound.units">+13.4u</span>
-            <span class="hero-live-round-value" data-stat="latestRound.roi">36% ROI</span>
-          </div>
-
-          <div class="hero-next-round" id="next-round-pill">
-            <span class="hero-next-round-dot"></span>
-            <span class="hero-next-round-label">Next</span>
-            <span class="hero-next-round-round" data-stat="nextRound.round">R17</span>
-            <span class="hero-next-round-kickoff" data-nextround-kickoff>Thu 7:20pm</span>
-            <span class="hero-next-round-timer" data-nextround-timer>Kicks off in 2d 4h</span>
+          <div class="hero-rounds">
+            <div class="round-pill round-pill--last">
+              <span class="round-pill-dot"></span>
+              <span class="round-pill-label">Last</span>
+              <span class="round-pill-values">
+                <span class="round-pill-round" data-stat="latestRound.round">R16</span>
+                <span class="round-pill-value--pos" data-stat="latestRound.profit">+$670</span>
+                <span class="round-pill-value--pos" data-stat="latestRound.units">+13.4u</span>
+              </span>
+            </div>
+            <div class="round-pill round-pill--next" id="next-round-pill">
+              <span class="round-pill-dot"></span>
+              <span class="round-pill-label">Next</span>
+              <span class="round-pill-values">
+                <span class="round-pill-round" data-stat="nextRound.round">R17</span>
+                <span class="round-pill-kickoff" data-nextround-kickoff>Thu 7:20pm AEST</span>
+                <span class="round-pill-timer" data-nextround-timer>&nbsp;</span>
+              </span>
+            </div>
           </div>
 
           <div class="hero-cta-row">
@@ -3238,17 +3241,7 @@
           <div class="discord-body">
             <div class="discord-message">
               <div class="discord-avatar" aria-hidden="true">
-                <svg viewBox="0 0 32 32" fill="none">
-                  <defs>
-                    <linearGradient id="bull-grad" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stop-color="#7cedff"/>
-                      <stop offset="100%" stop-color="#3b82f6"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M6 10 Q4 4 8 4 L11 10 L21 10 L24 4 Q28 4 26 10 Q26 13 24 14 Q24 18 20 22 L20 26 L12 26 L12 22 Q8 18 8 14 Q6 13 6 10 Z" fill="url(#bull-grad)"/>
-                  <circle cx="13" cy="15" r="1.6" fill="#050815"/>
-                  <circle cx="19" cy="15" r="1.6" fill="#050815"/>
-                </svg>
+                <img src="../assets/fnf-discord-avatar.png" alt="FNF Gainz" decoding="async">
               </div>
               <div class="discord-body-content">
                 <div class="discord-meta">
@@ -3413,16 +3406,16 @@
           <article class="compare-card compare-card--featured">
             <span class="compare-tag compare-tag--recommended">Recommended</span>
             <div class="compare-name">AFL Premium</div>
-            <p class="compare-sub">Every AFL bet posted with staking guidance and personal onboarding.</p>
+            <p class="compare-sub">The full AFL system in your private Discord.</p>
             <div class="compare-price">
               <span class="compare-price-amount">$140</span>
               <span class="compare-price-period">AUD / mo</span>
             </div>
             <ul class="compare-features">
               <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Every AFL bet posted live in Discord</li>
-              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Full round breakdowns Thursday to Sunday</li>
-              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Personal onboarding and unit sizing</li>
-              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Weekly reports + public dashboard</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Round breakdowns Thursday to Sunday</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Personal onboarding &amp; unit sizing</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Weekly reports &amp; public dashboard</li>
               <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Cancel anytime, no lock-in</li>
             </ul>
             <div class="compare-cta">
@@ -3437,17 +3430,17 @@
           <article class="compare-card">
             <span class="compare-tag compare-tag--upgrade">Full Coverage</span>
             <div class="compare-name">Champion</div>
-            <p class="compare-sub">The full AFL system plus the full NRL system, run side by side.</p>
+            <p class="compare-sub">The full AFL system + the full NRL system.</p>
             <div class="compare-price">
               <span class="compare-price-amount">$200</span>
               <span class="compare-price-period">AUD / mo</span>
             </div>
             <ul class="compare-features">
               <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Everything in AFL Premium</li>
-              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Full NRL system side-by-side</li>
-              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Separate staking + tracking per code</li>
-              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Combined season view across AFL + NRL</li>
-              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Save $80/mo vs buying both individually</li>
+              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Full NRL system, side by side</li>
+              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Separate staking per code</li>
+              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Combined season dashboard</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Save $80/mo vs both separately</li>
             </ul>
             <div class="compare-cta">
               <button class="btn btn-outline lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">
@@ -3637,15 +3630,28 @@
       var timerEl = pill.querySelector('[data-nextround-timer]');
       var kickoffISO = null;
 
-      function formatKickoffLabel(date) {
-        var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-        var day = days[date.getDay()];
-        var h = date.getHours();
-        var m = date.getMinutes();
-        var suffix = h >= 12 ? 'pm' : 'am';
-        var hh = ((h + 11) % 12 + 1);
-        var mm = m < 10 ? '0' + m : String(m);
-        return day + ' ' + hh + ':' + mm + suffix;
+      // Format the kickoff date in Australia/Melbourne (AEST/AEDT), not viewer's local tz.
+      // This keeps the label consistent for all visitors: it's an AFL game, shown in AFL time.
+      function formatKickoffAEST(date) {
+        try {
+          var opts = {
+            timeZone: 'Australia/Melbourne',
+            weekday: 'short',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+          };
+          var parts = new Intl.DateTimeFormat('en-AU', opts).formatToParts(date);
+          var lookup = {};
+          parts.forEach(function(p) { lookup[p.type] = p.value; });
+          var weekday = lookup.weekday || '';
+          var hour = lookup.hour || '';
+          var minute = lookup.minute || '';
+          var dayPeriod = (lookup.dayPeriod || '').toLowerCase().replace(/\s/g, '');
+          return weekday + ' ' + hour + ':' + minute + dayPeriod + ' AEST';
+        } catch (e) {
+          return null;
+        }
       }
 
       function update() {
@@ -3654,24 +3660,26 @@
         var kickoff = new Date(kickoffISO).getTime();
         var diff = kickoff - now;
         if (diff <= 0) {
-          timerEl.textContent = 'Live now';
+          // Games underway — hide the timer text but keep kickoff label visible
+          timerEl.textContent = '';
+          timerEl.style.display = 'none';
           return;
         }
+        timerEl.style.display = '';
         var days = Math.floor(diff / (24*60*60*1000));
         var hrs = Math.floor((diff % (24*60*60*1000)) / (60*60*1000));
         var mins = Math.floor((diff % (60*60*1000)) / (60*1000));
         var text;
         if (days > 0) {
-          text = 'Kicks off in ' + days + 'd ' + hrs + 'h';
+          text = 'in ' + days + 'd ' + hrs + 'h';
         } else if (hrs > 0) {
-          text = 'Kicks off in ' + hrs + 'h ' + mins + 'm';
+          text = 'in ' + hrs + 'h ' + mins + 'm';
         } else {
-          text = 'Kicks off in ' + mins + 'm';
+          text = 'in ' + mins + 'm';
         }
         timerEl.textContent = text;
       }
 
-      // Fetch nextRound from stats.json, then start ticking
       fetch('stats.json', { cache: 'no-cache' })
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(data) {
@@ -3679,7 +3687,8 @@
             kickoffISO = data.nextRound.kickoff;
             var d = new Date(kickoffISO);
             if (!isNaN(d.getTime())) {
-              kickoffEl.textContent = formatKickoffLabel(d);
+              var label = formatKickoffAEST(d);
+              if (label) kickoffEl.textContent = label;
             }
             update();
             setInterval(update, 60000);
@@ -3701,14 +3710,16 @@
       var hero = document.querySelector('.hero');
       if (!textEl || !timeEl || !avatarEl || !hero) return;
 
+      // Only real, verifiable events: round results already published on the public dashboard,
+      // and Discord posts that actually happened. No fabricated signups.
       var activities = [
-        { name: 'Curtis',       action: 'just joined AFL Premium',    time: 'Just now',        avatar: 'C', color: 'linear-gradient(135deg, #00d4ff, #3b82f6)' },
-        { name: 'James',        action: 'joined AFL Premium',         time: '4 min ago',       avatar: 'J', color: 'linear-gradient(135deg, #a78bfa, #7c3aed)' },
-        { name: 'Sarah',        action: 'joined AFL Premium',         time: '12 min ago',      avatar: 'S', color: 'linear-gradient(135deg, #ffbb47, #f97316)' },
-        { name: 'R16 result',   action: 'posted &mdash; +$670 / +13.4u', time: '2 hours ago',   avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
-        { name: 'Mitchell',     action: 'joined AFL Premium',         time: '38 min ago',      avatar: 'M', color: 'linear-gradient(135deg, #00d4ff, #3b82f6)' },
-        { name: 'Tom',          action: 'joined Champion (AFL + NRL)', time: '1 hour ago',     avatar: 'T', color: 'linear-gradient(135deg, #ffbb47, #f97316)' },
-        { name: 'Round 17',     action: 'preview posted in Discord',  time: '3 hours ago',    avatar: 'R', color: 'linear-gradient(135deg, #a78bfa, #7c3aed)' }
+        { name: 'R16 result',   action: 'posted &mdash; <strong>+$670</strong> / +13.4u / 36% ROI',   time: 'Last round',    avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
+        { name: 'R15 result',   action: 'posted &mdash; <strong>+$839</strong> / +16.8u / 47% ROI',   time: 'Round 15',      avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
+        { name: 'R14 result',   action: 'posted &mdash; <strong>+$468</strong> / +9.4u / 22% ROI',    time: 'Round 14',      avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
+        { name: 'R13 result',   action: 'posted &mdash; <strong>+$828</strong> / +16.6u / 40% ROI',   time: 'Round 13',      avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
+        { name: 'R10 result',   action: 'posted &mdash; <strong>+$1,268</strong> / +25.4u / 64% ROI', time: 'Season 2026',   avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
+        { name: 'Season 2026',  action: 'running at <strong>+$5,034</strong> / +100.7u / 18% ROI',    time: 'In progress',   avatar: 'S', color: 'linear-gradient(135deg, #00d4ff, #3b82f6)' },
+        { name: 'All-time',     action: 'sitting at <strong>+$45,189</strong> / +903.8u / 19% ROI',   time: 'Since 2022',    avatar: 'A', color: 'linear-gradient(135deg, #a78bfa, #7c3aed)' }
       ];
       var index = 0;
       var dismissed = false;
