@@ -1,26 +1,26 @@
 {
-  "_README": "Edit this file weekly to update the stats shown on fnfgainz.com/afl. Commit and push to deploy. Numbers update automatically across the page. If this file fails to load, the hardcoded fallback values in index.html are shown instead.",
+  "_README": "Tier-2 fallback only. Primary data source is https://fnf-gainz-afl.vercel.app/api/afl-stats. Keep values roughly in sync so if Vercel is ever down, users still see close-to-current numbers rather than stale ones.",
   "allTime": {
-    "bets": 5840,
-    "profit": 45189,
-    "units": 903.8,
-    "roi": 19
+    "bets": 5940,
+    "profit": 44759,
+    "units": 895.2,
+    "roi": 18.3
   },
   "season2026": {
-    "bets": 676,
-    "profit": 5034,
-    "units": 100.7,
-    "roi": 18
+    "bets": 775,
+    "profit": 4754,
+    "units": 95.1,
+    "roi": 14.5
   },
   "latestRound": {
-    "round": "R16",
-    "profit": 670,
-    "units": 13.4,
-    "roi": 36
+    "round": "R17",
+    "profit": 122,
+    "units": 2.4,
+    "roi": 5.1
   },
   "nextRound": {
-    "round": "R17",
-    "kickoff": "2026-07-10T19:20:00+10:00"
+    "round": "R18",
+    "kickoff": "2026-07-09T10:10:00.000Z"
   },
-  "lastUpdated": "2026-06-22"
+  "lastUpdated": "2026-07-09"
 }
