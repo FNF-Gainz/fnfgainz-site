@@ -1033,6 +1033,23 @@
       border: 1px solid rgba(255, 187, 71, 0.28);
     }
 
+    /* Live variant. applied when the next-round kickoff has passed but
+       the API hasn't marked that round complete yet. Reads as urgent
+       and current instead of "coming up". */
+    .round-pill--live {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.42);
+      box-shadow: 0 0 24px rgba(239, 68, 68, 0.12);
+    }
+    .round-pill--live .round-pill-dot {
+      background: #ef4444;
+      box-shadow: 0 0 10px #ef4444;
+      animation: blink 1.2s ease-in-out infinite;
+    }
+    .round-pill--live .round-pill-label {
+      color: #ff6b6b;
+    }
+
     .round-pill-dot {
       width: 7px;
       height: 7px;
@@ -4748,7 +4765,9 @@
       if (!pill) return;
       var kickoffEl = pill.querySelector('[data-nextround-kickoff]');
       var timerEl = pill.querySelector('[data-nextround-timer]');
+      var labelEl = pill.querySelector('.round-pill-label');
       var kickoffISO = null;
+      var wasLive = false;
 
       // Format the kickoff date in Australia/Melbourne (AEST/AEDT), not viewer's local tz.
       // This keeps the label consistent for all visitors: it's an AFL game, shown in AFL time.
@@ -4780,7 +4799,14 @@
         var kickoff = new Date(kickoffISO).getTime();
         var diff = kickoff - now;
         if (diff <= 0) {
-          // Games underway. hide the timer text but keep kickoff label visible
+          // Games are being played right now. Swap NEXT -> LIVE.
+          if (!wasLive) {
+            wasLive = true;
+            pill.classList.remove('round-pill--next');
+            pill.classList.add('round-pill--live');
+            if (labelEl) labelEl.textContent = 'Live';
+            if (kickoffEl) kickoffEl.textContent = 'In play now';
+          }
           timerEl.textContent = '';
           timerEl.style.display = 'none';
           return;

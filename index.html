@@ -862,6 +862,80 @@
       transform: translateX(4px);
     }
 
+    /* MINI HERO (main-URL storefront style, above packages) */
+    .mini-hero {
+      padding: clamp(48px, 8vh, 88px) 0 clamp(24px, 4vh, 40px);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+    }
+    .mini-hero-brand {
+      display: inline-flex;
+      text-decoration: none;
+      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+    .mini-hero-brand:hover { opacity: 0.9; transform: translateY(-2px); }
+    .mini-hero-brand img {
+      display: block;
+      height: 72px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 24px rgba(0, 212, 255, 0.2));
+    }
+    .mini-hero-tag {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 16px;
+      margin: 4px 0 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 1.6vw + 0.6rem, 1.65rem);
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .mini-hero-tag span:nth-child(2) {
+      background: var(--grad-signature);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .mini-hero-proof {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 12px;
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-3);
+    }
+    .mini-hero-proof strong { color: var(--green-2); font-weight: 700; }
+    .mini-hero-proof-sep { opacity: 0.4; }
+
+    @media (max-width: 640px) {
+      .mini-hero { padding: 32px 0 20px; gap: 16px; }
+      .mini-hero-brand img { height: 56px; }
+      .mini-hero-proof { font-size: 0.68rem; }
+    }
+
+    /* Compact section head used on the packages + quick-links sections */
+    .section-head.compact-head {
+      margin-bottom: 24px;
+    }
+    .section-title.compact-title {
+      font-size: clamp(1.5rem, 2.2vw + 0.6rem, 2.1rem);
+      line-height: 1.15;
+      margin: 0;
+    }
+
     /* HERO. Cathedral */
     .hero {
       padding: clamp(72px, 12vh, 128px) 0 clamp(48px, 8vh, 88px);
@@ -3637,6 +3711,100 @@
     }
     .pkg-more:hover { color: var(--text); }
 
+    /* ==================== QUICK LINKS ==================== */
+    .quick-links-section {
+      padding: clamp(48px, 8vh, 96px) 0 clamp(32px, 5vh, 56px);
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .quick-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .quick-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--text);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .quick-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 212, 255, 0.35);
+      background: rgba(0, 212, 255, 0.04);
+    }
+    .quick-link-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      color: var(--cyan-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .quick-link-body {
+      flex: 1;
+      text-align: left;
+      min-width: 0;
+    }
+    .quick-link-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--green-2);
+      background: var(--green-dim);
+      border: 1px solid rgba(0, 255, 157, 0.35);
+      padding: 3px 8px;
+      border-radius: 999px;
+      margin-bottom: 4px;
+    }
+    .quick-link-title {
+      font-family: var(--font-display);
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 2px;
+    }
+    .quick-link-sub {
+      font-size: 0.82rem;
+      color: var(--text-3);
+      line-height: 1.4;
+    }
+    .quick-link-arrow {
+      flex-shrink: 0;
+      color: var(--text-3);
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+    .quick-link:hover .quick-link-arrow {
+      color: var(--cyan-2);
+      transform: translate(2px, -2px);
+    }
+    @media (max-width: 640px) {
+      .quick-links-section { padding: 32px 0 24px; }
+      .quick-link { padding: 14px 16px; gap: 12px; }
+      .quick-link-icon { width: 38px; height: 38px; }
+      .quick-link-title { font-size: 0.94rem; }
+      .quick-link-sub { font-size: 0.76rem; }
+    }
+
     /* ==================== STICKY MOBILE CTA ==================== */
     .sticky-cta {
       position: fixed;
@@ -3979,239 +4147,33 @@
   <div class="aurora" aria-hidden="true"></div>
   <canvas id="particles" class="particles-canvas"></canvas>
 
-  <!-- LIVE TICKER -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-inner">
-      <span class="ticker-item"><span class="ticker-live">Live</span></span>
-      <span class="ticker-item"><span class="ticker-round">AFL</span><span class="ticker-value--pos">+$44,759</span><span>18.3% ROI</span><span>5 seasons</span></span>
-      <span class="ticker-item"><span class="ticker-round">NRL</span><span>Value-driven</span><span>Every bet in Discord</span></span>
-      <span class="ticker-item"><span class="ticker-round">Champion</span><span class="ticker-value--pos">AFL + NRL</span><span>Save $80/mo</span></span>
-      <span class="ticker-item"><span class="ticker-round">Matched Betting</span><span>Low-risk foundations</span><span>Build bankroll</span></span>
-      <span class="ticker-item"><span class="ticker-round">Community</span><span>EV + Racing Bot</span><span>$25/mo entry</span></span>
-      <span class="ticker-item"><span class="ticker-round">All-time</span><span class="ticker-value--pos">+$44,759</span><span>+895.2u</span><span>5,940 bets</span></span>
-      <span class="ticker-item"><span class="ticker-live">Live</span></span>
-      <span class="ticker-item"><span class="ticker-round">AFL</span><span class="ticker-value--pos">+$44,759</span><span>18.3% ROI</span><span>5 seasons</span></span>
-      <span class="ticker-item"><span class="ticker-round">NRL</span><span>Value-driven</span><span>Every bet in Discord</span></span>
-      <span class="ticker-item"><span class="ticker-round">Champion</span><span class="ticker-value--pos">AFL + NRL</span><span>Save $80/mo</span></span>
-      <span class="ticker-item"><span class="ticker-round">Matched Betting</span><span>Low-risk foundations</span><span>Build bankroll</span></span>
-      <span class="ticker-item"><span class="ticker-round">Community</span><span>EV + Racing Bot</span><span>$25/mo entry</span></span>
-      <span class="ticker-item"><span class="ticker-round">All-time</span><span class="ticker-value--pos">+$44,759</span><span>+895.2u</span><span>5,940 bets</span></span>
-    </div>
-  </div>
 
   <main class="afl">
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-spotlight" aria-hidden="true"></div>
-      <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>FNF Gainz &middot; Facts Not Feelings Since 2022</span>
-
-      <div class="hero-grid">
-        <div class="hero-text">
-          <h1 class="hero-title">
-            <span class="word">Structured</span> <span class="word accent">systems.</span> <span class="word">Publicly</span> <span class="word accent">tracked.</span>
-          </h1>
-
-          <p class="hero-sub">
-            Five years of disciplined execution across AFL, NRL, matched betting, and community strategies. Every bet posted to our private Discord with staking guidance and personal onboarding. Five packages, one standard.
-          </p>
-
-          <div class="hero-cta-row">
-            <a href="#packages" class="btn btn-primary">
-              <span>See Memberships</span>
-              <span class="btn-price">5 packages</span>
-            </a>
-            <span class="hero-trust">5 years of member trust &middot; Cancel anytime</span>
-          </div>
-
-          <div class="scoreboard">
-            <div class="scoreboard-cell">
-              <div class="scoreboard-value scoreboard-value--cyan" data-count-to="5">5</div>
-              <div class="scoreboard-label">Years</div>
-            </div>
-            <div class="scoreboard-cell">
-              <div class="scoreboard-value" data-count-to="5940" data-format="int">5,940</div>
-              <div class="scoreboard-label">Bets Tracked</div>
-            </div>
-            <div class="scoreboard-cell">
-              <div class="scoreboard-value scoreboard-value--green" data-count-to="44759" data-format="currency">+$44,759</div>
-              <div class="scoreboard-label">AFL Profit</div>
-            </div>
-            <div class="scoreboard-cell">
-              <div class="scoreboard-value scoreboard-value--gold" data-count-to="5">5</div>
-              <div class="scoreboard-label">Systems</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-portrait" data-tilt>
-          <div class="hero-portrait-card">
-            <div class="hero-portrait-brand" aria-hidden="true">
-              <img src="assets/fnf-bull-logo-trimmed.png" alt="" width="405" height="356">
-            </div>
-            <img src="assets/jordan-portrait-hero.png" alt="Jordan, FNF Gainz founder" decoding="async">
-            <div class="hero-portrait-caption">
-              <div>
-                <div class="hero-portrait-name">Jordan</div>
-                <div class="hero-portrait-title">FNF Gainz Founder</div>
-              </div>
-              <div class="hero-portrait-badge">
-                <strong>10 yrs</strong>
-                <span>Analysis</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-
-    <!-- BOOKMAKER STRIP -->
-    <div class="bookies-wrap" data-reveal>
-      <span class="bookies-label">Tracked across</span>
-      <ul class="bookies-list">
-        <li class="bookies-item"><span class="bookies-item-dot"></span>Sportsbet</li>
-        <li class="bookies-item"><span class="bookies-item-dot"></span>TAB</li>
-        <li class="bookies-item"><span class="bookies-item-dot"></span>Bet365</li>
-        <li class="bookies-item"><span class="bookies-item-dot"></span>Ladbrokes</li>
-      </ul>
-    </div>
-
-    <!-- SYSTEM -->
-    <section class="section">
-      <div class="section-head">
-        <div class="section-index" data-reveal="down" aria-hidden="true">01</div>
-        <span class="section-eyebrow" data-reveal="pill">The Standard</span>
-        <h2 class="section-title" data-reveal-words>One standard. Applied to every code, every strategy.</h2>
-      </div>
-
-      <div class="pillars">
-        <div class="pillar" data-tilt data-reveal="rise" data-reveal-delay="1">
-          <div class="pillar-index">01</div>
-          <div class="pillar-label">Structured</div>
-          <h3 class="pillar-title">Every bet is a system decision, not a hunch</h3>
-          <p>Ten years analysing markets. Five years publicly tracked. Custom data models combined with live bookmaker odds pick every play across AFL, NRL, matched betting, and community strategies.</p>
-        </div>
-        <div class="pillar" data-tilt data-reveal="rise" data-reveal-delay="3">
-          <div class="pillar-index">02</div>
-          <div class="pillar-label">Transparent</div>
-          <h3 class="pillar-title">Every bet posted before it lands</h3>
-          <p>Bets go into your Discord channel with the stake, odds, and rationale. Every win, loss, and drawdown lives on the public results dashboard. Nothing edited after the fact.</p>
-        </div>
-        <div class="pillar" data-tilt data-reveal="rise" data-reveal-delay="5">
-          <div class="pillar-index">03</div>
-          <div class="pillar-label">Personal</div>
-          <h3 class="pillar-title">Onboarding, staking, and support built in</h3>
-          <p>Every membership includes personal onboarding: unit sizing to your bankroll, bookmaker setup guidance, and ongoing support through tickets and the active member community.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOUNDER -->
-    <section class="section">
-      <div class="section-head" style="text-align: left; max-width: 1080px;">
-        <div class="section-index" aria-hidden="true">02</div>
-      </div>
-      <div class="founder">
-        <div class="founder-portrait" data-reveal="develop">
-          <span class="founder-tag">Founder</span>
-          <img src="assets/jordan-portrait.png" alt="Jordan, FNF Gainz founder" decoding="async">
-        </div>
-        <div class="founder-content" data-reveal="right" data-reveal-delay="2">
-          <div class="founder-mark" aria-hidden="true">&ldquo;</div>
-          <h2 class="founder-quote" data-reveal-words data-rw-step="0.07" data-reveal-delay="3">This isn't a tipping service. It's a structured system.</h2>
-          <p data-reveal="up" data-reveal-delay="5">I've been analysing sports markets every day for ten years. Five years ago I started sharing the strategy publicly, and we've been at the front of the industry ever since.</p>
-          <p data-reveal="up" data-reveal-delay="6">FNF Gainz today is five distinct systems: AFL, NRL, Champion, matched betting, and community. All built on the same standard. Every bet logged. Every result public. Wins, losses, drawdowns. That's how I hold the service to account.</p>
-          <div class="founder-sig" data-reveal="up" data-reveal-delay="7">Jordan &middot; FNF Gainz Founder</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MEMBER RECEIPTS. REDESIGNED -->
-    <section class="section">
-      <div class="section-head">
-        <div class="section-index" data-reveal="down" aria-hidden="true">05</div>
-        <span class="section-eyebrow" data-reveal="pill">Member Receipts</span>
-        <h2 class="section-title" data-reveal-words>Real members. Real results.</h2>
-      </div>
-
-      <div class="receipts-marquee" aria-hidden="true">
-        <div class="receipts-track">
-          <span class="receipts-item"><span class="receipts-name">Curtis</span><span class="receipts-value">+$27,500</span><span>Mar–Sep season</span></span>
-          <span class="receipts-item"><span class="receipts-name">Lorelius</span><span class="receipts-value">+$8,000</span><span>Full season</span></span>
-          <span class="receipts-item"><span class="receipts-name">Vitamin_GG</span><span class="receipts-value">Scaled up</span><span>Multiple seasons</span></span>
-          <span class="receipts-item"><span class="receipts-name">iiDooblay</span><span>Consistent picks</span><span>Ongoing</span></span>
-          <span class="receipts-item"><span class="receipts-name">Season 2026</span><span class="receipts-value">+$4,754</span><span>+14.5% ROI</span></span>
-          <span class="receipts-item"><span class="receipts-name">All-time</span><span class="receipts-value">+$44,759</span><span>+18.3% ROI</span></span>
-          <span class="receipts-item"><span class="receipts-name">Curtis</span><span class="receipts-value">+$27,500</span><span>Mar–Sep season</span></span>
-          <span class="receipts-item"><span class="receipts-name">Lorelius</span><span class="receipts-value">+$8,000</span><span>Full season</span></span>
-          <span class="receipts-item"><span class="receipts-name">Vitamin_GG</span><span class="receipts-value">Scaled up</span><span>Multiple seasons</span></span>
-          <span class="receipts-item"><span class="receipts-name">iiDooblay</span><span>Consistent picks</span><span>Ongoing</span></span>
-          <span class="receipts-item"><span class="receipts-name">Season 2026</span><span class="receipts-value">+$4,754</span><span>+14.5% ROI</span></span>
-          <span class="receipts-item"><span class="receipts-name">All-time</span><span class="receipts-value">+$44,759</span><span>+18.3% ROI</span></span>
-        </div>
-      </div>
-
-      <div class="testimonials">
-        <article class="testimonial testimonial--cyan" data-tilt data-reveal="deal" data-reveal-delay="1">
-          <span class="testimonial-badge"><span class="testimonial-badge-value">+$27,500</span> March – September</span>
-          <p class="testimonial-quote">"Following the system through a full season completely changed how I approach betting. Been able to grow my own business and move into a bigger house off the back of it."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar" aria-hidden="true">C</div>
-            <div>
-              <div class="testimonial-author-name">Curtis</div>
-              <div class="testimonial-author-role">Member since 2022</div>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonial testimonial--violet" data-tilt data-reveal="deal-right" data-reveal-delay="3">
-          <span class="testimonial-badge"><span class="testimonial-badge-value">Multiple Seasons</span> Consistent</span>
-          <p class="testimonial-quote">"So much confidence in the picks knowing the high level of research and analysis done beforehand."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar" aria-hidden="true">i</div>
-            <div>
-              <div class="testimonial-author-name">iiDooblay</div>
-              <div class="testimonial-author-role">Ongoing Member</div>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonial testimonial--gold" data-tilt data-reveal="deal" data-reveal-delay="5">
-          <span class="testimonial-badge"><span class="testimonial-badge-value">+$8,000</span> Full season</span>
-          <p class="testimonial-quote">"Personally around $8k profit for the season. Couldn't recommend the AFL package more."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar" aria-hidden="true">L</div>
-            <div>
-              <div class="testimonial-author-name">Lorelius</div>
-              <div class="testimonial-author-role">Full-season Member</div>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonial testimonial--green" data-tilt data-reveal="deal-right" data-reveal-delay="7">
-          <span class="testimonial-badge"><span class="testimonial-badge-value">Scaled Up</span> Multiple seasons</span>
-          <p class="testimonial-quote">"With the mountain of work FNF puts in I was easily able to scale to exponentially profitable levels."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar" aria-hidden="true">V</div>
-            <div>
-              <div class="testimonial-author-name">Vitamin_GG</div>
-              <div class="testimonial-author-role">Long-term Member</div>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <p class="testimonials-disclaimer">Individual results vary. Past performance does not guarantee future results. Sports betting carries risk and losing periods are part of the process.</p>
+    <!-- COMPACT HERO -->
+    <section class="mini-hero">
+      <a href="/" class="mini-hero-brand" aria-label="FNF Gainz">
+        <img src="assets/fnf-logo-long-trimmed.png" alt="FNF Gainz. Facts Not Feelings.">
+      </a>
+      <p class="mini-hero-tag">
+        <span>Structured systems.</span>
+        <span>Publicly tracked.</span>
+        <span>Five years.</span>
+      </p>
+      <p class="mini-hero-proof">
+        <strong>5,940 bets</strong>
+        <span class="mini-hero-proof-sep">&middot;</span>
+        <strong>+$44,759 AFL profit</strong>
+        <span class="mini-hero-proof-sep">&middot;</span>
+        <strong>18.3% ROI</strong>
+      </p>
     </section>
 
     <!-- PACKAGES -->
     <section class="section section--tight-top" id="packages">
-      <div class="section-head">
-        <div class="section-index" data-reveal="down" aria-hidden="true">06</div>
-        <span class="section-eyebrow" data-reveal="pill">The Memberships</span>
-        <h2 class="section-title" data-reveal-words>Five systems. Pick the one that fits you.</h2>
+      <div class="section-head compact-head">
+        <span class="section-eyebrow" data-reveal="pill">Memberships</span>
+        <h2 class="section-title compact-title" data-reveal-words>Pick your system. Join in seconds.</h2>
       </div>
 
       <div class="packages-grid">
@@ -4349,25 +4311,44 @@
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="section">
-      <div class="section-head">
-        <div class="section-index" data-reveal="down" aria-hidden="true">07</div>
-        <span class="section-eyebrow" data-reveal="pill">FAQ</span>
-        <h2 class="section-title" data-reveal-words>Common questions.</h2>
+    <!-- QUICK LINKS -->
+    <section class="quick-links-section">
+      <div class="section-head compact-head">
+        <span class="section-eyebrow" data-reveal="pill">Free Tools &amp; Info</span>
+        <h2 class="section-title compact-title" data-reveal-words>Everything else in one place.</h2>
       </div>
-
-      <div class="faq">
-        <details class="faq-item" data-reveal><summary>Which package should I pick?</summary><div class="faq-answer">If you follow AFL only, start with the AFL Package. If you follow both AFL and NRL, Champion saves you $80/mo vs both separately and is our best value. NRL Package for NRL-only. Matched Betting for building bankroll on low-risk foundations. Community is the $25/mo entry point for premium chats, EV strategies, and the Racing Bot. You can start on any package and upgrade any time.</div></details>
-        <details class="faq-item" data-reveal><summary>How do I get access after I join?</summary><div class="faq-answer">Checkout runs through LaunchPass. Once payment is processed, your Discord account is automatically linked to your membership and the private bet channels unlock in our server. You'll get a welcome message with onboarding instructions, and you can open a personal onboarding ticket so the team can confirm your unit sizing and bookmaker setup.</div></details>
-        <details class="faq-item" data-reveal><summary>Do you guarantee profits?</summary><div class="faq-answer">Nobody can guarantee profits. However, we can confirm that we have delivered 5 years of profitable strategy for our members. AFL Premium provides systems and strategies built around long-term edge, executed with discipline and proper bankroll management. Losing weekends happen and drawdowns are part of the process. Follow our strategy, ask questions, be disciplined, and you will succeed.</div></details>
-        <details class="faq-item" data-reveal><summary>How much money do I need to start?</summary><div class="faq-answer">There's no fixed minimum. We recommend 1 unit equals roughly 1% of your bankroll. Our tracked bets use $50 units, so a $5,000 bankroll matches our tracked results 1:1. Smaller bankrolls scale down proportionally (e.g. $1 units on a $100 bankroll). If you're unsure, our onboarding team helps you size correctly.</div></details>
-        <details class="faq-item" data-reveal><summary>Do I need accounts with specific bookmakers?</summary><div class="faq-answer">Ideally yes. Sportsbet, TAB, Bet365 and Ladbrokes are the major Australian bookmakers we use. Having more bookies improves your ability to find the best odds and follow bets accurately. If you're missing an account or restricted, we'll help you organise alternatives during onboarding.</div></details>
-        <details class="faq-item" data-reveal><summary>Where can I see the full results history?</summary><div class="faq-answer">Every bet, win and loss is logged on our <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer">public results dashboard</a>. View all historical and current performance, broken down weekly and seasonally.</div></details>
-        <details class="faq-item" data-reveal><summary>Is this suitable for beginners?</summary><div class="faq-answer">Yes, provided you're willing to follow instructions and manage your bankroll properly. We recommend beginners start with smaller units and work closely with our team during onboarding. This isn't a get-rich-quick service. It's a long-term, disciplined system.</div></details>
-        <details class="faq-item" data-reveal><summary>What happens during a losing streak?</summary><div class="faq-answer">Losing streaks are part of the process. Short-term variance is normal, even with strong edges. The system works because we don't change strategy after a bad round. We hold the line, track everything, and let the edge play out across the full season.</div></details>
-        <details class="faq-item" data-reveal><summary>Can I cancel my membership?</summary><div class="faq-answer">Yes, anytime. You can manage your subscription through your LaunchPass portal. Once cancelled, access remains active until the end of your current billing period. No lock-in.</div></details>
-        <details class="faq-item" data-reveal><summary>What support is available?</summary><div class="faq-answer">Personal onboarding is included for every new member. Our team helps you set your unit sizing, organise your bookmaker accounts, and understand how to follow the package correctly from day one. Ongoing support is available through tickets and the active member community.</div></details>
+      <div class="quick-links">
+        <a href="https://admitted-vinyl-11b.notion.site/BEFORE-YOU-JOIN-FNF-GAINZ-PLEASE-READ-2f015b7a5a1d80c883f5c2278dcf9ee3" target="_blank" rel="noopener noreferrer" class="quick-link" data-reveal="up" data-reveal-delay="1">
+          <div class="quick-link-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </div>
+          <div class="quick-link-body">
+            <div class="quick-link-title">Read Before You Join</div>
+            <div class="quick-link-sub">Everything you should know before subscribing</div>
+          </div>
+          <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="quick-link" data-reveal="up" data-reveal-delay="2">
+          <div class="quick-link-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="7 12 12 7 16 11 21 6"/></svg>
+          </div>
+          <div class="quick-link-body">
+            <div class="quick-link-title">Public Results Dashboard</div>
+            <div class="quick-link-sub">Every bet, win, and loss tracked openly</div>
+          </div>
+          <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <a href="https://app.fnfgainz.com/position-edge" target="_blank" rel="noopener noreferrer" class="quick-link quick-link--free" data-reveal="up" data-reveal-delay="3">
+          <div class="quick-link-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="quick-link-body">
+            <div class="quick-link-tag">Free</div>
+            <div class="quick-link-title">Official App</div>
+            <div class="quick-link-sub">Position Edge match-up analysis + tag tracker</div>
+          </div>
+          <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
       </div>
     </section>
 
