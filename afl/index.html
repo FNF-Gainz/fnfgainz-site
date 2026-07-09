@@ -181,6 +181,10 @@
       --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
     }
 
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
     body {
       background: var(--bg);
       font-family: var(--font-sans);
@@ -189,6 +193,8 @@
       -moz-osx-font-smoothing: grayscale;
       color: var(--text);
       overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
     }
 
     /* ==================== MILESTONE STORY OVERLAY ==================== */
@@ -3467,6 +3473,13 @@
 
     @media (max-width: 640px) {
       .afl { padding: 0 16px; }
+
+      /* On desktop .afl has 24px padding and .receipts-marquee uses
+         margin:0 -24px to break out. On mobile padding is 16px, so
+         the -24px margin extends the marquee 8px past the viewport
+         on each side, causing horizontal overflow that offsets every
+         position:fixed element on Android. Match margin to padding. */
+      .receipts-marquee { margin-left: -16px !important; margin-right: -16px !important; }
 
       .scoreboard { grid-template-columns: repeat(2, 1fr); }
 
