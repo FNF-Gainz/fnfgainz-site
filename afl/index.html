@@ -3552,9 +3552,12 @@
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
       }
-      /* Ticker cycles fast on mobile. Matches desktop 12s. */
-      .ticker-inner { animation-duration: 12s !important; }
-      .receipts-track { animation-duration: 12s !important; }
+      /* Mobile marquee tracks are shorter (fewer items visible per
+         viewport), so at the same duration the perceived scroll
+         feels slower than desktop. Halve the duration so items
+         cross the smaller viewport at a comparable pace. */
+      .ticker-inner { animation-duration: 6s !important; }
+      .receipts-track { animation-duration: 6s !important; }
 
       /* Mobile: hide LaunchPass embed modal entirely.
          On mobile we intercept the button click and open our own
