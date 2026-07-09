@@ -3575,11 +3575,16 @@
       to   { opacity: 1; }
     }
     .fnf-checkout-backdrop {
-      position: absolute;
+      /* fixed + inset:0 so it always covers the whole viewport,
+         ignoring any parent padding or transforms. */
+      position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.72);
       -webkit-tap-highlight-color: transparent;
     }
+    /* When our checkout modal is open, hide the sticky bottom CTA
+       so it can't peek through in any stacking-context edge case. */
+    body.fnf-modal-open .sticky-cta { display: none !important; }
     .fnf-checkout-card {
       position: relative;
       width: 100%;
@@ -4439,6 +4444,7 @@
         if (!currentModal) return;
         currentModal.remove();
         currentModal = null;
+        document.body.classList.remove('fnf-modal-open');
         if (escHandler) { document.removeEventListener('keydown', escHandler); escHandler = null; }
         if (messageHandler) { window.removeEventListener('message', messageHandler); messageHandler = null; }
       }
@@ -4459,6 +4465,7 @@
           // ancestor overflow/stacking can hide it on Android.
           '<button class="fnf-checkout-close" aria-label="Close checkout" type="button">&times;</button>';
         document.body.appendChild(modal);
+        document.body.classList.add('fnf-modal-open');
         currentModal = modal;
 
         var iframe = modal.querySelector('iframe');
