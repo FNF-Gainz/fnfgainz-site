@@ -1127,29 +1127,25 @@
       z-index: 1;
     }
 
-    /* FNF brand chip in the top-right corner of the portrait card */
+    /* FNF bull head mark in the top-right corner of the portrait card.
+       Transparent PNG floats on the background. no container. no chip. */
     .hero-portrait-brand {
       position: absolute;
-      top: 16px;
-      right: 16px;
+      top: 18px;
+      right: 18px;
       z-index: 3;
-      padding: 8px 12px;
-      border-radius: 10px;
-      background: rgba(5, 8, 21, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       pointer-events: none;
     }
     .hero-portrait-brand img {
       display: block;
-      height: 22px;
+      height: 44px;
       width: auto;
-      opacity: 0.95;
+      opacity: 0.9;
+      filter: drop-shadow(0 4px 12px rgba(0, 212, 255, 0.35));
     }
     @media (max-width: 480px) {
-      .hero-portrait-brand { top: 12px; right: 12px; padding: 6px 10px; }
-      .hero-portrait-brand img { height: 18px; }
+      .hero-portrait-brand { top: 14px; right: 14px; }
+      .hero-portrait-brand img { height: 36px; }
     }
 
     .hero-portrait-caption {
@@ -3617,7 +3613,7 @@
         <div class="hero-portrait" data-tilt>
           <div class="hero-portrait-card">
             <div class="hero-portrait-brand" aria-hidden="true">
-              <img src="../assets/fnf-logo-long-trimmed.png" alt="" width="524" height="188">
+              <img src="../assets/fnf-bull-logo-trimmed.png" alt="" width="405" height="356">
             </div>
             <img src="../assets/jordan-portrait-hero.png" alt="Jordan, FNF Gainz founder" decoding="async">
             <div class="hero-portrait-caption">
