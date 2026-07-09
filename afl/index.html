@@ -3486,7 +3486,30 @@
       .stats-row { grid-template-columns: repeat(2, 1fr); gap: 18px 14px; }
 
       .terminal-body { padding: 28px 18px 24px; }
-      .terminal-header { padding: 14px 18px; font-size: 0.66rem; gap: 12px; }
+      .terminal-header {
+        padding: 14px 18px;
+        font-size: 0.6rem;
+        gap: 10px;
+        letter-spacing: 0.08em;
+      }
+      /* Hide "Updated weekly" on mobile so the title has room to sit
+         on one line instead of wrapping to " . SINCE 2022" as line 2. */
+      .terminal-updated { display: none; }
+
+      /* Stats "2026 Season . Latest R17 . In Progress" was wrapping to
+         three lines on Android. Tighten letter-spacing and font-size
+         so it fits on one clean line. */
+      .stats-label {
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+        gap: 8px;
+      }
+
+      /* Bet slip text was breaking (CAR), (STK), (WB), and @Price: 1.36
+         values onto separate lines. Slight font-size reduction + tighter
+         line-height keeps each leg description on the intended line. */
+      .bet-slip-leg-desc,
+      .bet-slip-leg-player { font-size: 0.72rem; line-height: 1.35; }
 
       .btn { width: 100%; }
       .btn-price { padding-left: 12px; }
@@ -3837,7 +3860,7 @@
             <span class="terminal-dot"></span>
             <span>Live</span>
           </div>
-          <div class="terminal-title"><strong>AFL Cumulative Profit</strong> &middot; Since 2022</div>
+          <div class="terminal-title"><strong>AFL Cumulative Profit</strong>&nbsp;&middot;&nbsp;Since 2022</div>
           <div class="terminal-updated">Updated weekly</div>
         </div>
 
@@ -4180,18 +4203,18 @@
                   <div class="bet-slip-legs">
                     <div class="bet-slip-leg">
                       <div class="bet-slip-leg-header">Leg 1 &middot; Sat 20 Jun</div>
-                      <div class="bet-slip-leg-desc">Same Game Multi, 2 props <strong>@Price: 1.36</strong></div>
+                      <div class="bet-slip-leg-desc">Same Game Multi, 2 props <strong>@Price:&nbsp;1.36</strong></div>
                       <div class="bet-slip-leg-players">
-                        <span class="bet-slip-leg-player">AFL GWS-Crl 20Disps <strong>Patrick Cripps</strong> (CAR)</span>
-                        <span class="bet-slip-leg-player">AFL GWS-Crl 20Disps <strong>Jagga Smith</strong> (CAR)</span>
+                        <span class="bet-slip-leg-player">AFL GWS-Crl 20Disps <strong>Patrick Cripps</strong>&nbsp;(CAR)</span>
+                        <span class="bet-slip-leg-player">AFL GWS-Crl 20Disps <strong>Jagga Smith</strong>&nbsp;(CAR)</span>
                       </div>
                     </div>
                     <div class="bet-slip-leg">
                       <div class="bet-slip-leg-header">Leg 2 &middot; Sun 21 Jun</div>
-                      <div class="bet-slip-leg-desc">Same Game Multi, 2 props <strong>@Price: 1.50</strong></div>
+                      <div class="bet-slip-leg-desc">Same Game Multi, 2 props <strong>@Price:&nbsp;1.50</strong></div>
                       <div class="bet-slip-leg-players">
-                        <span class="bet-slip-leg-player">AFL StK-WBd 20Disps <strong>Max Hall</strong> (STK)</span>
-                        <span class="bet-slip-leg-player">AFL StK-WBd 15Disps <strong>Joel Freijah</strong> (WB)</span>
+                        <span class="bet-slip-leg-player">AFL StK-WBd 20Disps <strong>Max Hall</strong>&nbsp;(STK)</span>
+                        <span class="bet-slip-leg-player">AFL StK-WBd 15Disps <strong>Joel Freijah</strong>&nbsp;(WB)</span>
                       </div>
                     </div>
                   </div>
