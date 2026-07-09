@@ -574,25 +574,21 @@
     [data-reveal="develop"]   { filter: blur(14px) saturate(0.4); transform: scale(1.04); transition: opacity 1.4s var(--ease-out), transform 1.4s var(--ease-out), filter 1.4s var(--ease-out); }
     [data-reveal="develop"].is-visible { filter: blur(0) saturate(1); transform: scale(1); }
 
-    /* PKG variant. Membership cards enter with a slow, long-travel
-       lift plus a clip-path that wipes upward from the bottom edge -
-       the card literally rises AND grows into view at the same time.
-       The card frame arrives first over 1.6s, then the interior
-       content fades up in a staggered cascade (below). Reads as
-       "layers falling into place" rather than a single blip. */
+    /* PKG variant. Membership cards enter with a slow long-travel lift
+       + gentle scale settle. The card frame arrives over 1.6s, then the
+       interior content fades up in a staggered cascade (below). Reads
+       as "layers falling into place" rather than a single blip. */
     [data-reveal="pkg"] {
       opacity: 0;
-      transform: translateY(90px);
-      clip-path: inset(100% 0 0 0);
+      transform: translateY(80px) scale(0.94);
+      transform-origin: center bottom;
       transition:
         opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 1.6s cubic-bezier(0.16, 1, 0.3, 1),
-        clip-path 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
     [data-reveal="pkg"].is-visible {
       opacity: 1;
-      transform: translateY(0);
-      clip-path: inset(0 0 0 0);
+      transform: translateY(0) scale(1);
     }
 
     /* Interior cascade: each direct child of a .pkg card fades up
