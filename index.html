@@ -574,44 +574,51 @@
     [data-reveal="develop"]   { filter: blur(14px) saturate(0.4); transform: scale(1.04); transition: opacity 1.4s var(--ease-out), transform 1.4s var(--ease-out), filter 1.4s var(--ease-out); }
     [data-reveal="develop"].is-visible { filter: blur(0) saturate(1); transform: scale(1); }
 
-    /* PKG variant. sophisticated multi-property reveal for membership
-       cards. Progressive blur reduction, subtle 3D perspective tilt,
-       longer settle. Reads as "the panel forms itself" rather than
-       "the panel appears". Paired with a one-shot glow pulse (below)
-       and staggered per-card delays for a graceful cascade. */
+    /* PKG variant. Membership cards enter with a slow, long-travel
+       lift plus a clip-path that wipes upward from the bottom edge -
+       the card literally rises AND grows into view at the same time.
+       The card frame arrives first over 1.6s, then the interior
+       content fades up in a staggered cascade (below). Reads as
+       "layers falling into place" rather than a single blip. */
     [data-reveal="pkg"] {
       opacity: 0;
-      transform: perspective(1400px) translateY(56px) rotateX(-7deg) scale(0.96);
-      filter: blur(10px) saturate(0.55);
-      transform-origin: center top;
+      transform: translateY(90px);
+      clip-path: inset(100% 0 0 0);
       transition:
-        opacity 1.35s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 1.35s cubic-bezier(0.22, 1, 0.36, 1),
-        filter 1.05s cubic-bezier(0.22, 1, 0.36, 1),
-        box-shadow 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+        clip-path 1.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     [data-reveal="pkg"].is-visible {
       opacity: 1;
-      transform: perspective(1400px) translateY(0) rotateX(0) scale(1);
-      filter: blur(0) saturate(1);
-      animation: pkg-land-pulse 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
+      transform: translateY(0);
+      clip-path: inset(0 0 0 0);
     }
-    /* One-shot glow that pulses as each card lands. Uses box-shadow
-       (composes with the card's own layout) rather than a ::after
-       overlay that would be clipped by overflow:hidden. */
-    @keyframes pkg-land-pulse {
-      0%   { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
-      35%  { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 68px 6px rgba(0, 212, 255, 0.32); }
-      100% { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+
+    /* Interior cascade: each direct child of a .pkg card fades up
+       in sequence once the card is visible, so the user watches the
+       card compose itself: badge, then heading, then description,
+       then price, then features, then CTA. */
+    [data-reveal="pkg"] > * {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    [data-reveal="pkg"].pkg--champion.is-visible {
-      animation: pkg-land-pulse-gold 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
+    [data-reveal="pkg"].is-visible > * {
+      opacity: 1;
+      transform: translateY(0);
     }
-    @keyframes pkg-land-pulse-gold {
-      0%   { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(255, 187, 71, 0.12); }
-      35%  { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 72px 8px rgba(255, 187, 71, 0.42); }
-      100% { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(255, 187, 71, 0.12); }
-    }
+    [data-reveal="pkg"].is-visible > *:nth-child(1) { transition-delay: 0.45s; }
+    [data-reveal="pkg"].is-visible > *:nth-child(2) { transition-delay: 0.55s; }
+    [data-reveal="pkg"].is-visible > *:nth-child(3) { transition-delay: 0.65s; }
+    [data-reveal="pkg"].is-visible > *:nth-child(4) { transition-delay: 0.75s; }
+    [data-reveal="pkg"].is-visible > *:nth-child(5) { transition-delay: 0.85s; }
+    [data-reveal="pkg"].is-visible > *:nth-child(6) { transition-delay: 0.95s; }
+    [data-reveal="pkg"].is-visible > *:nth-child(7) { transition-delay: 1.05s; }
+    [data-reveal="pkg"].is-visible > *:nth-child(8) { transition-delay: 1.15s; }
+    [data-reveal="pkg"].is-visible > *:nth-child(9) { transition-delay: 1.25s; }
 
     /* Card deal. like a hand being dealt onto the table */
     [data-reveal="deal"]      { transform: translateY(60px) rotate(-4deg) scale(0.94); transition: opacity 1.05s var(--ease-out), transform 1.05s cubic-bezier(0.34, 1.32, 0.64, 1); }
@@ -1032,35 +1039,37 @@
       margin: 0;
     }
 
-    /* Scroll cue chip. sits under "Pick your system" and bounces gently
-       so the user knows the packages are just below the fold. */
+    /* Ambient scroll cue. bare chevron that pulses down + glows softly.
+       No text, no pill. Just a subtle hint that there's more below. */
     .scroll-cue {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 18px;
-      padding: 7px 14px;
-      background: rgba(0, 212, 255, 0.06);
-      border: 1px solid rgba(0, 212, 255, 0.2);
-      border-radius: 999px;
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--cyan-2);
-      animation: scroll-cue-bounce 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      display: flex;
+      justify-content: center;
+      margin-top: 22px;
+      pointer-events: none;
     }
     .scroll-cue svg {
-      animation: scroll-cue-arrow 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      width: 22px;
+      height: 22px;
+      color: var(--cyan-2);
+      opacity: 0.45;
+      filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.25));
+      animation: scroll-cue-pulse 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
-    @keyframes scroll-cue-bounce {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(6px); }
-    }
-    @keyframes scroll-cue-arrow {
-      0%, 100% { transform: translateY(0); opacity: 0.7; }
-      50%      { transform: translateY(3px); opacity: 1; }
+    @keyframes scroll-cue-pulse {
+      0% {
+        transform: translateY(-4px);
+        opacity: 0.15;
+        filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.15));
+      }
+      45% {
+        opacity: 0.75;
+        filter: drop-shadow(0 0 14px rgba(0, 212, 255, 0.5));
+      }
+      100% {
+        transform: translateY(10px);
+        opacity: 0;
+        filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0));
+      }
     }
 
     /* HERO. Cathedral */
@@ -4486,8 +4495,7 @@
         <span class="section-eyebrow" data-reveal="pill">Memberships</span>
         <h2 class="section-title compact-title" data-reveal-words>Pick your system. Join in seconds.</h2>
         <div class="scroll-cue" aria-hidden="true">
-          <span>5 packages below</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
       </div>
 
