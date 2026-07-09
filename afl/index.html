@@ -3535,6 +3535,10 @@
       .btn-primary::before {
         animation: none !important;
       }
+      /* .hero-portrait has opacity:0 baked in and relies on its
+         fade-in-scale animation to become visible. Since we killed
+         its animation above, force it visible here or it stays blank. */
+      .hero-portrait { opacity: 1 !important; }
       /* Drop expensive backdrop-blur filters where they are decorative */
       .compare-card,
       .terminal,
