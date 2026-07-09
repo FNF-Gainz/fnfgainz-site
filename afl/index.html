@@ -28,6 +28,15 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.launchpass.com">
+  <link rel="dns-prefetch" href="https://www.launchpass.com">
+
+  <!-- LaunchPass embeds. deferred here in head so they start downloading
+       in parallel with page parse and their click handlers are guaranteed
+       attached by DOMContentLoaded — no single-tap misses on mobile. -->
+  <script defer src="https://www.launchpass.com/fnf-gainz/afl/embed.js"></script>
+  <script defer src="https://www.launchpass.com/fnf-gainz/champion/embed.js"></script>
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
   <meta name="facebook-domain-verification" content="rvdz1dijk208hjgyhh9yvlcztyrg3p">
@@ -1472,6 +1481,43 @@
     /* Hover. a simple scale so users clearly see the milestone is interactive. */
     .chart-milestone { cursor: pointer; transition: transform 0.2s ease-out; transform-origin: center; transform-box: fill-box; }
     .chart-milestone:hover { transform: scale(1.08); }
+
+    /* Mobile chart: the SVG viewBox scales down to ~47% at 375px viewport,
+       which makes the callout rects + text unreadably small. Hide the label
+       chrome, keep just enlarged dots + connecting lines so users can still
+       tap for the story. A helper line below the chart explains the cue. */
+    @media (max-width: 640px) {
+      .chart-milestone rect,
+      .chart-milestone text { display: none; }
+      .chart-milestone line { stroke-opacity: 0.5; }
+      .chart-milestone circle:first-of-type { r: 8; }
+      .chart-milestone circle:last-of-type { r: 12; stroke-width: 2; }
+      @keyframes milestone-pulse {
+        0%   { r: 10; opacity: 1;   stroke-width: 3; }
+        100% { r: 36; opacity: 0;   stroke-width: 0.5; }
+      }
+      .chart-milestone-hint { display: block; }
+    }
+    .chart-milestone-hint {
+      display: none;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      text-align: center;
+      color: var(--text-3);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-top: 12px;
+    }
+    .chart-milestone-hint-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      vertical-align: middle;
+      margin: -2px 6px 0;
+    }
 
     .chart.is-animated .chart-area { opacity: 1; }
     .chart.is-animated .chart-line {
@@ -3712,6 +3758,10 @@
               <text x="511" y="262" fill="#a3aec5" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2025</text>
               <text x="660" y="262" fill="#a3aec5" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="middle">2026</text>
             </svg>
+            <div class="chart-milestone-hint" aria-hidden="true">
+              <span class="chart-milestone-hint-dot"></span>
+              Tap a highlighted moment for the story
+            </div>
           </div>
 
           <div class="terminal-stats">
@@ -4227,10 +4277,6 @@
       <span class="btn-price">$140 AUD / mo</span>
     </button>
   </div>
-
-  <!-- LaunchPass -->
-  <script async src="https://www.launchpass.com/fnf-gainz/afl/embed.js"></script>
-  <script async src="https://www.launchpass.com/fnf-gainz/champion/embed.js"></script>
 
   <script src="../script.js"></script>
 
