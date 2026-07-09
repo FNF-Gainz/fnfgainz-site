@@ -574,6 +574,45 @@
     [data-reveal="develop"]   { filter: blur(14px) saturate(0.4); transform: scale(1.04); transition: opacity 1.4s var(--ease-out), transform 1.4s var(--ease-out), filter 1.4s var(--ease-out); }
     [data-reveal="develop"].is-visible { filter: blur(0) saturate(1); transform: scale(1); }
 
+    /* PKG variant. sophisticated multi-property reveal for membership
+       cards. Progressive blur reduction, subtle 3D perspective tilt,
+       longer settle. Reads as "the panel forms itself" rather than
+       "the panel appears". Paired with a one-shot glow pulse (below)
+       and staggered per-card delays for a graceful cascade. */
+    [data-reveal="pkg"] {
+      opacity: 0;
+      transform: perspective(1400px) translateY(56px) rotateX(-7deg) scale(0.96);
+      filter: blur(10px) saturate(0.55);
+      transform-origin: center top;
+      transition:
+        opacity 1.35s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1.35s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 1.05s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    [data-reveal="pkg"].is-visible {
+      opacity: 1;
+      transform: perspective(1400px) translateY(0) rotateX(0) scale(1);
+      filter: blur(0) saturate(1);
+      animation: pkg-land-pulse 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
+    }
+    /* One-shot glow that pulses as each card lands. Uses box-shadow
+       (composes with the card's own layout) rather than a ::after
+       overlay that would be clipped by overflow:hidden. */
+    @keyframes pkg-land-pulse {
+      0%   { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+      35%  { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 68px 6px rgba(0, 212, 255, 0.32); }
+      100% { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+    }
+    [data-reveal="pkg"].pkg--champion.is-visible {
+      animation: pkg-land-pulse-gold 1.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
+    }
+    @keyframes pkg-land-pulse-gold {
+      0%   { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(255, 187, 71, 0.12); }
+      35%  { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 72px 8px rgba(255, 187, 71, 0.42); }
+      100% { box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(255, 187, 71, 0.12); }
+    }
+
     /* Card deal. like a hand being dealt onto the table */
     [data-reveal="deal"]      { transform: translateY(60px) rotate(-4deg) scale(0.94); transition: opacity 1.05s var(--ease-out), transform 1.05s cubic-bezier(0.34, 1.32, 0.64, 1); }
     [data-reveal="deal-right"] { transform: translateY(60px) rotate(4deg) scale(0.94); transition: opacity 1.05s var(--ease-out), transform 1.05s cubic-bezier(0.34, 1.32, 0.64, 1); }
@@ -991,6 +1030,37 @@
       font-size: clamp(1.5rem, 2.2vw + 0.6rem, 2.1rem);
       line-height: 1.15;
       margin: 0;
+    }
+
+    /* Scroll cue chip. sits under "Pick your system" and bounces gently
+       so the user knows the packages are just below the fold. */
+    .scroll-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+      padding: 7px 14px;
+      background: rgba(0, 212, 255, 0.06);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cyan-2);
+      animation: scroll-cue-bounce 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    .scroll-cue svg {
+      animation: scroll-cue-arrow 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    @keyframes scroll-cue-bounce {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(6px); }
+    }
+    @keyframes scroll-cue-arrow {
+      0%, 100% { transform: translateY(0); opacity: 0.7; }
+      50%      { transform: translateY(3px); opacity: 1; }
     }
 
     /* HERO. Cathedral */
@@ -1794,7 +1864,8 @@
     }
 
     .section--tight-top {
-      padding-top: clamp(24px, 4vh, 40px);
+      padding-top: clamp(16px, 2.5vh, 28px);
+      padding-bottom: clamp(28px, 4vh, 48px);
     }
 
     .section-head {
@@ -4414,13 +4485,17 @@
       <div class="section-head compact-head">
         <span class="section-eyebrow" data-reveal="pill">Memberships</span>
         <h2 class="section-title compact-title" data-reveal-words>Pick your system. Join in seconds.</h2>
+        <div class="scroll-cue" aria-hidden="true">
+          <span>5 packages below</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
       </div>
 
       <!-- ROW 1: HEADLINERS - AFL Package + Champion side by side -->
       <div class="pkg-row pkg-row--headliners">
 
         <!-- AFL Package (Flagship, cyan) -->
-        <article class="pkg pkg--headliner pkg--afl" data-reveal="rise" data-reveal-delay="1">
+        <article class="pkg pkg--headliner pkg--afl" data-reveal="pkg" data-reveal-delay="1">
           <div class="pkg-flag pkg-flag--cyan">Flagship</div>
           <div class="pkg-founder">
             <img src="assets/jordan-portrait.png" alt="Jordan, FNF Gainz founder" class="pkg-founder-avatar" decoding="async" loading="lazy">
@@ -4452,11 +4527,11 @@
         </article>
 
         <!-- CHAMPION (Best value, gold) -->
-        <article class="pkg pkg--headliner pkg--champion" data-reveal="rise" data-reveal-delay="2">
+        <article class="pkg pkg--headliner pkg--champion" data-reveal="pkg" data-reveal-delay="2">
           <div class="pkg-flag">Best Value</div>
           <div class="pkg-eyebrow">AFL + NRL &middot; Combined</div>
           <h3 class="pkg-name">Champion</h3>
-          <p class="pkg-desc">The full AFL system and the full NRL system in one membership. Separate staking per code, combined dashboard.</p>
+          <p class="pkg-desc">Portfolio management for serious punters. Both codes running side by side with separate staking per code, unified performance dashboard, and one weekly report.</p>
           <div class="pkg-price">
             <span class="pkg-price-amount">$200</span>
             <span class="pkg-price-period">AUD / mo</span>
@@ -4483,7 +4558,7 @@
       <div class="pkg-row pkg-row--rest">
 
         <!-- NRL Package -->
-        <article class="pkg" data-reveal="rise" data-reveal-delay="3">
+        <article class="pkg" data-reveal="pkg" data-reveal-delay="3">
           <div class="pkg-name">NRL Package</div>
           <p class="pkg-desc">Value-driven NRL model. Structured for upside on strong lines.</p>
           <div class="pkg-price">
@@ -4505,7 +4580,7 @@
         </article>
 
         <!-- Matched Betting -->
-        <article class="pkg" data-reveal="rise" data-reveal-delay="4">
+        <article class="pkg" data-reveal="pkg" data-reveal-delay="4">
           <div class="pkg-name">Matched Betting</div>
           <p class="pkg-desc">Low-risk foundations. Build bankroll and discipline before scaling.</p>
           <div class="pkg-price">
@@ -4527,7 +4602,7 @@
         </article>
 
         <!-- Community -->
-        <article class="pkg" data-reveal="rise" data-reveal-delay="5">
+        <article class="pkg" data-reveal="pkg" data-reveal-delay="5">
           <div class="pkg-name">Community</div>
           <p class="pkg-desc">Premium chats, EV &amp; e-sports strategies, Racing Bot. Great entry point.</p>
           <div class="pkg-price">
