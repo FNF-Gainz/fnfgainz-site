@@ -908,6 +908,32 @@
       z-index: 1;
     }
 
+    /* FNF brand mark at the very top of the hero.
+       Prominent and clickable back to the main site. */
+    .hero-brand {
+      display: inline-flex;
+      align-self: flex-start;
+      margin-bottom: 28px;
+      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+      text-decoration: none;
+    }
+    .hero-brand:hover { opacity: 0.9; transform: translateY(-2px); }
+    .hero-brand img {
+      display: block;
+      height: 120px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 40px rgba(0, 212, 255, 0.22));
+    }
+    @media (max-width: 900px) {
+      .hero-brand { margin-bottom: 22px; }
+      .hero-brand img { height: 90px; }
+    }
+    @media (max-width: 480px) {
+      .hero-brand img { height: 72px; }
+    }
+
     .hero-eyebrow {
       display: inline-flex;
       align-items: center;
@@ -1762,27 +1788,6 @@
     }
 
     /* FOUNDER. Documentary chapter */
-    /* FNF brand lockup above the founder card */
-    .founder-brand {
-      max-width: 1080px;
-      margin: 0 auto 32px;
-      padding: 0 clamp(16px, 3vw, 32px);
-      display: flex;
-      justify-content: center;
-    }
-    .founder-brand-mark {
-      display: block;
-      height: 84px;
-      width: auto;
-      max-width: 360px;
-      object-fit: contain;
-      filter: drop-shadow(0 12px 32px rgba(0, 212, 255, 0.18));
-    }
-    @media (max-width: 640px) {
-      .founder-brand { margin: 0 auto 24px; }
-      .founder-brand-mark { height: 60px; max-width: 260px; }
-    }
-
     .founder {
       display: grid;
       grid-template-columns: 1fr 1.05fr;
@@ -3549,6 +3554,9 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero-spotlight" aria-hidden="true"></div>
+      <a href="../" class="hero-brand" aria-label="FNF Gainz home">
+        <img src="../assets/fnf-logo-long.png" alt="FNF Gainz. Facts Not Feelings.">
+      </a>
       <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>AFL Premium &middot; Helping Punters Succeed Since 2022</span>
 
       <div class="hero-grid">
@@ -3795,9 +3803,6 @@
     <section class="section">
       <div class="section-head" style="text-align: left; max-width: 1080px;">
         <div class="section-index" aria-hidden="true">02</div>
-      </div>
-      <div class="founder-brand" data-reveal="up">
-        <img src="../assets/fnf-logo-long.png" alt="FNF Gainz. Facts Not Feelings." class="founder-brand-mark">
       </div>
       <div class="founder">
         <div class="founder-portrait" data-reveal="develop">
