@@ -2212,7 +2212,7 @@
     .receipts-track {
       display: flex;
       gap: 0;
-      animation: marquee 40s linear infinite;
+      animation: marquee 24s linear infinite;
       white-space: nowrap;
       will-change: transform;
     }
@@ -2661,12 +2661,11 @@
     .bookies-wrap {
       max-width: 1000px;
       margin: 0 auto clamp(56px, 8vh, 88px);
-      padding: 20px 32px;
+      padding: 24px 32px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
+      gap: 16px;
       background: rgba(15, 20, 38, 0.5);
       border: 1px solid var(--border);
       border-radius: 16px;
@@ -2675,34 +2674,23 @@
 
     .bookies-label {
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       color: var(--text-3);
       text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-
-    .bookies-label::before {
-      content: '';
-      width: 24px;
-      height: 1px;
-      background: linear-gradient(90deg, var(--cyan), transparent);
+      text-align: center;
     }
 
     .bookies-list {
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      gap: 10px;
       flex-wrap: wrap;
       list-style: none;
       margin: 0;
       padding: 0;
-      flex: 1;
-      justify-content: flex-end;
     }
 
     .bookies-item {
@@ -3458,13 +3446,8 @@
         gap: 40px;
       }
 
-      .bookies-wrap {
-        justify-content: center;
-      }
-
-      .bookies-list {
-        justify-content: center;
-      }
+      .bookies-wrap { padding: 20px 20px; gap: 12px; }
+      .bookies-list { gap: 8px; }
 
       .compare {
         grid-template-columns: 1fr;
@@ -3571,7 +3554,7 @@
       }
       /* Ticker cycles fast on mobile. Matches desktop 12s. */
       .ticker-inner { animation-duration: 12s !important; }
-      .receipts-track { animation-duration: 40s !important; }
+      .receipts-track { animation-duration: 24s !important; }
 
       /* Mobile: hide LaunchPass embed modal entirely.
          On mobile we intercept the button click and open our own
