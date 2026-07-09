@@ -4484,43 +4484,54 @@
         document.addEventListener('keydown', escHandler);
       }
 
-      function handleClick(e) {
-        if (window.innerWidth > 640) return; // re-check every click
-        var btn = e.currentTarget && e.currentTarget.classList
-          ? e.currentTarget
-          : (e.target && e.target.closest && e.target.closest('.lp6640832616333312, .lp4572582037028864'));
-        if (!btn) return;
-        var url = null;
-        if (btn.classList.contains('lp6640832616333312')) url = IFRAME_URLS.lp6640832616333312;
-        else if (btn.classList.contains('lp4572582037028864')) url = IFRAME_URLS.lp4572582037028864;
-        if (!url) return;
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        openModal(url);
-      }
-
-      // Belt: document-level capture delegation catches any button.
-      document.addEventListener('click', handleClick, true);
-
-      // Braces: bind directly to every LaunchPass button we can find
-      // right now. In case anything in the click delegation chain
-      // (e.g. an inline onclick) interferes on some devices, this
-      // guarantees the sticky-cta and every other LaunchPass button
-      // gets our handler.
-      function bindDirect() {
-        document.querySelectorAll('.lp6640832616333312, .lp4572582037028864').forEach(function(btn) {
-          if (btn.__fnfBound) return;
-          btn.__fnfBound = true;
-          btn.addEventListener('click', handleClick, true);
+      // Nuclear approach on mobile: for every Join button, strip the
+       // LaunchPass class + inline onclick and replace with our own handler.
+       // LaunchPass embed can't fight for a button it doesn't recognize.
+      function takeOverButtons() {
+        // AFL Premium buttons
+        document.querySelectorAll('.lp6640832616333312').forEach(function(btn) {
+          if (btn.__fnfOwned) return;
+          btn.__fnfOwned = true;
+          btn.classList.remove('lp6640832616333312');
+          btn.setAttribute('data-fnf-join', 'afl');
+          btn.onclick = null;
+          btn.removeAttribute('onclick');
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (window.fnfTrack) {
+              try { window.fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' }); } catch (_) {}
+            }
+            openModal(IFRAME_URLS.lp6640832616333312);
+          });
+        });
+        // Champion buttons
+        document.querySelectorAll('.lp4572582037028864').forEach(function(btn) {
+          if (btn.__fnfOwned) return;
+          btn.__fnfOwned = true;
+          btn.classList.remove('lp4572582037028864');
+          btn.setAttribute('data-fnf-join', 'champion');
+          btn.onclick = null;
+          btn.removeAttribute('onclick');
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (window.fnfTrack) {
+              try { window.fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' }); } catch (_) {}
+            }
+            openModal(IFRAME_URLS.lp4572582037028864);
+          });
         });
       }
-      bindDirect();
-      // Sticky CTA button is in the DOM at parse time but re-run just
-      // in case something injects buttons later (e.g. LaunchPass rewriting).
+
+      // Run immediately, on DOMContentLoaded, on load, and on pageshow
+      // (covers bfcache restores where scripts don't re-run).
+      takeOverButtons();
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', bindDirect);
+        document.addEventListener('DOMContentLoaded', takeOverButtons);
       }
-      window.addEventListener('load', bindDirect);
+      window.addEventListener('load', takeOverButtons);
+      window.addEventListener('pageshow', takeOverButtons);
     })();
   </script>
 
