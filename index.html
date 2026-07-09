@@ -3633,6 +3633,55 @@
       background: linear-gradient(90deg, transparent, #ffbb47, #ff9500, transparent);
     }
     .pkg-eyebrow--cyan { color: var(--cyan-2); }
+
+    /* Founder byline inside AFL headliner card. Small circular photo
+       + "Built by Jordan" line reads as a trust signal without
+       stealing focus from the price + CTA. */
+    .pkg-founder {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 14px 8px 8px;
+      border: 1px solid rgba(0, 212, 255, 0.22);
+      border-radius: 999px;
+      background: rgba(0, 212, 255, 0.05);
+      margin-bottom: 16px;
+      align-self: flex-start;
+    }
+    .pkg-founder-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 22%;
+      flex-shrink: 0;
+      border: 1px solid rgba(0, 212, 255, 0.28);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    }
+    .pkg-founder-name {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+    .pkg-founder-role {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      font-weight: 500;
+      color: var(--text-3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    @media (max-width: 640px) {
+      .pkg-founder { padding: 6px 12px 6px 6px; gap: 10px; }
+      .pkg-founder-avatar { width: 34px; height: 34px; }
+      .pkg-founder-name { font-size: 0.66rem; }
+      .pkg-founder-role { font-size: 0.54rem; }
+    }
     .pkg--headliner .pkg-name {
       font-size: clamp(1.7rem, 2.2vw + 0.6rem, 2.1rem);
       margin-top: 2px;
@@ -4369,7 +4418,13 @@
         <!-- AFL Package (Flagship, cyan) -->
         <article class="pkg pkg--headliner pkg--afl" data-reveal="rise" data-reveal-delay="1">
           <div class="pkg-flag pkg-flag--cyan">Flagship</div>
-          <div class="pkg-eyebrow pkg-eyebrow--cyan">AFL &middot; Since 2022</div>
+          <div class="pkg-founder">
+            <img src="assets/jordan-portrait.png" alt="Jordan, FNF Gainz founder" class="pkg-founder-avatar" decoding="async" loading="lazy">
+            <div class="pkg-founder-text">
+              <div class="pkg-founder-name">Built by Jordan</div>
+              <div class="pkg-founder-role">10 years AFL analysis &middot; Since 2022</div>
+            </div>
+          </div>
           <h3 class="pkg-name">AFL Package</h3>
           <p class="pkg-desc">Our flagship. Disposal-market system built on ten years of AFL analysis. Every bet posted live to Discord.</p>
           <div class="pkg-price">
