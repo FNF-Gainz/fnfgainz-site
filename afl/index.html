@@ -3559,16 +3559,51 @@
         animation-duration: 90s !important; /* half-speed = half the paints */
       }
 
-      /* Force any LaunchPass embed iframe to fit the mobile viewport so
-         it doesn't render at desktop width and require the user to zoom.
-         Applies to whatever iframe the embed injects, whichever class
-         wrapper LaunchPass uses. */
-      iframe[src*="launchpass.com"] {
-        max-width: 100vw !important;
-        width: 100vw !important;
-        max-height: 100vh !important;
-        left: 0 !important;
-        right: 0 !important;
+      /* LaunchPass modal on mobile.
+         The embed creates: .launchPassLoader (backdrop, click-to-close) >
+         div (flex-centering) > div (position:fixed, 100%x100%) > div >
+         iframe. Because inner divs are 100% width/height the backdrop
+         has no visible margin and users can't tap outside to close.
+         Shrink the container so the backdrop shows all around, giving
+         the click-to-close a target and preventing the modal from
+         swallowing the whole screen. */
+      .launchPassLoader > div > div {
+        position: relative !important;
+        width: 92vw !important;
+        max-width: 92vw !important;
+        height: 88vh !important;
+        max-height: 88vh !important;
+        top: auto !important;
+        left: auto !important;
+        margin: 6vh auto !important;
+        border-radius: 14px !important;
+        overflow: hidden !important;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5) !important;
+      }
+      .launchPassLoader iframe {
+        max-width: 100% !important;
+        max-height: 100% !important;
+      }
+      /* Our own guaranteed-clickable close X pinned above the modal.
+         Injected by JS below when the loader appears. */
+      .fnf-lp-close {
+        position: fixed;
+        top: 14px;
+        right: 14px;
+        z-index: 10000;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(5, 8, 21, 0.85);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #fff;
+        font-size: 22px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
       }
     }
 
@@ -4340,6 +4375,52 @@
   </div>
 
   <script src="../script.js"></script>
+
+  <!-- Mobile: watch for the LaunchPass modal to be added and inject an
+       always-visible close X. Belt-and-braces on top of the tap-to-close
+       backdrop, because on some Android + iOS builds users get stuck
+       inside the modal with nothing tappable outside the iframe. -->
+  <script>
+    (function() {
+      if (window.innerWidth > 640) return;
+      var observed = false;
+      var mo = new MutationObserver(function(muts) {
+        muts.forEach(function(m) {
+          m.addedNodes.forEach(function(node) {
+            if (node.nodeType !== 1) return;
+            var loader = node.classList && node.classList.contains('launchPassLoader')
+              ? node
+              : node.querySelector && node.querySelector('.launchPassLoader');
+            if (!loader || loader.__fnfClose) return;
+            loader.__fnfClose = true;
+
+            var btn = document.createElement('button');
+            btn.className = 'fnf-lp-close';
+            btn.setAttribute('aria-label', 'Close checkout');
+            btn.textContent = '×';
+            btn.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              loader.style.display = 'none';
+              btn.remove();
+            });
+            document.body.appendChild(btn);
+
+            // Also allow ESC to close (helps external keyboards on tablets)
+            var esc = function(ev) {
+              if (ev.key === 'Escape') {
+                loader.style.display = 'none';
+                btn.remove();
+                document.removeEventListener('keydown', esc);
+              }
+            };
+            document.addEventListener('keydown', esc);
+          });
+        });
+      });
+      mo.observe(document.body, { childList: true, subtree: true });
+    })();
+  </script>
 
   <!-- Chart animation trigger -->
   <script>
