@@ -469,7 +469,7 @@
       gap: 0;
       padding: 11px 0;
       white-space: nowrap;
-      animation: ticker-scroll 25s linear infinite;
+      animation: ticker-scroll 18s linear infinite;
       will-change: transform;
     }
 
@@ -3527,35 +3527,47 @@
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
       }
-      /* Ticker speed on mobile: matches desktop 25s so users see the
-         highlight rounds cycle briskly, not crawl. */
-      .ticker-inner { animation-duration: 25s !important; }
+      /* Ticker cycles briskly on mobile too. Matches desktop 18s. */
+      .ticker-inner { animation-duration: 18s !important; }
       .receipts-track { animation-duration: 40s !important; }
 
       /* LaunchPass modal on mobile.
          The embed creates: .launchPassLoader (backdrop, click-to-close) >
          div (flex-centering) > div (position:fixed, 100%x100%) > div >
-         iframe. Because inner divs are 100% width/height the backdrop
-         has no visible margin and users can't tap outside to close.
-         Shrink the container so the backdrop shows all around, giving
-         the click-to-close a target and preventing the modal from
-         swallowing the whole screen. */
+         iframe. Two mobile issues we fix here:
+         1. Inner container fills viewport so there is no backdrop
+            margin to tap for close. Shrink it.
+         2. On iOS Safari, first-render of the fresh iframe sometimes
+            paints blank/white so the modal looks empty. Force a dark
+            background on the container + iframe so at least the
+            modal frame is visible while the iframe hydrates.
+         Using percentage sizing (not vh/vw) so iOS Safari URL-bar
+         viewport changes don't push content off screen. */
       .launchPassLoader > div > div {
         position: relative !important;
-        width: 92vw !important;
-        max-width: 92vw !important;
-        height: 88vh !important;
-        max-height: 88vh !important;
+        width: 92% !important;
+        max-width: 92% !important;
+        height: 85% !important;
+        max-height: 85% !important;
         top: auto !important;
         left: auto !important;
-        margin: 6vh auto !important;
+        margin: 0 auto !important;
         border-radius: 14px !important;
         overflow: hidden !important;
         box-shadow: 0 20px 60px rgba(0,0,0,0.5) !important;
+        background: #0a0d1e !important;
       }
       .launchPassLoader iframe {
         max-width: 100% !important;
         max-height: 100% !important;
+        background: #0a0d1e !important;
+      }
+      .launchPassLoader .loading {
+        color: #7cedff !important;
+        font-family: 'JetBrains Mono', monospace !important;
+        font-size: 0.85rem !important;
+        letter-spacing: 0.15em !important;
+        text-transform: uppercase !important;
       }
       /* Our own guaranteed-clickable close X pinned above the modal.
          Injected by JS below when the loader appears. */
@@ -4391,8 +4403,20 @@
         currentLoader = loader;
         var attrMo = new MutationObserver(function() {
           var visible = loader.style.display && loader.style.display !== 'none';
-          if (visible) showCloseBtn();
-          else hideCloseBtn();
+          if (visible) {
+            showCloseBtn();
+            // iOS Safari sometimes fails to paint the freshly-shown
+            // fixed-position modal on first open. Force a repaint by
+            // toggling a property that triggers layout.
+            requestAnimationFrame(function() {
+              loader.style.opacity = '0.999';
+              requestAnimationFrame(function() {
+                loader.style.opacity = '';
+              });
+            });
+          } else {
+            hideCloseBtn();
+          }
         });
         attrMo.observe(loader, { attributes: true, attributeFilter: ['style'] });
         // Initial check
