@@ -3531,98 +3531,92 @@
       .ticker-inner { animation-duration: 18s !important; }
       .receipts-track { animation-duration: 40s !important; }
 
-      /* LaunchPass modal on mobile.
-         Structure LaunchPass injects:
-           .launchPassLoader (fixed, 100%x100%, backdrop, click-to-close)
-             > div (display:flex, height:100%)
-               > div (width:100% height:100% position:fixed - centered card)
-                 > div (height:100%)
-                   > iframe (display:flex position:relative)
-                   > .loading (position:absolute)
-
-         Issues:
-         1. The card fills the viewport so there is no visible backdrop
-            margin to tap-close.
-         2. On iOS Safari, LaunchPass's iframe with inline display:flex +
-            position:relative sometimes collapses to zero dimensions
-            inside our constrained container - user sees dark box with
-            no content.
-
-         Fix strategy:
-         - Center the card with classic top:50% + translate (reliable
-           on both iOS and Android, no flex layout dependencies).
-         - Give the iframe's parent explicit position:relative so the
-           iframe can be absolutely positioned inside it, filling the
-           entire container regardless of the inline display:flex. */
-      .launchPassLoader > div > div {
-        position: fixed !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        width: 94% !important;
-        max-width: 94% !important;
-        height: 88% !important;
-        max-height: 88% !important;
-        margin: 0 !important;
-        border-radius: 14px !important;
-        overflow: hidden !important;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.5) !important;
-        background: #fff !important;
-      }
-      .launchPassLoader > div > div > div {
-        position: relative !important;
-        width: 100% !important;
-        height: 100% !important;
-      }
-      .launchPassLoader iframe {
-        display: block !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        min-height: 100% !important;
-        border: none !important;
-        background: #fff !important;
-      }
-      .launchPassLoader .loading {
-        position: absolute !important;
-        inset: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        z-index: 5 !important;
-        color: #666 !important;
-        font-family: 'JetBrains Mono', monospace !important;
-        font-size: 0.85rem !important;
-        letter-spacing: 0.15em !important;
-        text-transform: uppercase !important;
-        background: #fff !important;
-      }
-      /* Our own guaranteed-clickable close X pinned above the modal.
-         Injected by JS below when the loader appears. */
-      .fnf-lp-close {
-        position: fixed;
-        top: 14px;
-        right: 14px;
-        z-index: 10000;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(5, 8, 21, 0.85);
-        border: 1px solid rgba(255,255,255,0.2);
-        color: #fff;
-        font-size: 22px;
-        line-height: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        -webkit-tap-highlight-color: transparent;
-      }
+      /* Mobile: hide LaunchPass embed modal entirely.
+         On mobile we intercept the button click and open our own
+         reliable modal instead. LaunchPass's own modal has known
+         iOS Safari rendering bugs. */
+      .launchPassLoader { display: none !important; }
     }
+
+    /* Our own mobile checkout modal (built ourselves - full control,
+       no dependency on LaunchPass embed's fragile internal DOM). */
+    .fnf-checkout-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fnf-checkout-in 0.2s ease-out;
+    }
+    @keyframes fnf-checkout-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .fnf-checkout-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .fnf-checkout-card {
+      position: relative;
+      width: 94%;
+      height: 90%;
+      max-width: 500px;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+    }
+    .fnf-checkout-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      border: none;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+      padding: 0;
+    }
+    .fnf-checkout-close:hover,
+    .fnf-checkout-close:active { background: rgba(0,0,0,0.85); }
+    .fnf-checkout-card iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: #fff;
+      flex: 1;
+    }
+    .fnf-checkout-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      color: #888;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fnf-checkout-modal.is-loaded .fnf-checkout-loading { display: none; }
 
     @media (prefers-reduced-motion: reduce) {
       .btn-primary::before,
@@ -4393,138 +4387,93 @@
 
   <script src="../script.js"></script>
 
-  <!-- Mobile: keep an always-clickable close X pinned above the LaunchPass
-       modal every time it opens. Belt-and-braces on top of the tap-outside
-       backdrop, because on some Android + iOS builds users get stuck inside
-       the modal with nothing tappable outside the iframe. -->
+  <!-- Mobile checkout: intercept the button click and open OUR own
+       modal with a direct-load iframe. LaunchPass's own embed modal
+       has iOS Safari rendering bugs (iframe collapses to 0 dimensions,
+       backdrop click-close intermittently fails). By owning the modal
+       DOM ourselves we control positioning, sizing, and close behavior
+       reliably on both iOS and Android. Desktop still uses their embed. -->
   <script>
     (function() {
       if (window.innerWidth > 640) return;
 
-      var closeBtn = null;
-      var currentLoader = null;
+      var IFRAME_URLS = {
+        'lp6640832616333312': 'https://www.launchpass.com/fnf-gainz/afl/iframe',
+        'lp4572582037028864': 'https://www.launchpass.com/fnf-gainz/champion/iframe'
+      };
 
-      function ensureCloseBtn() {
-        if (closeBtn && closeBtn.isConnected) return closeBtn;
-        closeBtn = document.createElement('button');
-        closeBtn.className = 'fnf-lp-close';
-        closeBtn.setAttribute('aria-label', 'Close checkout');
-        closeBtn.textContent = '×'; // multiplication sign
-        closeBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          if (currentLoader) currentLoader.style.display = 'none';
-          hideCloseBtn();
+      var currentModal = null;
+      var escHandler = null;
+      var messageHandler = null;
+
+      function closeModal() {
+        if (!currentModal) return;
+        currentModal.remove();
+        currentModal = null;
+        if (escHandler) { document.removeEventListener('keydown', escHandler); escHandler = null; }
+        if (messageHandler) { window.removeEventListener('message', messageHandler); messageHandler = null; }
+      }
+
+      function openModal(iframeUrl) {
+        // Close any prior instance
+        closeModal();
+
+        var modal = document.createElement('div');
+        modal.className = 'fnf-checkout-modal';
+        modal.innerHTML =
+          '<div class="fnf-checkout-backdrop"></div>' +
+          '<div class="fnf-checkout-card">' +
+            '<button class="fnf-checkout-close" aria-label="Close checkout" type="button">&times;</button>' +
+            '<div class="fnf-checkout-loading">Loading&hellip;</div>' +
+            '<iframe src="' + iframeUrl + '" allow="payment *" allowpaymentrequest="true"></iframe>' +
+          '</div>';
+        document.body.appendChild(modal);
+        currentModal = modal;
+
+        var iframe = modal.querySelector('iframe');
+
+        // Once iframe loads, mirror LaunchPass embed's own initialization
+        // handshake: send openPaymentModal after 100ms.
+        iframe.addEventListener('load', function() {
+          modal.classList.add('is-loaded');
+          setTimeout(function() {
+            try { iframe.contentWindow.postMessage('openPaymentModal', '*'); } catch (_) {}
+          }, 100);
         });
-        document.body.appendChild(closeBtn);
-        return closeBtn;
+
+        // Listen for LaunchPass iframe messages (init + close signals)
+        messageHandler = function(event) {
+          if (!iframe || event.source !== iframe.contentWindow) return;
+          if (event.data === 'closeIframe') closeModal();
+          if (event.data === 'initIframe') modal.classList.add('is-loaded');
+        };
+        window.addEventListener('message', messageHandler);
+
+        // Close on backdrop tap
+        modal.querySelector('.fnf-checkout-backdrop')
+          .addEventListener('click', closeModal);
+        // Close on X tap
+        modal.querySelector('.fnf-checkout-close')
+          .addEventListener('click', closeModal);
+
+        // Close on Escape (external keyboards on tablets)
+        escHandler = function(ev) { if (ev.key === 'Escape') closeModal(); };
+        document.addEventListener('keydown', escHandler);
       }
 
-      function showCloseBtn() {
-        ensureCloseBtn().style.display = 'flex';
-      }
-
-      function hideCloseBtn() {
-        if (closeBtn) closeBtn.style.display = 'none';
-      }
-
-      // Watch the loader's visibility. Show our X when it becomes visible,
-      // hide when it goes away. Fires every time the modal opens, not just
-      // the first time.
-      function watchLoader(loader) {
-        currentLoader = loader;
-        var attrMo = new MutationObserver(function() {
-          var visible = loader.style.display && loader.style.display !== 'none';
-          if (visible) {
-            showCloseBtn();
-            // iOS Safari sometimes fails to paint the freshly-shown
-            // fixed-position modal on first open. Force a repaint by
-            // toggling a property that triggers layout.
-            requestAnimationFrame(function() {
-              loader.style.opacity = '0.999';
-              requestAnimationFrame(function() {
-                loader.style.opacity = '';
-              });
-            });
-          } else {
-            hideCloseBtn();
-          }
-        });
-        attrMo.observe(loader, { attributes: true, attributeFilter: ['style'] });
-        // Initial check
-        if (loader.style.display && loader.style.display !== 'none') showCloseBtn();
-      }
-
-      // Fallback: if the iframe still hasn't rendered content after 2.5s
-      // (iOS Safari sometimes leaves the modal blank), inject an escape
-      // link on top of the modal that opens LaunchPass directly.
-      function scheduleIframeCheck(loader) {
-        setTimeout(function() {
-          if (!loader || loader.style.display === 'none') return;
-          var iframe = loader.querySelector('iframe');
-          if (!iframe) return;
-          var rect = iframe.getBoundingClientRect();
-          // Iframe rendered fine
-          if (rect.width > 100 && rect.height > 100 && iframe.offsetHeight > 0) return;
-          // Iframe is broken. inject an escape link.
-          if (loader.__fnfEscape) return;
-          loader.__fnfEscape = true;
-          var url = iframe.src && iframe.src.indexOf('champion') !== -1
-            ? 'https://www.launchpass.com/fnf-gainz/champion'
-            : 'https://www.launchpass.com/fnf-gainz/afl';
-          var link = document.createElement('a');
-          link.href = url;
-          link.target = '_blank';
-          link.rel = 'noopener';
-          link.textContent = 'Open checkout in a new tab';
-          link.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10001;padding:14px 24px;background:#00d4ff;color:#000;font-family:Inter,sans-serif;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 12px 32px rgba(0,0,0,0.5);';
-          document.body.appendChild(link);
-          link.addEventListener('click', function() {
-            setTimeout(function() {
-              if (loader) loader.style.display = 'none';
-              hideCloseBtn();
-              link.remove();
-            }, 100);
-          });
-        }, 2500);
-      }
-
-      // Watch DOM for the loader element being added
-      var mo = new MutationObserver(function(muts) {
-        muts.forEach(function(m) {
-          m.addedNodes.forEach(function(node) {
-            if (node.nodeType !== 1) return;
-            var loader = node.classList && node.classList.contains('launchPassLoader')
-              ? node
-              : node.querySelector && node.querySelector('.launchPassLoader');
-            if (loader && !loader.__fnfWatched) {
-              loader.__fnfWatched = true;
-              watchLoader(loader);
-              // Enhance our watcher to trigger the check every time
-              // the loader becomes visible.
-              var origAttrMo = new MutationObserver(function() {
-                if (loader.style.display && loader.style.display !== 'none') {
-                  scheduleIframeCheck(loader);
-                }
-              });
-              origAttrMo.observe(loader, { attributes: true, attributeFilter: ['style'] });
-              // Initial check if already visible
-              if (loader.style.display && loader.style.display !== 'none') {
-                scheduleIframeCheck(loader);
-              }
-            }
-          });
-        });
-      });
-      mo.observe(document.body, { childList: true, subtree: true });
-
-      // ESC also closes (external keyboards on tablets)
-      document.addEventListener('keydown', function(ev) {
-        if (ev.key === 'Escape' && currentLoader && currentLoader.style.display !== 'none') {
-          currentLoader.style.display = 'none';
-          hideCloseBtn();
-        }
-      });
+      // Capture-phase click handler intercepts before LaunchPass embed's
+      // own click handler (which would try to open their broken modal).
+      document.addEventListener('click', function(e) {
+        var btn = e.target && e.target.closest && e.target.closest('.lp6640832616333312, .lp4572582037028864');
+        if (!btn) return;
+        var url = null;
+        if (btn.classList.contains('lp6640832616333312')) url = IFRAME_URLS.lp6640832616333312;
+        else if (btn.classList.contains('lp4572582037028864')) url = IFRAME_URLS.lp4572582037028864;
+        if (!url) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        openModal(url);
+      }, true);
     })();
   </script>
 
