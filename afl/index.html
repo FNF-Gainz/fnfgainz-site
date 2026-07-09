@@ -469,7 +469,7 @@
       gap: 0;
       padding: 11px 0;
       white-space: nowrap;
-      animation: ticker-scroll 18s linear infinite;
+      animation: ticker-scroll 12s linear infinite;
       will-change: transform;
     }
 
@@ -695,6 +695,9 @@
       position: relative;
       overflow: hidden;
       white-space: nowrap;
+      /* iOS mobile: kill 300ms tap-delay + tap highlight for reliable first tap */
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .btn-primary {
@@ -3414,6 +3417,9 @@
       border: 1.5px solid rgba(147, 197, 253, 0.6);
       box-shadow: 0 12px 40px rgba(0, 212, 255, 0.5), 0 0 60px rgba(0, 212, 255, 0.25);
       backdrop-filter: blur(20px);
+      /* Kill iOS 300ms tap-delay so first tap opens checkout on iPhone */
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
 
     /* RESPONSIVE */
@@ -3527,8 +3533,8 @@
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
       }
-      /* Ticker cycles briskly on mobile too. Matches desktop 18s. */
-      .ticker-inner { animation-duration: 18s !important; }
+      /* Ticker cycles fast on mobile. Matches desktop 12s. */
+      .ticker-inner { animation-duration: 12s !important; }
       .receipts-track { animation-duration: 40s !important; }
 
       /* Mobile: hide LaunchPass embed modal entirely.
@@ -3582,10 +3588,14 @@
       flex-direction: column;
     }
     .fnf-checkout-close {
-      position: fixed;
-      top: max(env(safe-area-inset-top, 0px), 12px);
-      right: max(env(safe-area-inset-right, 0px), 12px);
-      z-index: 10001;
+      /* Absolutely positioned inside the modal container (which is
+         itself position:fixed full-viewport). Ends up at viewport
+         corner but as a card SIBLING, not descendant, so no
+         card ancestor can hide it. */
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -3599,6 +3609,7 @@
       align-items: center;
       justify-content: center;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
       padding: 0;
     }
     .fnf-checkout-close:hover,
@@ -4433,10 +4444,12 @@
         modal.innerHTML =
           '<div class="fnf-checkout-backdrop"></div>' +
           '<div class="fnf-checkout-card">' +
-            '<button class="fnf-checkout-close" aria-label="Close checkout" type="button">&times;</button>' +
             '<div class="fnf-checkout-loading">Loading&hellip;</div>' +
             '<iframe src="' + iframeUrl + '" allow="payment *" allowpaymentrequest="true"></iframe>' +
-          '</div>';
+          '</div>' +
+          // Close X is a sibling of the card (not inside it) so no
+          // ancestor overflow/stacking can hide it on Android.
+          '<button class="fnf-checkout-close" aria-label="Close checkout" type="button">&times;</button>';
         document.body.appendChild(modal);
         currentModal = modal;
 
