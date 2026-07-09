@@ -4484,9 +4484,10 @@
         document.addEventListener('keydown', escHandler);
       }
 
-      // Nuclear approach on mobile: for every Join button, strip the
-       // LaunchPass class + inline onclick and replace with our own handler.
-       // LaunchPass embed can't fight for a button it doesn't recognize.
+      // Take total ownership of every Join button on mobile so LaunchPass
+      // embed can't fight for it - strip the class, wipe onclick, bind
+      // our own click. LaunchPass embed cannot bind to a button it does
+      // not know exists.
       function takeOverButtons() {
         // AFL Premium buttons
         document.querySelectorAll('.lp6640832616333312').forEach(function(btn) {
