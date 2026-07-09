@@ -468,6 +468,10 @@
       -webkit-backdrop-filter: blur(20px);
       overflow: hidden;
       z-index: 2;
+      /* Fade both edges so the animation loop-point never shows as
+         a hard cut. Whatever's near the seam is hidden by the fade. */
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
     }
 
     .ticker-inner {
@@ -2205,25 +2209,12 @@
       position: relative;
     }
 
-    .receipts-marquee::before,
-    .receipts-marquee::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 80px;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .receipts-marquee::before {
-      left: 0;
-      background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
-    }
-
-    .receipts-marquee::after {
-      right: 0;
-      background: linear-gradient(-90deg, var(--bg) 0%, transparent 100%);
+    /* Edge fade masks so the animation loop-point is hidden behind a
+       soft fade. Cleaner than the old ::before / ::after solid overlays
+       and doesn't depend on matching the container background. */
+    .receipts-marquee {
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
     }
 
     .receipts-track {
@@ -4765,9 +4756,14 @@
       if (!pill) return;
       var kickoffEl = pill.querySelector('[data-nextround-kickoff]');
       var timerEl = pill.querySelector('[data-nextround-timer]');
+      var roundEl = pill.querySelector('[data-stat="nextRound.round"]');
       var labelEl = pill.querySelector('.round-pill-label');
       var kickoffISO = null;
       var wasLive = false;
+      // Track whether the API surfaced a live-in-progress round (gap of
+      // 2+ between latestRound and nextRound means a middle round is
+      // currently being played). Set by fetchNextRound() below.
+      var inferredLiveRound = null;
 
       // Format the kickoff date in Australia/Melbourne (AEST/AEDT), not viewer's local tz.
       // This keeps the label consistent for all visitors: it's an AFL game, shown in AFL time.
@@ -4793,22 +4789,32 @@
         }
       }
 
+      function makeLive(roundLabel, kickoffText) {
+        if (wasLive) return;
+        wasLive = true;
+        pill.classList.remove('round-pill--next');
+        pill.classList.add('round-pill--live');
+        if (labelEl) labelEl.textContent = 'Live';
+        if (roundLabel && roundEl) roundEl.textContent = roundLabel;
+        if (kickoffEl) kickoffEl.textContent = kickoffText || 'In play now';
+        if (timerEl) { timerEl.textContent = ''; timerEl.style.display = 'none'; }
+      }
+
       function update() {
+        // Case A: API surfaced a live-in-progress round (skip detected).
+        // We're inside a round window right now. Nothing to count down to.
+        if (inferredLiveRound) {
+          makeLive(inferredLiveRound, 'In play now');
+          return;
+        }
+        // Case B: countdown to nextRound.kickoff. If it's already
+        // passed, flip to LIVE using nextRound's own label.
         if (!kickoffISO) return;
         var now = Date.now();
         var kickoff = new Date(kickoffISO).getTime();
         var diff = kickoff - now;
         if (diff <= 0) {
-          // Games are being played right now. Swap NEXT -> LIVE.
-          if (!wasLive) {
-            wasLive = true;
-            pill.classList.remove('round-pill--next');
-            pill.classList.add('round-pill--live');
-            if (labelEl) labelEl.textContent = 'Live';
-            if (kickoffEl) kickoffEl.textContent = 'In play now';
-          }
-          timerEl.textContent = '';
-          timerEl.style.display = 'none';
+          makeLive(null, 'In play now');
           return;
         }
         timerEl.style.display = '';
@@ -4826,27 +4832,52 @@
         timerEl.textContent = text;
       }
 
-      // Source order matches the main stats loader below: Vercel → stats.json → fallback.
-      // Change VERCEL_URL in the stats loader to activate live Vercel data everywhere.
+      // Pull round data straight from Charlie's live endpoint so we
+      // never lag behind. Falls back to stats.json if the endpoint
+      // is temporarily unreachable.
       function fetchNextRound() {
-        return fetch('stats.json', { cache: 'no-cache' })
-          .then(function(r) { return r.ok ? r.json() : null; });
+        return fetch('https://fnf-gainz-afl.vercel.app/api/afl-stats', { cache: 'no-cache' })
+          .then(function(r) { return r.ok ? r.json() : null; })
+          .catch(function() {
+            return fetch('stats.json', { cache: 'no-cache' })
+              .then(function(r) { return r.ok ? r.json() : null; })
+              .catch(function() { return null; });
+          });
+      }
+
+      // Parse "R18" -> 18. Returns NaN if not a plain R-number.
+      function parseRound(str) {
+        if (typeof str !== 'string') return NaN;
+        var m = str.match(/^R(\d+)$/i);
+        return m ? parseInt(m[1], 10) : NaN;
       }
 
       fetchNextRound()
         .then(function(data) {
-          if (data && data.nextRound && data.nextRound.kickoff) {
+          if (!data) return;
+          // Detect the missing-round case: if latestRound and nextRound
+          // are more than one apart, there's a round happening right
+          // now that the API doesn't surface. Infer it.
+          var latestN = parseRound(data.latestRound && data.latestRound.round);
+          var nextN = parseRound(data.nextRound && data.nextRound.round);
+          if (!isNaN(latestN) && !isNaN(nextN) && (nextN - latestN) >= 2) {
+            inferredLiveRound = 'R' + (latestN + 1);
+            // Detach from the generic stats-loader so it can't overwrite
+            // our inferred LIVE round with the raw nextRound.round value.
+            if (roundEl) roundEl.removeAttribute('data-stat');
+          }
+
+          if (data.nextRound && data.nextRound.kickoff) {
             kickoffISO = data.nextRound.kickoff;
             var d = new Date(kickoffISO);
             if (!isNaN(d.getTime())) {
               var label = formatKickoffAEST(d);
-              if (label) kickoffEl.textContent = label;
+              if (label && kickoffEl) kickoffEl.textContent = label;
             }
-            update();
-            setInterval(update, 60000);
           }
-        })
-        .catch(function() {});
+          update();
+          setInterval(update, 60000);
+        });
     })();
   </script>
 

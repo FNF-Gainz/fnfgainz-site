@@ -933,6 +933,10 @@
       max-width: 1160px;
       padding: 0 clamp(16px, 3vw, 32px);
       overflow: hidden;
+      /* Fade both edges so the loop-point is hidden behind a soft
+         gradient and the scroll reads as continuous. */
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
     }
     .mini-banner-inner {
       display: flex;
