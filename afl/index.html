@@ -908,32 +908,6 @@
       z-index: 1;
     }
 
-    /* FNF brand mark at the very top of the hero.
-       Trimmed PNG (524x188, no internal padding), clickable to home. */
-    .hero-brand {
-      display: inline-flex;
-      align-self: flex-start;
-      margin-bottom: 24px;
-      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
-      text-decoration: none;
-    }
-    .hero-brand:hover { opacity: 0.9; transform: translateY(-2px); }
-    .hero-brand img {
-      display: block;
-      height: 64px;
-      width: auto;
-      max-width: 100%;
-      object-fit: contain;
-      filter: drop-shadow(0 8px 24px rgba(0, 212, 255, 0.2));
-    }
-    @media (max-width: 900px) {
-      .hero-brand { margin-bottom: 18px; }
-      .hero-brand img { height: 52px; }
-    }
-    @media (max-width: 480px) {
-      .hero-brand img { height: 44px; }
-    }
-
     .hero-eyebrow {
       display: inline-flex;
       align-items: center;
@@ -1151,6 +1125,31 @@
       background: linear-gradient(180deg, transparent 45%, rgba(5, 8, 21, 0.95) 100%);
       pointer-events: none;
       z-index: 1;
+    }
+
+    /* FNF brand chip in the top-right corner of the portrait card */
+    .hero-portrait-brand {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 3;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(5, 8, 21, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      pointer-events: none;
+    }
+    .hero-portrait-brand img {
+      display: block;
+      height: 22px;
+      width: auto;
+      opacity: 0.95;
+    }
+    @media (max-width: 480px) {
+      .hero-portrait-brand { top: 12px; right: 12px; padding: 6px 10px; }
+      .hero-portrait-brand img { height: 18px; }
     }
 
     .hero-portrait-caption {
@@ -3554,9 +3553,6 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero-spotlight" aria-hidden="true"></div>
-      <a href="../" class="hero-brand" aria-label="FNF Gainz home">
-        <img src="../assets/fnf-logo-long-trimmed.png" alt="FNF Gainz. Facts Not Feelings." width="524" height="188">
-      </a>
       <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>AFL Premium &middot; Helping Punters Succeed Since 2022</span>
 
       <div class="hero-grid">
@@ -3620,6 +3616,9 @@
 
         <div class="hero-portrait" data-tilt>
           <div class="hero-portrait-card">
+            <div class="hero-portrait-brand" aria-hidden="true">
+              <img src="../assets/fnf-logo-long-trimmed.png" alt="" width="524" height="188">
+            </div>
             <img src="../assets/jordan-portrait-hero.png" alt="Jordan, FNF Gainz founder" decoding="async">
             <div class="hero-portrait-caption">
               <div>
