@@ -3543,6 +3543,11 @@
          iOS Safari rendering bugs. */
       .launchPassLoader { display: none !important; }
     }
+    /* Also hide LaunchPass modal on any touch-capable device even if
+       the mobile media query didn't match (unusual Android widths). */
+    @media (hover: none), (pointer: coarse) {
+      .launchPassLoader { display: none !important; }
+    }
 
     /* Our own mobile checkout modal (built ourselves - full control,
        no dependency on LaunchPass embed's fragile internal DOM).
@@ -4416,7 +4421,10 @@
        reliably on both iOS and Android. Desktop still uses their embed. -->
   <script>
     (function() {
-      if (window.innerWidth > 640) return;
+      // Detect any touch-capable device OR narrow viewport. Belt & braces
+      // so Android phones reporting slightly-off innerWidth still qualify.
+      var isMobile = window.matchMedia('(hover: none), (pointer: coarse), (max-width: 900px)').matches;
+      if (!isMobile) return;
 
       var IFRAME_URLS = {
         'lp6640832616333312': 'https://www.launchpass.com/fnf-gainz/afl/iframe',
