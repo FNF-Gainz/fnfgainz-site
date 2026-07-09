@@ -926,6 +926,59 @@
       .mini-hero-proof { font-size: 0.68rem; }
     }
 
+    /* Scrolling banner under mini-hero. Cycles AFL wins + testimonials. */
+    .mini-banner {
+      position: relative;
+      margin: 8px auto 20px;
+      max-width: 1160px;
+      padding: 0 clamp(16px, 3vw, 32px);
+      overflow: hidden;
+    }
+    .mini-banner-inner {
+      display: flex;
+      gap: 0;
+      padding: 14px 0;
+      white-space: nowrap;
+      animation: mini-banner-scroll 24s linear infinite;
+      will-change: transform;
+      background: rgba(5, 8, 21, 0.55);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .mini-banner-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 28px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+      color: var(--text-2);
+    }
+    .mini-banner-item::after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-4);
+      margin-left: 28px;
+    }
+    .mini-banner-round { color: var(--text-3); font-weight: 400; }
+    .mini-banner-pos { color: var(--green-2); font-weight: 700; }
+    .mini-banner-quote { color: var(--text); font-style: italic; max-width: 340px; overflow: hidden; text-overflow: ellipsis; }
+    .mini-banner-quote-author { color: var(--cyan-2); font-weight: 600; }
+    @keyframes mini-banner-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @media (max-width: 640px) {
+      .mini-banner-inner { animation-duration: 12s !important; padding: 10px 0; }
+      .mini-banner-item { font-size: 0.7rem; padding: 0 20px; }
+      .mini-banner-item::after { margin-left: 20px; }
+    }
+
     /* Compact section head used on the packages + quick-links sections */
     .section-head.compact-head {
       margin-bottom: 24px;
@@ -3492,24 +3545,25 @@
     }
 
     /* ==================== PACKAGES STOREFRONT ==================== */
-    /* One featured card at the top spanning full width, then a
-       4-column grid of the remaining packages beneath (2x2 on
-       tablet, 1-col on phone). */
-    .packages-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+    /* Row 1: two headliner cards side by side (AFL + Champion)
+       Row 2: three slimmer cards (NRL + Matched Betting + Community) */
+    .pkg-row {
       max-width: 1200px;
       margin: 0 auto;
+      display: grid;
+      gap: 20px;
     }
-    .packages-grid > .pkg--featured {
-      grid-column: 1 / -1;
+    .pkg-row--headliners {
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 24px;
     }
-    @media (max-width: 1000px) {
-      .packages-grid { grid-template-columns: repeat(2, 1fr); }
+    .pkg-row--rest {
+      grid-template-columns: repeat(3, 1fr);
     }
-    @media (max-width: 640px) {
-      .packages-grid { grid-template-columns: 1fr; gap: 16px; }
+    @media (max-width: 900px) {
+      .pkg-row--headliners { grid-template-columns: 1fr; }
+      .pkg-row--rest { grid-template-columns: 1fr; gap: 16px; }
+      .pkg-row--headliners { margin-bottom: 16px; }
     }
 
     .pkg {
@@ -3545,6 +3599,48 @@
     }
     @media (max-width: 640px) {
       .pkg--featured { padding: 28px 22px 22px; }
+    }
+
+    /* Two headliner cards (AFL + Champion) share the same generous
+       padding, glow, and top-edge accent bar, but each keeps its
+       own colour: cyan for AFL, gold for Champion. */
+    .pkg--headliner {
+      padding: 32px 30px 26px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+    }
+    .pkg--headliner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+    }
+    .pkg--afl {
+      background: linear-gradient(140deg, rgba(0, 212, 255, 0.08) 0%, rgba(15, 20, 38, 0.65) 55%);
+      border-color: rgba(0, 212, 255, 0.32);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(0, 212, 255, 0.12);
+    }
+    .pkg--afl::before {
+      background: linear-gradient(90deg, transparent, #00d4ff, #3b82f6, transparent);
+    }
+    .pkg--champion {
+      background: linear-gradient(140deg, rgba(255, 187, 71, 0.08) 0%, rgba(15, 20, 38, 0.65) 55%);
+      border-color: rgba(255, 187, 71, 0.35);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(255, 187, 71, 0.12);
+    }
+    .pkg--champion::before {
+      background: linear-gradient(90deg, transparent, #ffbb47, #ff9500, transparent);
+    }
+    .pkg-eyebrow--cyan { color: var(--cyan-2); }
+    .pkg--headliner .pkg-name {
+      font-size: clamp(1.7rem, 2.2vw + 0.6rem, 2.1rem);
+      margin-top: 2px;
+    }
+    .pkg--headliner .pkg-price-amount { font-size: 2.7rem; }
+    @media (max-width: 640px) {
+      .pkg--headliner { padding: 26px 22px 22px; }
+      .pkg--headliner .pkg-price-amount { font-size: 2.3rem; }
     }
 
     .pkg-flag {
@@ -3718,12 +3814,26 @@
       margin: 0 auto;
       text-align: center;
     }
+    /* Top variant: 3-in-a-row compact links between hero + packages */
+    .quick-links-section--top {
+      padding: 12px 0 24px;
+      max-width: 1080px;
+    }
     .quick-links {
       display: flex;
       flex-direction: column;
       gap: 12px;
       max-width: 640px;
       margin: 0 auto;
+    }
+    .quick-links--compact {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 100%;
+    }
+    @media (max-width: 720px) {
+      .quick-links--compact { grid-template-columns: 1fr; }
     }
     .quick-link {
       display: flex;
@@ -3796,6 +3906,21 @@
     .quick-link:hover .quick-link-arrow {
       color: var(--cyan-2);
       transform: translate(2px, -2px);
+    }
+
+    /* Highlight the free Official App link so users notice the free offer */
+    .quick-link--free {
+      border-color: rgba(0, 255, 157, 0.35);
+      background: linear-gradient(135deg, rgba(0, 255, 157, 0.06), var(--surface));
+    }
+    .quick-link--free .quick-link-icon {
+      background: var(--green-dim);
+      border-color: rgba(0, 255, 157, 0.4);
+      color: var(--green-2);
+    }
+    .quick-link--free:hover {
+      border-color: rgba(0, 255, 157, 0.5);
+      background: linear-gradient(135deg, rgba(0, 255, 157, 0.1), var(--surface));
     }
     @media (max-width: 640px) {
       .quick-links-section { padding: 32px 0 24px; }
@@ -4169,6 +4294,68 @@
       </p>
     </section>
 
+    <!-- SCROLLING BANNER: AFL wins + member testimonials, cycling -->
+    <div class="mini-banner" aria-hidden="true">
+      <div class="mini-banner-inner">
+        <span class="mini-banner-item"><span class="mini-banner-round">AFL R14</span><span class="mini-banner-pos">+$839</span><span>46.7% ROI</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-quote">"Made $27,500 from March to September."</span><span class="mini-banner-quote-author">Curtis</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-round">AFL R12</span><span class="mini-banner-pos">+$826</span><span>39.8% ROI</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-quote">"$8k profit for the season. Couldn't recommend more."</span><span class="mini-banner-quote-author">Lorelius</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-round">AFL R15</span><span class="mini-banner-pos">+$665</span><span>36.2% ROI</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-quote">"So much confidence in the picks."</span><span class="mini-banner-quote-author">iiDooblay</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-round">AFL R13</span><span class="mini-banner-pos">+$469</span><span>22.5% ROI</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-quote">"Scaled to exponentially profitable levels."</span><span class="mini-banner-quote-author">Vitamin_GG</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-round">All-time</span><span class="mini-banner-pos">+$44,759</span><span>5,940 bets</span></span>
+        <!-- duplicated so the infinite scroll wraps seamlessly -->
+        <span class="mini-banner-item"><span class="mini-banner-round">AFL R14</span><span class="mini-banner-pos">+$839</span><span>46.7% ROI</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-quote">"Made $27,500 from March to September."</span><span class="mini-banner-quote-author">Curtis</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-round">AFL R12</span><span class="mini-banner-pos">+$826</span><span>39.8% ROI</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-quote">"$8k profit for the season. Couldn't recommend more."</span><span class="mini-banner-quote-author">Lorelius</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-round">AFL R15</span><span class="mini-banner-pos">+$665</span><span>36.2% ROI</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-quote">"So much confidence in the picks."</span><span class="mini-banner-quote-author">iiDooblay</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-round">AFL R13</span><span class="mini-banner-pos">+$469</span><span>22.5% ROI</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-quote">"Scaled to exponentially profitable levels."</span><span class="mini-banner-quote-author">Vitamin_GG</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-round">All-time</span><span class="mini-banner-pos">+$44,759</span><span>5,940 bets</span></span>
+      </div>
+    </div>
+
+    <!-- QUICK LINKS (moved to top - compact row above packages) -->
+    <section class="quick-links-section quick-links-section--top">
+      <div class="quick-links quick-links--compact">
+        <a href="https://app.fnfgainz.com/position-edge" target="_blank" rel="noopener noreferrer" class="quick-link quick-link--free">
+          <div class="quick-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="quick-link-body">
+            <div class="quick-link-tag">Free</div>
+            <div class="quick-link-title">Official App</div>
+            <div class="quick-link-sub">Position Edge match-ups</div>
+          </div>
+          <svg class="quick-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <a href="https://admitted-vinyl-11b.notion.site/BEFORE-YOU-JOIN-FNF-GAINZ-PLEASE-READ-2f015b7a5a1d80c883f5c2278dcf9ee3" target="_blank" rel="noopener noreferrer" class="quick-link">
+          <div class="quick-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </div>
+          <div class="quick-link-body">
+            <div class="quick-link-title">Read Before You Join</div>
+            <div class="quick-link-sub">What to know before subscribing</div>
+          </div>
+          <svg class="quick-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="quick-link">
+          <div class="quick-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="7 12 12 7 16 11 21 6"/></svg>
+          </div>
+          <div class="quick-link-body">
+            <div class="quick-link-title">Public Results</div>
+            <div class="quick-link-sub">Every bet, win, and loss tracked</div>
+          </div>
+          <svg class="quick-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </section>
+
     <!-- PACKAGES -->
     <section class="section section--tight-top" id="packages">
       <div class="section-head compact-head">
@@ -4176,54 +4363,25 @@
         <h2 class="section-title compact-title" data-reveal-words>Pick your system. Join in seconds.</h2>
       </div>
 
-      <div class="packages-grid">
+      <!-- ROW 1: HEADLINERS - AFL Package + Champion side by side -->
+      <div class="pkg-row pkg-row--headliners">
 
-        <!-- CHAMPION (Featured, full width) -->
-        <article class="pkg pkg--featured" data-reveal="rise" data-reveal-delay="1">
-          <div class="pkg-flag">Best Value</div>
-          <div class="pkg-head">
-            <div>
-              <div class="pkg-eyebrow">AFL + NRL &middot; Combined</div>
-              <h3 class="pkg-name">Champion</h3>
-              <p class="pkg-desc">The full AFL system and the full NRL system in one membership. Separate staking per code, combined season dashboard.</p>
-            </div>
-            <div class="pkg-price-wrap">
-              <div class="pkg-price">
-                <span class="pkg-price-amount">$200</span>
-                <span class="pkg-price-period">AUD / mo</span>
-              </div>
-              <div class="pkg-price-note">Save $80/mo vs both separately</div>
-            </div>
-          </div>
-          <ul class="pkg-features">
-            <li><span class="pkg-check">&#10003;</span>Every AFL &amp; NRL bet posted live in Discord</li>
-            <li><span class="pkg-check">&#10003;</span>Round breakdowns for both codes</li>
-            <li><span class="pkg-check">&#10003;</span>Personal onboarding &amp; unit sizing</li>
-            <li><span class="pkg-check">&#10003;</span>Weekly reports &amp; combined dashboard</li>
-            <li><span class="pkg-check">&#10003;</span>Cancel anytime, no lock-in</li>
-          </ul>
-          <div class="pkg-cta">
-            <button class="btn btn-gold lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">
-              <span>Join Champion</span>
-              <span class="btn-price">$200 / mo</span>
-            </button>
-          </div>
-        </article>
-
-        <!-- AFL Package (Flagship) -->
-        <article class="pkg pkg--afl" data-reveal="rise" data-reveal-delay="2">
+        <!-- AFL Package (Flagship, cyan) -->
+        <article class="pkg pkg--headliner pkg--afl" data-reveal="rise" data-reveal-delay="1">
           <div class="pkg-flag pkg-flag--cyan">Flagship</div>
-          <div class="pkg-name">AFL Package</div>
-          <p class="pkg-desc">Our flagship. Disposal-market system built on ten years of AFL analysis.</p>
+          <div class="pkg-eyebrow pkg-eyebrow--cyan">AFL &middot; Since 2022</div>
+          <h3 class="pkg-name">AFL Package</h3>
+          <p class="pkg-desc">Our flagship. Disposal-market system built on ten years of AFL analysis. Every bet posted live to Discord.</p>
           <div class="pkg-price">
             <span class="pkg-price-amount">$140</span>
             <span class="pkg-price-period">AUD / mo</span>
           </div>
           <ul class="pkg-features">
-            <li><span class="pkg-check">&#10003;</span>Every bet posted live in Discord</li>
+            <li><span class="pkg-check">&#10003;</span>Every AFL bet posted live in Discord</li>
             <li><span class="pkg-check">&#10003;</span>Round breakdowns Thu &ndash; Sun</li>
             <li><span class="pkg-check">&#10003;</span>Personal onboarding &amp; unit sizing</li>
-            <li><span class="pkg-check">&#10003;</span>Public dashboard access</li>
+            <li><span class="pkg-check">&#10003;</span>Public results dashboard</li>
+            <li><span class="pkg-check">&#10003;</span>Cancel anytime, no lock-in</li>
           </ul>
           <div class="pkg-cta">
             <button class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
@@ -4234,6 +4392,37 @@
           <a href="/afl/" class="pkg-more">See full AFL page &rarr;</a>
         </article>
 
+        <!-- CHAMPION (Best value, gold) -->
+        <article class="pkg pkg--headliner pkg--champion" data-reveal="rise" data-reveal-delay="2">
+          <div class="pkg-flag">Best Value</div>
+          <div class="pkg-eyebrow">AFL + NRL &middot; Combined</div>
+          <h3 class="pkg-name">Champion</h3>
+          <p class="pkg-desc">The full AFL system and the full NRL system in one membership. Separate staking per code, combined dashboard.</p>
+          <div class="pkg-price">
+            <span class="pkg-price-amount">$200</span>
+            <span class="pkg-price-period">AUD / mo</span>
+          </div>
+          <div class="pkg-price-note">Save $80/mo vs both separately</div>
+          <ul class="pkg-features">
+            <li><span class="pkg-check">&#10003;</span>Every AFL &amp; NRL bet posted live in Discord</li>
+            <li><span class="pkg-check">&#10003;</span>Round breakdowns for both codes</li>
+            <li><span class="pkg-check">&#10003;</span>Personal onboarding &amp; unit sizing</li>
+            <li><span class="pkg-check">&#10003;</span>Combined season dashboard</li>
+            <li><span class="pkg-check">&#10003;</span>Cancel anytime, no lock-in</li>
+          </ul>
+          <div class="pkg-cta">
+            <button class="btn btn-gold lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">
+              <span>Join Champion</span>
+              <span class="btn-price">$200 / mo</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- ROW 2: 3 more packages in a slimmer row -->
+      <div class="pkg-row pkg-row--rest">
+
         <!-- NRL Package -->
         <article class="pkg" data-reveal="rise" data-reveal-delay="3">
           <div class="pkg-name">NRL Package</div>
@@ -4243,9 +4432,9 @@
             <span class="pkg-price-period">AUD / mo</span>
           </div>
           <ul class="pkg-features">
-            <li><span class="pkg-check">&#10003;</span>Every NRL bet posted live in Discord</li>
+            <li><span class="pkg-check">&#10003;</span>Every NRL bet in Discord</li>
             <li><span class="pkg-check">&#10003;</span>Weekly round breakdowns</li>
-            <li><span class="pkg-check">&#10003;</span>Personal onboarding &amp; staking guidance</li>
+            <li><span class="pkg-check">&#10003;</span>Personal onboarding</li>
             <li><span class="pkg-check">&#10003;</span>Public dashboard access</li>
           </ul>
           <div class="pkg-cta">
@@ -4259,16 +4448,16 @@
         <!-- Matched Betting -->
         <article class="pkg" data-reveal="rise" data-reveal-delay="4">
           <div class="pkg-name">Matched Betting</div>
-          <p class="pkg-desc">Low-risk foundations. Build bankroll and discipline before scaling into the sports systems.</p>
+          <p class="pkg-desc">Low-risk foundations. Build bankroll and discipline before scaling.</p>
           <div class="pkg-price">
             <span class="pkg-price-amount">$100</span>
             <span class="pkg-price-period">AUD / mo</span>
           </div>
           <ul class="pkg-features">
-            <li><span class="pkg-check">&#10003;</span>Structured matched-betting workflow</li>
+            <li><span class="pkg-check">&#10003;</span>Structured MB workflow</li>
             <li><span class="pkg-check">&#10003;</span>Bonus tracking &amp; conversion tips</li>
-            <li><span class="pkg-check">&#10003;</span>Core skills for long-term punting</li>
-            <li><span class="pkg-check">&#10003;</span>Direct access to the coaches</li>
+            <li><span class="pkg-check">&#10003;</span>Core long-term punting skills</li>
+            <li><span class="pkg-check">&#10003;</span>Direct access to coaches</li>
           </ul>
           <div class="pkg-cta">
             <button class="btn btn-outline lp4657629529505792" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 100.00, currency: 'AUD', content_name: 'Matched Betting Package' });">
@@ -4281,7 +4470,7 @@
         <!-- Community -->
         <article class="pkg" data-reveal="rise" data-reveal-delay="5">
           <div class="pkg-name">Community</div>
-          <p class="pkg-desc">Discord community with premium chats, EV &amp; e-sports strategies, and the Racing Bot. Great entry point.</p>
+          <p class="pkg-desc">Premium chats, EV &amp; e-sports strategies, Racing Bot. Great entry point.</p>
           <div class="pkg-price">
             <span class="pkg-price-amount">$25</span>
             <span class="pkg-price-period">AUD / mo</span>
@@ -4308,47 +4497,6 @@
         <span>Cancel anytime</span>
         <span>&middot;</span>
         <span>18+ only</span>
-      </div>
-    </section>
-
-    <!-- QUICK LINKS -->
-    <section class="quick-links-section">
-      <div class="section-head compact-head">
-        <span class="section-eyebrow" data-reveal="pill">Free Tools &amp; Info</span>
-        <h2 class="section-title compact-title" data-reveal-words>Everything else in one place.</h2>
-      </div>
-      <div class="quick-links">
-        <a href="https://admitted-vinyl-11b.notion.site/BEFORE-YOU-JOIN-FNF-GAINZ-PLEASE-READ-2f015b7a5a1d80c883f5c2278dcf9ee3" target="_blank" rel="noopener noreferrer" class="quick-link" data-reveal="up" data-reveal-delay="1">
-          <div class="quick-link-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          </div>
-          <div class="quick-link-body">
-            <div class="quick-link-title">Read Before You Join</div>
-            <div class="quick-link-sub">Everything you should know before subscribing</div>
-          </div>
-          <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-        <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="quick-link" data-reveal="up" data-reveal-delay="2">
-          <div class="quick-link-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="7 12 12 7 16 11 21 6"/></svg>
-          </div>
-          <div class="quick-link-body">
-            <div class="quick-link-title">Public Results Dashboard</div>
-            <div class="quick-link-sub">Every bet, win, and loss tracked openly</div>
-          </div>
-          <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-        <a href="https://app.fnfgainz.com/position-edge" target="_blank" rel="noopener noreferrer" class="quick-link quick-link--free" data-reveal="up" data-reveal-delay="3">
-          <div class="quick-link-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          </div>
-          <div class="quick-link-body">
-            <div class="quick-link-tag">Free</div>
-            <div class="quick-link-title">Official App</div>
-            <div class="quick-link-sub">Position Edge match-up analysis + tag tracker</div>
-          </div>
-          <svg class="quick-link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
       </div>
     </section>
 
