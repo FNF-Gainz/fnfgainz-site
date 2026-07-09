@@ -1485,11 +1485,30 @@
     .chart-milestone:hover { transform: scale(1.08); }
 
     /* Mobile chart: the SVG viewBox scales to ~47% at 375px viewport, so
-       small dots and label chrome become unreadable. Hide labels, but make
-       the milestone dots LOUD: bigger radius, persistent glow, thicker ring. */
+       small dots and label chrome become unreadable. Strategy:
+       - Show only the BIGGEST WEEK badge (marketing gold), hidden others
+       - Boost SVG font-size and rect dimensions for the visible one
+       - Make all four dots loud with per-color drop-shadow glow */
     @media (max-width: 640px) {
-      .chart-milestone rect,
-      .chart-milestone text { display: none; }
+      /* Hide non-hero milestone chrome. dots stay visible. */
+      .chart-milestone--1 rect,
+      .chart-milestone--1 text,
+      .chart-milestone--2 rect,
+      .chart-milestone--2 text,
+      .chart-milestone--3 rect,
+      .chart-milestone--3 text { display: none; }
+
+      /* BIGGEST WEEK badge: boost text + resize rect via SVG attribute overrides */
+      .chart-milestone--4 rect {
+        width: 180px;
+        x: 44px;
+        y: 20px;
+        height: 40px;
+        rx: 10px;
+      }
+      .chart-milestone--4 text:first-of-type { font-size: 22px; y: 50px; }
+      .chart-milestone--4 text:last-of-type { font-size: 15px; y: 12px; }
+
       .chart-milestone line { stroke-opacity: 0.55; stroke-width: 1.5; }
       .chart-milestone circle:first-of-type {
         r: 14;
@@ -1504,8 +1523,6 @@
         0%   { r: 14; opacity: 1;    stroke-width: 3; }
         100% { r: 52; opacity: 0;    stroke-width: 0.5; }
       }
-      /* Keep the pulse looping so late-scrolling mobile users still get
-         the "tap me" cue instead of static dots. */
       .chart.is-animated .chart-milestone circle:last-of-type {
         animation: milestone-pulse 2s cubic-bezier(0.16, 1, 0.3, 1) 1s infinite;
       }
@@ -3522,6 +3539,39 @@
       .journey { grid-template-columns: 1fr; }
 
       .sticky-cta { display: block; }
+
+      /* Mobile perf: kill the heavy always-on animations to free the CPU
+         for scroll + tap responsiveness. iOS Safari especially chokes on
+         concurrent infinite CSS animations, so we drop the decoration
+         but keep the reveal-on-scroll animations that feel essential. */
+      .chart-line,
+      .chart-endpoint-pulse,
+      .chart-endpoint-core,
+      .aurora::before,
+      .aurora::after,
+      .hero-portrait,
+      .btn-primary::before {
+        animation: none !important;
+      }
+      /* Drop expensive backdrop-blur filters where they are decorative */
+      .compare-card,
+      .terminal,
+      .footer,
+      .discord-card,
+      .founder,
+      .hero-eyebrow,
+      .hero-portrait-brand,
+      .round-pill,
+      .chart-tooltip {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      /* Freeze the ticker + marquee at scroll-off-screen (they still show
+         at page top but pause once scrolled past to save GPU) */
+      .ticker-inner,
+      .receipts-track {
+        animation-duration: 90s !important; /* half-speed = half the paints */
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -4292,6 +4342,32 @@
   </div>
 
   <script src="../script.js"></script>
+
+  <!-- Mobile checkout: bypass LaunchPass embed modal (which sizes badly
+       on Android and takes noticeable time to load on iOS) and open the
+       hosted checkout page directly in a new tab. LaunchPass's own page
+       is already mobile-responsive. Desktop still uses the embed modal. -->
+  <script>
+    (function() {
+      if (window.innerWidth > 640) return;
+      var CHECKOUTS = {
+        'lp6640832616333312': 'https://www.launchpass.com/fnf-gainz/afl',
+        'lp4572582037028864': 'https://www.launchpass.com/fnf-gainz/champion'
+      };
+      Object.keys(CHECKOUTS).forEach(function(cls) {
+        var url = CHECKOUTS[cls];
+        document.querySelectorAll('.' + cls).forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            // Let the fnfTrack pixel fire first (it's synchronous),
+            // then open the hosted checkout page in a new tab.
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            window.open(url, '_blank', 'noopener');
+          }, true); // capture phase runs before LaunchPass's embed handler
+        });
+      });
+    })();
+  </script>
 
   <!-- Chart animation trigger -->
   <script>
