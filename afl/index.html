@@ -441,6 +441,62 @@
       z-index: 1;
     }
 
+    /* Top nav — FNF branding strip above the ticker */
+    .site-nav {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px clamp(20px, 4vw, 48px);
+      background: rgba(5, 8, 21, 0.65);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      z-index: 3;
+    }
+
+    .site-nav-brand {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+    .site-nav-brand:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .site-nav-brand img {
+      display: block;
+      height: 40px;
+      width: auto;
+      max-width: 220px;
+      object-fit: contain;
+    }
+
+    .site-nav-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .site-nav-label-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @media (max-width: 640px) {
+      .site-nav { padding: 12px 18px; }
+      .site-nav-brand img { height: 32px; max-width: 160px; }
+      .site-nav-label { font-size: 0.6rem; letter-spacing: 0.16em; }
+    }
+
     /* Ticker */
     .ticker {
       position: relative;
@@ -3500,6 +3556,17 @@
   <canvas id="mesh-canvas" class="mesh-canvas" aria-hidden="true"></canvas>
   <div class="aurora" aria-hidden="true"></div>
   <canvas id="particles" class="particles-canvas"></canvas>
+
+  <!-- TOP NAV -->
+  <nav class="site-nav" aria-label="Primary">
+    <a href="../" class="site-nav-brand" aria-label="FNF Gainz home">
+      <img src="../assets/fnf-logo-long.png" alt="FNF Gainz. Facts Not Feelings.">
+    </a>
+    <span class="site-nav-label">
+      <span class="site-nav-label-dot" aria-hidden="true"></span>
+      AFL Premium
+    </span>
+  </nav>
 
   <!-- LIVE TICKER -->
   <div class="ticker" aria-hidden="true">
