@@ -31,11 +31,13 @@
   <link rel="preconnect" href="https://www.launchpass.com">
   <link rel="dns-prefetch" href="https://www.launchpass.com">
 
-  <!-- LaunchPass embeds. deferred here in head so they start downloading
-       in parallel with page parse and their click handlers are guaranteed
-       attached by DOMContentLoaded — no single-tap misses on mobile. -->
-  <script defer src="https://www.launchpass.com/fnf-gainz/afl/embed.js"></script>
-  <script defer src="https://www.launchpass.com/fnf-gainz/champion/embed.js"></script>
+  <!-- LaunchPass embeds. Preloaded at high priority so the browser fetches
+       them immediately after the connection is warm, then executed via
+       defer script tags. Handlers are ready well before DOMContentLoaded. -->
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/afl/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/champion/embed.js" fetchpriority="high">
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/afl/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/champion/embed.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
@@ -1482,19 +1484,30 @@
     .chart-milestone { cursor: pointer; transition: transform 0.2s ease-out; transform-origin: center; transform-box: fill-box; }
     .chart-milestone:hover { transform: scale(1.08); }
 
-    /* Mobile chart: the SVG viewBox scales down to ~47% at 375px viewport,
-       which makes the callout rects + text unreadably small. Hide the label
-       chrome, keep just enlarged dots + connecting lines so users can still
-       tap for the story. A helper line below the chart explains the cue. */
+    /* Mobile chart: the SVG viewBox scales to ~47% at 375px viewport, so
+       small dots and label chrome become unreadable. Hide labels, but make
+       the milestone dots LOUD: bigger radius, persistent glow, thicker ring. */
     @media (max-width: 640px) {
       .chart-milestone rect,
       .chart-milestone text { display: none; }
-      .chart-milestone line { stroke-opacity: 0.5; }
-      .chart-milestone circle:first-of-type { r: 8; }
-      .chart-milestone circle:last-of-type { r: 12; stroke-width: 2; }
+      .chart-milestone line { stroke-opacity: 0.55; stroke-width: 1.5; }
+      .chart-milestone circle:first-of-type {
+        r: 14;
+        filter: drop-shadow(0 0 8px currentColor);
+      }
+      .chart-milestone--1 circle:first-of-type { color: #00d4ff; }
+      .chart-milestone--2 circle:first-of-type { color: #00d4ff; }
+      .chart-milestone--3 circle:first-of-type { color: #00ff9d; }
+      .chart-milestone--4 circle:first-of-type { color: #ffbb47; }
+      .chart-milestone circle:last-of-type { r: 22; stroke-width: 3; }
       @keyframes milestone-pulse {
-        0%   { r: 10; opacity: 1;   stroke-width: 3; }
-        100% { r: 36; opacity: 0;   stroke-width: 0.5; }
+        0%   { r: 14; opacity: 1;    stroke-width: 3; }
+        100% { r: 52; opacity: 0;    stroke-width: 0.5; }
+      }
+      /* Keep the pulse looping so late-scrolling mobile users still get
+         the "tap me" cue instead of static dots. */
+      .chart.is-animated .chart-milestone circle:last-of-type {
+        animation: milestone-pulse 2s cubic-bezier(0.16, 1, 0.3, 1) 1s infinite;
       }
       .chart-milestone-hint { display: block; }
     }
@@ -4622,12 +4635,16 @@
     })();
   </script>
 
-  <!-- Cathedral mesh gradient background. animated color orbs, screen-blended -->
+  <!-- Cathedral mesh gradient background. animated color orbs, screen-blended.
+       Skipped on mobile: the requestAnimationFrame loop was eating CPU that
+       interactions need, and the aurora/CSS gradient underneath already gives
+       plenty of atmosphere at phone sizes. -->
   <script>
     (function() {
       var canvas = document.getElementById('mesh-canvas');
       if (!canvas) return;
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (window.innerWidth <= 640 || reduced) { canvas.style.display = 'none'; return; }
       var ctx = canvas.getContext('2d');
       if (!ctx) return;
 
