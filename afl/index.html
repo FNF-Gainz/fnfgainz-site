@@ -909,29 +909,29 @@
     }
 
     /* FNF brand mark at the very top of the hero.
-       Prominent and clickable back to the main site. */
+       Trimmed PNG (524x188, no internal padding), clickable to home. */
     .hero-brand {
       display: inline-flex;
       align-self: flex-start;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
       transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
       text-decoration: none;
     }
     .hero-brand:hover { opacity: 0.9; transform: translateY(-2px); }
     .hero-brand img {
       display: block;
-      height: 120px;
+      height: 64px;
       width: auto;
       max-width: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 12px 40px rgba(0, 212, 255, 0.22));
+      filter: drop-shadow(0 8px 24px rgba(0, 212, 255, 0.2));
     }
     @media (max-width: 900px) {
-      .hero-brand { margin-bottom: 22px; }
-      .hero-brand img { height: 90px; }
+      .hero-brand { margin-bottom: 18px; }
+      .hero-brand img { height: 52px; }
     }
     @media (max-width: 480px) {
-      .hero-brand img { height: 72px; }
+      .hero-brand img { height: 44px; }
     }
 
     .hero-eyebrow {
@@ -3555,7 +3555,7 @@
     <section class="hero">
       <div class="hero-spotlight" aria-hidden="true"></div>
       <a href="../" class="hero-brand" aria-label="FNF Gainz home">
-        <img src="../assets/fnf-logo-long.png" alt="FNF Gainz. Facts Not Feelings.">
+        <img src="../assets/fnf-logo-long-trimmed.png" alt="FNF Gainz. Facts Not Feelings." width="524" height="188">
       </a>
       <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>AFL Premium &middot; Helping Punters Succeed Since 2022</span>
 
