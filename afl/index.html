@@ -469,7 +469,7 @@
       gap: 0;
       padding: 11px 0;
       white-space: nowrap;
-      animation: ticker-scroll 45s linear infinite;
+      animation: ticker-scroll 25s linear infinite;
       will-change: transform;
     }
 
@@ -1484,41 +1484,16 @@
     .chart-milestone { cursor: pointer; transition: transform 0.2s ease-out; transform-origin: center; transform-box: fill-box; }
     .chart-milestone:hover { transform: scale(1.08); }
 
-    /* Mobile chart: the SVG scales too small to render legible labels.
-       Kill all milestone chrome (rects, text, connecting lines) and show
-       only the tappable dots with a per-color glow. A small hint below
-       the chart tells users the dots are interactive. */
+    /* Mobile chart: kill milestones entirely. Labels don't fit the
+       scaled-down SVG and dots without labels look misplaced.
+       Milestones + story cards remain on desktop only. */
     @media (max-width: 640px) {
-      .chart-milestone rect,
-      .chart-milestone text,
-      .chart-milestone line { display: none; }
-      .chart-milestone circle:first-of-type {
-        r: 14;
-        filter: drop-shadow(0 0 8px currentColor);
-      }
-      .chart-milestone--1 circle:first-of-type { color: #00d4ff; }
-      .chart-milestone--2 circle:first-of-type { color: #00d4ff; }
-      .chart-milestone--3 circle:first-of-type { color: #00ff9d; }
-      .chart-milestone--4 circle:first-of-type { color: #ffbb47; }
-      .chart-milestone circle:last-of-type { r: 22; stroke-width: 3; }
-      @keyframes milestone-pulse {
-        0%   { r: 14; opacity: 1;    stroke-width: 3; }
-        100% { r: 52; opacity: 0;    stroke-width: 0.5; }
-      }
-      .chart.is-animated .chart-milestone circle:last-of-type {
-        animation: milestone-pulse 2s cubic-bezier(0.16, 1, 0.3, 1) 1s infinite;
-      }
-      .chart-milestone-hint { display: block; }
+      .chart-milestone { display: none; }
     }
+    /* Kept as a no-op utility. milestones are desktop-only now, so
+       there is no mobile tap-hint to show. */
     .chart-milestone-hint {
       display: none;
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      text-align: center;
-      color: var(--text-3);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-top: 12px;
     }
     .chart-milestone-hint-dot {
       display: inline-block;
@@ -3552,12 +3527,10 @@
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
       }
-      /* Freeze the ticker + marquee at scroll-off-screen (they still show
-         at page top but pause once scrolled past to save GPU) */
-      .ticker-inner,
-      .receipts-track {
-        animation-duration: 90s !important; /* half-speed = half the paints */
-      }
+      /* Ticker speed on mobile: matches desktop 25s so users see the
+         highlight rounds cycle briskly, not crawl. */
+      .ticker-inner { animation-duration: 25s !important; }
+      .receipts-track { animation-duration: 40s !important; }
 
       /* LaunchPass modal on mobile.
          The embed creates: .launchPassLoader (backdrop, click-to-close) >
@@ -4376,14 +4349,57 @@
 
   <script src="../script.js"></script>
 
-  <!-- Mobile: watch for the LaunchPass modal to be added and inject an
-       always-visible close X. Belt-and-braces on top of the tap-to-close
-       backdrop, because on some Android + iOS builds users get stuck
-       inside the modal with nothing tappable outside the iframe. -->
+  <!-- Mobile: keep an always-clickable close X pinned above the LaunchPass
+       modal every time it opens. Belt-and-braces on top of the tap-outside
+       backdrop, because on some Android + iOS builds users get stuck inside
+       the modal with nothing tappable outside the iframe. -->
   <script>
     (function() {
       if (window.innerWidth > 640) return;
-      var observed = false;
+
+      var closeBtn = null;
+      var currentLoader = null;
+
+      function ensureCloseBtn() {
+        if (closeBtn && closeBtn.isConnected) return closeBtn;
+        closeBtn = document.createElement('button');
+        closeBtn.className = 'fnf-lp-close';
+        closeBtn.setAttribute('aria-label', 'Close checkout');
+        closeBtn.textContent = '×'; // multiplication sign
+        closeBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (currentLoader) currentLoader.style.display = 'none';
+          hideCloseBtn();
+        });
+        document.body.appendChild(closeBtn);
+        return closeBtn;
+      }
+
+      function showCloseBtn() {
+        ensureCloseBtn().style.display = 'flex';
+      }
+
+      function hideCloseBtn() {
+        if (closeBtn) closeBtn.style.display = 'none';
+      }
+
+      // Watch the loader's visibility. Show our X when it becomes visible,
+      // hide when it goes away. Fires every time the modal opens, not just
+      // the first time.
+      function watchLoader(loader) {
+        currentLoader = loader;
+        var attrMo = new MutationObserver(function() {
+          var visible = loader.style.display && loader.style.display !== 'none';
+          if (visible) showCloseBtn();
+          else hideCloseBtn();
+        });
+        attrMo.observe(loader, { attributes: true, attributeFilter: ['style'] });
+        // Initial check
+        if (loader.style.display && loader.style.display !== 'none') showCloseBtn();
+      }
+
+      // Watch DOM for the loader element being added
       var mo = new MutationObserver(function(muts) {
         muts.forEach(function(m) {
           m.addedNodes.forEach(function(node) {
@@ -4391,34 +4407,22 @@
             var loader = node.classList && node.classList.contains('launchPassLoader')
               ? node
               : node.querySelector && node.querySelector('.launchPassLoader');
-            if (!loader || loader.__fnfClose) return;
-            loader.__fnfClose = true;
-
-            var btn = document.createElement('button');
-            btn.className = 'fnf-lp-close';
-            btn.setAttribute('aria-label', 'Close checkout');
-            btn.textContent = '×';
-            btn.addEventListener('click', function(e) {
-              e.preventDefault();
-              e.stopPropagation();
-              loader.style.display = 'none';
-              btn.remove();
-            });
-            document.body.appendChild(btn);
-
-            // Also allow ESC to close (helps external keyboards on tablets)
-            var esc = function(ev) {
-              if (ev.key === 'Escape') {
-                loader.style.display = 'none';
-                btn.remove();
-                document.removeEventListener('keydown', esc);
-              }
-            };
-            document.addEventListener('keydown', esc);
+            if (loader && !loader.__fnfWatched) {
+              loader.__fnfWatched = true;
+              watchLoader(loader);
+            }
           });
         });
       });
       mo.observe(document.body, { childList: true, subtree: true });
+
+      // ESC also closes (external keyboards on tablets)
+      document.addEventListener('keydown', function(ev) {
+        if (ev.key === 'Escape' && currentLoader && currentLoader.style.display !== 'none') {
+          currentLoader.style.display = 'none';
+          hideCloseBtn();
+        }
+      });
     })();
   </script>
 
