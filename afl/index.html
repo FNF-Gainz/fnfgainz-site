@@ -4484,10 +4484,11 @@
         document.addEventListener('keydown', escHandler);
       }
 
-      // Capture-phase click handler intercepts before LaunchPass embed's
-      // own click handler (which would try to open their broken modal).
-      document.addEventListener('click', function(e) {
-        var btn = e.target && e.target.closest && e.target.closest('.lp6640832616333312, .lp4572582037028864');
+      function handleClick(e) {
+        if (window.innerWidth > 640) return; // re-check every click
+        var btn = e.currentTarget && e.currentTarget.classList
+          ? e.currentTarget
+          : (e.target && e.target.closest && e.target.closest('.lp6640832616333312, .lp4572582037028864'));
         if (!btn) return;
         var url = null;
         if (btn.classList.contains('lp6640832616333312')) url = IFRAME_URLS.lp6640832616333312;
@@ -4496,7 +4497,30 @@
         e.preventDefault();
         e.stopImmediatePropagation();
         openModal(url);
-      }, true);
+      }
+
+      // Belt: document-level capture delegation catches any button.
+      document.addEventListener('click', handleClick, true);
+
+      // Braces: bind directly to every LaunchPass button we can find
+      // right now. In case anything in the click delegation chain
+      // (e.g. an inline onclick) interferes on some devices, this
+      // guarantees the sticky-cta and every other LaunchPass button
+      // gets our handler.
+      function bindDirect() {
+        document.querySelectorAll('.lp6640832616333312, .lp4572582037028864').forEach(function(btn) {
+          if (btn.__fnfBound) return;
+          btn.__fnfBound = true;
+          btn.addEventListener('click', handleClick, true);
+        });
+      }
+      bindDirect();
+      // Sticky CTA button is in the DOM at parse time but re-run just
+      // in case something injects buttons later (e.g. LaunchPass rewriting).
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindDirect);
+      }
+      window.addEventListener('load', bindDirect);
     })();
   </script>
 
