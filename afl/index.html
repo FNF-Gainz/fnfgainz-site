@@ -479,7 +479,7 @@
       gap: 0;
       padding: 11px 0;
       white-space: nowrap;
-      animation: ticker-scroll 12s linear infinite;
+      animation: ticker-scroll 16s linear infinite;
       will-change: transform;
       /* Force the flex container to match the sum of its children widths
          so translateX(-50%) lands exactly at the duplicated-content
@@ -2226,7 +2226,7 @@
     .receipts-track {
       display: flex;
       gap: 0;
-      animation: marquee 12s linear infinite;
+      animation: marquee 16s linear infinite;
       white-space: nowrap;
       will-change: transform;
       /* width:max-content forces the flex container to the sum of its
@@ -3575,10 +3575,10 @@
       }
       /* Mobile marquee tracks are shorter (fewer items visible per
          viewport), so at the same duration the perceived scroll
-         feels slower than desktop. Halve the duration so items
-         cross the smaller viewport at a comparable pace. */
-      .ticker-inner { animation-duration: 6s !important; }
-      .receipts-track { animation-duration: 6s !important; }
+         needs its own pacing. Twice the desktop duration so items
+         cross the smaller viewport at a comfortable readable pace. */
+      .ticker-inner { animation-duration: 12s !important; }
+      .receipts-track { animation-duration: 12s !important; }
 
       /* Mobile: hide LaunchPass embed modal entirely.
          On mobile we intercept the button click and open our own
