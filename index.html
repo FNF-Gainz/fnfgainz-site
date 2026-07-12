@@ -992,6 +992,10 @@
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
+      /* Critical for seamless loop: force the flex container to be
+         exactly the sum of its children widths, otherwise translateX(-50%)
+         is -50% of the parent width instead of the actual content width. */
+      width: max-content;
     }
     .mini-banner-item {
       display: inline-flex;
@@ -1002,6 +1006,9 @@
       font-size: 0.78rem;
       letter-spacing: 0.02em;
       color: var(--text-2);
+      /* Prevent flex from shrinking items to fit - they must stay at
+         their natural width so the duplicated content aligns perfectly. */
+      flex-shrink: 0;
     }
     .mini-banner-item::after {
       content: '';
