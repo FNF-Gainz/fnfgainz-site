@@ -1,11 +1,24 @@
 const { createHash } = require('crypto');
 
-const ALLOWED_EVENTS = new Set(['PageView', 'ViewContent', 'InitiateCheckout']);
+// PageView + ViewContent + InitiateCheckout fire from the landing pages.
+// Purchase fires from the /thank-you/* confirmation pages.
+const ALLOWED_EVENTS = new Set([
+  'PageView',
+  'ViewContent',
+  'InitiateCheckout',
+  'Purchase',
+]);
 
 function sha256Hex(value) {
   return createHash('sha256')
     .update(String(value).trim().toLowerCase())
     .digest('hex');
+}
+
+// Strip any non-digits before hashing phone (Meta expects E.164 without + or spaces).
+function normalisePhone(value) {
+  const digits = String(value).replace(/[^0-9]/g, '');
+  return digits ? sha256Hex(digits) : null;
 }
 
 exports.handler = async (event) => {
@@ -36,6 +49,11 @@ exports.handler = async (event) => {
     fbp,
     fbc,
     external_id,
+    // Optional plaintext PII. Hashed here before leaving the server.
+    email,
+    phone,
+    first_name,
+    last_name,
   } = payload;
 
   if (!event_name || !ALLOWED_EVENTS.has(event_name)) {
@@ -78,8 +96,25 @@ exports.handler = async (event) => {
   if (ua) user_data.client_user_agent = ua;
   if (fbp && typeof fbp === 'string') user_data.fbp = fbp;
   if (fbc && typeof fbc === 'string') user_data.fbc = fbc;
+
+  // external_id (our persistent visitor UUID) - hashed
   if (external_id && typeof external_id === 'string') {
     user_data.external_id = sha256Hex(external_id);
+  }
+
+  // Advanced matching (all hashed server-side before egress)
+  if (email && typeof email === 'string' && email.indexOf('@') > 0) {
+    user_data.em = sha256Hex(email);
+  }
+  if (phone && typeof phone === 'string') {
+    const ph = normalisePhone(phone);
+    if (ph) user_data.ph = ph;
+  }
+  if (first_name && typeof first_name === 'string') {
+    user_data.fn = sha256Hex(first_name);
+  }
+  if (last_name && typeof last_name === 'string') {
+    user_data.ln = sha256Hex(last_name);
   }
 
   const metaEvent = {
@@ -110,7 +145,8 @@ exports.handler = async (event) => {
     });
 
     if (!res.ok) {
-      console.error('Meta CAPI HTTP ' + res.status + ' for event ' + event_name);
+      const body = await res.text().catch(() => '');
+      console.error('Meta CAPI HTTP ' + res.status + ' for ' + event_name + ': ' + body.slice(0, 500));
       return {
         statusCode: 502,
         headers: { 'Content-Type': 'application/json' },
@@ -120,7 +156,7 @@ exports.handler = async (event) => {
 
     return { statusCode: 204, body: '' };
   } catch (err) {
-    console.error('Meta CAPI request failed: ' + err.name);
+    console.error('Meta CAPI request failed: ' + err.name + ' - ' + err.message);
     return {
       statusCode: 502,
       headers: { 'Content-Type': 'application/json' },

@@ -10,7 +10,10 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../../assets/apple-touch-icon.png">
   <link rel="stylesheet" href="../../styles.css">
 
-  <!-- Meta Pixel Code -->
+  <!-- Meta Pixel + Conversions API dual-fire, deduplicated via shared event_id.
+       LaunchPass redirects here after successful payment and may append
+       ?email=... &fbclid=... &external_id=... in the query string. We hash
+       the email/phone server-side (via /api/track) for advanced matching. -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -21,13 +24,108 @@
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '926315323681572');
-  fbq('track', 'PageView');
-  fbq('track', 'Purchase', { value: 140.00, currency: 'AUD', content_name: 'AFL Premium' });
+
+  (function(){
+    var params = new URLSearchParams(window.location.search);
+
+    function uuid(){
+      if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+        var r=Math.random()*16|0;return (c==='x'?r:(r&0x3|0x8)).toString(16);
+      });
+    }
+    function getCookie(n){
+      var m=document.cookie.match(new RegExp('(?:^|; )'+n+'=([^;]*)'));
+      return m?decodeURIComponent(m[1]):null;
+    }
+    function getExternalId(){
+      var id=params.get('external_id')||null;
+      if(!id){try{id=localStorage.getItem('fnf_eid');}catch(e){}}
+      if(!id){id=uuid();try{localStorage.setItem('fnf_eid',id);}catch(e){}}
+      return id;
+    }
+    function getFbc(){
+      var fbc=getCookie('_fbc');
+      if(fbc)return fbc;
+      var fbclid=params.get('fbclid');
+      // Fallback: landing page stashed the ad click id in localStorage so
+      // we can rebuild _fbc even if LaunchPass dropped the URL param.
+      if(!fbclid){
+        try {
+          var stored = localStorage.getItem('fnf_fbclid');
+          var ts = parseInt(localStorage.getItem('fnf_fbclid_ts')||'0', 10);
+          // Meta considers _fbc valid for ~7 days after the click.
+          if (stored && ts && (Date.now() - ts) < 7*24*60*60*1000) {
+            fbclid = stored;
+          }
+        } catch(e) {}
+      }
+      if(fbclid)return 'fb.1.'+Date.now()+'.'+fbclid;
+      return null;
+    }
+
+    // Shared event id so browser pixel and CAPI dedupe as ONE event.
+    var eventId = uuid();
+    var purchaseData = {
+      value: 140.00,
+      currency: 'AUD',
+      content_name: 'AFL Premium',
+      content_category: 'AFL Package',
+      content_ids: ['afl-premium'],
+      content_type: 'product'
+    };
+    var email = params.get('email');
+    var phone = params.get('phone');
+    var first_name = params.get('first_name');
+    var last_name = params.get('last_name');
+
+    // Fire PageView (own event id) and Purchase (dedupable) client-side.
+    var pageviewId = uuid();
+    fbq('track', 'PageView', {}, { eventID: pageviewId });
+
+    // Advanced matching for the browser-side event so pixel-only users
+    // still contribute a strong match. fbq hashes for us on the client.
+    var advancedMatch = {};
+    if (email && email.indexOf('@') > 0) advancedMatch.em = email.trim().toLowerCase();
+    if (phone) advancedMatch.ph = String(phone).replace(/[^0-9]/g, '');
+    if (first_name) advancedMatch.fn = first_name.trim().toLowerCase();
+    if (last_name) advancedMatch.ln = last_name.trim().toLowerCase();
+    if (Object.keys(advancedMatch).length) fbq('setUserProperties', '926315323681572', advancedMatch);
+
+    fbq('track', 'Purchase', purchaseData, { eventID: eventId });
+
+    // Server-side CAPI mirror. If the client pixel is blocked, this still
+    // lands. Meta dedupes with pixel via shared event_id.
+    function capiSend(name, id, data) {
+      try {
+        fetch('/api/track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event_name: name,
+            event_id: id,
+            event_source_url: window.location.href,
+            custom_data: data,
+            fbp: getCookie('_fbp'),
+            fbc: getFbc(),
+            external_id: getExternalId(),
+            email: email || null,
+            phone: phone || null,
+            first_name: first_name || null,
+            last_name: last_name || null
+          }),
+          keepalive: true
+        }).catch(function(){});
+      } catch(e) {}
+    }
+    capiSend('PageView', pageviewId, {});
+    capiSend('Purchase', eventId, purchaseData);
+  })();
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=926315323681572&ev=PageView&noscript=1"
   /></noscript>
-  <!-- End Meta Pixel Code -->
+  <!-- End Meta Pixel + CAPI -->
 
   <style>
     .thanks-page {

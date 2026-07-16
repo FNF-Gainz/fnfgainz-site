@@ -107,10 +107,23 @@
         }).catch(function(){});
       }catch(e){}
     };
+
+    // Persist the ad click ID so the thank-you page can attribute Purchase
+    // back to the originating ad even when LaunchPass drops URL params.
+    (function persistAdClick(){
+      try {
+        var p = new URLSearchParams(window.location.search);
+        var fbclid = p.get('fbclid');
+        if (fbclid) {
+          localStorage.setItem('fnf_fbclid', fbclid);
+          localStorage.setItem('fnf_fbclid_ts', String(Date.now()));
+        }
+      } catch(e) {}
+    })();
   })();
 
   fnfTrack('PageView');
-  fnfTrack('ViewContent', { content_name: 'AFL Premium Landing Page', content_category: 'AFL Package' });
+  fnfTrack('ViewContent', { content_name: 'FNF Gainz Storefront' });
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=926315323681572&ev=PageView&noscript=1"
@@ -4719,6 +4732,19 @@
         // Close any prior instance
         closeModal();
 
+        // Preserve fbclid + external_id through the LaunchPass flow so
+        // Meta can attribute the resulting purchase back to the ad click.
+        try {
+          var url = new URL(iframeUrl);
+          var pageParams = new URLSearchParams(window.location.search);
+          var fbclid = pageParams.get('fbclid');
+          if (fbclid && !url.searchParams.has('fbclid')) url.searchParams.set('fbclid', fbclid);
+          var eid = null;
+          try { eid = localStorage.getItem('fnf_eid'); } catch (_) {}
+          if (eid && !url.searchParams.has('external_id')) url.searchParams.set('external_id', eid);
+          iframeUrl = url.toString();
+        } catch (_) {}
+
         var modal = document.createElement('div');
         modal.className = 'fnf-checkout-modal';
         modal.innerHTML =
@@ -4781,10 +4807,24 @@
             btn.addEventListener('click', function(e) {
               e.preventDefault();
               e.stopPropagation();
+              // Fire pixel + CAPI first, un-masked so any failure surfaces
+              // in the console for diagnosis. fnfTrack is defined synchronously
+              // at the top of the page so it always exists here.
               if (window.fnfTrack) {
-                try { window.fnfTrack('InitiateCheckout', { value: pkg.value, currency: 'AUD', content_name: pkg.name }); } catch (_) {}
+                window.fnfTrack('InitiateCheckout', {
+                  value: pkg.value,
+                  currency: 'AUD',
+                  content_name: pkg.name,
+                  content_category: pkg.key,
+                  content_ids: [pkg.key],
+                  content_type: 'product'
+                });
               }
-              openModal(pkg.url);
+              // Give fbq + CAPI a frame to schedule their requests before
+              // the DOM churn from mounting the modal iframe.
+              window.requestAnimationFrame(function() {
+                openModal(pkg.url);
+              });
             });
           });
         });
