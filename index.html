@@ -3956,6 +3956,17 @@
     }
     .pkg-more:hover { color: var(--text); }
 
+    /* Champion has no ".pkg-more" link under its CTA. Reserve equivalent
+       vertical space via ::after so the two headliner Join buttons land
+       at the same y-position instead of Champion sitting lower. */
+    .pkg--champion::after {
+      content: '';
+      display: block;
+      margin-top: 12px;
+      height: 0.68rem;
+      line-height: 1;
+    }
+
     /* ==================== QUICK LINKS ==================== */
     .quick-links-section {
       padding: clamp(48px, 8vh, 96px) 0 clamp(32px, 5vh, 56px);
