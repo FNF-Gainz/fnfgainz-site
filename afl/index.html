@@ -1117,6 +1117,8 @@
     }
 
     .round-pill-value--pos { color: var(--green-2); font-weight: 700; }
+    /* Losing round. neutral grey so it neither celebrates nor alarms. */
+    .round-pill-value--neutral { color: var(--text-3); font-weight: 600; }
     .round-pill-kickoff { color: var(--text-3); }
     .round-pill-timer { color: var(--gold-2); font-weight: 700; }
 
@@ -1420,7 +1422,9 @@
       content: '';
       position: absolute;
       bottom: -5px;
-      left: 50%;
+      /* Arrow tracks the data point when the tooltip is edge-clamped.
+         --arrow-offset is set by the tooltip's JS positioning code. */
+      left: calc(50% + var(--arrow-offset, 0px));
       transform: translateX(-50%) rotate(45deg);
       width: 8px;
       height: 8px;
@@ -5326,13 +5330,30 @@
           '<div class="chart-tooltip-label">' + p.label + '</div>' +
           '<div class="chart-tooltip-value">' + p.value + '</div>';
 
-        // Measure once we've set content so height reflects reality
+        // Measure once we've set content so height/width reflect reality.
         var tipH = tip.offsetHeight || 60;
+        var tipW = tip.offsetWidth || 140;
+
         // If the dot is close to the top of the chart, flip the tooltip
         // to appear BELOW the dot so it doesn't overflow into the buttons above.
         var flip = sy < (tipH + 20);
         tip.classList.toggle('is-flipped', flip);
-        tip.style.left = sx + 'px';
+
+        // Clamp horizontal position so the tooltip never overflows the
+        // chart container's left or right edge. The arrow is offset back
+        // toward the actual data point via a CSS custom property so it
+        // still visually anchors to the hovered dot.
+        var halfW = tipW / 2;
+        var padX = 6; // small breathing room from container edge
+        var minLeft = halfW + padX;
+        var maxLeft = rect.width - halfW - padX;
+        var clampedX = Math.max(minLeft, Math.min(sx, maxLeft));
+        // Keep the arrow within the tooltip's rounded interior.
+        var rawArrowOffset = sx - clampedX;
+        var arrowLimit = halfW - 14;
+        var arrowOffset = Math.max(-arrowLimit, Math.min(rawArrowOffset, arrowLimit));
+        tip.style.setProperty('--arrow-offset', arrowOffset + 'px');
+        tip.style.left = clampedX + 'px';
         tip.style.top = (flip ? (sy + 14) : (sy - 12)) + 'px';
         tip.classList.add('is-visible');
       });
@@ -5462,6 +5483,33 @@
 
           var formatted = formatStat(key, value);
           if (formatted !== null) el.textContent = formatted;
+
+          // For last-round profit + units: swap the "positive" green class
+          // for a neutral grey class when the round lost. Also applies to
+          // the season 2026 profit/units cells if they ever go red.
+          if (key === 'latestRound.profit' || key === 'latestRound.units' ||
+              key === 'season2026.profit' || key === 'season2026.units') {
+            var num = Number(value);
+            if (!isNaN(num)) {
+              var wasPos = el.classList.contains('round-pill-value--pos') ||
+                           el.classList.contains('stat-value--profit') ||
+                           el.classList.contains('stat-value--units');
+              if (wasPos) {
+                if (num < 0) {
+                  el.classList.remove('round-pill-value--pos');
+                  el.classList.add('round-pill-value--neutral');
+                } else {
+                  el.classList.remove('round-pill-value--neutral');
+                  // Restore --pos if it was stripped by a prior negative render.
+                  if (!el.classList.contains('round-pill-value--pos') &&
+                      !el.classList.contains('stat-value--profit') &&
+                      !el.classList.contains('stat-value--units')) {
+                    el.classList.add('round-pill-value--pos');
+                  }
+                }
+              }
+            }
+          }
         });
       }
 
