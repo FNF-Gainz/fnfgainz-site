@@ -73,11 +73,18 @@
       if(!id){id=uuid();try{localStorage.setItem('fnf_eid',id);}catch(e){}}
       return id;
     }
+    // Read fbclid RAW from the URL string via regex - never URLSearchParams,
+    // which URL-decodes the value (turning "+" into space, "%2B" into "+",
+    // etc.). Meta's CAPI validator flags any modified fbclid inside _fbc,
+    // so the value must round-trip exactly as captured from the URL.
+    function getRawFbclid(){
+      var m=window.location.search.match(/[?&]fbclid=([^&#]*)/);
+      return (m && m[1]) ? m[1] : null;
+    }
     function getFbc(){
       var fbc=getCookie('_fbc');
       if(fbc)return fbc;
-      var p=new URLSearchParams(window.location.search);
-      var fbclid=p.get('fbclid');
+      var fbclid=getRawFbclid();
       if(fbclid)return 'fb.1.'+Date.now()+'.'+fbclid;
       return null;
     }
@@ -105,11 +112,12 @@
 
     // Persist the ad click ID so the thank-you page (which LaunchPass
     // redirects to) can still attribute the Purchase back to the ad even
-    // if LaunchPass doesn't forward the fbclid URL param.
+    // if LaunchPass doesn't forward the fbclid URL param. Store the RAW
+    // fbclid so the thank-you page rebuilds _fbc identically to what the
+    // Meta pixel would have set here.
     (function persistAdClick(){
       try {
-        var p = new URLSearchParams(window.location.search);
-        var fbclid = p.get('fbclid');
+        var fbclid = getRawFbclid();
         if (fbclid) {
           localStorage.setItem('fnf_fbclid', fbclid);
           localStorage.setItem('fnf_fbclid_ts', String(Date.now()));
@@ -4516,18 +4524,24 @@
 
         // Preserve the fbclid + external_id through the LaunchPass flow
         // so Meta can attribute the purchase back to the ad click on the
-        // thank-you page. We append them to LaunchPass's iframe URL; if
-        // they configure the success redirect to include ?fbclid={fbclid}
-        // in their dashboard the click id survives end-to-end.
+        // thank-you page. Read fbclid RAW from location.search so the
+        // value isn't URL-decoded before being re-appended (which would
+        // change its shape). Only append if not already present on the
+        // iframe URL.
         try {
-          var url = new URL(iframeUrl);
-          var pageParams = new URLSearchParams(window.location.search);
-          var fbclid = pageParams.get('fbclid');
-          if (fbclid && !url.searchParams.has('fbclid')) url.searchParams.set('fbclid', fbclid);
+          var rawFbclid = null;
+          var m = window.location.search.match(/[?&]fbclid=([^&#]*)/);
+          if (m) rawFbclid = m[1];
+          var sep = iframeUrl.indexOf('?') === -1 ? '?' : '&';
+          if (rawFbclid && iframeUrl.indexOf('fbclid=') === -1) {
+            iframeUrl += sep + 'fbclid=' + rawFbclid;
+            sep = '&';
+          }
           var eid = null;
           try { eid = localStorage.getItem('fnf_eid'); } catch (_) {}
-          if (eid && !url.searchParams.has('external_id')) url.searchParams.set('external_id', eid);
-          iframeUrl = url.toString();
+          if (eid && iframeUrl.indexOf('external_id=') === -1) {
+            iframeUrl += sep + 'external_id=' + encodeURIComponent(eid);
+          }
         } catch (_) {}
 
         var modal = document.createElement('div');

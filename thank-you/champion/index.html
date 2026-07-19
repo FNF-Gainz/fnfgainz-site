@@ -41,20 +41,31 @@
       if(!id){id=uuid();try{localStorage.setItem('fnf_eid',id);}catch(e){}}
       return id;
     }
+    // Read fbclid RAW from the URL string; URLSearchParams URL-decodes it
+    // and Meta's CAPI validator flags any modification inside _fbc.
+    function getRawFbclid(){
+      var m=window.location.search.match(/[?&]fbclid=([^&#]*)/);
+      return (m && m[1]) ? m[1] : null;
+    }
     function getFbc(){
       var fbc=getCookie('_fbc');
       if(fbc)return fbc;
-      var fbclid=params.get('fbclid');
+      var fbclid=getRawFbclid();
+      var creationTs=Date.now();
+      // Fallback rebuild from RAW fbclid persisted at landing time.
+      // Use the ORIGINAL click timestamp so _fbc's creation_time_ms
+      // reflects when the ad click actually happened.
       if(!fbclid){
         try {
           var stored = localStorage.getItem('fnf_fbclid');
           var ts = parseInt(localStorage.getItem('fnf_fbclid_ts')||'0', 10);
           if (stored && ts && (Date.now() - ts) < 7*24*60*60*1000) {
             fbclid = stored;
+            creationTs = ts;
           }
         } catch(e) {}
       }
-      if(fbclid)return 'fb.1.'+Date.now()+'.'+fbclid;
+      if(fbclid)return 'fb.1.'+creationTs+'.'+fbclid;
       return null;
     }
 

@@ -44,12 +44,22 @@
       if(!id){id=uuid();try{localStorage.setItem('fnf_eid',id);}catch(e){}}
       return id;
     }
+    // Read fbclid RAW from the URL string so URLSearchParams' URL-decoding
+    // doesn't modify the value inside _fbc (Meta CAPI validator flags any
+    // modification).
+    function getRawFbclid(){
+      var m=window.location.search.match(/[?&]fbclid=([^&#]*)/);
+      return (m && m[1]) ? m[1] : null;
+    }
     function getFbc(){
       var fbc=getCookie('_fbc');
       if(fbc)return fbc;
-      var fbclid=params.get('fbclid');
-      // Fallback: landing page stashed the ad click id in localStorage so
-      // we can rebuild _fbc even if LaunchPass dropped the URL param.
+      var fbclid=getRawFbclid();
+      var creationTs=Date.now();
+      // Fallback: landing page stashed the RAW ad click id in localStorage
+      // so we can rebuild _fbc even if LaunchPass dropped the URL param.
+      // When falling back, use the ORIGINAL click timestamp - not now -
+      // so _fbc's creation_time_ms matches when the click actually happened.
       if(!fbclid){
         try {
           var stored = localStorage.getItem('fnf_fbclid');
@@ -57,10 +67,11 @@
           // Meta considers _fbc valid for ~7 days after the click.
           if (stored && ts && (Date.now() - ts) < 7*24*60*60*1000) {
             fbclid = stored;
+            creationTs = ts;
           }
         } catch(e) {}
       }
-      if(fbclid)return 'fb.1.'+Date.now()+'.'+fbclid;
+      if(fbclid)return 'fb.1.'+creationTs+'.'+fbclid;
       return null;
     }
 

@@ -78,11 +78,16 @@
       if(!id){id=uuid();try{localStorage.setItem('fnf_eid',id);}catch(e){}}
       return id;
     }
+    // Read fbclid RAW via regex - URLSearchParams URL-decodes the value
+    // and Meta's CAPI validator flags any modified fbclid inside _fbc.
+    function getRawFbclid(){
+      var m=window.location.search.match(/[?&]fbclid=([^&#]*)/);
+      return (m && m[1]) ? m[1] : null;
+    }
     function getFbc(){
       var fbc=getCookie('_fbc');
       if(fbc)return fbc;
-      var p=new URLSearchParams(window.location.search);
-      var fbclid=p.get('fbclid');
+      var fbclid=getRawFbclid();
       if(fbclid)return 'fb.1.'+Date.now()+'.'+fbclid;
       return null;
     }
@@ -108,12 +113,11 @@
       }catch(e){}
     };
 
-    // Persist the ad click ID so the thank-you page can attribute Purchase
-    // back to the originating ad even when LaunchPass drops URL params.
+    // Persist the RAW fbclid so the thank-you page rebuilds _fbc
+    // identically to what the pixel would have set here.
     (function persistAdClick(){
       try {
-        var p = new URLSearchParams(window.location.search);
-        var fbclid = p.get('fbclid');
+        var fbclid = getRawFbclid();
         if (fbclid) {
           localStorage.setItem('fnf_fbclid', fbclid);
           localStorage.setItem('fnf_fbclid_ts', String(Date.now()));
@@ -4743,17 +4747,23 @@
         // Close any prior instance
         closeModal();
 
-        // Preserve fbclid + external_id through the LaunchPass flow so
-        // Meta can attribute the resulting purchase back to the ad click.
+        // Preserve fbclid + external_id through the LaunchPass flow so Meta
+        // can attribute the resulting purchase back to the ad click. Read
+        // fbclid RAW so it isn't URL-decoded before re-appending.
         try {
-          var url = new URL(iframeUrl);
-          var pageParams = new URLSearchParams(window.location.search);
-          var fbclid = pageParams.get('fbclid');
-          if (fbclid && !url.searchParams.has('fbclid')) url.searchParams.set('fbclid', fbclid);
+          var rawFbclid = null;
+          var m = window.location.search.match(/[?&]fbclid=([^&#]*)/);
+          if (m) rawFbclid = m[1];
+          var sep = iframeUrl.indexOf('?') === -1 ? '?' : '&';
+          if (rawFbclid && iframeUrl.indexOf('fbclid=') === -1) {
+            iframeUrl += sep + 'fbclid=' + rawFbclid;
+            sep = '&';
+          }
           var eid = null;
           try { eid = localStorage.getItem('fnf_eid'); } catch (_) {}
-          if (eid && !url.searchParams.has('external_id')) url.searchParams.set('external_id', eid);
-          iframeUrl = url.toString();
+          if (eid && iframeUrl.indexOf('external_id=') === -1) {
+            iframeUrl += sep + 'external_id=' + encodeURIComponent(eid);
+          }
         } catch (_) {}
 
         var modal = document.createElement('div');
