@@ -5277,9 +5277,11 @@
         {x:426,y:153,label:'Mar 2025',value:'$11.8k'},
         {x:489,y:140,label:'Sep 2025',value:'$13.8k'},
         {x:553,y:120,label:'Feb 2026',value:'$16.9k'},
-        {x:618,y:95, label:'Round 3',value:'$20.7k'},
-        {x:660,y:81, label:'Round 6',value:'$22.9k'},
-        {x:700,y:72, label:'Round 9',value:'$25.6k'},
+        // 2026 R3 tooltip value matches the on-chart milestone badge ($30K).
+        // R6/R9 hardcoded snapshots were dropped: their values were frozen
+        // when those rounds were live and no longer reflect the current line.
+        // Hovering the mid-2026 gap snaps to R3 or the tail's first round.
+        {x:618,y:95, label:'2026 R3',value:'$30k'},
         {x:706,y:72, label:'R10',value:'$26.9k · +$1,268 · 64% ROI'},
         {x:745,y:68, label:'R13',value:'+$469 · 22.5% ROI'},
         {x:758,y:69, label:'R14',value:'+$839 · 46.7% ROI'},
