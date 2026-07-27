@@ -3775,9 +3775,10 @@
   <div class="aurora" aria-hidden="true"></div>
   <canvas id="particles" class="particles-canvas"></canvas>
 
-  <!-- LIVE TICKER -->
+  <!-- LIVE TICKER. Contents are rebuilt at runtime from the Vercel endpoint
+       via buildTicker() below. Fallback markup stays for no-JS + first paint. -->
   <div class="ticker" aria-hidden="true">
-    <div class="ticker-inner">
+    <div class="ticker-inner" id="ticker-inner">
       <span class="ticker-item"><span class="ticker-live">Live</span></span>
       <span class="ticker-item"><span class="ticker-round">R14</span><span class="ticker-value--pos">+$839</span><span>+16.8u</span><span>46.7% ROI</span></span>
       <span class="ticker-item"><span class="ticker-round">R12</span><span class="ticker-value--pos">+$826</span><span>+16.5u</span><span>39.8% ROI</span></span>
@@ -5300,11 +5301,31 @@
       hoverDot.style.transition = 'opacity 0.2s ease';
       chartSvg.appendChild(hoverDot);
 
+      // Format a tail round (delta / units / roi) into a tooltip point.
+      function formatTailPoint(t) {
+        var deltaPrefix = t.delta >= 0 ? '+$' : '-$';
+        var deltaStr = deltaPrefix + Math.abs(Math.round(t.delta)).toLocaleString('en-AU');
+        var cumStr = '$' + Math.round(t.cumulative).toLocaleString('en-AU');
+        var roiStr = (t.roi >= 0 ? '+' : '') + t.roi.toFixed(1) + '% ROI';
+        return { x: t.x, y: t.y, label: t.round, value: cumStr + ' &middot; ' + deltaStr + ' &middot; ' + roiStr };
+      }
+
       function findNearest(vbx) {
-        var nearest = points[0], minDist = Math.abs(points[0].x - vbx);
-        for (var i = 1; i < points.length; i++) {
-          var d = Math.abs(points[i].x - vbx);
-          if (d < minDist) { minDist = d; nearest = points[i]; }
+        // Merge historical points with any freshly-loaded recent-round tail
+        // so hovering the endpoint area shows real live round data instead of
+        // the stale R17 that was hardcoded in the points array.
+        var pool = points.slice();
+        var tail = window.__aflChartTail;
+        if (tail && tail.length) {
+          // Drop any hardcoded points that overlap the fresh tail's x-range.
+          var tailMinX = tail[0].x;
+          pool = pool.filter(function(p) { return p.x < tailMinX; });
+          tail.forEach(function(t) { pool.push(formatTailPoint(t)); });
+        }
+        var nearest = pool[0], minDist = Math.abs(pool[0].x - vbx);
+        for (var i = 1; i < pool.length; i++) {
+          var d = Math.abs(pool[i].x - vbx);
+          if (d < minDist) { minDist = d; nearest = pool[i]; }
         }
         return nearest;
       }
@@ -5602,15 +5623,24 @@
           // Take up to the last N rounds that fit in TAIL_X.
           var n = Math.min(reversed.length, TAIL_X.length);
           var slice = reversed.slice(reversed.length - n);
+          var recentSlice = recent.slice(recent.length - n); // for delta + roi
           // Align rounds to the RIGHT edge of TAIL_X so latest sits at x=790.
           var offset = TAIL_X.length - n;
           for (var j = 0; j < n; j++) {
             newTailPoints.push({
               x: TAIL_X[offset + j],
-              y: profitToY(slice[j].cumulative)
+              y: profitToY(slice[j].cumulative),
+              round: slice[j].round,
+              cumulative: slice[j].cumulative,
+              delta: Number(recentSlice[j].profit) || 0,
+              units: Number(recentSlice[j].units) || 0,
+              roi: Number(recentSlice[j].roi) || 0
             });
           }
         }
+        // Expose the fresh tail so the chart hover tooltip can use it
+        // instead of the hardcoded points array.
+        window.__aflChartTail = newTailPoints;
 
         // Build the new line-path 'd': keep everything up to the point before
         // TAIL_START, then append the freshly-computed tail.
@@ -5664,11 +5694,69 @@
         chart.setAttribute('aria-label', aria);
       }
 
+      // Rebuild the top ticker items from live data. We show:
+      // "Live" pill + 5 most-recent WINNING rounds + season + all-time,
+      // duplicated once for the seamless marquee loop.
+      function buildTicker(data) {
+        var inner = document.getElementById('ticker-inner');
+        if (!inner || !data) return;
+
+        var items = [];
+        items.push('<span class="ticker-item"><span class="ticker-live">Live</span></span>');
+
+        // Recent winning rounds, most recent first, cap at 5.
+        var recent = Array.isArray(data.recentRounds) ? data.recentRounds : [];
+        var wins = recent.filter(function(r) { return Number(r.profit) > 0; })
+                         .reverse()
+                         .slice(0, 5);
+        wins.forEach(function(r) {
+          var profit = Number(r.profit);
+          var units = Number(r.units);
+          var roi = Number(r.roi);
+          items.push(
+            '<span class="ticker-item">' +
+              '<span class="ticker-round">' + r.round + '</span>' +
+              '<span class="ticker-value--pos">+$' + Math.round(profit).toLocaleString('en-AU') + '</span>' +
+              '<span>+' + units.toFixed(1) + 'u</span>' +
+              '<span>' + roi.toFixed(1) + '% ROI</span>' +
+            '</span>'
+          );
+        });
+
+        if (data.season2026 && Number(data.season2026.profit) > 0) {
+          var s = data.season2026;
+          items.push(
+            '<span class="ticker-item">' +
+              '<span class="ticker-round">Season 2026</span>' +
+              '<span class="ticker-value--pos">+$' + Math.round(Number(s.profit)).toLocaleString('en-AU') + '</span>' +
+              '<span>+' + Number(s.units).toFixed(1) + 'u</span>' +
+              '<span>' + Number(s.roi).toFixed(1) + '% ROI</span>' +
+            '</span>'
+          );
+        }
+
+        if (data.allTime) {
+          var a = data.allTime;
+          items.push(
+            '<span class="ticker-item">' +
+              '<span class="ticker-round">All-time</span>' +
+              '<span class="ticker-value--pos">+$' + Math.round(Number(a.profit)).toLocaleString('en-AU') + '</span>' +
+              '<span>+' + Number(a.units).toFixed(1) + 'u</span>' +
+              '<span>' + Number(a.roi).toFixed(1) + '% ROI</span>' +
+            '</span>'
+          );
+        }
+
+        // Duplicate the whole set once so the -50% translate loop is seamless.
+        inner.innerHTML = items.join('') + items.join('');
+      }
+
       tryVercel()
         .catch(function() { return tryStatsJson(); })
         .then(function(data) {
           applyStats(data);
           updateChart(data);
+          buildTicker(data);
         })
         .catch(function() {
           // Both sources failed. hardcoded HTML fallback values remain visible. Silent.

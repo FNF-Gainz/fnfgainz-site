@@ -4451,9 +4451,12 @@
       </p>
     </section>
 
-    <!-- SCROLLING BANNER: AFL wins + member testimonials, cycling -->
+    <!-- SCROLLING BANNER: AFL wins + member testimonials, cycling.
+         AFL result items are rebuilt at runtime from the Vercel endpoint
+         via buildMiniBanner() at the end of the page. Fallback markup
+         stays for no-JS + first paint. -->
     <div class="mini-banner" aria-hidden="true">
-      <div class="mini-banner-inner">
+      <div class="mini-banner-inner" id="mini-banner-inner">
         <span class="mini-banner-item"><span class="mini-banner-round">AFL R14</span><span class="mini-banner-pos">+$839</span><span>46.7% ROI</span></span>
         <span class="mini-banner-item"><span class="mini-banner-quote">"Made $27,500 from March to September."</span><span class="mini-banner-quote-author">Curtis</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round">AFL R12</span><span class="mini-banner-pos">+$826</span><span>39.8% ROI</span></span>
@@ -4708,6 +4711,67 @@
   </div>
 
   <script src="script.js"></script>
+
+  <!-- Mini banner: fetch live AFL data and rebuild the round-result items
+       so we're not stuck on old rounds. Testimonials are always shown from
+       a static curated list; AFL rounds pull from data.recentRounds. -->
+  <script>
+    (function() {
+      var inner = document.getElementById('mini-banner-inner');
+      if (!inner) return;
+
+      var TESTIMONIALS = [
+        { quote: '"Made $27,500 from March to September."',      author: 'Curtis' },
+        { quote: "\"$8k profit for the season. Couldn't recommend more.\"", author: 'Lorelius' },
+        { quote: '"So much confidence in the picks."',           author: 'iiDooblay' },
+        { quote: '"Scaled to exponentially profitable levels."', author: 'Vitamin_GG' }
+      ];
+
+      function render(afl) {
+        var items = [];
+        var wins = (afl && Array.isArray(afl.recentRounds))
+          ? afl.recentRounds.filter(function(r){ return Number(r.profit) > 0; }).reverse().slice(0, 4)
+          : [];
+        for (var i = 0; i < Math.max(wins.length, TESTIMONIALS.length); i++) {
+          if (wins[i]) {
+            var r = wins[i];
+            items.push(
+              '<span class="mini-banner-item">' +
+                '<span class="mini-banner-round">AFL ' + r.round + '</span>' +
+                '<span class="mini-banner-pos">+$' + Math.round(Number(r.profit)).toLocaleString('en-AU') + '</span>' +
+                '<span>' + Number(r.roi).toFixed(1) + '% ROI</span>' +
+              '</span>'
+            );
+          }
+          if (TESTIMONIALS[i]) {
+            var t = TESTIMONIALS[i];
+            items.push(
+              '<span class="mini-banner-item">' +
+                '<span class="mini-banner-quote">' + t.quote + '</span>' +
+                '<span class="mini-banner-quote-author">' + t.author + '</span>' +
+              '</span>'
+            );
+          }
+        }
+        if (afl && afl.allTime) {
+          items.push(
+            '<span class="mini-banner-item">' +
+              '<span class="mini-banner-round">All-time</span>' +
+              '<span class="mini-banner-pos">+$' + Math.round(Number(afl.allTime.profit)).toLocaleString('en-AU') + '</span>' +
+              '<span>' + Number(afl.allTime.bets).toLocaleString('en-AU') + ' bets</span>' +
+            '</span>'
+          );
+        }
+        // Duplicate once so the marquee -50% translate loop is seamless.
+        inner.innerHTML = items.join('') + items.join('');
+      }
+
+      fetch('https://fnf-gainz-afl.vercel.app/api/afl-stats', { cache: 'no-cache' })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(render)
+        .catch(function() { render(null); });
+    })();
+  </script>
 
   <!-- Mobile checkout: intercept the button click and open OUR own
        modal with a direct-load iframe. LaunchPass's own embed modal
