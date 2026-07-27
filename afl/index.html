@@ -5546,9 +5546,130 @@
           });
       }
 
+      // ---- CHART LIVE UPDATE ----
+      // The AFL cumulative-profit chart is a static SVG path with hand-crafted
+      // historical data points. To keep it current with each new round we:
+      //  1. Rebuild the tail of the path from data.recentRounds (last 8 rounds,
+      //     working backward from allTime.profit to compute per-round cumulative).
+      //  2. Snap the endpoint dot + area-fill closing to the new tail.
+      //  3. Update the aria-label with the latest round + current profit.
+      // Historical points (pre-recent-rounds) are left untouched.
+      function updateChart(data) {
+        if (!data || !data.allTime) return;
+        var chart = document.querySelector('.chart');
+        if (!chart) return;
+        var line = chart.querySelector('.chart-line');
+        var area = chart.querySelector('.chart-area');
+        if (!line || !area) return;
+
+        // Y-axis calibration: y=240 is $0, y=31 is $50k. 42px per $10k.
+        function profitToY(profit) {
+          var y = 240 - (Number(profit) / 10000) * 42;
+          // Clamp so a huge future profit doesn't render above the chart area
+          // (25 leaves some headroom above the $50k gridline for the pulse dot).
+          if (y < 25) y = 25;
+          if (y > 240) y = 240;
+          return Math.round(y * 10) / 10;
+        }
+
+        var currentProfit = Number(data.allTime.profit);
+        if (isNaN(currentProfit)) return;
+        var newEndY = profitToY(currentProfit);
+
+        // Rebuild the tail from recentRounds if available.
+        // Recent rounds are ordered oldest -> newest; each element has a
+        // `profit` delta for that round. Working backward from the current
+        // cumulative, we can derive cumulative-at-each-recent-round-start.
+        var recent = Array.isArray(data.recentRounds) ? data.recentRounds : [];
+        // If we don't have enough per-round data, only update the endpoint.
+        // Fixed x-positions for the last 8 rounds: reserves the right edge of
+        // the 2026 span (x=706..790). Change if you re-lay-out the chart.
+        var TAIL_X = [706, 718, 730, 742, 754, 766, 778, 790];
+        var TAIL_START = TAIL_X[0]; // any historical point at or after this x is replaced
+
+        var newTailPoints = [];
+        if (recent.length > 0) {
+          // Compute cumulative AT the end of each recent round.
+          // Start from the latest and work backward.
+          var cumulativeEnd = currentProfit;
+          var reversed = [];
+          for (var i = recent.length - 1; i >= 0; i--) {
+            reversed.push({ round: recent[i].round, cumulative: cumulativeEnd });
+            cumulativeEnd -= Number(recent[i].profit) || 0;
+          }
+          reversed.reverse(); // back to chronological order
+
+          // Take up to the last N rounds that fit in TAIL_X.
+          var n = Math.min(reversed.length, TAIL_X.length);
+          var slice = reversed.slice(reversed.length - n);
+          // Align rounds to the RIGHT edge of TAIL_X so latest sits at x=790.
+          var offset = TAIL_X.length - n;
+          for (var j = 0; j < n; j++) {
+            newTailPoints.push({
+              x: TAIL_X[offset + j],
+              y: profitToY(slice[j].cumulative)
+            });
+          }
+        }
+
+        // Build the new line-path 'd': keep everything up to the point before
+        // TAIL_START, then append the freshly-computed tail.
+        var lineD = line.getAttribute('d');
+        // Parse existing segments into [{cmd, x, y}, ...].
+        var segRe = /([ML])\s+(-?[\d.]+)\s+(-?[\d.]+)/g;
+        var kept = [];
+        var m;
+        while ((m = segRe.exec(lineD)) !== null) {
+          var x = parseFloat(m[2]);
+          var y = parseFloat(m[3]);
+          if (x < TAIL_START) {
+            kept.push({ cmd: m[1], x: x, y: y });
+          } else {
+            break; // stop as soon as we hit the tail region
+          }
+        }
+
+        // If we have fresh tail points, use them; otherwise just move the endpoint.
+        var tailPoints = newTailPoints.length ? newTailPoints
+                                              : [{ x: 790, y: newEndY }];
+        // Ensure the final tail point is anchored at the right edge with the true endpoint y.
+        tailPoints[tailPoints.length - 1] = { x: 790, y: newEndY };
+
+        // Compose new path strings.
+        var buildD = function(points) {
+          if (!points.length) return '';
+          var parts = [];
+          for (var i = 0; i < points.length; i++) {
+            parts.push((i === 0 ? 'M' : 'L') + ' ' + points[i].x + ' ' + points[i].y);
+          }
+          return parts.join(' ');
+        };
+        var allPoints = kept.concat(tailPoints);
+        var newLineD = buildD(allPoints);
+        line.setAttribute('d', newLineD);
+        area.setAttribute('d', newLineD + ' L 790 240 L 42 240 Z');
+
+        // Move the endpoint dots.
+        var pulse = chart.querySelector('.chart-endpoint-pulse');
+        var core = chart.querySelector('.chart-endpoint-core');
+        if (pulse) pulse.setAttribute('cy', newEndY);
+        if (core)  core.setAttribute('cy', newEndY);
+
+        // Refresh the accessible label.
+        var latestRound = (data.latestRound && data.latestRound.round) || '';
+        var aria = 'AFL cumulative profit chart from March 2022 to ' +
+                   latestRound +
+                   ', growing from $0 to $' +
+                   Math.round(currentProfit).toLocaleString('en-AU');
+        chart.setAttribute('aria-label', aria);
+      }
+
       tryVercel()
         .catch(function() { return tryStatsJson(); })
-        .then(applyStats)
+        .then(function(data) {
+          applyStats(data);
+          updateChart(data);
+        })
         .catch(function() {
           // Both sources failed. hardcoded HTML fallback values remain visible. Silent.
         });
