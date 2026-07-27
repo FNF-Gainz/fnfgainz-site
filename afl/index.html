@@ -1479,6 +1479,9 @@
       height: auto;
       aspect-ratio: 800 / 280;
       display: block;
+      /* Ensure mousemove fires over the SVG's full rect, not just painted regions,
+         so the hover tooltip works between line segments and above/below the line. */
+      pointer-events: bounding-box;
     }
 
     .chart-area {
@@ -5302,26 +5305,41 @@
       chartSvg.appendChild(hoverDot);
 
       // Format a tail round (delta / units / roi) into a tooltip point.
+      // Returns null if the input is missing enough fields to render safely.
       function formatTailPoint(t) {
-        var deltaPrefix = t.delta >= 0 ? '+$' : '-$';
-        var deltaStr = deltaPrefix + Math.abs(Math.round(t.delta)).toLocaleString('en-AU');
-        var cumStr = '$' + Math.round(t.cumulative).toLocaleString('en-AU');
-        var roiStr = (t.roi >= 0 ? '+' : '') + t.roi.toFixed(1) + '% ROI';
-        return { x: t.x, y: t.y, label: t.round, value: cumStr + ' &middot; ' + deltaStr + ' &middot; ' + roiStr };
+        if (!t || typeof t.x !== 'number' || typeof t.y !== 'number') return null;
+        var delta = Number(t.delta);
+        var cum = Number(t.cumulative);
+        var roi = Number(t.roi);
+        if (isNaN(delta) || isNaN(cum) || isNaN(roi)) return null;
+        var deltaPrefix = delta >= 0 ? '+$' : '-$';
+        var deltaStr = deltaPrefix + Math.abs(Math.round(delta)).toLocaleString('en-AU');
+        var cumStr = '$' + Math.round(cum).toLocaleString('en-AU');
+        var roiStr = (roi >= 0 ? '+' : '') + roi.toFixed(1) + '% ROI';
+        return { x: t.x, y: t.y, label: t.round || '', value: cumStr + ' &middot; ' + deltaStr + ' &middot; ' + roiStr };
       }
 
       function findNearest(vbx) {
         // Merge historical points with any freshly-loaded recent-round tail
         // so hovering the endpoint area shows real live round data instead of
-        // the stale R17 that was hardcoded in the points array.
+        // the stale R17 that was hardcoded in the points array. If anything
+        // about the tail merge blows up, we fall back to the raw points so the
+        // tooltip stays interactive.
         var pool = points.slice();
-        var tail = window.__aflChartTail;
-        if (tail && tail.length) {
-          // Drop any hardcoded points that overlap the fresh tail's x-range.
-          var tailMinX = tail[0].x;
-          pool = pool.filter(function(p) { return p.x < tailMinX; });
-          tail.forEach(function(t) { pool.push(formatTailPoint(t)); });
+        try {
+          var tail = window.__aflChartTail;
+          if (tail && tail.length) {
+            var tailMinX = tail[0].x;
+            pool = pool.filter(function(p) { return p.x < tailMinX; });
+            tail.forEach(function(t) {
+              var formatted = formatTailPoint(t);
+              if (formatted) pool.push(formatted);
+            });
+          }
+        } catch (err) {
+          pool = points.slice();
         }
+        if (!pool.length) return null;
         var nearest = pool[0], minDist = Math.abs(pool[0].x - vbx);
         for (var i = 1; i < pool.length; i++) {
           var d = Math.abs(pool[i].x - vbx);
@@ -5337,7 +5355,9 @@
       var MILESTONE_GUARD = 22;
 
       chartSvg.addEventListener('mousemove', function(e) {
+       try {
         var rect = chartSvg.getBoundingClientRect();
+        if (!rect.width) return;
         var relX = e.clientX - rect.left;
         var vbx = (relX / rect.width) * 800;
         if (vbx < 42 || vbx > 790) {
@@ -5354,6 +5374,11 @@
           }
         }
         var p = findNearest(vbx);
+        if (!p) {
+          tip.classList.remove('is-visible');
+          hoverDot.style.opacity = '0';
+          return;
+        }
         var sx = (p.x / 800) * rect.width;
         var sy = (p.y / 280) * rect.height;
 
@@ -5391,6 +5416,11 @@
         tip.style.left = clampedX + 'px';
         tip.style.top = (flip ? (sy + 14) : (sy - 12)) + 'px';
         tip.classList.add('is-visible');
+       } catch (err) {
+        try { console.error('[chart tooltip] mousemove failed:', err); } catch (_) {}
+        tip.classList.remove('is-visible');
+        hoverDot.style.opacity = '0';
+       }
       });
 
       chartSvg.addEventListener('mouseleave', function() {
