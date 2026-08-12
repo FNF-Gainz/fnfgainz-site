@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WGR2M6NF');</script>
+  <!-- End Google Tag Manager -->
+
+  <title>Racing | FNF Gainz</title>
+  <meta name="description" content="A professional non-promotional horse racing system. 8 to 20 bets a week across Australian and Hong Kong racing, every selection backed by written analysis and disciplined staking. Weekly, monthly and Spring Carnival memberships.">
+
+  <meta property="og:title" content="Racing | FNF Gainz">
+  <meta property="og:description" content="A professional non-promotional horse racing system. 8 to 20 bets a week across Australian and Hong Kong racing, every selection backed by written analysis and disciplined staking.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fnfgainz.com/racing">
+  <meta property="og:image" content="https://fnfgainz.com/assets/fnf-logo-main.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" sizes="64x64" href="../assets/favicon-64.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../styles.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.launchpass.com">
+  <link rel="dns-prefetch" href="https://www.launchpass.com">
+
+  <!-- LaunchPass embeds. Preloaded at high priority so the browser fetches
+       them immediately after the connection is warm, then executed via
+       defer script tags. Handlers are ready well before DOMContentLoaded. -->
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-carnival/embed.js" fetchpriority="high">
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-carnival/embed.js"></script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+
+  <meta name="facebook-domain-verification" content="rvdz1dijk208hjgyhh9yvlcztyrg3p">
+
+  <!-- Meta Pixel + CAPI dual-fire -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '926315323681572');
+
+  (function(){
+    function uuid(){
+      if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+        var r=Math.random()*16|0;
+        return (c==='x'?r:(r&0x3|0x8)).toString(16);
+      });
+    }
+    function getCookie(n){
+      var m=document.cookie.match(new RegExp('(?:^|; )'+n+'=([^;]*)'));
+      return m?decodeURIComponent(m[1]):null;
+    }
+    function getExternalId(){
+      var id=null;
+      try{id=localStorage.getItem('fnf_eid');}catch(e){}
+      if(!id){id=uuid();try{localStorage.setItem('fnf_eid',id);}catch(e){}}
+      return id;
+    }
+    // Read fbclid RAW from the URL string via regex - never URLSearchParams,
+    // which URL-decodes the value (turning "+" into space, "%2B" into "+",
+    // etc.). Meta's CAPI validator flags any modified fbclid inside _fbc,
+    // so the value must round-trip exactly as captured from the URL.
+    function getRawFbclid(){
+      var m=window.location.search.match(/[?&]fbclid=([^&#]*)/);
+      return (m && m[1]) ? m[1] : null;
+    }
+    function getFbc(){
+      var fbc=getCookie('_fbc');
+      if(fbc)return fbc;
+      var fbclid=getRawFbclid();
+      if(fbclid)return 'fb.1.'+Date.now()+'.'+fbclid;
+      return null;
+    }
+    window.fnfTrack=function(eventName,customData){
+      var eventId=uuid();
+      var data=customData||{};
+      if(window.fbq)window.fbq('track',eventName,data,{eventID:eventId});
+      try{
+        fetch('/api/track',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            event_name:eventName,
+            event_id:eventId,
+            event_source_url:window.location.href,
+            custom_data:data,
+            fbp:getCookie('_fbp'),
+            fbc:getFbc(),
+            external_id:getExternalId()
+          }),
+          keepalive:true
+        }).catch(function(){});
+      }catch(e){}
+    };
+
+    // Persist the ad click ID so the thank-you page (which LaunchPass
+    // redirects to) can still attribute the Purchase back to the ad even
+    // if LaunchPass doesn't forward the fbclid URL param. Store the RAW
+    // fbclid so the thank-you page rebuilds _fbc identically to what the
+    // Meta pixel would have set here.
+    (function persistAdClick(){
+      try {
+        var fbclid = getRawFbclid();
+        if (fbclid) {
+          localStorage.setItem('fnf_fbclid', fbclid);
+          localStorage.setItem('fnf_fbclid_ts', String(Date.now()));
+        }
+      } catch(e) {}
+    })();
+  })();
+
+  fnfTrack('PageView');
+  fnfTrack('ViewContent', { content_name: 'Racing Landing Page', content_category: 'Racing Package' });
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=926315323681572&ev=PageView&noscript=1"
+  /></noscript>
+
+  <style>
+    /* ==================== RACING v1. CARNIVAL GOLD ==================== */
+
+    :root {
+      --bg: #030612;
+      --bg-1: #070b1a;
+      --surface: rgba(15, 20, 38, 0.6);
+      --surface-strong: rgba(20, 26, 46, 0.82);
+      --border: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(255, 255, 255, 0.14);
+
+      --type-cathedral: clamp(2.5rem, 6vw + 0.5rem, 4.6rem);
+      --type-chapter: clamp(1.5rem, 2vw + 0.75rem, 2.15rem);
+
+      --ease-cathedral: cubic-bezier(0.19, 1, 0.22, 1);
+
+      --text: #ffffff;
+      --text-2: #dbe1ee;
+      --text-3: #a3aec5;
+      --text-4: #6b7690;
+
+      --cyan: #00d4ff;
+      --cyan-2: #7cedff;
+      --cyan-dim: rgba(0, 212, 255, 0.15);
+
+      --green: #00ff9d;
+      --green-2: #6fffc0;
+
+      --gold: #ffbb47;
+      --gold-2: #ffd280;
+      --gold-dim: rgba(255, 187, 71, 0.15);
+
+      --red: #ff5470;
+
+      --grad-gold: linear-gradient(135deg, #ffbb47 0%, #ff9500 100%);
+      --grad-gold-text: linear-gradient(135deg, #ffd280 0%, #ffbb47 45%, #ff9500 100%);
+
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --dur: 0.4s;
+
+      --font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+    }
+
+    html {
+      overflow-x: hidden;
+      width: 100%;
+      scroll-behavior: smooth;
+    }
+    body {
+      background: var(--bg);
+      font-family: var(--font-sans);
+      font-feature-settings: 'ss01', 'cv11';
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: var(--text);
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+      margin: 0;
+    }
+
+    /* Atmosphere. warm gold shifted from the AFL page's cyan */
+    .aurora {
+      position: fixed;
+      inset: -20% -10%;
+      background:
+        radial-gradient(ellipse 60% 45% at 75% 8%, rgba(255, 187, 71, 0.09), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 15% 30%, rgba(0, 212, 255, 0.05), transparent 65%),
+        radial-gradient(ellipse 65% 50% at 60% 95%, rgba(255, 149, 0, 0.05), transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ==================== TOP STRIP ==================== */
+    .launch-strip {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 11px 16px;
+      background: linear-gradient(90deg, rgba(255, 187, 71, 0.08), rgba(255, 149, 0, 0.14), rgba(255, 187, 71, 0.08));
+      border-bottom: 1px solid rgba(255, 187, 71, 0.18);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-2);
+    }
+    .launch-strip strong { color: #fff; font-weight: 700; }
+
+    /* ==================== HERO ==================== */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: clamp(72px, 12vh, 130px) 24px clamp(56px, 9vh, 96px);
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-2);
+      padding: 9px 18px;
+      border: 1px solid rgba(255, 187, 71, 0.3);
+      border-radius: 999px;
+      background: rgba(255, 187, 71, 0.06);
+      margin-bottom: 30px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: var(--type-cathedral);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.04;
+      margin: 0 0 26px;
+    }
+    .hero h1 .accent {
+      background: var(--grad-gold-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      max-width: 640px;
+      margin: 0 auto 34px;
+      font-size: clamp(1.02rem, 1.4vw, 1.16rem);
+      line-height: 1.7;
+      color: var(--text-2);
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 42px;
+    }
+    .hero-chip {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--text-3);
+      padding: 8px 15px;
+      border: 1px solid var(--border-strong);
+      border-radius: 999px;
+      background: var(--surface);
+    }
+    .hero-chip strong { color: var(--gold-2); font-weight: 600; }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    /* ==================== BUTTONS ==================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 18px 32px;
+      border-radius: 14px;
+      font-family: var(--font-sans);
+      font-size: 0.98rem;
+      font-weight: 600;
+      letter-spacing: -0.005em;
+      cursor: pointer;
+      transition: all var(--dur) var(--ease);
+      text-decoration: none;
+      border: 1.5px solid transparent;
+      min-height: 56px;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-gold {
+      background: var(--grad-gold);
+      color: #1a1000;
+      border-color: transparent;
+      padding: 22px 36px;
+      font-size: 1.02rem;
+      font-weight: 700;
+      min-height: 60px;
+      border-radius: 16px;
+      box-shadow:
+        0 14px 36px rgba(255, 149, 0, 0.32),
+        0 0 80px rgba(255, 187, 71, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    }
+    .btn-gold .btn-price {
+      color: rgba(26, 16, 0, 0.72);
+      border-left-color: rgba(26, 16, 0, 0.32);
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 18px 44px rgba(255, 149, 0, 0.42),
+        0 0 80px rgba(255, 187, 71, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      color: #1a1000;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--border-strong);
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold-2);
+      background: var(--gold-dim);
+      box-shadow: 0 0 24px rgba(255, 187, 71, 0.18);
+    }
+
+    .btn-price {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 500;
+      opacity: 0.9;
+      padding-left: 14px;
+      border-left: 1px solid rgba(255, 255, 255, 0.35);
+      letter-spacing: 0.02em;
+    }
+
+    /* ==================== SECTION SHELL ==================== */
+    section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: clamp(56px, 9vh, 96px) 24px;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-2);
+      padding: 8px 16px;
+      border: 1px solid rgba(255, 187, 71, 0.25);
+      border-radius: 999px;
+      background: rgba(255, 187, 71, 0.05);
+      margin-bottom: 22px;
+    }
+    .section-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto clamp(36px, 6vh, 56px);
+    }
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-size: var(--type-chapter);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin: 0 0 16px;
+    }
+    .section-head p {
+      color: var(--text-3);
+      font-size: 1.02rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ==================== WEEK STRUCTURE ==================== */
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 820px) {
+      .week-grid { grid-template-columns: 1fr; }
+    }
+
+    .day-card {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 18px;
+      padding: 28px 26px;
+      backdrop-filter: blur(8px);
+      transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+    .day-card:hover {
+      border-color: rgba(255, 187, 71, 0.35);
+      transform: translateY(-3px);
+    }
+    .day-card--primary {
+      border-color: rgba(255, 187, 71, 0.4);
+      background: linear-gradient(180deg, rgba(255, 187, 71, 0.07), var(--surface) 45%);
+    }
+
+    .day-chip {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-2);
+      padding: 6px 12px;
+      border: 1px solid rgba(255, 187, 71, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 187, 71, 0.07);
+      margin-bottom: 16px;
+    }
+    .day-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.22rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 0 0 8px;
+    }
+    .day-focus {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-4);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .day-card p {
+      color: var(--text-2);
+      font-size: 0.94rem;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ==================== BET HIERARCHY ==================== */
+    .tier-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .tier {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 20px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 24px 26px;
+      backdrop-filter: blur(8px);
+    }
+    .tier--lock { border-color: rgba(255, 187, 71, 0.4); }
+    .tier-rank {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gold-2);
+      background: rgba(255, 187, 71, 0.08);
+      border: 1px solid rgba(255, 187, 71, 0.28);
+    }
+    .tier h3 {
+      font-family: var(--font-display);
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin: 4px 0 6px;
+    }
+    .tier h3 .tier-units {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-2);
+      margin-left: 10px;
+    }
+    .tier p {
+      color: var(--text-2);
+      font-size: 0.93rem;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .analysis-note {
+      max-width: 760px;
+      margin: 26px auto 0;
+      padding: 22px 26px;
+      border-left: 3px solid var(--gold);
+      background: rgba(255, 187, 71, 0.05);
+      border-radius: 0 14px 14px 0;
+      color: var(--text-2);
+      font-size: 0.97rem;
+      line-height: 1.7;
+    }
+    .analysis-note strong { color: #fff; }
+
+    /* ==================== WHY NON-PROMOTIONAL ==================== */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    @media (max-width: 720px) {
+      .why-grid { grid-template-columns: 1fr; }
+    }
+    .why-tile {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 26px;
+      backdrop-filter: blur(8px);
+    }
+    .why-tile h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0 0 8px;
+      color: var(--gold-2);
+    }
+    .why-tile p {
+      color: var(--text-2);
+      font-size: 0.93rem;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ==================== WHAT MEMBERS RECEIVE ==================== */
+    .receive-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px 20px;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0;
+      list-style: none;
+    }
+    @media (max-width: 720px) {
+      .receive-list { grid-template-columns: 1fr; }
+    }
+    .receive-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      color: var(--text-2);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+    .receive-list li::before {
+      content: '\2713';
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #1a1000;
+      background: var(--grad-gold);
+      margin-top: 1px;
+    }
+
+    /* ==================== THE RECORD ==================== */
+    .record-panel {
+      max-width: 820px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, rgba(20, 30, 55, 0.85), rgba(7, 11, 26, 0.9));
+      border: 1px solid rgba(255, 187, 71, 0.25);
+      border-radius: 22px;
+      padding: clamp(32px, 5vw, 52px);
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+    .record-panel h2 {
+      font-family: var(--font-display);
+      font-size: var(--type-chapter);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 18px;
+    }
+    .record-panel h2 .accent {
+      background: var(--grad-gold-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .record-panel p {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--text-2);
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+    .record-points {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .record-point {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-2);
+      padding: 9px 16px;
+      border: 1px solid rgba(255, 187, 71, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 187, 71, 0.06);
+    }
+
+    /* ==================== PRICING ==================== */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+    @media (max-width: 900px) {
+      .plans-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      /* Featured card first on mobile */
+      .plan--featured { order: -1; }
+    }
+
+    .plan {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 22px;
+      padding: 30px 26px 26px;
+      backdrop-filter: blur(8px);
+      position: relative;
+      transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+    .plan:hover { transform: translateY(-4px); }
+
+    .plan--featured {
+      border-color: rgba(255, 187, 71, 0.55);
+      background: linear-gradient(180deg, rgba(255, 187, 71, 0.09), var(--surface) 40%);
+      box-shadow: 0 24px 70px rgba(255, 149, 0, 0.13);
+    }
+
+    .plan-flag {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #1a1000;
+      background: var(--grad-gold);
+      padding: 6px 16px;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 6px 18px rgba(255, 149, 0, 0.35);
+    }
+
+    .plan-name {
+      font-family: var(--font-display);
+      font-size: 1.12rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 0 0 4px;
+    }
+    .plan-term {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-4);
+      margin-bottom: 20px;
+    }
+
+    .plan-price {
+      display: flex;
+      align-items: baseline;
+      justify-content: flex-start;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .plan-price-amount {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .plan--featured .plan-price-amount {
+      background: var(--grad-gold-text);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .plan-price-unit {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text-3);
+    }
+    .plan-equiv {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-4);
+      margin-bottom: 22px;
+      min-height: 1.1em;
+    }
+    .plan-equiv strong { color: var(--gold-2); font-weight: 600; }
+
+    .plan-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--text-2);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .plan-features li::before {
+      content: '\2713';
+      flex-shrink: 0;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.82rem;
+      margin-top: 2px;
+    }
+
+    .plan .btn { width: 100%; }
+
+    .plans-note {
+      text-align: center;
+      margin-top: 28px;
+      color: var(--text-3);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+    .plans-note strong { color: var(--text-2); }
+
+    .plans-secure {
+      text-align: center;
+      margin-top: 14px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-4);
+    }
+
+    /* ==================== WHO IT'S FOR ==================== */
+    .fit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    @media (max-width: 720px) {
+      .fit-grid { grid-template-columns: 1fr; }
+    }
+    .fit-card {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 18px;
+      padding: 28px 26px;
+      backdrop-filter: blur(8px);
+    }
+    .fit-card--yes { border-color: rgba(0, 255, 157, 0.25); }
+    .fit-card--no  { border-color: rgba(255, 84, 112, 0.22); }
+    .fit-card h3 {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin: 0 0 18px;
+    }
+    .fit-card--yes h3 { color: var(--green-2); }
+    .fit-card--no  h3 { color: var(--red); }
+    .fit-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .fit-card li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: var(--text-2);
+      font-size: 0.94rem;
+      line-height: 1.6;
+    }
+    .fit-card--yes li::before {
+      content: '\2713';
+      color: var(--green);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .fit-card--no li::before {
+      content: '\00d7';
+      color: var(--red);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ==================== FAQ ==================== */
+    .faq {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      transition: all var(--dur) var(--ease);
+      backdrop-filter: blur(8px);
+      overflow: hidden;
+    }
+    .faq-item[open] {
+      border-color: rgba(255, 187, 71, 0.3);
+      background: rgba(15, 20, 38, 0.85);
+    }
+    .faq-item summary {
+      padding: 22px 26px;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--text);
+      font-size: 1.02rem;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: color var(--dur) var(--ease);
+    }
+    .faq-item summary:hover { color: var(--gold-2); }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+';
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--text-3);
+      transition: all var(--dur) var(--ease);
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .faq-item[open] summary::after {
+      content: '\2212';
+      color: var(--gold);
+    }
+    .faq-answer {
+      padding: 0 26px 24px;
+      color: var(--text-2);
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+    .faq-answer a {
+      color: var(--gold-2);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ==================== FOOTER ==================== */
+    .footer {
+      max-width: 760px;
+      margin: 40px auto 0;
+      padding: 56px 24px 40px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .footer-rg {
+      font-size: 0.84rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .footer-rg a { color: var(--text-2); }
+    .footer-links { margin-bottom: 16px; }
+    .footer-links a {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color var(--dur) var(--ease);
+    }
+    .footer-links a:hover { color: var(--gold-2); }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--text-3);
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    /* ==================== STICKY MOBILE CTA ==================== */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, rgba(3, 6, 18, 0), rgba(3, 6, 18, 0.92) 30%);
+      z-index: 100;
+      transform: translateY(110%);
+      transition: transform 0.35s var(--ease-out);
+      pointer-events: none;
+    }
+    .sticky-cta.is-visible {
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .sticky-cta .btn { width: 100%; }
+    @media (max-width: 900px) {
+      .sticky-cta { display: block; }
+    }
+
+    /* ==================== CHECKOUT MODAL (mobile) ==================== */
+    .fnf-checkout-modal {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      box-sizing: border-box;
+      animation: fnf-checkout-in 0.2s ease-out;
+    }
+    @keyframes fnf-checkout-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .fnf-checkout-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      -webkit-tap-highlight-color: transparent;
+    }
+    body.fnf-modal-open .sticky-cta { display: none !important; }
+    .fnf-checkout-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      max-width: 480px;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+    }
+    .fnf-checkout-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      padding: 0;
+    }
+    .fnf-checkout-close:hover,
+    .fnf-checkout-close:active { background: rgba(0,0,0,0.9); }
+    .fnf-checkout-card iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: #fff;
+      flex: 1;
+    }
+    .fnf-checkout-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      color: #888;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .fnf-checkout-modal.is-loaded .fnf-checkout-loading { display: none; }
+
+    /* ==================== REVEAL ==================== */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.9s var(--ease-cathedral), transform 0.9s var(--ease-cathedral);
+    }
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    @media (max-width: 640px) {
+      .hero { padding-top: 56px; }
+      .hero-ctas .btn { width: 100%; }
+      .btn { white-space: normal; }
+      .tier { grid-template-columns: 44px 1fr; gap: 16px; padding: 20px; }
+      .tier-rank { width: 44px; height: 44px; border-radius: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+  <canvas id="particles" class="particles-canvas"></canvas>
+
+  <div class="launch-strip">
+    Spring Racing 2026 &middot; Carnival pass: <strong>14 August to 14 November</strong>
+  </div>
+
+  <main>
+
+    <!-- ==================== HERO ==================== -->
+    <header class="hero">
+      <span class="hero-eyebrow" data-reveal>FNF Gainz &middot; Racing</span>
+      <h1 data-reveal>Serious racing.<br><span class="accent">Value first.</span></h1>
+      <p class="hero-sub" data-reveal>
+        A professional non-promotional horse racing system across Australian and Hong Kong
+        meetings. 8 to 20 selections a week, each backed by written analysis, modelled fair
+        odds and disciplined staking. No bookmaker promos required.
+      </p>
+      <div class="hero-chips" data-reveal>
+        <span class="hero-chip">Doors open <strong>14 August</strong></span>
+        <span class="hero-chip">Wed &middot; Sat &middot; Sun structure</span>
+        <span class="hero-chip">Every bet <strong>graded &amp; published</strong></span>
+      </div>
+      <div class="hero-ctas" data-reveal>
+        <a href="#memberships" class="btn btn-gold">View memberships</a>
+        <a href="#how" class="btn btn-outline">How it works</a>
+      </div>
+    </header>
+
+    <!-- ==================== THE WEEK ==================== -->
+    <section id="how">
+      <div class="section-head">
+        <span class="section-eyebrow" data-reveal>The Week</span>
+        <h2 data-reveal>Three days. One disciplined rhythm.</h2>
+        <p data-reveal>Racing rewards selectivity, not volume. The week is built around the
+        meetings where value actually appears, and nothing else.</p>
+      </div>
+      <div class="week-grid">
+        <article class="day-card" data-reveal>
+          <span class="day-chip">Wednesday</span>
+          <h3>Midweek value</h3>
+          <div class="day-focus">Australian meetings + Happy Valley</div>
+          <p>Smaller outlay days. Selective bets only across Australian midweek racing and
+          Hong Kong's Happy Valley night meeting. If the value isn't there, we don't bet.</p>
+        </article>
+        <article class="day-card day-card--primary" data-reveal>
+          <span class="day-chip">Saturday &middot; Primary</span>
+          <h3>Feature day</h3>
+          <div class="day-focus">Feature meetings + metro zones</div>
+          <p>The main event. Early market bets lock in value before prices tighten, then
+          additional bets are released on race morning once track conditions, rail position
+          and bias are confirmed against our modelled fair odds.</p>
+        </article>
+        <article class="day-card" data-reveal>
+          <span class="day-chip">Sunday</span>
+          <h3>Sha Tin + selects</h3>
+          <div class="day-focus">Hong Kong + select Sunday meetings</div>
+          <p>Focused betting on Sha Tin and hand-picked Sunday meetings, targeting the
+          markets and venues where the system has been performing strongest.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==================== BET HIERARCHY ==================== -->
+    <section>
+      <div class="section-head">
+        <span class="section-eyebrow" data-reveal>The Hierarchy</span>
+        <h2 data-reveal>Every bet knows its place.</h2>
+        <p data-reveal>Conviction is applied selectively. A clear hierarchy separates the
+        anchor bet of the day from the broader portfolio, and the staking follows it.</p>
+      </div>
+      <div class="tier-list">
+        <article class="tier tier--lock" data-reveal>
+          <div class="tier-rank">01</div>
+          <div>
+            <h3>Lock of the Day <span class="tier-units">Higher units</span></h3>
+            <p>The single highest-conviction bet on the card. This is the anchor of the
+            "Best Bet of the Day" framework, and it carries higher recommended units.</p>
+          </div>
+        </article>
+        <article class="tier" data-reveal>
+          <div class="tier-rank">02</div>
+          <div>
+            <h3>Core value plays <span class="tier-units">Base units</span></h3>
+            <p>Selective value around the major meetings at conservative base staking.
+            Early market positions taken when the price beats our modelled fair odds.</p>
+          </div>
+        </article>
+        <article class="tier" data-reveal>
+          <div class="tier-rank">03</div>
+          <div>
+            <h3>Portfolio plays <span class="tier-units">Controlled risk</span></h3>
+            <p>The remaining selections form the broader weekly portfolio, roughly 8 to 20
+            bets in total across the week. Risk stays controlled at every level.</p>
+          </div>
+        </article>
+      </div>
+      <div class="analysis-note" data-reveal>
+        <strong>These are not blind tips.</strong> Every selection comes with written
+        analysis: the expected race shape, the key factors, and why the price is wrong.
+        You'll always understand the reasoning behind the bet you're placing.
+      </div>
+    </section>
+
+    <!-- ==================== WHY NON-PROMOTIONAL ==================== -->
+    <section>
+      <div class="section-head">
+        <span class="section-eyebrow" data-reveal>The Approach</span>
+        <h2 data-reveal>Why non-promotional racing?</h2>
+        <p data-reveal>No bonus bets. No promo turnover. Just market value. That one
+        decision changes everything about how long you last in this game.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-tile" data-reveal>
+          <h3>Account longevity</h3>
+          <p>Promo-driven betting patterns get accounts restricted fast. Betting pure value
+          at normal market prices keeps your bookmaker accounts alive far longer.</p>
+        </div>
+        <div class="why-tile" data-reveal>
+          <h3>Independent of bookmakers</h3>
+          <p>The system never relies on bookmaker incentives to generate its edge, so it
+          keeps working when the promos dry up or your accounts stop receiving them.</p>
+        </div>
+        <div class="why-tile" data-reveal>
+          <h3>Pure market value</h3>
+          <p>We bet when the available price is longer than our modelled fair odds. That is
+          the entire trigger. No price, no bet.</p>
+        </div>
+        <div class="why-tile" data-reveal>
+          <h3>A repeatable process</h3>
+          <p>Value betting is a long-term process you can repeat week after week, season
+          after season. That's the foundation of sustainable racing betting.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WHAT MEMBERS RECEIVE ==================== -->
+    <section>
+      <div class="section-head">
+        <span class="section-eyebrow" data-reveal>Membership</span>
+        <h2 data-reveal>What you get.</h2>
+      </div>
+      <ul class="receive-list">
+        <li data-reveal>8 to 20 bets per week across Wednesday, Saturday and Sunday racing</li>
+        <li data-reveal>Early market value plays plus race-day confirmations</li>
+        <li data-reveal>Written analysis on every selection, never a blind tip</li>
+        <li data-reveal>Disciplined staking guidance in units on every bet</li>
+        <li data-reveal>Dedicated horse racing channels inside the FNF Discord</li>
+        <li data-reveal>Onboarding, ongoing support and execution guidance</li>
+      </ul>
+    </section>
+
+    <!-- ==================== THE RECORD ==================== -->
+    <section>
+      <div class="record-panel" data-reveal>
+        <h2>The record starts <span class="accent">day one.</span></h2>
+        <p>
+          FNF Gainz has published every AFL and NRL bet for five years, wins and losses
+          alike. Racing gets the same treatment. Every selection is logged with its price
+          and stake when it's posted, then graded when it settles. No deleted losers, no
+          cherry-picked screenshots. The ledger builds in public from the very first bet.
+        </p>
+        <div class="record-points">
+          <span class="record-point">Every bet logged</span>
+          <span class="record-point">Graded when settled</span>
+          <span class="record-point">Losses shown</span>
+          <span class="record-point">Published weekly</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PRICING ==================== -->
+    <section id="memberships">
+      <div class="section-head">
+        <span class="section-eyebrow" data-reveal>Memberships</span>
+        <h2 data-reveal>Choose your term.</h2>
+        <p data-reveal>Same bets, same analysis, same channels on every plan. The only
+        difference is how you pay.</p>
+      </div>
+      <div class="plans-grid">
+
+        <!-- Weekly -->
+        <article class="plan" data-reveal>
+          <h3 class="plan-name">Racing Weekly</h3>
+          <div class="plan-term">Billed weekly &middot; no lock-in</div>
+          <div class="plan-price">
+            <span class="plan-price-amount">$45</span>
+            <span class="plan-price-unit">AUD / week</span>
+          </div>
+          <div class="plan-equiv">Week to week flexibility</div>
+          <ul class="plan-features">
+            <li>Every bet, every analysis, all channels</li>
+            <li>Staking guidance on every selection</li>
+            <li>Cancel anytime, access to end of week</li>
+          </ul>
+          <button class="btn btn-outline lp5053940233535488" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 45.00, currency: 'AUD', content_name: 'Racing Weekly', content_category: 'Racing Package', content_ids: ['racing-weekly'], content_type: 'product' });">
+            <span>Join Weekly</span>
+            <span class="btn-price">$45 / wk</span>
+          </button>
+        </article>
+
+        <!-- Carnival (featured) -->
+        <article class="plan plan--featured" data-reveal>
+          <span class="plan-flag">Spring Carnival</span>
+          <h3 class="plan-name">Carnival Pass</h3>
+          <div class="plan-term">One payment &middot; 14 Aug to 14 Nov</div>
+          <div class="plan-price">
+            <span class="plan-price-amount">$340</span>
+            <span class="plan-price-unit">AUD one-off</span>
+          </div>
+          <div class="plan-equiv">Works out around <strong>$26 a week</strong></div>
+          <ul class="plan-features">
+            <li>Every bet of the entire Spring Carnival</li>
+            <li>Save $95 vs paying monthly</li>
+            <li>Covers the full feature season through November</li>
+            <li>No renewal, access simply ends 14 November</li>
+          </ul>
+          <button class="btn btn-gold lp6699068434022400" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
+            <span>Get the Carnival Pass</span>
+          </button>
+        </article>
+
+        <!-- Monthly -->
+        <article class="plan" data-reveal>
+          <h3 class="plan-name">Racing Monthly</h3>
+          <div class="plan-term">Billed monthly &middot; no lock-in</div>
+          <div class="plan-price">
+            <span class="plan-price-amount">$145</span>
+            <span class="plan-price-unit">AUD / mo</span>
+          </div>
+          <div class="plan-equiv">Works out around $33 a week</div>
+          <ul class="plan-features">
+            <li>Every bet, every analysis, all channels</li>
+            <li>Staking guidance on every selection</li>
+            <li>Cancel anytime, access to end of month</li>
+          </ul>
+          <button class="btn btn-outline lp5468151011213312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">
+            <span>Join Monthly</span>
+            <span class="btn-price">$145 / mo</span>
+          </button>
+        </article>
+
+      </div>
+      <p class="plans-note" data-reveal>
+        <strong>Not sure?</strong> Start weekly. If the process suits you, upgrade to the
+        Carnival Pass or monthly and keep the same channels without missing a bet.
+      </p>
+      <p class="plans-secure" data-reveal>Secure checkout via LaunchPass + Stripe &middot; instant Discord access</p>
+    </section>
+
+    <!-- ==================== WHO IT'S FOR ==================== -->
+    <section>
+      <div class="section-head">
+        <span class="section-eyebrow" data-reveal>Fit Check</span>
+        <h2 data-reveal>Built for a specific kind of punter.</h2>
+      </div>
+      <div class="fit-grid">
+        <div class="fit-card fit-card--yes" data-reveal>
+          <h3>This is for you if</h3>
+          <ul>
+            <li>You want structure and reasoning, not volume</li>
+            <li>You think in seasons, not Saturdays</li>
+            <li>You want racing exposure without relying on bookmaker offers</li>
+            <li>You'll follow the staking guidance as written</li>
+          </ul>
+        </div>
+        <div class="fit-card fit-card--no" data-reveal>
+          <h3>This is not for you if</h3>
+          <ul>
+            <li>You want action on every race, every day</li>
+            <li>You expect to win every single week</li>
+            <li>You bet whatever feels right instead of sizing properly</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section id="faq">
+      <div class="section-head">
+        <span class="section-eyebrow" data-reveal>FAQ</span>
+        <h2 data-reveal>Questions, answered.</h2>
+      </div>
+      <div class="faq">
+        <details class="faq-item" data-reveal><summary>How do I get access after I join?</summary><div class="faq-answer">Checkout runs through LaunchPass. Once payment is processed, your Discord account is automatically linked to your Racing membership and the private racing channels unlock in our server. You'll get a welcome message with onboarding instructions so you can be set up before the next race day.</div></details>
+        <details class="faq-item" data-reveal><summary>When do the bets drop?</summary><div class="faq-answer">Early market bets are posted as soon as value is identified, typically the night before or early on race morning. On Saturdays, additional bets are released on race morning once track conditions, rail position and bias are confirmed. Hong Kong bets land ahead of the Happy Valley (Wednesday night) and Sha Tin (Sunday) meetings.</div></details>
+        <details class="faq-item" data-reveal><summary>How much money do I need to start?</summary><div class="faq-answer">There's no fixed minimum. We recommend 1 unit equals roughly 1% of your bankroll, and every selection comes with recommended units. Whatever your bankroll, you scale the same staking proportionally. If you're unsure, the team helps you size correctly during onboarding.</div></details>
+        <details class="faq-item" data-reveal><summary>What's the difference between the plans?</summary><div class="faq-answer">Nothing except the term. Every plan gets the same bets, the same written analysis and the same channels. Weekly is $45 per week, monthly is $145 per month, and the Carnival Pass is a single $340 payment covering everything from 14 August to 14 November.</div></details>
+        <details class="faq-item" data-reveal><summary>What happens when the Carnival Pass ends?</summary><div class="faq-answer">The pass is a one-off payment, so there's no auto-renewal. Access ends on 14 November, and if you want to keep going you can roll onto the weekly or monthly plan from there.</div></details>
+        <details class="faq-item" data-reveal><summary>Do I need accounts with specific bookmakers?</summary><div class="faq-answer">The more books you have, the better the price you can take. Major Australian bookmakers (TAB, Sportsbet, Ladbrokes, bet365) cover most selections. Because the system is non-promotional, you don't need bonus bets or promo eligibility for it to work.</div></details>
+        <details class="faq-item" data-reveal><summary>Is this suitable for beginners?</summary><div class="faq-answer">Yes, provided you're willing to follow instructions and manage your bankroll properly. Every bet comes with written reasoning, so you learn the process as you follow it. This isn't a get-rich-quick service. It's a long-term, disciplined system.</div></details>
+        <details class="faq-item" data-reveal><summary>What happens during a losing run?</summary><div class="faq-answer">Losing runs are part of racing, even with a genuine edge. The system works because we don't chase or change strategy after a bad week. We hold the line, keep staking controlled, track everything, and let the process play out over the full season.</div></details>
+        <details class="faq-item" data-reveal><summary>Can I cancel my membership?</summary><div class="faq-answer">Weekly and monthly plans can be cancelled anytime through your LaunchPass portal, and access stays active until the end of your current billing period. The Carnival Pass is a single payment with no renewal, so there's nothing to cancel.</div></details>
+        <details class="faq-item" data-reveal><summary>Where can I see the results?</summary><div class="faq-answer">Every bet is logged and graded in the member channels as it settles, and the racing record is published as it builds, wins and losses alike. FNF has published its AFL and NRL results publicly for five years, and racing is held to the same standard from day one.</div></details>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-rg">
+        FNF Gainz promotes responsible gambling. Please only bet what you can afford to lose. If you or someone you know has a gambling problem, contact Gambling Help Online at <strong>1800 858 858</strong> or visit <a href="https://www.gamblinghelponline.org.au" target="_blank" rel="noopener noreferrer">gamblinghelponline.org.au</a>.
+      </div>
+      <div class="footer-links">
+        <a href="../">&larr; Back to main site</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 FNF Gainz. All rights reserved.</p>
+    </footer>
+
+  </main>
+
+  <!-- Sticky mobile CTA -->
+  <div class="sticky-cta" id="sticky-cta">
+    <button class="btn btn-gold lp6699068434022400" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
+      <span>Get the Carnival Pass</span>
+      <span class="btn-price">$340 one-off</span>
+    </button>
+  </div>
+
+  <script src="../script.js"></script>
+
+  <!-- Reveal animations -->
+  <script>
+    (function() {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var els = document.querySelectorAll('[data-reveal]');
+      if (reduced || !('IntersectionObserver' in window)) {
+        els.forEach(function(el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function(el, i) {
+        // Small stagger within a viewport batch for a soft cascade.
+        el.style.transitionDelay = (i % 4) * 0.08 + 's';
+        observer.observe(el);
+      });
+    })();
+  </script>
+
+  <!-- Sticky CTA visibility: show once past the hero, hide while the
+       pricing section is on screen so the page never shows two CTAs. -->
+  <script>
+    (function() {
+      var cta = document.getElementById('sticky-cta');
+      var hero = document.querySelector('.hero');
+      var pricing = document.getElementById('memberships');
+      if (!cta || !hero || !('IntersectionObserver' in window)) return;
+
+      var pastHero = false;
+      var pricingVisible = false;
+      function update() {
+        cta.classList.toggle('is-visible', pastHero && !pricingVisible);
+      }
+      new IntersectionObserver(function(entries) {
+        pastHero = !entries[0].isIntersecting;
+        update();
+      }, { threshold: 0 }).observe(hero);
+      if (pricing) {
+        new IntersectionObserver(function(entries) {
+          pricingVisible = entries[0].isIntersecting;
+          update();
+        }, { threshold: 0.15 }).observe(pricing);
+      }
+    })();
+  </script>
+
+  <!-- Mobile checkout: intercept the button click and open OUR own
+       modal with a direct-load iframe. LaunchPass's own embed modal
+       has iOS Safari rendering bugs (iframe collapses to 0 dimensions,
+       backdrop click-close intermittently fails). By owning the modal
+       DOM ourselves we control positioning, sizing, and close behavior
+       reliably on both iOS and Android. Desktop still uses their embed. -->
+  <script>
+    (function() {
+      var isMobile = window.matchMedia('(hover: none), (pointer: coarse), (max-width: 900px)').matches;
+      if (!isMobile) return;
+
+      var IFRAME_URLS = {
+        'lp5053940233535488': 'https://www.launchpass.com/fnf-gainz/racing-weekly/iframe',
+        'lp5468151011213312': 'https://www.launchpass.com/fnf-gainz/racing-monthly/iframe',
+        'lp6699068434022400': 'https://www.launchpass.com/fnf-gainz/racing-carnival/iframe'
+      };
+
+      var currentModal = null;
+      var escHandler = null;
+      var messageHandler = null;
+
+      function closeModal() {
+        if (!currentModal) return;
+        currentModal.remove();
+        currentModal = null;
+        document.body.classList.remove('fnf-modal-open');
+        if (escHandler) { document.removeEventListener('keydown', escHandler); escHandler = null; }
+        if (messageHandler) { window.removeEventListener('message', messageHandler); messageHandler = null; }
+      }
+
+      function openModal(iframeUrl) {
+        closeModal();
+
+        // Preserve the fbclid + external_id through the LaunchPass flow
+        // so Meta can attribute the purchase back to the ad click on the
+        // thank-you page. Read fbclid RAW from location.search so the
+        // value isn't URL-decoded before being re-appended.
+        try {
+          var rawFbclid = null;
+          var m = window.location.search.match(/[?&]fbclid=([^&#]*)/);
+          if (m) rawFbclid = m[1];
+          var sep = iframeUrl.indexOf('?') === -1 ? '?' : '&';
+          if (rawFbclid && iframeUrl.indexOf('fbclid=') === -1) {
+            iframeUrl += sep + 'fbclid=' + rawFbclid;
+            sep = '&';
+          }
+          var eid = null;
+          try { eid = localStorage.getItem('fnf_eid'); } catch (_) {}
+          if (eid && iframeUrl.indexOf('external_id=') === -1) {
+            iframeUrl += sep + 'external_id=' + encodeURIComponent(eid);
+          }
+        } catch (_) {}
+
+        var modal = document.createElement('div');
+        modal.className = 'fnf-checkout-modal';
+        modal.innerHTML =
+          '<div class="fnf-checkout-backdrop"></div>' +
+          '<div class="fnf-checkout-card">' +
+            '<div class="fnf-checkout-loading">Loading&hellip;</div>' +
+            '<iframe src="' + iframeUrl + '" allow="payment *" allowpaymentrequest="true"></iframe>' +
+          '</div>' +
+          '<button class="fnf-checkout-close" aria-label="Close checkout" type="button">&times;</button>';
+        document.body.appendChild(modal);
+        document.body.classList.add('fnf-modal-open');
+        currentModal = modal;
+
+        var iframe = modal.querySelector('iframe');
+
+        iframe.addEventListener('load', function() {
+          modal.classList.add('is-loaded');
+          setTimeout(function() {
+            try { iframe.contentWindow.postMessage('openPaymentModal', '*'); } catch (_) {}
+          }, 100);
+        });
+
+        messageHandler = function(event) {
+          if (!iframe || event.source !== iframe.contentWindow) return;
+          if (event.data === 'closeIframe') closeModal();
+          if (event.data === 'initIframe') modal.classList.add('is-loaded');
+        };
+        window.addEventListener('message', messageHandler);
+
+        modal.querySelector('.fnf-checkout-backdrop')
+          .addEventListener('click', closeModal);
+        modal.querySelector('.fnf-checkout-close')
+          .addEventListener('click', closeModal);
+
+        escHandler = function(ev) { if (ev.key === 'Escape') closeModal(); };
+        document.addEventListener('keydown', escHandler);
+      }
+
+      var PKG_META = {
+        'lp5053940233535488': { key: 'racing-weekly',   value: 45.00,  name: 'Racing Weekly' },
+        'lp5468151011213312': { key: 'racing-monthly',  value: 145.00, name: 'Racing Monthly' },
+        'lp6699068434022400': { key: 'racing-carnival', value: 340.00, name: 'Racing Carnival Pass' }
+      };
+
+      // Take total ownership of every Join button on mobile so LaunchPass
+      // embed can't fight for it - strip the class, wipe onclick, bind
+      // our own click. LaunchPass embed cannot bind to a button it does
+      // not know exists.
+      function takeOverButtons() {
+        Object.keys(PKG_META).forEach(function(cls) {
+          var meta = PKG_META[cls];
+          document.querySelectorAll('.' + cls).forEach(function(btn) {
+            if (btn.__fnfOwned) return;
+            btn.__fnfOwned = true;
+            btn.classList.remove(cls);
+            btn.setAttribute('data-fnf-join', meta.key);
+            btn.onclick = null;
+            btn.removeAttribute('onclick');
+            btn.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              if (window.fnfTrack) {
+                window.fnfTrack('InitiateCheckout', {
+                  value: meta.value,
+                  currency: 'AUD',
+                  content_name: meta.name,
+                  content_category: 'Racing Package',
+                  content_ids: [meta.key],
+                  content_type: 'product'
+                });
+              }
+              // Let the fbq XHR + CAPI keepalive fetch get scheduled
+              // before the DOM churn from mounting the modal iframe.
+              window.requestAnimationFrame(function() {
+                openModal(IFRAME_URLS[cls]);
+              });
+            });
+          });
+        });
+      }
+
+      takeOverButtons();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', takeOverButtons);
+      }
+      window.addEventListener('load', takeOverButtons);
+      window.addEventListener('pageshow', takeOverButtons);
+    })();
+  </script>
+</body>
+</html>
