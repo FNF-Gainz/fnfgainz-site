@@ -239,7 +239,7 @@
     .hero {
       max-width: 900px;
       margin: 0 auto;
-      padding: clamp(72px, 12vh, 130px) 24px clamp(56px, 9vh, 96px);
+      padding: clamp(72px, 12vh, 130px) 24px clamp(36px, 6vh, 56px);
       text-align: center;
     }
 
@@ -450,6 +450,97 @@
       padding-left: 14px;
       border-left: 1px solid rgba(255, 255, 255, 0.35);
       letter-spacing: 0.02em;
+    }
+
+    /* ==================== HERO PHOTO BAND ==================== */
+    /* Cinematic strip under the hero: Ka Ying Rising winning The
+       Everest. Links to the record section where the price ladder
+       tells the story. */
+    .hero-photo {
+      max-width: 1100px;
+      margin: clamp(8px, 2vh, 24px) auto 0;
+      padding: 0 24px;
+    }
+    .hero-photo-frame {
+      position: relative;
+      display: block;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 187, 71, 0.28);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+      text-decoration: none;
+      transition: border-color var(--dur) var(--ease), transform 0.6s var(--ease-cathedral);
+    }
+    .hero-photo-frame:hover {
+      border-color: rgba(255, 187, 71, 0.55);
+      transform: translateY(-3px);
+    }
+    .hero-photo-frame img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 21 / 9;
+      object-fit: cover;
+      object-position: center 22%;
+    }
+    /* Dark grade so the photo sits in the page's palette and the
+       caption stays readable. */
+    .hero-photo-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(3, 6, 18, 0.35), transparent 32%,
+                        transparent 55%, rgba(3, 6, 18, 0.88));
+      pointer-events: none;
+    }
+    .hero-photo-caption {
+      position: absolute;
+      left: clamp(18px, 3vw, 32px);
+      right: clamp(18px, 3vw, 32px);
+      bottom: clamp(14px, 2.5vw, 26px);
+      z-index: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .hero-photo-kicker {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-2);
+      margin-bottom: 6px;
+    }
+    .hero-photo-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 2vw, 1.4rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #fff;
+      line-height: 1.25;
+    }
+    .hero-photo-title span { color: var(--gold-2); }
+    .hero-photo-link {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      padding: 9px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 999px;
+      background: rgba(3, 6, 18, 0.55);
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+    }
+    @media (max-width: 640px) {
+      .hero-photo-frame img { aspect-ratio: 16 / 10; }
+      .hero-photo-link { display: none; }
     }
 
     /* ==================== SECTION SHELL ==================== */
@@ -1275,6 +1366,20 @@
         </button>
       </div>
     </header>
+
+    <!-- ==================== HERO PHOTO: KA YING RISING ==================== -->
+    <div class="hero-photo" data-reveal>
+      <a href="#record" class="hero-photo-frame" aria-label="Ka Ying Rising winning The Everest. See the record.">
+        <img src="assets/ka-ying-rising-everest.jpg" alt="Ka Ying Rising winning The Everest at Royal Randwick" width="1600" height="1073" fetchpriority="high">
+        <div class="hero-photo-caption">
+          <div>
+            <span class="hero-photo-kicker">The early call</span>
+            <div class="hero-photo-title">Ka Ying Rising wins The Everest. <span>Backed from $21 into $1.80.</span></div>
+          </div>
+          <span class="hero-photo-link">See the record &darr;</span>
+        </div>
+      </a>
+    </div>
 
     <!-- ==================== THE WEEK ==================== -->
     <section id="how">
