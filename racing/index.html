@@ -452,95 +452,38 @@
       letter-spacing: 0.02em;
     }
 
-    /* ==================== HERO PHOTO BAND ==================== */
-    /* Cinematic strip under the hero: Ka Ying Rising winning The
-       Everest. Links to the record section where the price ladder
-       tells the story. */
-    .hero-photo {
-      max-width: 1100px;
-      margin: clamp(8px, 2vh, 24px) auto 0;
-      padding: 0 24px;
-    }
-    .hero-photo-frame {
-      position: relative;
-      display: block;
-      border-radius: 24px;
+    /* ==================== HERO BACKDROP ==================== */
+    /* Ka Ying Rising winning The Everest, blended into the top of the
+       page: heavily darkened, desaturated toward the house palette,
+       masked to transparent well before the first content section. */
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: min(96vh, 860px);
+      z-index: -1;
       overflow: hidden;
-      border: 1px solid rgba(255, 187, 71, 0.28);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
-      text-decoration: none;
-      transition: border-color var(--dur) var(--ease), transform 0.6s var(--ease-cathedral);
+      pointer-events: none;
     }
-    .hero-photo-frame:hover {
-      border-color: rgba(255, 187, 71, 0.55);
-      transform: translateY(-3px);
-    }
-    .hero-photo-frame img {
+    .hero-bg img {
       width: 100%;
-      display: block;
-      aspect-ratio: 21 / 9;
+      height: 100%;
       object-fit: cover;
-      object-position: center 22%;
+      object-position: center 24%;
+      opacity: 0.32;
+      filter: saturate(0.55) brightness(0.75) contrast(1.05);
+      -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.6) 55%, transparent 96%);
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.6) 55%, transparent 96%);
     }
-    /* Dark grade so the photo sits in the page's palette and the
-       caption stays readable. */
-    .hero-photo-frame::after {
+    /* Centre vignette keeps the headline zone calm. */
+    .hero-bg::after {
       content: '';
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(3, 6, 18, 0.35), transparent 32%,
-                        transparent 55%, rgba(3, 6, 18, 0.88));
-      pointer-events: none;
-    }
-    .hero-photo-caption {
-      position: absolute;
-      left: clamp(18px, 3vw, 32px);
-      right: clamp(18px, 3vw, 32px);
-      bottom: clamp(14px, 2.5vw, 26px);
-      z-index: 1;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 16px;
-    }
-    .hero-photo-kicker {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold-2);
-      margin-bottom: 6px;
-    }
-    .hero-photo-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.05rem, 2vw, 1.4rem);
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: #fff;
-      line-height: 1.25;
-    }
-    .hero-photo-title span { color: var(--gold-2); }
-    .hero-photo-link {
-      flex-shrink: 0;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-2);
-      padding: 9px 16px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 999px;
-      background: rgba(3, 6, 18, 0.55);
-      backdrop-filter: blur(8px);
-      white-space: nowrap;
-    }
-    @media (max-width: 640px) {
-      .hero-photo-frame img { aspect-ratio: 16 / 10; }
-      .hero-photo-link { display: none; }
+        radial-gradient(ellipse 75% 60% at 50% 42%, rgba(3, 6, 18, 0.55), transparent 75%),
+        linear-gradient(180deg, rgba(3, 6, 18, 0.3), transparent 30%, rgba(3, 6, 18, 0.5) 80%, var(--bg) 98%);
     }
 
     /* ==================== SECTION SHELL ==================== */
@@ -785,31 +728,73 @@
     }
     .record-honesty strong { color: var(--text-2); }
 
-    /* Ka Ying Rising early-call ladder */
+    /* Ka Ying Rising early-call feature: photo on top, ladder below,
+       one card. */
     .early-call {
       max-width: 860px;
       margin: 0 auto clamp(36px, 6vh, 52px);
       background: linear-gradient(180deg, rgba(255, 187, 71, 0.07), var(--surface) 50%);
       border: 1px solid rgba(255, 187, 71, 0.35);
       border-radius: 20px;
-      padding: clamp(26px, 4vw, 40px);
+      overflow: hidden;
       backdrop-filter: blur(8px);
     }
-    .early-call h3 {
+    .early-call-photo {
+      position: relative;
+    }
+    .early-call-photo img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 21 / 9;
+      object-fit: cover;
+      object-position: center 22%;
+    }
+    .early-call-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(3, 6, 18, 0.25), transparent 35%,
+                  transparent 55%, rgba(3, 6, 18, 0.85));
+      pointer-events: none;
+    }
+    .early-call-caption {
+      position: absolute;
+      left: clamp(18px, 3vw, 30px);
+      right: clamp(18px, 3vw, 30px);
+      bottom: clamp(12px, 2vw, 22px);
+      z-index: 1;
+    }
+    .early-call-kicker {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-2);
+      margin-bottom: 6px;
+    }
+    .early-call-title {
       font-family: var(--font-display);
-      font-size: 1.3rem;
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
       font-weight: 700;
       letter-spacing: -0.01em;
-      margin: 0 0 8px;
-      text-align: center;
+      color: #fff;
+      line-height: 1.25;
     }
-    .early-call p {
+    .early-call-body {
+      padding: clamp(20px, 3vw, 30px) clamp(20px, 3.5vw, 36px) clamp(24px, 3.5vw, 34px);
+    }
+    .early-call-body p {
       max-width: 560px;
-      margin: 0 auto 24px;
+      margin: 0 auto 22px;
       text-align: center;
       color: var(--text-2);
       font-size: 0.95rem;
       line-height: 1.65;
+    }
+    @media (max-width: 640px) {
+      .early-call-photo img { aspect-ratio: 16 / 10; }
     }
     .price-ladder {
       display: flex;
@@ -1336,6 +1321,11 @@
 
   <main>
 
+    <!-- Blended hero backdrop: Ka Ying Rising winning The Everest -->
+    <div class="hero-bg" aria-hidden="true">
+      <img src="assets/ka-ying-rising-everest.jpg" alt="" fetchpriority="high">
+    </div>
+
     <!-- ==================== HERO ==================== -->
     <header class="hero">
       <span class="hero-eyebrow" data-reveal>FNF Gainz &middot; Racing</span>
@@ -1366,20 +1356,6 @@
         </button>
       </div>
     </header>
-
-    <!-- ==================== HERO PHOTO: KA YING RISING ==================== -->
-    <div class="hero-photo" data-reveal>
-      <a href="#record" class="hero-photo-frame" aria-label="Ka Ying Rising winning The Everest. See the record.">
-        <img src="assets/ka-ying-rising-everest.jpg" alt="Ka Ying Rising winning The Everest at Royal Randwick" width="1600" height="1073" fetchpriority="high">
-        <div class="hero-photo-caption">
-          <div>
-            <span class="hero-photo-kicker">The early call</span>
-            <div class="hero-photo-title">Ka Ying Rising wins The Everest. <span>Backed from $21 into $1.80.</span></div>
-          </div>
-          <span class="hero-photo-link">See the record &darr;</span>
-        </div>
-      </a>
-    </div>
 
     <!-- ==================== THE WEEK ==================== -->
     <section id="how">
@@ -1485,7 +1461,14 @@
       </p>
 
       <div class="early-call" data-reveal>
-        <h3>The early call: Ka Ying Rising</h3>
+        <div class="early-call-photo">
+          <img src="assets/ka-ying-rising-everest.jpg" alt="Ka Ying Rising winning The Everest at Royal Randwick" loading="lazy" width="1600" height="1073">
+          <div class="early-call-caption">
+            <span class="early-call-kicker">The early call</span>
+            <div class="early-call-title">Ka Ying Rising wins The Everest.</div>
+          </div>
+        </div>
+        <div class="early-call-body">
         <p>Spotted before the market woke up. Backed at every price on the way down,
         until it closed below $1.80.</p>
         <div class="price-ladder">
@@ -1506,6 +1489,7 @@
           <span class="price-step">$2.50</span>
           <span class="price-arrow">&rarr;</span>
           <span class="price-step price-step--close">Closed $1.80</span>
+        </div>
         </div>
       </div>
 
