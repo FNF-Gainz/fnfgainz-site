@@ -550,106 +550,34 @@
       margin: 0;
     }
 
-    /* ==================== BET HIERARCHY ==================== */
-    .tier-list {
+    /* ==================== BET HIERARCHY (compact strip) ==================== */
+    .tier-strip {
+      max-width: 760px;
+      margin: 22px auto 0;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 8px 22px;
+      backdrop-filter: blur(8px);
+    }
+    .tier-row {
       display: flex;
-      flex-direction: column;
+      align-items: baseline;
       gap: 14px;
-      max-width: 760px;
-      margin: 0 auto;
+      padding: 14px 0;
+      font-size: 0.94rem;
+      line-height: 1.5;
+      color: var(--text-2);
     }
-    .tier {
-      display: grid;
-      grid-template-columns: 56px 1fr;
-      gap: 20px;
-      align-items: flex-start;
-      background: var(--surface);
-      border: 1px solid var(--border-strong);
-      border-radius: 16px;
-      padding: 24px 26px;
-      backdrop-filter: blur(8px);
-    }
-    .tier--lock { border-color: rgba(255, 187, 71, 0.4); }
+    .tier-row + .tier-row { border-top: 1px solid var(--border); }
     .tier-rank {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-shrink: 0;
       font-family: var(--font-mono);
-      font-size: 1.05rem;
+      font-size: 0.78rem;
       font-weight: 700;
       color: var(--gold-2);
-      background: rgba(255, 187, 71, 0.08);
-      border: 1px solid rgba(255, 187, 71, 0.28);
     }
-    .tier h3 {
-      font-family: var(--font-display);
-      font-size: 1.08rem;
-      font-weight: 700;
-      margin: 4px 0 6px;
-    }
-    .tier h3 .tier-units {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gold-2);
-      margin-left: 10px;
-    }
-    .tier p {
-      color: var(--text-2);
-      font-size: 0.93rem;
-      line-height: 1.65;
-      margin: 0;
-    }
-
-    .analysis-note {
-      max-width: 760px;
-      margin: 26px auto 0;
-      padding: 22px 26px;
-      border-left: 3px solid var(--gold);
-      background: rgba(255, 187, 71, 0.05);
-      border-radius: 0 14px 14px 0;
-      color: var(--text-2);
-      font-size: 0.97rem;
-      line-height: 1.7;
-    }
-    .analysis-note strong { color: #fff; }
-
-    /* ==================== WHY NON-PROMOTIONAL ==================== */
-    .why-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-    @media (max-width: 720px) {
-      .why-grid { grid-template-columns: 1fr; }
-    }
-    .why-tile {
-      background: var(--surface);
-      border: 1px solid var(--border-strong);
-      border-radius: 16px;
-      padding: 26px;
-      backdrop-filter: blur(8px);
-    }
-    .why-tile h3 {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin: 0 0 8px;
-      color: var(--gold-2);
-    }
-    .why-tile p {
-      color: var(--text-2);
-      font-size: 0.93rem;
-      line-height: 1.65;
-      margin: 0;
-    }
+    .tier-row strong { color: var(--text); font-weight: 600; margin-right: 8px; }
 
     /* ==================== WHAT MEMBERS RECEIVE ==================== */
     .receive-list {
@@ -804,18 +732,38 @@
       box-shadow: 0 6px 18px rgba(255, 149, 0, 0.3);
     }
 
-    /* Member receipts gallery */
+    /* Member receipts gallery: symmetric layout, two talls flanking a
+       stacked middle column. Explicit areas so nothing orphans. */
     .receipts-gallery {
-      columns: 3;
-      column-gap: 14px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas:
+        "a b d"
+        "a c d";
+      gap: 14px;
       max-width: 900px;
       margin: 0 auto;
+      align-items: start;
     }
-    @media (max-width: 820px) { .receipts-gallery { columns: 2; } }
-    .receipts-gallery figure {
-      margin: 0 0 14px;
-      break-inside: avoid;
+    .receipt-a { grid-area: a; }
+    .receipt-b { grid-area: b; }
+    .receipt-c { grid-area: c; }
+    .receipt-d { grid-area: d; }
+    @media (max-width: 820px) {
+      .receipts-gallery {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "a d"
+          "b c";
+      }
     }
+    @media (max-width: 520px) {
+      .receipts-gallery {
+        grid-template-columns: 1fr;
+        grid-template-areas: "a" "b" "c" "d";
+      }
+    }
+    .receipts-gallery figure { margin: 0; }
     .receipts-gallery img {
       width: 100%;
       display: block;
@@ -824,18 +772,19 @@
     }
     .receipts-gallery figcaption {
       font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.06em;
-      color: var(--text-4);
-      padding: 8px 4px 0;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      color: var(--text-2);
+      padding: 10px 4px 0;
       line-height: 1.5;
+      text-align: center;
     }
     .receipts-note {
       max-width: 640px;
-      margin: 18px auto clamp(36px, 6vh, 52px);
+      margin: 22px auto clamp(32px, 5vh, 44px);
       text-align: center;
-      color: var(--text-3);
-      font-size: 0.88rem;
+      color: var(--text-2);
+      font-size: 0.9rem;
       line-height: 1.7;
     }
 
@@ -864,42 +813,11 @@
       margin-left: 10px;
     }
 
-    .record-panel {
-      max-width: 820px;
-      margin: 0 auto;
-      background: linear-gradient(180deg, rgba(20, 30, 55, 0.85), rgba(7, 11, 26, 0.9));
-      border: 1px solid rgba(255, 187, 71, 0.25);
-      border-radius: 22px;
-      padding: clamp(32px, 5vw, 52px);
-      text-align: center;
-      backdrop-filter: blur(12px);
-    }
-    .record-panel h2 {
-      font-family: var(--font-display);
-      font-size: var(--type-chapter);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin: 0 0 18px;
-    }
-    .record-panel h2 .accent {
-      background: var(--grad-gold-text);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .record-panel p {
-      max-width: 620px;
-      margin: 0 auto;
-      color: var(--text-2);
-      font-size: 1rem;
-      line-height: 1.75;
-    }
     .record-points {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-      margin-top: 26px;
     }
     .record-point {
       font-family: var(--font-mono);
@@ -1060,67 +978,6 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-4);
-    }
-
-    /* ==================== WHO IT'S FOR ==================== */
-    .fit-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-    @media (max-width: 720px) {
-      .fit-grid { grid-template-columns: 1fr; }
-    }
-    .fit-card {
-      background: var(--surface);
-      border: 1px solid var(--border-strong);
-      border-radius: 18px;
-      padding: 28px 26px;
-      backdrop-filter: blur(8px);
-    }
-    .fit-card--yes { border-color: rgba(0, 255, 157, 0.25); }
-    .fit-card--no  { border-color: rgba(255, 84, 112, 0.22); }
-    .fit-card h3 {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin: 0 0 18px;
-    }
-    .fit-card--yes h3 { color: var(--green-2); }
-    .fit-card--no  h3 { color: var(--red); }
-    .fit-card ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .fit-card li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      color: var(--text-2);
-      font-size: 0.94rem;
-      line-height: 1.6;
-    }
-    .fit-card--yes li::before {
-      content: '\2713';
-      color: var(--green);
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .fit-card--no li::before {
-      content: '\00d7';
-      color: var(--red);
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 1px;
     }
 
     /* ==================== FAQ ==================== */
@@ -1407,7 +1264,8 @@
         <span class="section-eyebrow" data-reveal>The Week</span>
         <h2 data-reveal>Three days. One disciplined rhythm.</h2>
         <p data-reveal>Racing rewards selectivity, not volume. The week is built around the
-        meetings where value actually appears, and nothing else.</p>
+        meetings where value actually appears. If the price doesn't beat our modelled fair
+        odds, there is no bet.</p>
       </div>
       <div class="week-grid">
         <article class="day-card" data-reveal>
@@ -1433,77 +1291,18 @@
           markets and venues where the system has been performing strongest.</p>
         </article>
       </div>
-    </section>
-
-    <!-- ==================== BET HIERARCHY ==================== -->
-    <section>
-      <div class="section-head">
-        <span class="section-eyebrow" data-reveal>The Hierarchy</span>
-        <h2 data-reveal>Every bet knows its place.</h2>
-        <p data-reveal>Conviction is applied selectively. A clear hierarchy separates the
-        anchor bet of the day from the broader portfolio, and the staking follows it.</p>
-      </div>
-      <div class="tier-list">
-        <article class="tier tier--lock" data-reveal>
-          <div class="tier-rank">01</div>
-          <div>
-            <h3>Lock of the Day <span class="tier-units">Higher units</span></h3>
-            <p>The single highest-conviction bet on the card. This is the anchor of the
-            "Best Bet of the Day" framework, and it carries higher recommended units.</p>
-          </div>
-        </article>
-        <article class="tier" data-reveal>
-          <div class="tier-rank">02</div>
-          <div>
-            <h3>Core value plays <span class="tier-units">Base units</span></h3>
-            <p>Selective value around the major meetings at conservative base staking.
-            Early market positions taken when the price beats our modelled fair odds.</p>
-          </div>
-        </article>
-        <article class="tier" data-reveal>
-          <div class="tier-rank">03</div>
-          <div>
-            <h3>Portfolio plays <span class="tier-units">Controlled risk</span></h3>
-            <p>The remaining selections form the broader weekly portfolio, roughly 8 to 20
-            bets in total across the week. Risk stays controlled at every level.</p>
-          </div>
-        </article>
-      </div>
-      <div class="analysis-note" data-reveal>
-        <strong>No price, no bet.</strong> Every selection has to beat our modelled fair
-        odds to make the card. If the value isn't there on a given day, the card stays
-        short. Quality of the number over quantity of action.
-      </div>
-    </section>
-
-    <!-- ==================== WHY NON-PROMOTIONAL ==================== -->
-    <section>
-      <div class="section-head">
-        <span class="section-eyebrow" data-reveal>The Approach</span>
-        <h2 data-reveal>Why non-promotional racing?</h2>
-        <p data-reveal>No bonus bets. No promo turnover. Just market value. That one
-        decision changes everything about how long you last in this game.</p>
-      </div>
-      <div class="why-grid">
-        <div class="why-tile" data-reveal>
-          <h3>Account longevity</h3>
-          <p>Promo-driven betting patterns get accounts restricted fast. Betting pure value
-          at normal market prices keeps your bookmaker accounts alive far longer.</p>
+      <div class="tier-strip" data-reveal>
+        <div class="tier-row">
+          <span class="tier-rank">01</span>
+          <div><strong>Lock of the Day</strong>The anchor bet on the card, higher recommended units.</div>
         </div>
-        <div class="why-tile" data-reveal>
-          <h3>Independent of bookmakers</h3>
-          <p>The system never relies on bookmaker incentives to generate its edge, so it
-          keeps working when the promos dry up or your accounts stop receiving them.</p>
+        <div class="tier-row">
+          <span class="tier-rank">02</span>
+          <div><strong>Core value plays</strong>Selective bets around the majors at conservative base staking.</div>
         </div>
-        <div class="why-tile" data-reveal>
-          <h3>Pure market value</h3>
-          <p>We bet when the available price is longer than our modelled fair odds. That is
-          the entire trigger. No price, no bet.</p>
-        </div>
-        <div class="why-tile" data-reveal>
-          <h3>A repeatable process</h3>
-          <p>Value betting is a long-term process you can repeat week after week, season
-          after season. That's the foundation of sustainable racing betting.</p>
+        <div class="tier-row">
+          <span class="tier-rank">03</span>
+          <div><strong>Portfolio plays</strong>The rest of the 8 to 20 weekly bets, risk controlled throughout.</div>
         </div>
       </div>
     </section>
@@ -1588,23 +1387,19 @@
       </div>
 
       <div class="receipts-gallery" data-reveal>
-        <figure>
+        <figure class="receipt-a">
           <img src="assets/slip-fivefold.png" alt="Member bet slip: $77.83 five-fold returning $14,149.74" loading="lazy" width="446" height="940">
           <figcaption>$77.83 five-fold &rarr; $14,149.74</figcaption>
         </figure>
-        <figure>
+        <figure class="receipt-b">
           <img src="assets/slip-hunter-fourfold.png" alt="Member bet slip: $25 four-fold returning $1,937.52" loading="lazy" width="308" height="390">
           <figcaption>$25 four-fold &rarr; $1,937.52</figcaption>
         </figure>
-        <figure>
+        <figure class="receipt-c">
           <img src="assets/slip-balance-day.png" alt="Member screenshot: balance $0.00 at the start of the day, $4,000.41 at the end" loading="lazy" width="357" height="258">
-          <figcaption>How the day started vs how it finished</figcaption>
+          <figcaption>How the day started vs finished</figcaption>
         </figure>
-        <figure>
-          <img src="assets/slip-karl-fourfold.png" alt="Member bet slip: $60 four-fold returning $3,554.63" loading="lazy" width="327" height="407">
-          <figcaption>$60 four-fold &rarr; $3,554.63</figcaption>
-        </figure>
-        <figure>
+        <figure class="receipt-d">
           <img src="assets/slip-settled-list.png" alt="Member settled bets list showing a winning five-fold and six winning singles" loading="lazy" width="448" height="988">
           <figcaption>One member's settled slate</figcaption>
         </figure>
@@ -1618,25 +1413,13 @@
       <div class="record-quotes" data-reveal>
         <span class="record-quote">&ldquo;Bloody goat.&rdquo;<span class="record-quote-handle">nigel</span></span>
         <span class="record-quote">&ldquo;What a carnival.&rdquo;<span class="record-quote-handle">nickytis</span></span>
-        <span class="record-quote">&ldquo;Goes alright on the donkeys I guess.&rdquo;<span class="record-quote-handle">jarrydlyons</span></span>
-        <span class="record-quote">&ldquo;Cheers, heard ur decent.&rdquo;<span class="record-quote-handle">Eldest Son</span></span>
-        <span class="record-quote">&ldquo;Thanks I guess.&rdquo;<span class="record-quote-handle">krazykarl</span></span>
       </div>
 
-      <div class="record-panel" data-reveal>
-        <h2>And it continues <span class="accent">this spring.</span></h2>
-        <p>
-          FNF Gainz has published every AFL and NRL bet for five years, wins and losses
-          alike. Racing is held to the same standard. Every selection this carnival is
-          logged with its price and stake when it's posted, then graded when it settles.
-          No deleted losers, no cherry-picked screenshots.
-        </p>
-        <div class="record-points">
-          <span class="record-point">Every bet logged</span>
-          <span class="record-point">Graded when settled</span>
-          <span class="record-point">Losses shown</span>
-          <span class="record-point">Published weekly</span>
-        </div>
+      <div class="record-points" data-reveal>
+        <span class="record-point">Every bet logged</span>
+        <span class="record-point">Graded when settled</span>
+        <span class="record-point">Losses shown</span>
+        <span class="record-point">Published weekly</span>
       </div>
     </section>
 
@@ -1719,33 +1502,6 @@
       <p class="plans-secure" data-reveal>Secure checkout via LaunchPass + Stripe &middot; instant Discord access</p>
     </section>
 
-    <!-- ==================== WHO IT'S FOR ==================== -->
-    <section>
-      <div class="section-head">
-        <span class="section-eyebrow" data-reveal>Fit Check</span>
-        <h2 data-reveal>Built for a specific kind of punter.</h2>
-      </div>
-      <div class="fit-grid">
-        <div class="fit-card fit-card--yes" data-reveal>
-          <h3>This is for you if</h3>
-          <ul>
-            <li>You want structure and selectivity, not volume</li>
-            <li>You think in seasons, not Saturdays</li>
-            <li>You want racing exposure without relying on bookmaker offers</li>
-            <li>You'll follow the staking guidance as written</li>
-          </ul>
-        </div>
-        <div class="fit-card fit-card--no" data-reveal>
-          <h3>This is not for you if</h3>
-          <ul>
-            <li>You want action on every race, every day</li>
-            <li>You expect to win every single week</li>
-            <li>You bet whatever feels right instead of sizing properly</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
     <!-- ==================== FAQ ==================== -->
     <section id="faq">
       <div class="section-head">
@@ -1754,6 +1510,7 @@
       </div>
       <div class="faq">
         <details class="faq-item" data-reveal><summary>How do I get access after I join?</summary><div class="faq-answer">Checkout runs through LaunchPass. Once payment is processed, your Discord account is automatically linked to your Racing membership and the private racing channels unlock in our server. You'll get a welcome message with onboarding instructions so you can be set up before the next race day.</div></details>
+        <details class="faq-item" data-reveal><summary>What does non-promotional mean?</summary><div class="faq-answer">The system never relies on bookmaker promotions, bonus bets or boosted odds to generate its edge. We bet when the available price is longer than our modelled fair odds, and that's the entire trigger. Betting pure value at normal market prices keeps your bookmaker accounts healthier for longer, and the process keeps working when the promos dry up.</div></details>
         <details class="faq-item" data-reveal><summary>When do the bets drop?</summary><div class="faq-answer">Early market bets are posted as soon as value is identified, typically the night before or early on race morning. On Saturdays, additional bets are released on race morning once track conditions, rail position and bias are confirmed. Hong Kong bets land ahead of the Happy Valley (Wednesday night) and Sha Tin (Sunday) meetings.</div></details>
         <details class="faq-item" data-reveal><summary>How much money do I need to start?</summary><div class="faq-answer">There's no fixed minimum. We recommend 1 unit equals roughly 1% of your bankroll, and every selection comes with recommended units. Whatever your bankroll, you scale the same staking proportionally. If you're unsure, the team helps you size correctly during onboarding.</div></details>
         <details class="faq-item" data-reveal><summary>What's the difference between the plans?</summary><div class="faq-answer">Nothing except the term. Every plan gets the same bets and the same channels. Weekly is $45 per week, monthly is $145 per month, and the Carnival Pass is a single $340 payment covering everything from 14 August to 14 November.</div></details>
