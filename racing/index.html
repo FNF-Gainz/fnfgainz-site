@@ -38,10 +38,10 @@
        defer script tags. Handlers are ready well before DOMContentLoaded. -->
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js" fetchpriority="high">
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-carnival/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js" fetchpriority="high">
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js"></script>
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-carnival/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
@@ -1350,7 +1350,7 @@
         <button class="hero-plan lp5053940233535488" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 45.00, currency: 'AUD', content_name: 'Racing Weekly', content_category: 'Racing Package', content_ids: ['racing-weekly'], content_type: 'product' });">
           Weekly <span class="hero-plan-price">$45 / wk</span>
         </button>
-        <button class="hero-plan hero-plan--carnival lp6699068434022400" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
+        <button class="hero-plan hero-plan--carnival lp5185073053040640" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
           Carnival Pass <span class="hero-plan-price">$340 one-off</span>
         </button>
         <button class="hero-plan lp5468151011213312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">
@@ -1578,7 +1578,7 @@
             <li>Covers the full feature season through November</li>
             <li>No renewal, access simply ends 14 November</li>
           </ul>
-          <button class="btn btn-gold lp6699068434022400" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
+          <button class="btn btn-gold lp5185073053040640" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
             <span>Get the Carnival Pass</span>
           </button>
         </article>
@@ -1646,7 +1646,7 @@
 
   <!-- Sticky mobile CTA -->
   <div class="sticky-cta" id="sticky-cta">
-    <button class="btn btn-gold lp6699068434022400" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
+    <button class="btn btn-gold lp5185073053040640" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
       <span>Get the Carnival Pass</span>
       <span class="btn-price">$340 one-off</span>
     </button>
@@ -1720,7 +1720,7 @@
       var IFRAME_URLS = {
         'lp5053940233535488': 'https://www.launchpass.com/fnf-gainz/racing-weekly/iframe',
         'lp5468151011213312': 'https://www.launchpass.com/fnf-gainz/racing-monthly/iframe',
-        'lp6699068434022400': 'https://www.launchpass.com/fnf-gainz/racing-carnival/iframe'
+        'lp5185073053040640': 'https://www.launchpass.com/fnf-gainz/spring-carnival/iframe'
       };
 
       var currentModal = null;
@@ -1800,7 +1800,7 @@
       var PKG_META = {
         'lp5053940233535488': { key: 'racing-weekly',   value: 45.00,  name: 'Racing Weekly' },
         'lp5468151011213312': { key: 'racing-monthly',  value: 145.00, name: 'Racing Monthly' },
-        'lp6699068434022400': { key: 'racing-carnival', value: 340.00, name: 'Racing Carnival Pass' }
+        'lp5185073053040640': { key: 'racing-carnival', value: 340.00, name: 'Racing Carnival Pass' }
       };
 
       // Take total ownership of every Join button on mobile so LaunchPass
