@@ -38,11 +38,13 @@
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/nrl/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/mb-sports/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/community/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js" fetchpriority="high">
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/afl/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/champion/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/mb-sports/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/community/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
@@ -884,6 +886,35 @@
       box-shadow:
         0 18px 44px rgba(255, 149, 0, 0.42),
         0 0 80px rgba(255, 187, 71, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    /* Racing CTA. emerald mirror of .btn-gold, same dimensions so the
+       three headliner Join buttons match exactly. */
+    .btn-green {
+      background: linear-gradient(135deg, #00ff9d 0%, #10b981 100%);
+      color: #01130b;
+      border-color: transparent;
+      padding: 22px 36px;
+      font-size: 1.02rem;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      min-height: 60px;
+      border-radius: 16px;
+      box-shadow:
+        0 14px 36px rgba(16, 185, 129, 0.32),
+        0 0 80px rgba(0, 255, 157, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.32);
+    }
+    .btn-green .btn-price {
+      color: rgba(1, 19, 11, 0.72);
+      border-left-color: rgba(1, 19, 11, 0.32);
+    }
+    .btn-green:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 18px 44px rgba(16, 185, 129, 0.42),
+        0 0 80px rgba(0, 255, 157, 0.26),
         inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
 
@@ -3649,7 +3680,7 @@
     }
 
     /* ==================== PACKAGES STOREFRONT ==================== */
-    /* Row 1: two headliner cards side by side (AFL + Champion)
+    /* Row 1: three headliner cards (AFL + Champion + Racing)
        Row 2: three slimmer cards (NRL + Matched Betting + Community) */
     .pkg-row {
       max-width: 1200px;
@@ -3658,16 +3689,17 @@
       gap: 20px;
     }
     .pkg-row--headliners {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       margin-bottom: 24px;
     }
     .pkg-row--rest {
       grid-template-columns: repeat(3, 1fr);
     }
+    @media (max-width: 1080px) {
+      .pkg-row--headliners { grid-template-columns: 1fr; margin-bottom: 16px; }
+    }
     @media (max-width: 900px) {
-      .pkg-row--headliners { grid-template-columns: 1fr; }
       .pkg-row--rest { grid-template-columns: 1fr; gap: 16px; }
-      .pkg-row--headliners { margin-bottom: 16px; }
     }
 
     .pkg {
@@ -3736,7 +3768,18 @@
     .pkg--champion::before {
       background: linear-gradient(90deg, transparent, #ffbb47, #ff9500, transparent);
     }
+    /* Racing headliner: emerald accent so it reads distinct from AFL
+       cyan and Champion gold. */
+    .pkg--racing {
+      background: linear-gradient(140deg, rgba(0, 255, 157, 0.07) 0%, rgba(15, 20, 38, 0.65) 55%);
+      border-color: rgba(0, 255, 157, 0.3);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(0, 255, 157, 0.1);
+    }
+    .pkg--racing::before {
+      background: linear-gradient(90deg, transparent, #00ff9d, #10b981, transparent);
+    }
     .pkg-eyebrow--cyan { color: var(--cyan-2); }
+    .pkg-eyebrow--green { color: var(--green-2); }
 
     /* Founder byline inside AFL headliner card. Small circular photo
        + "Built by Jordan" line reads as a trust signal without
@@ -3817,6 +3860,11 @@
       background: var(--cyan-dim);
       border-color: rgba(0, 212, 255, 0.4);
       color: var(--cyan-2);
+    }
+    .pkg-flag--green {
+      background: var(--green-dim);
+      border-color: rgba(0, 255, 157, 0.4);
+      color: var(--green-2);
     }
 
     .pkg--featured .pkg-head {
@@ -3908,6 +3956,7 @@
       text-transform: uppercase;
       color: var(--gold-2);
     }
+    .pkg-price-note--green { color: var(--green-2); }
 
     .pkg-features {
       list-style: none;
@@ -3959,6 +4008,8 @@
       align-self: center;
     }
     .pkg-more:hover { color: var(--text); }
+    .pkg-more--green { color: var(--green-2); }
+    .pkg-more--green:hover { color: var(--text); }
 
     /* Champion has no ".pkg-more" link under its CTA. Reserve equivalent
        vertical space via ::after so the two headliner Join buttons land
@@ -4587,13 +4638,40 @@
           </div>
         </article>
 
+        <!-- RACING (New, emerald) -->
+        <article class="pkg pkg--headliner pkg--racing" data-reveal="pkg" data-reveal-delay="3">
+          <div class="pkg-flag pkg-flag--green">New</div>
+          <div class="pkg-eyebrow pkg-eyebrow--green">Horse Racing &middot; AU + HK</div>
+          <h3 class="pkg-name">Racing Package</h3>
+          <p class="pkg-desc">Professional non-promotional racing. Value-first selections across Australian and Hong Kong meetings.</p>
+          <div class="pkg-price">
+            <span class="pkg-price-amount">$340</span>
+            <span class="pkg-price-period">AUD one-off</span>
+          </div>
+          <div class="pkg-price-note pkg-price-note--green">Spring Carnival Pass &middot; 14 Aug to 14 Nov</div>
+          <ul class="pkg-features">
+            <li><span class="pkg-check">&#10003;</span>Last spring on the record: +49.82u across 487 bets</li>
+            <li><span class="pkg-check">&#10003;</span>8 to 20 bets a week across Wed, Sat and Sun racing</li>
+            <li><span class="pkg-check">&#10003;</span>Disciplined staking guidance in units</li>
+            <li><span class="pkg-check">&#10003;</span>One payment, every bet to 14 November</li>
+            <li><span class="pkg-check">&#10003;</span>Weekly and monthly plans on the racing page</li>
+          </ul>
+          <div class="pkg-cta">
+            <button class="btn btn-green lp5185073053040640" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
+              <span>Get the Carnival Pass</span>
+              <span class="btn-price">$340 one-off</span>
+            </button>
+          </div>
+          <a href="/racing/" class="pkg-more pkg-more--green">See full racing page &rarr;</a>
+        </article>
+
       </div>
 
       <!-- ROW 2: 3 more packages in a slimmer row -->
       <div class="pkg-row pkg-row--rest">
 
         <!-- NRL Package -->
-        <article class="pkg" data-reveal="pkg" data-reveal-delay="3">
+        <article class="pkg" data-reveal="pkg" data-reveal-delay="4">
           <div class="pkg-name">NRL Package</div>
           <p class="pkg-desc">Value-driven NRL model. Structured for upside on strong lines.</p>
           <div class="pkg-price">
@@ -4615,7 +4693,7 @@
         </article>
 
         <!-- Matched Betting -->
-        <article class="pkg" data-reveal="pkg" data-reveal-delay="4">
+        <article class="pkg" data-reveal="pkg" data-reveal-delay="5">
           <div class="pkg-name">Matched Betting</div>
           <p class="pkg-desc">Low-risk foundations. Build bankroll and discipline before scaling.</p>
           <div class="pkg-price">
@@ -4637,7 +4715,7 @@
         </article>
 
         <!-- Community -->
-        <article class="pkg" data-reveal="pkg" data-reveal-delay="5">
+        <article class="pkg" data-reveal="pkg" data-reveal-delay="6">
           <div class="pkg-name">Community</div>
           <p class="pkg-desc">Premium chats, EV &amp; e-sports strategies, Racing Bot. Great entry point.</p>
           <div class="pkg-price">
@@ -4791,7 +4869,8 @@
         { cls: 'lp4572582037028864', url: 'https://www.launchpass.com/fnf-gainz/champion/iframe',  key: 'champion',  value: 200.00, name: 'Champion AFL + NRL' },
         { cls: 'lp6311659934711808', url: 'https://www.launchpass.com/fnf-gainz/nrl/iframe',       key: 'nrl',       value: 109.99, name: 'NRL Package' },
         { cls: 'lp4657629529505792', url: 'https://www.launchpass.com/fnf-gainz/mb-sports/iframe', key: 'mb',        value: 100.00, name: 'Matched Betting Package' },
-        { cls: 'lp6290145106329600', url: 'https://www.launchpass.com/fnf-gainz/community/iframe', key: 'community', value:  25.00, name: 'Community Membership' }
+        { cls: 'lp6290145106329600', url: 'https://www.launchpass.com/fnf-gainz/community/iframe', key: 'community', value:  25.00, name: 'Community Membership' },
+        { cls: 'lp5185073053040640', url: 'https://www.launchpass.com/fnf-gainz/spring-carnival/iframe', key: 'racing-carnival', value: 340.00, name: 'Racing Carnival Pass' }
       ];
 
       var currentModal = null;
