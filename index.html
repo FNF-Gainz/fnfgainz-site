@@ -39,12 +39,16 @@
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/mb-sports/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/community/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js" fetchpriority="high">
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/afl/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/champion/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/mb-sports/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/community/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
@@ -4011,6 +4015,45 @@
     .pkg-more--green { color: var(--green-2); }
     .pkg-more--green:hover { color: var(--text); }
 
+    /* Racing card: compact weekly/monthly checkout buttons under the
+       featured carnival CTA. */
+    .pkg-plan-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .pkg-plan {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 10px;
+      border-radius: 12px;
+      background: transparent;
+      border: 1.5px solid var(--border-strong);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--dur) var(--ease);
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pkg-plan span {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--green-2);
+      padding-left: 8px;
+      border-left: 1px solid var(--border-strong);
+    }
+    .pkg-plan:hover {
+      border-color: rgba(0, 255, 157, 0.5);
+      background: var(--green-dim);
+    }
+
     /* Champion has no ".pkg-more" link under its CTA. Reserve equivalent
        vertical space via ::after so the two headliner Join buttons land
        at the same y-position instead of Champion sitting lower. */
@@ -4661,6 +4704,14 @@
               <span>Get the Carnival Pass</span>
               <span class="btn-price">$340 one-off</span>
             </button>
+            <div class="pkg-plan-row">
+              <button class="pkg-plan lp5053940233535488" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 45.00, currency: 'AUD', content_name: 'Racing Weekly', content_category: 'Racing Package', content_ids: ['racing-weekly'], content_type: 'product' });">
+                Weekly <span>$45 / wk</span>
+              </button>
+              <button class="pkg-plan lp5468151011213312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">
+                Monthly <span>$145 / mo</span>
+              </button>
+            </div>
           </div>
           <a href="/racing/" class="pkg-more pkg-more--green">See full racing page &rarr;</a>
         </article>
@@ -4870,7 +4921,9 @@
         { cls: 'lp6311659934711808', url: 'https://www.launchpass.com/fnf-gainz/nrl/iframe',       key: 'nrl',       value: 109.99, name: 'NRL Package' },
         { cls: 'lp4657629529505792', url: 'https://www.launchpass.com/fnf-gainz/mb-sports/iframe', key: 'mb',        value: 100.00, name: 'Matched Betting Package' },
         { cls: 'lp6290145106329600', url: 'https://www.launchpass.com/fnf-gainz/community/iframe', key: 'community', value:  25.00, name: 'Community Membership' },
-        { cls: 'lp5185073053040640', url: 'https://www.launchpass.com/fnf-gainz/spring-carnival/iframe', key: 'racing-carnival', value: 340.00, name: 'Racing Carnival Pass' }
+        { cls: 'lp5185073053040640', url: 'https://www.launchpass.com/fnf-gainz/spring-carnival/iframe', key: 'racing-carnival', value: 340.00, name: 'Racing Carnival Pass' },
+        { cls: 'lp5053940233535488', url: 'https://www.launchpass.com/fnf-gainz/racing-weekly/iframe',   key: 'racing-weekly',   value:  45.00, name: 'Racing Weekly' },
+        { cls: 'lp5468151011213312', url: 'https://www.launchpass.com/fnf-gainz/racing-monthly/iframe',  key: 'racing-monthly',  value: 145.00, name: 'Racing Monthly' }
       ];
 
       var currentModal = null;
