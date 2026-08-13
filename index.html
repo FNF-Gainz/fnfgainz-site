@@ -4028,14 +4028,15 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 12px 10px;
+      padding: 12px 6px;
       border-radius: 12px;
       background: transparent;
       border: 1.5px solid var(--border-strong);
       color: var(--text);
       font-family: var(--font-sans);
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 600;
+      white-space: nowrap;
       cursor: pointer;
       transition: all var(--dur) var(--ease);
       touch-action: manipulation;
@@ -4043,11 +4044,12 @@
     }
     .pkg-plan span {
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 500;
       color: var(--green-2);
       padding-left: 8px;
       border-left: 1px solid var(--border-strong);
+      white-space: nowrap;
     }
     .pkg-plan:hover {
       border-color: rgba(0, 255, 157, 0.5);
@@ -4696,8 +4698,8 @@
             <li><span class="pkg-check">&#10003;</span>Last spring on the record: +49.82u across 487 bets</li>
             <li><span class="pkg-check">&#10003;</span>8 to 20 bets a week across Wed, Sat and Sun racing</li>
             <li><span class="pkg-check">&#10003;</span>Disciplined staking guidance in units</li>
-            <li><span class="pkg-check">&#10003;</span>One payment, every bet to 14 November</li>
-            <li><span class="pkg-check">&#10003;</span>Weekly and monthly plans on the racing page</li>
+            <li><span class="pkg-check">&#10003;</span>Early market value plays plus race-day confirmations</li>
+            <li><span class="pkg-check">&#10003;</span>Dedicated racing channels inside the FNF Discord</li>
           </ul>
           <div class="pkg-cta">
             <button class="btn btn-green lp5185073053040640" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
@@ -4706,10 +4708,10 @@
             </button>
             <div class="pkg-plan-row">
               <button class="pkg-plan lp5053940233535488" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 45.00, currency: 'AUD', content_name: 'Racing Weekly', content_category: 'Racing Package', content_ids: ['racing-weekly'], content_type: 'product' });">
-                Weekly <span>$45 / wk</span>
+                Weekly <span>$45/wk</span>
               </button>
               <button class="pkg-plan lp5468151011213312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">
-                Monthly <span>$145 / mo</span>
+                Monthly <span>$145/mo</span>
               </button>
             </div>
           </div>
