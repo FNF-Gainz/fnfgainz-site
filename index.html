@@ -1049,11 +1049,22 @@
       background: rgba(6, 10, 24, 0.82);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      /* Fade both edges so the loop-point is hidden behind a soft
-         gradient and the scroll reads as continuous. */
-      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
-      mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
     }
+    /* Edge fades as overlay gradients rather than a CSS mask. A mask on
+       this container forces the moving track to re-rasterize every frame
+       (jerky on desktop); painted overlays composite cleanly. */
+    .mini-banner::before,
+    .mini-banner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: clamp(28px, 9%, 96px);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .mini-banner::before { left: 0; background: linear-gradient(to right, var(--bg), rgba(3, 6, 18, 0)); }
+    .mini-banner::after { right: 0; background: linear-gradient(to left, var(--bg), rgba(3, 6, 18, 0)); }
     .mini-banner-inner {
       display: flex;
       gap: 0;
@@ -1064,6 +1075,8 @@
       animation: mini-banner-scroll 40s linear infinite;
       will-change: transform;
       transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       /* Critical for seamless loop: force the flex container to be
          exactly the sum of its children widths, otherwise translateX(-50%)
          is -50% of the parent width instead of the actual content width. */
@@ -4854,7 +4867,7 @@
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R14</span><span class="mini-banner-pos">+$839</span><span>46.7% ROI</span></span>
         <span class="mini-banner-item"><span class="mini-banner-quote">"Made $27,500 from March to September."</span><span class="mini-banner-quote-author">Curtis</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R12</span><span class="mini-banner-pos">+$826</span><span>39.8% ROI</span></span>
-        <span class="mini-banner-item"><span class="mini-banner-quote">"$8k profit for the season. Couldn't recommend more."</span><span class="mini-banner-quote-author">Lorelius</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-quote">"$8k profit for the season."</span><span class="mini-banner-quote-author">Lorelius</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R15</span><span class="mini-banner-pos">+$665</span><span>36.2% ROI</span></span>
         <span class="mini-banner-item"><span class="mini-banner-quote">"So much confidence in the picks."</span><span class="mini-banner-quote-author">iiDooblay</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R13</span><span class="mini-banner-pos">+$469</span><span>22.5% ROI</span></span>
@@ -4864,7 +4877,7 @@
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R14</span><span class="mini-banner-pos">+$839</span><span>46.7% ROI</span></span>
         <span class="mini-banner-item"><span class="mini-banner-quote">"Made $27,500 from March to September."</span><span class="mini-banner-quote-author">Curtis</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R12</span><span class="mini-banner-pos">+$826</span><span>39.8% ROI</span></span>
-        <span class="mini-banner-item"><span class="mini-banner-quote">"$8k profit for the season. Couldn't recommend more."</span><span class="mini-banner-quote-author">Lorelius</span></span>
+        <span class="mini-banner-item"><span class="mini-banner-quote">"$8k profit for the season."</span><span class="mini-banner-quote-author">Lorelius</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R15</span><span class="mini-banner-pos">+$665</span><span>36.2% ROI</span></span>
         <span class="mini-banner-item"><span class="mini-banner-quote">"So much confidence in the picks."</span><span class="mini-banner-quote-author">iiDooblay</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R13</span><span class="mini-banner-pos">+$469</span><span>22.5% ROI</span></span>
@@ -5120,7 +5133,7 @@
 
       var TESTIMONIALS = [
         { quote: '"Made $27,500 from March to September."',      author: 'Curtis' },
-        { quote: "\"$8k profit for the season. Couldn't recommend more.\"", author: 'Lorelius' },
+        { quote: '"$8k profit for the season."', author: 'Lorelius' },
         { quote: '"So much confidence in the picks."',           author: 'iiDooblay' },
         { quote: '"Scaled to exponentially profitable levels."', author: 'Vitamin_GG' }
       ];
