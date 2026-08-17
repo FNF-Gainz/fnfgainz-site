@@ -5115,10 +5115,15 @@
 
       // NRL results are maintained here by hand until an NRL data feed
       // exists (AFL pulls live from Charlie's Vercel endpoint below; NRL
-      // has no equivalent yet). Update these strings as new NRL results
-      // land, or wire an NRL endpoint and build them like the AFL rounds.
+      // has no equivalent yet). Source = Jordan's weekly NRL sheet.
+      // Weeks are NRL season weeks (Week 24 = w/c 13 Aug 2026). Show the
+      // recent WINNING weeks, most-recent first, mirroring the AFL rounds.
+      // Update as new weeks land.
       var NRL_ITEMS = [
-        { round: 'NRL', pos: '+60u', note: 'Last 8 weeks' }
+        { round: 'NRL Wk 24', pos: '+$534',   note: '59% ROI' },
+        { round: 'NRL Wk 23', pos: '+$1,070', note: '108% ROI' },
+        { round: 'NRL Wk 20', pos: '+$919',   note: '128% ROI' },
+        { round: 'NRL Wk 18', pos: '+$271',   note: '61% ROI' }
       ];
 
       function render(afl) {
