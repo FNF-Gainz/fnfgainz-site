@@ -4,6 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Always open at the top. The sticky "See Memberships" CTA used to
+       leave #packages in the URL, so a reload jumped straight to the
+       storefront. Strip that hash before the browser scrolls to it, and
+       stop scroll-position restoration on reload. -->
+  <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (location.hash === '#packages') {
+      history.replaceState(null, document.title, location.pathname + location.search);
+    }
+  </script>
+
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -4285,11 +4296,10 @@
       flex: 1 1 0;
       min-width: 0;
       text-align: center;
-      font-family: var(--font-mono);
-      font-size: 0.63rem;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: -0.005em;
       color: var(--text-3);
       background: transparent;
       border: none;
@@ -4305,28 +4315,27 @@
     .plan-toggle--yellow .plan-opt.is-sel { background: var(--yellow); color: #1a1400; }
     .plan-toggle--red .plan-opt.is-sel { background: var(--red); color: #fff; }
     @media (max-width: 480px) {
-      .plan-opt { font-size: 0.56rem; letter-spacing: 0; padding: 7px 3px; }
+      .plan-opt { font-size: 0.7rem; padding: 7px 3px; }
     }
 
-    /* NRL hot-streak sticker */
+    /* NRL hot-streak chip. Lives in the top row (margin-left:auto), so
+       it stays inside the card instead of floating outside. */
     .hot-badge {
-      position: absolute;
-      top: -9px;
-      right: 14px;
-      z-index: 3;
+      margin-left: auto;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       font-family: var(--font-mono);
-      font-size: 0.54rem;
+      font-size: 0.52rem;
       font-weight: 700;
-      letter-spacing: 0.13em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: #fff;
       background: linear-gradient(135deg, #ff5e6c, #e5384a);
-      padding: 5px 10px;
+      padding: 4px 9px;
       border-radius: 999px;
-      box-shadow: 0 4px 14px rgba(229, 56, 74, 0.45);
+      white-space: nowrap;
+      box-shadow: 0 3px 12px rgba(229, 56, 74, 0.4);
       animation: hot-pulse 2.4s ease-in-out infinite;
     }
     @keyframes hot-pulse {
@@ -4936,6 +4945,7 @@
             <span class="mtag mtag--yellow">New</span>
           </div>
           <div class="mprice"><span class="mprice-amt" id="racing-amt">$340</span><span class="mprice-per" id="racing-per">one-off</span></div>
+          <p class="mdesc">Non-promotional AU + HK racing.</p>
           <div class="plan-toggle plan-toggle--yellow" id="racing-toggle" role="group" aria-label="Choose a racing plan">
             <button type="button" class="plan-opt is-sel" data-plan="carnival">Carnival</button>
             <button type="button" class="plan-opt" data-plan="weekly">Weekly</button>
@@ -4951,10 +4961,10 @@
 
         <!-- NRL (red, plan picker, hot streak) -->
         <article class="mtile mtile--nrl" data-reveal="up" data-reveal-delay="4">
-          <span class="hot-badge">&#128293; Hot streak</span>
           <div class="mtile-top">
             <span class="mdot mdot--red"></span>
             <span class="mname">NRL</span>
+            <span class="hot-badge">&#128293; Hot streak</span>
           </div>
           <div class="mprice"><span class="mprice-amt" id="nrl-amt">$110</span><span class="mprice-per" id="nrl-per">AUD / mo</span></div>
           <div class="hot-stat">+60u in the last 8 weeks</div>
@@ -5077,11 +5087,12 @@
     <button class="activity-toast-close" id="activity-toast-close" aria-label="Dismiss">&times;</button>
   </div>
 
-  <!-- Sticky mobile CTA - scrolls to the 5-package storefront -->
+  <!-- Sticky mobile CTA. Smooth-scrolls to the storefront WITHOUT
+       leaving #packages in the URL (which would make reloads jump). -->
   <div class="sticky-cta" id="sticky-cta">
-    <a href="#packages" class="btn btn-primary">
+    <a href="#packages" class="btn btn-primary" onclick="var t=document.getElementById('packages');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth'});}">
       <span>See Memberships</span>
-      <span class="btn-price">5 packages</span>
+      <span class="btn-price">6 packages</span>
     </a>
   </div>
 
@@ -5102,12 +5113,21 @@
         { quote: '"Scaled to exponentially profitable levels."', author: 'Vitamin_GG' }
       ];
 
+      // NRL results are maintained here by hand until an NRL data feed
+      // exists (AFL pulls live from Charlie's Vercel endpoint below; NRL
+      // has no equivalent yet). Update these strings as new NRL results
+      // land, or wire an NRL endpoint and build them like the AFL rounds.
+      var NRL_ITEMS = [
+        { round: 'NRL', pos: '+60u', note: 'Last 8 weeks' }
+      ];
+
       function render(afl) {
         var items = [];
         var wins = (afl && Array.isArray(afl.recentRounds))
           ? afl.recentRounds.filter(function(r){ return Number(r.profit) > 0; }).reverse().slice(0, 4)
           : [];
-        for (var i = 0; i < Math.max(wins.length, TESTIMONIALS.length); i++) {
+        var maxLen = Math.max(wins.length, TESTIMONIALS.length, NRL_ITEMS.length);
+        for (var i = 0; i < maxLen; i++) {
           if (wins[i]) {
             var r = wins[i];
             items.push(
@@ -5115,6 +5135,16 @@
                 '<span class="mini-banner-round">AFL ' + r.round + '</span>' +
                 '<span class="mini-banner-pos">+$' + Math.round(Number(r.profit)).toLocaleString('en-AU') + '</span>' +
                 '<span>' + Number(r.roi).toFixed(1) + '% ROI</span>' +
+              '</span>'
+            );
+          }
+          if (NRL_ITEMS[i]) {
+            var n = NRL_ITEMS[i];
+            items.push(
+              '<span class="mini-banner-item">' +
+                '<span class="mini-banner-round">' + n.round + '</span>' +
+                '<span class="mini-banner-pos">' + n.pos + '</span>' +
+                '<span>' + n.note + '</span>' +
               '</span>'
             );
           }
