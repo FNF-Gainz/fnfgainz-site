@@ -4270,6 +4270,79 @@
     .racing-join, .nrl-join { display: none; }
     .racing-join.is-active, .nrl-join.is-active { display: inline-flex; }
 
+    /* Visible plan toggle (replaces the dropdown) so the weekly/monthly
+       options are obvious at a glance. Selected pill takes the tile
+       accent. */
+    .plan-toggle {
+      display: flex;
+      gap: 4px;
+      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid var(--border-strong);
+      border-radius: 11px;
+      padding: 4px;
+    }
+    .plan-opt {
+      flex: 1 1 0;
+      min-width: 0;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.18s ease, color 0.18s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .plan-opt:hover { color: var(--text); }
+    .plan-toggle--yellow .plan-opt.is-sel { background: var(--yellow); color: #1a1400; }
+    .plan-toggle--red .plan-opt.is-sel { background: var(--red); color: #fff; }
+    @media (max-width: 480px) {
+      .plan-opt { font-size: 0.56rem; letter-spacing: 0; padding: 7px 3px; }
+    }
+
+    /* NRL hot-streak sticker */
+    .hot-badge {
+      position: absolute;
+      top: -9px;
+      right: 14px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-mono);
+      font-size: 0.54rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(135deg, #ff5e6c, #e5384a);
+      padding: 5px 10px;
+      border-radius: 999px;
+      box-shadow: 0 4px 14px rgba(229, 56, 74, 0.45);
+      animation: hot-pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes hot-pulse {
+      0%, 100% { box-shadow: 0 4px 14px rgba(229, 56, 74, 0.4); }
+      50% { box-shadow: 0 4px 22px rgba(229, 56, 74, 0.75); }
+    }
+    @media (prefers-reduced-motion: reduce) { .hot-badge { animation: none; } }
+    .hot-stat {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: #ff8a99;
+      letter-spacing: 0.02em;
+      margin-top: -2px;
+    }
+
     /* ==================== QUICK LINKS ==================== */
     .quick-links-section {
       padding: clamp(48px, 8vh, 96px) 0 clamp(32px, 5vh, 56px);
@@ -4863,11 +4936,11 @@
             <span class="mtag mtag--yellow">New</span>
           </div>
           <div class="mprice"><span class="mprice-amt" id="racing-amt">$340</span><span class="mprice-per" id="racing-per">one-off</span></div>
-          <select class="mselect" id="racing-plan" aria-label="Choose a racing plan">
-            <option value="carnival">Carnival &middot; $340 one-off</option>
-            <option value="weekly">Weekly &middot; $45 / wk</option>
-            <option value="monthly">Monthly &middot; $145 / mo</option>
-          </select>
+          <div class="plan-toggle plan-toggle--yellow" id="racing-toggle" role="group" aria-label="Choose a racing plan">
+            <button type="button" class="plan-opt is-sel" data-plan="carnival">Carnival</button>
+            <button type="button" class="plan-opt" data-plan="weekly">Weekly</button>
+            <button type="button" class="plan-opt" data-plan="monthly">Monthly</button>
+          </div>
           <div class="mtile-foot">
             <button class="mjoin mjoin--yellow racing-join is-active lp5185073053040640" data-plan="carnival" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">Join Racing</button>
             <button class="mjoin mjoin--yellow racing-join lp5053940233535488" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 45.00, currency: 'AUD', content_name: 'Racing Weekly', content_category: 'Racing Package', content_ids: ['racing-weekly'], content_type: 'product' });">Join Racing</button>
@@ -4876,17 +4949,19 @@
           </div>
         </article>
 
-        <!-- NRL (red, plan picker) -->
+        <!-- NRL (red, plan picker, hot streak) -->
         <article class="mtile mtile--nrl" data-reveal="up" data-reveal-delay="4">
+          <span class="hot-badge">&#128293; Hot streak</span>
           <div class="mtile-top">
             <span class="mdot mdot--red"></span>
             <span class="mname">NRL</span>
           </div>
           <div class="mprice"><span class="mprice-amt" id="nrl-amt">$110</span><span class="mprice-per" id="nrl-per">AUD / mo</span></div>
-          <select class="mselect" id="nrl-plan" aria-label="Choose an NRL plan">
-            <option value="monthly">Monthly &middot; $110 / mo</option>
-            <option value="weekly">Weekly &middot; $40 / wk</option>
-          </select>
+          <div class="hot-stat">+60u in the last 8 weeks</div>
+          <div class="plan-toggle plan-toggle--red" id="nrl-toggle" role="group" aria-label="Choose an NRL plan">
+            <button type="button" class="plan-opt is-sel" data-plan="monthly">Monthly</button>
+            <button type="button" class="plan-opt" data-plan="weekly">Weekly</button>
+          </div>
           <div class="mtile-foot">
             <button class="mjoin mjoin--red nrl-join is-active lp6311659934711808" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 109.99, currency: 'AUD', content_name: 'NRL Package' });">Join NRL</button>
             <button class="mjoin mjoin--red nrl-join lp5183312981524480" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 40.00, currency: 'AUD', content_name: 'NRL Weekly', content_category: 'NRL Package', content_ids: ['nrl-weekly'], content_type: 'product' });">Join NRL</button>
@@ -4930,25 +5005,30 @@
            bind. -->
       <script>
         (function() {
-          function initPicker(selId, amtId, perId, joinClass, plans) {
-            var sel = document.getElementById(selId);
-            if (!sel) return;
+          function initToggle(toggleId, amtId, perId, joinClass, plans) {
+            var root = document.getElementById(toggleId);
+            if (!root) return;
             var amt = document.getElementById(amtId);
             var per = document.getElementById(perId);
-            sel.addEventListener('change', function() {
-              var p = plans[sel.value];
-              if (p) { amt.textContent = p.amt; per.textContent = p.per; }
-              document.querySelectorAll('.' + joinClass).forEach(function(btn) {
-                btn.classList.toggle('is-active', btn.getAttribute('data-plan') === sel.value);
+            var opts = root.querySelectorAll('.plan-opt');
+            opts.forEach(function(opt) {
+              opt.addEventListener('click', function() {
+                var plan = opt.getAttribute('data-plan');
+                opts.forEach(function(o) { o.classList.toggle('is-sel', o === opt); });
+                var p = plans[plan];
+                if (p) { amt.textContent = p.amt; per.textContent = p.per; }
+                document.querySelectorAll('.' + joinClass).forEach(function(btn) {
+                  btn.classList.toggle('is-active', btn.getAttribute('data-plan') === plan);
+                });
               });
             });
           }
-          initPicker('racing-plan', 'racing-amt', 'racing-per', 'racing-join', {
+          initToggle('racing-toggle', 'racing-amt', 'racing-per', 'racing-join', {
             carnival: { amt: '$340', per: 'one-off' },
             weekly:   { amt: '$45',  per: '/ wk' },
             monthly:  { amt: '$145', per: '/ mo' }
           });
-          initPicker('nrl-plan', 'nrl-amt', 'nrl-per', 'nrl-join', {
+          initToggle('nrl-toggle', 'nrl-amt', 'nrl-per', 'nrl-join', {
             monthly: { amt: '$110', per: 'AUD / mo' },
             weekly:  { amt: '$40',  per: '/ wk' }
           });
