@@ -41,6 +41,7 @@
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/nrl-weekly/embed.js" fetchpriority="high">
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/afl/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/champion/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl/embed.js"></script>
@@ -49,6 +50,7 @@
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl-weekly/embed.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
@@ -184,6 +186,9 @@
       --green-2: #6fffc0;
       --green-dim: rgba(0, 255, 157, 0.15);
 
+      --yellow: #ffd23f;
+      --yellow-2: #ffe38a;
+      --red-2: #ff8a99;
       --gold: #ffbb47;
       --gold-2: #ffd280;
       --amber-dim: rgba(255, 187, 71, 0.15);
@@ -984,7 +989,7 @@
       display: inline-flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 6px 16px;
+      gap: 6px 9px;
       margin: 4px 0 0;
       font-family: var(--font-display);
       font-size: clamp(1.2rem, 1.6vw + 0.6rem, 1.65rem);
@@ -4067,6 +4072,37 @@
       line-height: 1;
     }
 
+    /* Slim "read before you join" bar, sits just under the packages
+       heading. One line, full-width to the grid. */
+    .readfirst {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      max-width: 760px;
+      margin: 0 auto 16px;
+      padding: 11px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .readfirst:hover { border-color: rgba(255, 187, 71, 0.4); background: rgba(255, 187, 71, 0.04); }
+    .readfirst-icon { flex-shrink: 0; color: var(--gold-2); display: flex; }
+    .readfirst-title {
+      flex: 1;
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .readfirst-arrow { flex-shrink: 0; color: var(--text-3); transition: color 0.2s ease, transform 0.2s ease; }
+    .readfirst:hover .readfirst-arrow { color: var(--gold-2); transform: translate(2px, -2px); }
+
     /* ==================== COMPACT MEMBERSHIP GRID ==================== */
     /* Two tiles per row, trimmed to name + price + one line + Join,
        with a Details link to the full landing/LaunchPass page. Stays
@@ -4097,17 +4133,22 @@
     .mtile:hover { transform: translateY(-3px); }
     @media (max-width: 480px) { .mtile { padding: 16px 14px 14px; gap: 10px; } }
 
+    /* AFL green, Champion orange, Racing yellow, NRL red */
     .mtile--afl {
-      border-color: rgba(0, 212, 255, 0.3);
-      background: linear-gradient(150deg, rgba(0, 212, 255, 0.06), var(--surface) 60%);
+      border-color: rgba(0, 255, 157, 0.3);
+      background: linear-gradient(150deg, rgba(0, 255, 157, 0.06), var(--surface) 60%);
     }
     .mtile--champion {
       border-color: rgba(255, 187, 71, 0.34);
       background: linear-gradient(150deg, rgba(255, 187, 71, 0.07), var(--surface) 55%);
     }
     .mtile--racing {
-      border-color: rgba(0, 255, 157, 0.3);
-      background: linear-gradient(150deg, rgba(0, 255, 157, 0.06), var(--surface) 60%);
+      border-color: rgba(255, 210, 63, 0.34);
+      background: linear-gradient(150deg, rgba(255, 210, 63, 0.07), var(--surface) 58%);
+    }
+    .mtile--nrl {
+      border-color: rgba(255, 84, 112, 0.32);
+      background: linear-gradient(150deg, rgba(255, 84, 112, 0.06), var(--surface) 60%);
     }
 
     .mtile-top { display: flex; align-items: center; gap: 8px; }
@@ -4115,6 +4156,8 @@
     .mdot--cyan { background: var(--cyan); }
     .mdot--gold { background: var(--gold); }
     .mdot--green { background: var(--green); }
+    .mdot--yellow { background: var(--yellow); }
+    .mdot--red { background: var(--red); }
     .mdot--blue { background: var(--blue-2); }
     .mdot--violet { background: var(--violet); }
     .mdot--slate { background: #8aa0c0; }
@@ -4141,6 +4184,7 @@
     .mtag--gold { color: var(--gold-2); background: rgba(255, 187, 71, 0.14); }
     .mtag--cyan { color: var(--cyan-2); background: var(--cyan-dim); }
     .mtag--green { color: var(--green-2); background: var(--green-dim); }
+    .mtag--yellow { color: var(--yellow-2); background: rgba(255, 210, 63, 0.16); }
 
     .mprice { display: flex; align-items: baseline; gap: 5px; }
     .mprice-amt {
@@ -4184,6 +4228,8 @@
     .mjoin--cyan { background: var(--grad-cyan); color: #04121f; }
     .mjoin--gold { background: linear-gradient(135deg, #ffbb47, #ff9500); color: #1a1000; }
     .mjoin--green { background: linear-gradient(135deg, #00ff9d, #10b981); color: #01130b; }
+    .mjoin--yellow { background: linear-gradient(135deg, #ffe066, #ffbe0b); color: #1a1400; }
+    .mjoin--red { background: linear-gradient(135deg, #ff5e6c, #e5384a); color: #fff; }
     .mjoin--ghost { background: transparent; border: 1.5px solid var(--border-strong); color: var(--text-2); }
     .mjoin--ghost:hover { border-color: var(--cyan); color: var(--cyan-2); background: var(--cyan-dim); filter: none; }
 
@@ -4210,19 +4256,19 @@
       font-weight: 600;
       color: var(--text);
       background-color: rgba(15, 20, 38, 0.85);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236fffc0' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a3aec5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 12px center;
-      border: 1px solid rgba(0, 255, 157, 0.3);
+      border: 1px solid var(--border-strong);
       border-radius: 11px;
       padding: 10px 32px 10px 12px;
       cursor: pointer;
     }
-    .mselect:focus { outline: none; border-color: rgba(0, 255, 157, 0.6); }
+    .mselect:focus { outline: none; border-color: var(--border-strong); box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.06); }
     .mselect option { background: #0d1526; color: var(--text); }
 
-    .racing-join { display: none; }
-    .racing-join.is-active { display: inline-flex; }
+    .racing-join, .nrl-join { display: none; }
+    .racing-join.is-active, .nrl-join.is-active { display: inline-flex; }
 
     /* ==================== QUICK LINKS ==================== */
     .quick-links-section {
@@ -4245,18 +4291,19 @@
     }
     .quick-links--compact {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      max-width: 100%;
+      max-width: 640px;
+      margin: 0 auto;
     }
-    @media (max-width: 720px) {
+    @media (max-width: 560px) {
       .quick-links--compact { grid-template-columns: 1fr; }
     }
     .quick-link {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 18px 20px;
+      gap: 14px;
+      padding: 14px 18px;
       background: var(--surface);
       border: 1px solid var(--border-strong);
       border-radius: 16px;
@@ -4741,18 +4788,7 @@
           </div>
           <div class="quick-link-body">
             <div class="quick-link-tag">Free</div>
-            <div class="quick-link-title">Official App</div>
-            <div class="quick-link-sub">Position Edge match-ups</div>
-          </div>
-          <svg class="quick-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-        <a href="https://admitted-vinyl-11b.notion.site/BEFORE-YOU-JOIN-FNF-GAINZ-PLEASE-READ-2f015b7a5a1d80c883f5c2278dcf9ee3" target="_blank" rel="noopener noreferrer" class="quick-link">
-          <div class="quick-link-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          </div>
-          <div class="quick-link-body">
-            <div class="quick-link-title">Read Before You Join</div>
-            <div class="quick-link-sub">What to know before subscribing</div>
+            <div class="quick-link-title">Official AFL App (data to help you win)</div>
           </div>
           <svg class="quick-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </a>
@@ -4762,7 +4798,6 @@
           </div>
           <div class="quick-link-body">
             <div class="quick-link-title">Public Results</div>
-            <div class="quick-link-sub">Every bet, win, and loss tracked</div>
           </div>
           <svg class="quick-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </a>
@@ -4779,21 +4814,28 @@
         </div>
       </div>
 
+      <!-- Read-first bar, directly under the heading -->
+      <a href="https://admitted-vinyl-11b.notion.site/BEFORE-YOU-JOIN-FNF-GAINZ-PLEASE-READ-2f015b7a5a1d80c883f5c2278dcf9ee3" target="_blank" rel="noopener noreferrer" class="readfirst">
+        <span class="readfirst-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+        <span class="readfirst-title">Read Before You Join</span>
+        <svg class="readfirst-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+
       <!-- Compact 2-up membership grid. Trimmed cards: name + price +
            one line + Join, with Details linking to the full page. -->
       <div class="mgrid">
 
-        <!-- AFL -->
+        <!-- AFL (green) -->
         <article class="mtile mtile--afl" data-reveal="up" data-reveal-delay="1">
           <div class="mtile-top">
-            <span class="mdot mdot--cyan"></span>
+            <span class="mdot mdot--green"></span>
             <span class="mname">AFL</span>
-            <span class="mtag mtag--cyan">Flagship</span>
+            <span class="mtag mtag--green">Flagship</span>
           </div>
           <div class="mprice"><span class="mprice-amt">$140</span><span class="mprice-per">AUD / mo</span></div>
           <p class="mdesc">Disposal-market system, 10-year record.</p>
           <div class="mtile-foot">
-            <button class="mjoin mjoin--cyan lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL</button>
+            <button class="mjoin mjoin--green lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL</button>
             <a href="/afl/" class="mdetails">Details &rarr;</a>
           </div>
         </article>
@@ -4813,12 +4855,12 @@
           </div>
         </article>
 
-        <!-- Racing (plan picker) -->
+        <!-- Racing (yellow, plan picker) -->
         <article class="mtile mtile--racing" data-reveal="up" data-reveal-delay="3">
           <div class="mtile-top">
-            <span class="mdot mdot--green"></span>
+            <span class="mdot mdot--yellow"></span>
             <span class="mname">Racing</span>
-            <span class="mtag mtag--green">New</span>
+            <span class="mtag mtag--yellow">New</span>
           </div>
           <div class="mprice"><span class="mprice-amt" id="racing-amt">$340</span><span class="mprice-per" id="racing-per">one-off</span></div>
           <select class="mselect" id="racing-plan" aria-label="Choose a racing plan">
@@ -4827,23 +4869,27 @@
             <option value="monthly">Monthly &middot; $145 / mo</option>
           </select>
           <div class="mtile-foot">
-            <button class="mjoin mjoin--green racing-join is-active lp5185073053040640" data-plan="carnival" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">Join Racing</button>
-            <button class="mjoin mjoin--green racing-join lp5053940233535488" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 45.00, currency: 'AUD', content_name: 'Racing Weekly', content_category: 'Racing Package', content_ids: ['racing-weekly'], content_type: 'product' });">Join Racing</button>
-            <button class="mjoin mjoin--green racing-join lp5468151011213312" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">Join Racing</button>
+            <button class="mjoin mjoin--yellow racing-join is-active lp5185073053040640" data-plan="carnival" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">Join Racing</button>
+            <button class="mjoin mjoin--yellow racing-join lp5053940233535488" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 45.00, currency: 'AUD', content_name: 'Racing Weekly', content_category: 'Racing Package', content_ids: ['racing-weekly'], content_type: 'product' });">Join Racing</button>
+            <button class="mjoin mjoin--yellow racing-join lp5468151011213312" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">Join Racing</button>
             <a href="/racing/" class="mdetails">Details &rarr;</a>
           </div>
         </article>
 
-        <!-- NRL -->
-        <article class="mtile" data-reveal="up" data-reveal-delay="4">
+        <!-- NRL (red, plan picker) -->
+        <article class="mtile mtile--nrl" data-reveal="up" data-reveal-delay="4">
           <div class="mtile-top">
-            <span class="mdot mdot--blue"></span>
+            <span class="mdot mdot--red"></span>
             <span class="mname">NRL</span>
           </div>
-          <div class="mprice"><span class="mprice-amt">$110</span><span class="mprice-per">AUD / mo</span></div>
-          <p class="mdesc">Value-driven NRL model.</p>
+          <div class="mprice"><span class="mprice-amt" id="nrl-amt">$110</span><span class="mprice-per" id="nrl-per">AUD / mo</span></div>
+          <select class="mselect" id="nrl-plan" aria-label="Choose an NRL plan">
+            <option value="monthly">Monthly &middot; $110 / mo</option>
+            <option value="weekly">Weekly &middot; $40 / wk</option>
+          </select>
           <div class="mtile-foot">
-            <button class="mjoin mjoin--ghost lp6311659934711808" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 109.99, currency: 'AUD', content_name: 'NRL Package' });">Join NRL</button>
+            <button class="mjoin mjoin--red nrl-join is-active lp6311659934711808" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 109.99, currency: 'AUD', content_name: 'NRL Package' });">Join NRL</button>
+            <button class="mjoin mjoin--red nrl-join lp5183312981524480" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 40.00, currency: 'AUD', content_name: 'NRL Weekly', content_category: 'NRL Package', content_ids: ['nrl-weekly'], content_type: 'product' });">Join NRL</button>
             <a href="https://www.launchpass.com/fnf-gainz/nrl" target="_blank" rel="noopener noreferrer" class="mdetails">Details &rarr;</a>
           </div>
         </article>
@@ -4878,27 +4924,33 @@
 
       </div>
 
-      <!-- Racing plan picker: swap the active checkout button + price
-           display to match the selected plan. Each plan keeps its own
-           LaunchPass class so desktop embed + mobile takeover both bind. -->
+      <!-- Plan pickers (Racing + NRL): swap the active checkout button +
+           price display to match the selected plan. Each plan keeps its
+           own LaunchPass class so desktop embed + mobile takeover both
+           bind. -->
       <script>
         (function() {
-          var sel = document.getElementById('racing-plan');
-          if (!sel) return;
-          var amt = document.getElementById('racing-amt');
-          var per = document.getElementById('racing-per');
-          var PLANS = {
+          function initPicker(selId, amtId, perId, joinClass, plans) {
+            var sel = document.getElementById(selId);
+            if (!sel) return;
+            var amt = document.getElementById(amtId);
+            var per = document.getElementById(perId);
+            sel.addEventListener('change', function() {
+              var p = plans[sel.value];
+              if (p) { amt.textContent = p.amt; per.textContent = p.per; }
+              document.querySelectorAll('.' + joinClass).forEach(function(btn) {
+                btn.classList.toggle('is-active', btn.getAttribute('data-plan') === sel.value);
+              });
+            });
+          }
+          initPicker('racing-plan', 'racing-amt', 'racing-per', 'racing-join', {
             carnival: { amt: '$340', per: 'one-off' },
             weekly:   { amt: '$45',  per: '/ wk' },
             monthly:  { amt: '$145', per: '/ mo' }
-          };
-          sel.addEventListener('change', function() {
-            var plan = sel.value;
-            var p = PLANS[plan];
-            if (p) { amt.textContent = p.amt; per.textContent = p.per; }
-            document.querySelectorAll('.racing-join').forEach(function(btn) {
-              btn.classList.toggle('is-active', btn.getAttribute('data-plan') === plan);
-            });
+          });
+          initPicker('nrl-plan', 'nrl-amt', 'nrl-per', 'nrl-join', {
+            monthly: { amt: '$110', per: 'AUD / mo' },
+            weekly:  { amt: '$40',  per: '/ wk' }
           });
         })();
       </script>
@@ -5037,7 +5089,8 @@
         { cls: 'lp6290145106329600', url: 'https://www.launchpass.com/fnf-gainz/community/iframe', key: 'community', value:  25.00, name: 'Community Membership' },
         { cls: 'lp5185073053040640', url: 'https://www.launchpass.com/fnf-gainz/spring-carnival/iframe', key: 'racing-carnival', value: 340.00, name: 'Racing Carnival Pass' },
         { cls: 'lp5053940233535488', url: 'https://www.launchpass.com/fnf-gainz/racing-weekly/iframe',   key: 'racing-weekly',   value:  45.00, name: 'Racing Weekly' },
-        { cls: 'lp5468151011213312', url: 'https://www.launchpass.com/fnf-gainz/racing-monthly/iframe',  key: 'racing-monthly',  value: 145.00, name: 'Racing Monthly' }
+        { cls: 'lp5468151011213312', url: 'https://www.launchpass.com/fnf-gainz/racing-monthly/iframe',  key: 'racing-monthly',  value: 145.00, name: 'Racing Monthly' },
+        { cls: 'lp5183312981524480', url: 'https://www.launchpass.com/fnf-gainz/nrl-weekly/iframe',      key: 'nrl-weekly',      value:  40.00, name: 'NRL Weekly' }
       ];
 
       var currentModal = null;
