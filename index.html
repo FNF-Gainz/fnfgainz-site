@@ -4067,6 +4067,163 @@
       line-height: 1;
     }
 
+    /* ==================== COMPACT MEMBERSHIP GRID ==================== */
+    /* Two tiles per row, trimmed to name + price + one line + Join,
+       with a Details link to the full landing/LaunchPass page. Stays
+       2-up down to the smallest phones so the whole menu is a short
+       scroll. */
+    .mgrid {
+      max-width: 760px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 480px) { .mgrid { gap: 10px; } }
+
+    .mtile {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px 18px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 18px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
+    }
+    .mtile:hover { transform: translateY(-3px); }
+    @media (max-width: 480px) { .mtile { padding: 16px 14px 14px; gap: 10px; } }
+
+    .mtile--afl {
+      border-color: rgba(0, 212, 255, 0.3);
+      background: linear-gradient(150deg, rgba(0, 212, 255, 0.06), var(--surface) 60%);
+    }
+    .mtile--champion {
+      border-color: rgba(255, 187, 71, 0.34);
+      background: linear-gradient(150deg, rgba(255, 187, 71, 0.07), var(--surface) 55%);
+    }
+    .mtile--racing {
+      border-color: rgba(0, 255, 157, 0.3);
+      background: linear-gradient(150deg, rgba(0, 255, 157, 0.06), var(--surface) 60%);
+    }
+
+    .mtile-top { display: flex; align-items: center; gap: 8px; }
+    .mdot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+    .mdot--cyan { background: var(--cyan); }
+    .mdot--gold { background: var(--gold); }
+    .mdot--green { background: var(--green); }
+    .mdot--blue { background: var(--blue-2); }
+    .mdot--violet { background: var(--violet); }
+    .mdot--slate { background: #8aa0c0; }
+
+    .mname {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      line-height: 1;
+    }
+    .mtag {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .mtag--gold { color: var(--gold-2); background: rgba(255, 187, 71, 0.14); }
+    .mtag--cyan { color: var(--cyan-2); background: var(--cyan-dim); }
+    .mtag--green { color: var(--green-2); background: var(--green-dim); }
+
+    .mprice { display: flex; align-items: baseline; gap: 5px; }
+    .mprice-amt {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .mprice-per { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-3); }
+
+    .mdesc {
+      font-size: 0.76rem;
+      color: var(--text-3);
+      line-height: 1.4;
+      margin-top: -3px;
+    }
+
+    .mtile-foot { margin-top: auto; display: flex; flex-direction: column; gap: 9px; padding-top: 4px; }
+
+    .mjoin {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 11px;
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      cursor: pointer;
+      transition: transform 0.15s ease, filter 0.15s ease;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mjoin:hover { transform: translateY(-1px); filter: brightness(1.06); }
+    .mjoin--cyan { background: var(--grad-cyan); color: #04121f; }
+    .mjoin--gold { background: linear-gradient(135deg, #ffbb47, #ff9500); color: #1a1000; }
+    .mjoin--green { background: linear-gradient(135deg, #00ff9d, #10b981); color: #01130b; }
+    .mjoin--ghost { background: transparent; border: 1.5px solid var(--border-strong); color: var(--text-2); }
+    .mjoin--ghost:hover { border-color: var(--cyan); color: var(--cyan-2); background: var(--cyan-dim); filter: none; }
+
+    .mdetails {
+      align-self: center;
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .mdetails:hover { color: var(--text); }
+
+    /* Racing plan picker */
+    .mselect {
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      background-color: rgba(15, 20, 38, 0.85);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236fffc0' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      border: 1px solid rgba(0, 255, 157, 0.3);
+      border-radius: 11px;
+      padding: 10px 32px 10px 12px;
+      cursor: pointer;
+    }
+    .mselect:focus { outline: none; border-color: rgba(0, 255, 157, 0.6); }
+    .mselect option { background: #0d1526; color: var(--text); }
+
+    .racing-join { display: none; }
+    .racing-join.is-active { display: inline-flex; }
+
     /* ==================== QUICK LINKS ==================== */
     .quick-links-section {
       padding: clamp(48px, 8vh, 96px) 0 clamp(32px, 5vh, 56px);
@@ -4622,174 +4779,129 @@
         </div>
       </div>
 
-      <!-- ROW 1: HEADLINERS - AFL Package + Champion side by side -->
-      <div class="pkg-row pkg-row--headliners">
+      <!-- Compact 2-up membership grid. Trimmed cards: name + price +
+           one line + Join, with Details linking to the full page. -->
+      <div class="mgrid">
 
-        <!-- AFL Package (Flagship, cyan) -->
-        <article class="pkg pkg--headliner pkg--afl" data-reveal="pkg" data-reveal-delay="1">
-          <div class="pkg-flag pkg-flag--cyan">Flagship</div>
-          <div class="pkg-founder">
-            <img src="assets/jordan-portrait.png" alt="Jordan, FNF Gainz founder" class="pkg-founder-avatar" decoding="async" loading="lazy">
-            <div class="pkg-founder-text">
-              <div class="pkg-founder-name">Built by Jordan</div>
-              <div class="pkg-founder-role">10 years AFL analysis &middot; Since 2022</div>
-            </div>
+        <!-- AFL -->
+        <article class="mtile mtile--afl" data-reveal="up" data-reveal-delay="1">
+          <div class="mtile-top">
+            <span class="mdot mdot--cyan"></span>
+            <span class="mname">AFL</span>
+            <span class="mtag mtag--cyan">Flagship</span>
           </div>
-          <h3 class="pkg-name">AFL Package</h3>
-          <p class="pkg-desc">Our flagship. Disposal-market system built on ten years of AFL analysis. Every bet posted live to Discord.</p>
-          <div class="pkg-price">
-            <span class="pkg-price-amount">$140</span>
-            <span class="pkg-price-period">AUD / mo</span>
-          </div>
-          <ul class="pkg-features">
-            <li><span class="pkg-check">&#10003;</span>Every AFL bet posted live in Discord</li>
-            <li><span class="pkg-check">&#10003;</span>Round breakdowns Thu &ndash; Sun</li>
-            <li><span class="pkg-check">&#10003;</span>Personal onboarding &amp; unit sizing</li>
-            <li><span class="pkg-check">&#10003;</span>Public results dashboard</li>
-            <li><span class="pkg-check">&#10003;</span>Cancel anytime, no lock-in</li>
-          </ul>
-          <div class="pkg-cta">
-            <button class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
-              <span>Join AFL Premium</span>
-              <span class="btn-price">$140 / mo</span>
-            </button>
-          </div>
-          <a href="/afl/" class="pkg-more">See full AFL page &rarr;</a>
-        </article>
-
-        <!-- CHAMPION (Best value, gold) -->
-        <article class="pkg pkg--headliner pkg--champion" data-reveal="pkg" data-reveal-delay="2">
-          <div class="pkg-flag">Best Value</div>
-          <div class="pkg-eyebrow">AFL + NRL &middot; Combined</div>
-          <h3 class="pkg-name">Champion</h3>
-          <p class="pkg-desc">The full AFL system and the full NRL system in one membership. Portfolio management for serious punters.</p>
-          <div class="pkg-price">
-            <span class="pkg-price-amount">$200</span>
-            <span class="pkg-price-period">AUD / mo</span>
-          </div>
-          <div class="pkg-price-note">Save $80/mo vs both separately</div>
-          <ul class="pkg-features">
-            <li><span class="pkg-check">&#10003;</span>Every AFL &amp; NRL bet posted live in Discord</li>
-            <li><span class="pkg-check">&#10003;</span>Round breakdowns for both codes</li>
-            <li><span class="pkg-check">&#10003;</span>Personal onboarding &amp; unit sizing</li>
-            <li><span class="pkg-check">&#10003;</span>AFL &amp; NRL results side by side on the public dashboard</li>
-            <li><span class="pkg-check">&#10003;</span>Cancel anytime, no lock-in</li>
-          </ul>
-          <div class="pkg-cta">
-            <button class="btn btn-gold lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">
-              <span>Join Champion</span>
-              <span class="btn-price">$200 / mo</span>
-            </button>
+          <div class="mprice"><span class="mprice-amt">$140</span><span class="mprice-per">AUD / mo</span></div>
+          <p class="mdesc">Disposal-market system, 10-year record.</p>
+          <div class="mtile-foot">
+            <button class="mjoin mjoin--cyan lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL</button>
+            <a href="/afl/" class="mdetails">Details &rarr;</a>
           </div>
         </article>
 
-        <!-- RACING (New, emerald) -->
-        <article class="pkg pkg--headliner pkg--racing" data-reveal="pkg" data-reveal-delay="3">
-          <div class="pkg-flag pkg-flag--green">New</div>
-          <div class="pkg-eyebrow pkg-eyebrow--green">Horse Racing &middot; AU + HK</div>
-          <h3 class="pkg-name">Racing Package</h3>
-          <p class="pkg-desc">Professional non-promotional racing. Value-first selections across Australian and Hong Kong meetings.</p>
-          <div class="pkg-price">
-            <span class="pkg-price-amount">$340</span>
-            <span class="pkg-price-period">AUD one-off</span>
+        <!-- Champion -->
+        <article class="mtile mtile--champion" data-reveal="up" data-reveal-delay="2">
+          <div class="mtile-top">
+            <span class="mdot mdot--gold"></span>
+            <span class="mname">Champion</span>
+            <span class="mtag mtag--gold">Best value</span>
           </div>
-          <div class="pkg-price-note pkg-price-note--green">Spring Carnival Pass &middot; 14 Aug to 14 Nov</div>
-          <ul class="pkg-features">
-            <li><span class="pkg-check">&#10003;</span>Last spring on the record: +49.82u across 487 bets</li>
-            <li><span class="pkg-check">&#10003;</span>8 to 20 bets a week across Wed, Sat and Sun racing</li>
-            <li><span class="pkg-check">&#10003;</span>Disciplined staking guidance in units</li>
-            <li><span class="pkg-check">&#10003;</span>Early market value plays plus race-day confirmations</li>
-            <li><span class="pkg-check">&#10003;</span>Dedicated racing channels inside the FNF Discord</li>
-          </ul>
-          <div class="pkg-cta">
-            <button class="btn btn-green lp5185073053040640" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
-              <span>Get the Carnival Pass</span>
-              <span class="btn-price">$340 one-off</span>
-            </button>
-            <div class="pkg-plan-row">
-              <button class="pkg-plan lp5053940233535488" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 45.00, currency: 'AUD', content_name: 'Racing Weekly', content_category: 'Racing Package', content_ids: ['racing-weekly'], content_type: 'product' });">
-                Weekly <span>$45/wk</span>
-              </button>
-              <button class="pkg-plan lp5468151011213312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">
-                Monthly <span>$145/mo</span>
-              </button>
-            </div>
+          <div class="mprice"><span class="mprice-amt">$200</span><span class="mprice-per">AUD / mo</span></div>
+          <p class="mdesc">AFL + NRL combined. Save $80/mo.</p>
+          <div class="mtile-foot">
+            <button class="mjoin mjoin--gold lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">Join Champion</button>
+            <a href="https://www.launchpass.com/fnf-gainz/champion" target="_blank" rel="noopener noreferrer" class="mdetails">Details &rarr;</a>
           </div>
-          <a href="/racing/" class="pkg-more pkg-more--green">See full racing page &rarr;</a>
         </article>
 
-      </div>
-
-      <!-- ROW 2: 3 more packages in a slimmer row -->
-      <div class="pkg-row pkg-row--rest">
-
-        <!-- NRL Package -->
-        <article class="pkg" data-reveal="pkg" data-reveal-delay="4">
-          <div class="pkg-name">NRL Package</div>
-          <p class="pkg-desc">Value-driven NRL model. Structured for upside on strong lines.</p>
-          <div class="pkg-price">
-            <span class="pkg-price-amount">$110</span>
-            <span class="pkg-price-period">AUD / mo</span>
+        <!-- Racing (plan picker) -->
+        <article class="mtile mtile--racing" data-reveal="up" data-reveal-delay="3">
+          <div class="mtile-top">
+            <span class="mdot mdot--green"></span>
+            <span class="mname">Racing</span>
+            <span class="mtag mtag--green">New</span>
           </div>
-          <ul class="pkg-features">
-            <li><span class="pkg-check">&#10003;</span>Every NRL bet in Discord</li>
-            <li><span class="pkg-check">&#10003;</span>Weekly round breakdowns</li>
-            <li><span class="pkg-check">&#10003;</span>Personal onboarding</li>
-            <li><span class="pkg-check">&#10003;</span>Public dashboard access</li>
-          </ul>
-          <div class="pkg-cta">
-            <button class="btn btn-outline lp6311659934711808" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 109.99, currency: 'AUD', content_name: 'NRL Package' });">
-              <span>Join NRL</span>
-              <span class="btn-price">$110 / mo</span>
-            </button>
+          <div class="mprice"><span class="mprice-amt" id="racing-amt">$340</span><span class="mprice-per" id="racing-per">one-off</span></div>
+          <select class="mselect" id="racing-plan" aria-label="Choose a racing plan">
+            <option value="carnival">Carnival &middot; $340 one-off</option>
+            <option value="weekly">Weekly &middot; $45 / wk</option>
+            <option value="monthly">Monthly &middot; $145 / mo</option>
+          </select>
+          <div class="mtile-foot">
+            <button class="mjoin mjoin--green racing-join is-active lp5185073053040640" data-plan="carnival" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">Join Racing</button>
+            <button class="mjoin mjoin--green racing-join lp5053940233535488" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 45.00, currency: 'AUD', content_name: 'Racing Weekly', content_category: 'Racing Package', content_ids: ['racing-weekly'], content_type: 'product' });">Join Racing</button>
+            <button class="mjoin mjoin--green racing-join lp5468151011213312" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">Join Racing</button>
+            <a href="/racing/" class="mdetails">Details &rarr;</a>
+          </div>
+        </article>
+
+        <!-- NRL -->
+        <article class="mtile" data-reveal="up" data-reveal-delay="4">
+          <div class="mtile-top">
+            <span class="mdot mdot--blue"></span>
+            <span class="mname">NRL</span>
+          </div>
+          <div class="mprice"><span class="mprice-amt">$110</span><span class="mprice-per">AUD / mo</span></div>
+          <p class="mdesc">Value-driven NRL model.</p>
+          <div class="mtile-foot">
+            <button class="mjoin mjoin--ghost lp6311659934711808" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 109.99, currency: 'AUD', content_name: 'NRL Package' });">Join NRL</button>
+            <a href="https://www.launchpass.com/fnf-gainz/nrl" target="_blank" rel="noopener noreferrer" class="mdetails">Details &rarr;</a>
           </div>
         </article>
 
         <!-- Matched Betting -->
-        <article class="pkg" data-reveal="pkg" data-reveal-delay="5">
-          <div class="pkg-name">Matched Betting</div>
-          <p class="pkg-desc">Low-risk foundations. Build bankroll and discipline before scaling.</p>
-          <div class="pkg-price">
-            <span class="pkg-price-amount">$100</span>
-            <span class="pkg-price-period">AUD / mo</span>
+        <article class="mtile" data-reveal="up" data-reveal-delay="5">
+          <div class="mtile-top">
+            <span class="mdot mdot--violet"></span>
+            <span class="mname">Matched Betting</span>
           </div>
-          <ul class="pkg-features">
-            <li><span class="pkg-check">&#10003;</span>Structured MB workflow</li>
-            <li><span class="pkg-check">&#10003;</span>Bonus tracking &amp; conversion tips</li>
-            <li><span class="pkg-check">&#10003;</span>Core long-term punting skills</li>
-            <li><span class="pkg-check">&#10003;</span>Direct access to coaches</li>
-          </ul>
-          <div class="pkg-cta">
-            <button class="btn btn-outline lp4657629529505792" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 100.00, currency: 'AUD', content_name: 'Matched Betting Package' });">
-              <span>Join Matched Betting</span>
-              <span class="btn-price">$100 / mo</span>
-            </button>
+          <div class="mprice"><span class="mprice-amt">$100</span><span class="mprice-per">AUD / mo</span></div>
+          <p class="mdesc">Low-risk bankroll foundations.</p>
+          <div class="mtile-foot">
+            <button class="mjoin mjoin--ghost lp4657629529505792" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 100.00, currency: 'AUD', content_name: 'Matched Betting Package' });">Join</button>
+            <a href="https://www.launchpass.com/fnf-gainz/mb-sports" target="_blank" rel="noopener noreferrer" class="mdetails">Details &rarr;</a>
           </div>
         </article>
 
         <!-- Community -->
-        <article class="pkg" data-reveal="pkg" data-reveal-delay="6">
-          <div class="pkg-name">Community</div>
-          <p class="pkg-desc">Premium chats, EV &amp; e-sports strategies, Racing Bot. Great entry point.</p>
-          <div class="pkg-price">
-            <span class="pkg-price-amount">$25</span>
-            <span class="pkg-price-period">AUD / mo</span>
+        <article class="mtile" data-reveal="up" data-reveal-delay="6">
+          <div class="mtile-top">
+            <span class="mdot mdot--slate"></span>
+            <span class="mname">Community</span>
           </div>
-          <ul class="pkg-features">
-            <li><span class="pkg-check">&#10003;</span>Premium chat channels</li>
-            <li><span class="pkg-check">&#10003;</span>EV bet &amp; e-sports strategies</li>
-            <li><span class="pkg-check">&#10003;</span>Racing Bot access</li>
-            <li><span class="pkg-check">&#10003;</span>Active member community</li>
-          </ul>
-          <div class="pkg-cta">
-            <button class="btn btn-outline lp6290145106329600" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 25.00, currency: 'AUD', content_name: 'Community Membership' });">
-              <span>Join Community</span>
-              <span class="btn-price">$25 / mo</span>
-            </button>
+          <div class="mprice"><span class="mprice-amt">$25</span><span class="mprice-per">AUD / mo</span></div>
+          <p class="mdesc">Chats, EV strategies &amp; Racing Bot.</p>
+          <div class="mtile-foot">
+            <button class="mjoin mjoin--ghost lp6290145106329600" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 25.00, currency: 'AUD', content_name: 'Community Membership' });">Join</button>
+            <a href="https://www.launchpass.com/fnf-gainz/community" target="_blank" rel="noopener noreferrer" class="mdetails">Details &rarr;</a>
           </div>
         </article>
 
       </div>
+
+      <!-- Racing plan picker: swap the active checkout button + price
+           display to match the selected plan. Each plan keeps its own
+           LaunchPass class so desktop embed + mobile takeover both bind. -->
+      <script>
+        (function() {
+          var sel = document.getElementById('racing-plan');
+          if (!sel) return;
+          var amt = document.getElementById('racing-amt');
+          var per = document.getElementById('racing-per');
+          var PLANS = {
+            carnival: { amt: '$340', per: 'one-off' },
+            weekly:   { amt: '$45',  per: '/ wk' },
+            monthly:  { amt: '$145', per: '/ mo' }
+          };
+          sel.addEventListener('change', function() {
+            var plan = sel.value;
+            var p = PLANS[plan];
+            if (p) { amt.textContent = p.amt; per.textContent = p.per; }
+            document.querySelectorAll('.racing-join').forEach(function(btn) {
+              btn.classList.toggle('is-active', btn.getAttribute('data-plan') === plan);
+            });
+          });
+        })();
+      </script>
 
       <div class="close-trust" data-reveal="up" data-reveal-delay="7">
         <span>5 years of member trust</span>
