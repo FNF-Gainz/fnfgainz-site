@@ -53,6 +53,8 @@
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/nrl-weekly/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/afl-weekly/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/champion-weekly/embed.js" fetchpriority="high">
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/afl/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/champion/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl/embed.js"></script>
@@ -62,6 +64,8 @@
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl-weekly/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/afl-weekly/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/champion-weekly/embed.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
@@ -4303,8 +4307,9 @@
     .mselect:focus { outline: none; border-color: var(--border-strong); box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.06); }
     .mselect option { background: #0d1526; color: var(--text); }
 
-    .racing-join, .nrl-join { display: none; }
-    .racing-join.is-active, .nrl-join.is-active { display: inline-flex; }
+    .racing-join, .nrl-join, .afl-join, .champion-join { display: none; }
+    .racing-join.is-active, .nrl-join.is-active,
+    .afl-join.is-active, .champion-join.is-active { display: inline-flex; }
 
     /* Visible plan toggle (replaces the dropdown) so the weekly/monthly
        options are obvious at a glance. Selected pill takes the tile
@@ -4339,6 +4344,8 @@
     .plan-opt:hover { color: var(--text); }
     .plan-toggle--yellow .plan-opt.is-sel { background: var(--yellow); color: #1a1400; }
     .plan-toggle--red .plan-opt.is-sel { background: var(--red); color: #fff; }
+    .plan-toggle--green .plan-opt.is-sel { background: var(--green); color: #01130b; }
+    .plan-toggle--gold .plan-opt.is-sel { background: linear-gradient(135deg, #ffbb47, #ff9500); color: #1a1000; }
     @media (max-width: 480px) {
       .plan-opt { font-size: 0.7rem; padding: 7px 3px; }
     }
@@ -4939,10 +4946,15 @@
             <span class="mname">AFL</span>
             <span class="mtag mtag--green">Flagship</span>
           </div>
-          <div class="mprice"><span class="mprice-amt">$140</span><span class="mprice-per">AUD / mo</span></div>
+          <div class="mprice"><span class="mprice-amt" id="afl-amt">$140</span><span class="mprice-per" id="afl-per">AUD / mo</span></div>
           <p class="mdesc">Disposal-market system, 10-year record.</p>
+          <div class="plan-toggle plan-toggle--green" id="afl-toggle" role="group" aria-label="Choose an AFL plan">
+            <button type="button" class="plan-opt is-sel" data-plan="monthly">Monthly</button>
+            <button type="button" class="plan-opt" data-plan="weekly">Weekly</button>
+          </div>
           <div class="mtile-foot">
-            <button class="mjoin mjoin--green lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL</button>
+            <button class="mjoin mjoin--green afl-join is-active lp6640832616333312" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL</button>
+            <button class="mjoin mjoin--green afl-join lp5732019967754240" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 50.00, currency: 'AUD', content_name: 'AFL Weekly', content_category: 'AFL Package', content_ids: ['afl-weekly'], content_type: 'product' });">Join AFL</button>
             <a href="/afl/" class="mdetails">Details &rarr;</a>
           </div>
         </article>
@@ -4954,10 +4966,15 @@
             <span class="mname">Champion</span>
             <span class="mtag mtag--gold">Best value</span>
           </div>
-          <div class="mprice"><span class="mprice-amt">$200</span><span class="mprice-per">AUD / mo</span></div>
+          <div class="mprice"><span class="mprice-amt" id="champion-amt">$200</span><span class="mprice-per" id="champion-per">AUD / mo</span></div>
           <p class="mdesc">AFL + NRL combined. Save $80/mo.</p>
+          <div class="plan-toggle plan-toggle--gold" id="champion-toggle" role="group" aria-label="Choose a Champion plan">
+            <button type="button" class="plan-opt is-sel" data-plan="monthly">Monthly</button>
+            <button type="button" class="plan-opt" data-plan="weekly">Weekly</button>
+          </div>
           <div class="mtile-foot">
-            <button class="mjoin mjoin--gold lp4572582037028864" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">Join Champion</button>
+            <button class="mjoin mjoin--gold champion-join is-active lp4572582037028864" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">Join Champion</button>
+            <button class="mjoin mjoin--gold champion-join lp6453297716527104" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 75.00, currency: 'AUD', content_name: 'Champion Weekly', content_category: 'Champion', content_ids: ['champion-weekly'], content_type: 'product' });">Join Champion</button>
             <a href="https://www.launchpass.com/fnf-gainz/champion" target="_blank" rel="noopener noreferrer" class="mdetails">Details &rarr;</a>
           </div>
         </article>
@@ -5058,6 +5075,14 @@
               });
             });
           }
+          initToggle('afl-toggle', 'afl-amt', 'afl-per', 'afl-join', {
+            monthly: { amt: '$140', per: 'AUD / mo' },
+            weekly:  { amt: '$50',  per: '/ wk' }
+          });
+          initToggle('champion-toggle', 'champion-amt', 'champion-per', 'champion-join', {
+            monthly: { amt: '$200', per: 'AUD / mo' },
+            weekly:  { amt: '$75',  per: '/ wk' }
+          });
           initToggle('racing-toggle', 'racing-amt', 'racing-per', 'racing-join', {
             carnival: { amt: '$340', per: 'one-off' },
             weekly:   { amt: '$45',  per: '/ wk' },
@@ -5249,7 +5274,9 @@
         { cls: 'lp5185073053040640', url: 'https://www.launchpass.com/fnf-gainz/spring-carnival/iframe', key: 'racing-carnival', value: 340.00, name: 'Racing Carnival Pass' },
         { cls: 'lp5053940233535488', url: 'https://www.launchpass.com/fnf-gainz/racing-weekly/iframe',   key: 'racing-weekly',   value:  45.00, name: 'Racing Weekly' },
         { cls: 'lp5468151011213312', url: 'https://www.launchpass.com/fnf-gainz/racing-monthly/iframe',  key: 'racing-monthly',  value: 145.00, name: 'Racing Monthly' },
-        { cls: 'lp5183312981524480', url: 'https://www.launchpass.com/fnf-gainz/nrl-weekly/iframe',      key: 'nrl-weekly',      value:  40.00, name: 'NRL Weekly' }
+        { cls: 'lp5183312981524480', url: 'https://www.launchpass.com/fnf-gainz/nrl-weekly/iframe',      key: 'nrl-weekly',      value:  40.00, name: 'NRL Weekly' },
+        { cls: 'lp5732019967754240', url: 'https://www.launchpass.com/fnf-gainz/afl-weekly/iframe',      key: 'afl-weekly',      value:  50.00, name: 'AFL Weekly' },
+        { cls: 'lp6453297716527104', url: 'https://www.launchpass.com/fnf-gainz/champion-weekly/iframe', key: 'champion-weekly', value:  75.00, name: 'Champion Weekly' }
       ];
 
       var currentModal = null;
