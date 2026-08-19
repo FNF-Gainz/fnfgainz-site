@@ -1154,6 +1154,55 @@
       animation: fade-in 0.9s var(--ease-out) 1s forwards;
     }
 
+    /* Monthly (primary) + Weekly (compact secondary) side by side in the
+       hero. Stacks to full-width on mobile so weekly sits below monthly. */
+    .hero-cta-buttons {
+      display: flex;
+      align-items: stretch;
+      gap: 14px;
+    }
+    .hero-weekly {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-height: 60px;
+      padding: 0 24px;
+      border-radius: 16px;
+      border: 1.5px solid var(--border-strong);
+      background: rgba(0, 212, 255, 0.05);
+      color: var(--text);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--dur) var(--ease);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .hero-weekly:hover {
+      border-color: var(--cyan);
+      background: var(--cyan-dim);
+      transform: translateY(-2px);
+      box-shadow: 0 0 24px rgba(0, 212, 255, 0.18);
+    }
+    .hero-weekly .hw-label {
+      font-family: var(--font-sans);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      color: var(--text);
+    }
+    .hero-weekly .hw-price {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--cyan-2);
+      padding-left: 12px;
+      border-left: 1px solid var(--border-strong);
+    }
+    @media (max-width: 640px) {
+      .hero-cta-buttons { flex-direction: column; }
+    }
+
     /* Hero portrait */
     .hero-portrait {
       position: relative;
@@ -3880,10 +3929,16 @@
           </div>
 
           <div class="hero-cta-row">
-            <button data-cursor="Join AFL" class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
-              <span>Join AFL Premium</span>
-              <span class="btn-price">$140 AUD / mo</span>
-            </button>
+            <div class="hero-cta-buttons">
+              <button data-cursor="Join AFL" class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
+                <span>Join AFL Premium</span>
+                <span class="btn-price">$140 AUD / mo</span>
+              </button>
+              <button data-cursor="Weekly" class="hero-weekly lp5732019967754240" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 50.00, currency: 'AUD', content_name: 'AFL Weekly', content_category: 'AFL Package', content_ids: ['afl-weekly'], content_type: 'product' });">
+                <span class="hw-label">Weekly</span>
+                <span class="hw-price">$50 / wk</span>
+              </button>
+            </div>
             <span class="hero-trust">5 years of member trust &middot; Cancel anytime</span>
           </div>
 
