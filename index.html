@@ -49,7 +49,6 @@
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/nrl/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/mb-sports/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/community/embed.js" fetchpriority="high">
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/nrl-weekly/embed.js" fetchpriority="high">
@@ -60,7 +59,6 @@
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/mb-sports/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/community/embed.js"></script>
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl-weekly/embed.js"></script>
@@ -4986,17 +4984,15 @@
             <span class="mname">Racing</span>
             <span class="mtag mtag--yellow">New</span>
           </div>
-          <div class="mprice"><span class="mprice-amt" id="racing-amt">$340</span><span class="mprice-per" id="racing-per">one-off</span></div>
+          <div class="mprice"><span class="mprice-amt" id="racing-amt">$145</span><span class="mprice-per" id="racing-per">AUD / mo</span></div>
           <p class="mdesc">Non-promotional AU + HK racing.</p>
           <div class="plan-toggle plan-toggle--yellow" id="racing-toggle" role="group" aria-label="Choose a racing plan">
-            <button type="button" class="plan-opt is-sel" data-plan="carnival">Carnival</button>
+            <button type="button" class="plan-opt is-sel" data-plan="monthly">Monthly</button>
             <button type="button" class="plan-opt" data-plan="weekly">Weekly</button>
-            <button type="button" class="plan-opt" data-plan="monthly">Monthly</button>
           </div>
           <div class="mtile-foot">
-            <button class="mjoin mjoin--yellow racing-join is-active lp5185073053040640" data-plan="carnival" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">Join Racing</button>
+            <button class="mjoin mjoin--yellow racing-join is-active lp5468151011213312" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">Join Racing</button>
             <button class="mjoin mjoin--yellow racing-join lp5053940233535488" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 45.00, currency: 'AUD', content_name: 'Racing Weekly', content_category: 'Racing Package', content_ids: ['racing-weekly'], content_type: 'product' });">Join Racing</button>
-            <button class="mjoin mjoin--yellow racing-join lp5468151011213312" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">Join Racing</button>
             <a href="/racing/" class="mdetails">Details &rarr;</a>
           </div>
         </article>
@@ -5084,9 +5080,8 @@
             weekly:  { amt: '$75',  per: '/ wk' }
           });
           initToggle('racing-toggle', 'racing-amt', 'racing-per', 'racing-join', {
-            carnival: { amt: '$340', per: 'one-off' },
-            weekly:   { amt: '$45',  per: '/ wk' },
-            monthly:  { amt: '$145', per: '/ mo' }
+            monthly: { amt: '$145', per: 'AUD / mo' },
+            weekly:  { amt: '$45',  per: '/ wk' }
           });
           initToggle('nrl-toggle', 'nrl-amt', 'nrl-per', 'nrl-join', {
             monthly: { amt: '$110', per: 'AUD / mo' },
@@ -5271,7 +5266,6 @@
         { cls: 'lp6311659934711808', url: 'https://www.launchpass.com/fnf-gainz/nrl/iframe',       key: 'nrl',       value: 109.99, name: 'NRL Package' },
         { cls: 'lp4657629529505792', url: 'https://www.launchpass.com/fnf-gainz/mb-sports/iframe', key: 'mb',        value: 100.00, name: 'Matched Betting Package' },
         { cls: 'lp6290145106329600', url: 'https://www.launchpass.com/fnf-gainz/community/iframe', key: 'community', value:  25.00, name: 'Community Membership' },
-        { cls: 'lp5185073053040640', url: 'https://www.launchpass.com/fnf-gainz/spring-carnival/iframe', key: 'racing-carnival', value: 340.00, name: 'Racing Carnival Pass' },
         { cls: 'lp5053940233535488', url: 'https://www.launchpass.com/fnf-gainz/racing-weekly/iframe',   key: 'racing-weekly',   value:  45.00, name: 'Racing Weekly' },
         { cls: 'lp5468151011213312', url: 'https://www.launchpass.com/fnf-gainz/racing-monthly/iframe',  key: 'racing-monthly',  value: 145.00, name: 'Racing Monthly' },
         { cls: 'lp5183312981524480', url: 'https://www.launchpass.com/fnf-gainz/nrl-weekly/iframe',      key: 'nrl-weekly',      value:  40.00, name: 'NRL Weekly' },

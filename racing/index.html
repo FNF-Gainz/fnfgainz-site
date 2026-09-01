@@ -13,7 +13,7 @@
   <!-- End Google Tag Manager -->
 
   <title>Racing | FNF Gainz</title>
-  <meta name="description" content="A professional non-promotional horse racing system. 8 to 20 bets a week across Australian and Hong Kong racing, driven by modelled fair odds and disciplined staking. Weekly, monthly and Spring Carnival memberships.">
+  <meta name="description" content="A professional non-promotional horse racing system. 8 to 20 bets a week across Australian and Hong Kong racing, driven by modelled fair odds and disciplined staking. Weekly and monthly memberships.">
 
   <meta property="og:title" content="Racing | FNF Gainz">
   <meta property="og:description" content="A professional non-promotional horse racing system. 8 to 20 bets a week across Australian and Hong Kong racing, driven by modelled fair odds and disciplined staking.">
@@ -38,10 +38,8 @@
        defer script tags. Handlers are ready well before DOMContentLoaded. -->
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js" fetchpriority="high">
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js" fetchpriority="high">
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js"></script>
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/spring-carnival/embed.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
@@ -931,9 +929,11 @@
     /* ==================== PRICING ==================== */
     .plans-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 18px;
       align-items: stretch;
+      max-width: 720px;
+      margin: 0 auto;
     }
     @media (max-width: 900px) {
       .plans-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
@@ -1318,7 +1318,7 @@
   <canvas id="particles" class="particles-canvas"></canvas>
 
   <div class="launch-strip">
-    Spring Racing 2026 &middot; Carnival pass: <strong>14 August to 14 November</strong>
+    Spring Racing 2026 &middot; <strong>Weekly or monthly</strong> &middot; cancel anytime
   </div>
 
   <main>
@@ -1349,9 +1349,6 @@
       <div class="hero-plans" data-reveal>
         <button class="hero-plan lp5053940233535488" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 45.00, currency: 'AUD', content_name: 'Racing Weekly', content_category: 'Racing Package', content_ids: ['racing-weekly'], content_type: 'product' });">
           Weekly <span class="hero-plan-price">$45 / wk</span>
-        </button>
-        <button class="hero-plan hero-plan--carnival lp5185073053040640" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
-          Carnival Pass <span class="hero-plan-price">$340 one-off</span>
         </button>
         <button class="hero-plan lp5468151011213312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">
           Monthly <span class="hero-plan-price">$145 / mo</span>
@@ -1562,42 +1559,22 @@
           </button>
         </article>
 
-        <!-- Carnival (featured) -->
+        <!-- Monthly (featured) -->
         <article class="plan plan--featured" data-reveal>
-          <span class="plan-flag">Spring Carnival</span>
-          <h3 class="plan-name">Carnival Pass</h3>
-          <div class="plan-term">One payment &middot; 14 Aug to 14 Nov</div>
-          <div class="plan-price">
-            <span class="plan-price-amount">$340</span>
-            <span class="plan-price-unit">AUD one-off</span>
-          </div>
-          <div class="plan-equiv">Works out around <strong>$26 a week</strong></div>
-          <ul class="plan-features">
-            <li>Every bet of the entire Spring Carnival</li>
-            <li>Save $95 vs paying monthly</li>
-            <li>Covers the full feature season through November</li>
-            <li>No renewal, access simply ends 14 November</li>
-          </ul>
-          <button class="btn btn-gold lp5185073053040640" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
-            <span>Get the Carnival Pass</span>
-          </button>
-        </article>
-
-        <!-- Monthly -->
-        <article class="plan" data-reveal>
+          <span class="plan-flag">Best value</span>
           <h3 class="plan-name">Racing Monthly</h3>
           <div class="plan-term">Billed monthly &middot; no lock-in</div>
           <div class="plan-price">
             <span class="plan-price-amount">$145</span>
             <span class="plan-price-unit">AUD / mo</span>
           </div>
-          <div class="plan-equiv">Works out around $33 a week</div>
+          <div class="plan-equiv">Around <strong>$50/mo less</strong> than paying weekly</div>
           <ul class="plan-features">
             <li>Every bet, all racing channels</li>
             <li>Staking guidance on every selection</li>
             <li>Cancel anytime, access to end of month</li>
           </ul>
-          <button class="btn btn-outline lp5468151011213312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">
+          <button class="btn btn-gold lp5468151011213312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">
             <span>Join Monthly</span>
             <span class="btn-price">$145 / mo</span>
           </button>
@@ -1605,8 +1582,8 @@
 
       </div>
       <p class="plans-note" data-reveal>
-        <strong>Not sure?</strong> Start weekly. If the process suits you, upgrade to the
-        Carnival Pass or monthly and keep the same channels without missing a bet.
+        <strong>Not sure?</strong> Start weekly. If the process suits you, switch to
+        monthly and keep the same channels without missing a bet.
       </p>
       <p class="plans-secure" data-reveal>Secure checkout via LaunchPass + Stripe &middot; instant Discord access</p>
     </section>
@@ -1622,12 +1599,11 @@
         <details class="faq-item" data-reveal><summary>What does non-promotional mean?</summary><div class="faq-answer">The system never relies on bookmaker promotions, bonus bets or boosted odds to generate its edge. We bet when the available price is longer than our modelled fair odds, and that's the entire trigger. Betting pure value at normal market prices keeps your bookmaker accounts healthier for longer, and the process keeps working when the promos dry up.</div></details>
         <details class="faq-item" data-reveal><summary>When do the bets drop?</summary><div class="faq-answer">Early market bets are posted as soon as value is identified, typically the night before or early on race morning. On Saturdays, additional bets are released on race morning once track conditions, rail position and bias are confirmed. Hong Kong bets land ahead of the Happy Valley (Wednesday night) and Sha Tin (Sunday) meetings.</div></details>
         <details class="faq-item" data-reveal><summary>How much money do I need to start?</summary><div class="faq-answer">There's no fixed minimum. We recommend 1 unit equals roughly 1% of your bankroll, and every selection comes with recommended units. Whatever your bankroll, you scale the same staking proportionally. If you're unsure, the team helps you size correctly during onboarding.</div></details>
-        <details class="faq-item" data-reveal><summary>What's the difference between the plans?</summary><div class="faq-answer">Nothing except the term. Every plan gets the same bets and the same channels. Weekly is $45 per week, monthly is $145 per month, and the Carnival Pass is a single $340 payment covering everything from 14 August to 14 November.</div></details>
-        <details class="faq-item" data-reveal><summary>What happens when the Carnival Pass ends?</summary><div class="faq-answer">The pass is a one-off payment, so there's no auto-renewal. Access ends on 14 November, and if you want to keep going you can roll onto the weekly or monthly plan from there.</div></details>
+        <details class="faq-item" data-reveal><summary>What's the difference between the plans?</summary><div class="faq-answer">Nothing except the term. Both plans get the same bets and the same channels. Weekly is $45 per week and monthly is $145 per month, and you can switch or cancel anytime.</div></details>
         <details class="faq-item" data-reveal><summary>Do I need accounts with specific bookmakers?</summary><div class="faq-answer">The more books you have, the better the price you can take. Major Australian bookmakers (TAB, Sportsbet, Ladbrokes, bet365) cover most selections. Because the system is non-promotional, you don't need bonus bets or promo eligibility for it to work.</div></details>
         <details class="faq-item" data-reveal><summary>Is this suitable for beginners?</summary><div class="faq-answer">Yes, provided you're willing to follow instructions and manage your bankroll properly. Every bet comes with recommended units, so you always know how much to stake. This isn't a get-rich-quick service. It's a long-term, disciplined system.</div></details>
         <details class="faq-item" data-reveal><summary>What happens during a losing run?</summary><div class="faq-answer">Losing runs are part of racing, even with a genuine edge. The system works because we don't chase or change strategy after a bad week. We hold the line, keep staking controlled, track everything, and let the process play out over the full season.</div></details>
-        <details class="faq-item" data-reveal><summary>Can I cancel my membership?</summary><div class="faq-answer">Weekly and monthly plans can be cancelled anytime through your LaunchPass portal, and access stays active until the end of your current billing period. The Carnival Pass is a single payment with no renewal, so there's nothing to cancel.</div></details>
+        <details class="faq-item" data-reveal><summary>Can I cancel my membership?</summary><div class="faq-answer">Both plans can be cancelled anytime through your LaunchPass portal, and access stays active until the end of your current billing period. No lock-in.</div></details>
         <details class="faq-item" data-reveal><summary>Where can I see the results?</summary><div class="faq-answer">Last spring's full carnival record is published <a href="#record">on this page</a>: 487 bets, 601.86 units staked, +49.82 units profit at +8.3% ROI. This spring gets the same treatment: every bet is logged and graded in the member channels as it settles, wins and losses alike, exactly as FNF has published its AFL and NRL results for five years.</div></details>
       </div>
     </section>
@@ -1646,9 +1622,9 @@
 
   <!-- Sticky mobile CTA -->
   <div class="sticky-cta" id="sticky-cta">
-    <button class="btn btn-gold lp5185073053040640" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 340.00, currency: 'AUD', content_name: 'Racing Carnival Pass', content_category: 'Racing Package', content_ids: ['racing-carnival'], content_type: 'product' });">
-      <span>Get the Carnival Pass</span>
-      <span class="btn-price">$340 one-off</span>
+    <button class="btn btn-gold lp5468151011213312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 145.00, currency: 'AUD', content_name: 'Racing Monthly', content_category: 'Racing Package', content_ids: ['racing-monthly'], content_type: 'product' });">
+      <span>Join Racing Monthly</span>
+      <span class="btn-price">$145 / mo</span>
     </button>
   </div>
 
@@ -1719,8 +1695,7 @@
 
       var IFRAME_URLS = {
         'lp5053940233535488': 'https://www.launchpass.com/fnf-gainz/racing-weekly/iframe',
-        'lp5468151011213312': 'https://www.launchpass.com/fnf-gainz/racing-monthly/iframe',
-        'lp5185073053040640': 'https://www.launchpass.com/fnf-gainz/spring-carnival/iframe'
+        'lp5468151011213312': 'https://www.launchpass.com/fnf-gainz/racing-monthly/iframe'
       };
 
       var currentModal = null;
@@ -1799,8 +1774,7 @@
 
       var PKG_META = {
         'lp5053940233535488': { key: 'racing-weekly',   value: 45.00,  name: 'Racing Weekly' },
-        'lp5468151011213312': { key: 'racing-monthly',  value: 145.00, name: 'Racing Monthly' },
-        'lp5185073053040640': { key: 'racing-carnival', value: 340.00, name: 'Racing Carnival Pass' }
+        'lp5468151011213312': { key: 'racing-monthly',  value: 145.00, name: 'Racing Monthly' }
       };
 
       // Take total ownership of every Join button on mobile so LaunchPass
