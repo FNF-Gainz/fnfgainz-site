@@ -424,6 +424,83 @@
     }
 
     /* Cathedral mesh canvas. animated gradient blobs, screen-blended for a shader-like feel */
+    /* ==================== SEPTEMBER NFL BONUS BAR ==================== */
+    /* Dismissible sticky announcement strip at the very top. */
+    .promo-bar {
+      position: sticky;
+      top: 0;
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 46px 9px 18px;
+      background: linear-gradient(90deg, rgba(124, 58, 237, 0.22), rgba(6, 10, 24, 0.97) 32%, rgba(6, 10, 24, 0.97) 68%, rgba(0, 212, 255, 0.18));
+      border-bottom: 1px solid rgba(124, 58, 237, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .promo-bar[hidden] { display: none; }
+    .promo-bar-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .promo-pill {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #d4b5ff;
+      background: rgba(124, 58, 237, 0.22);
+      border: 1px solid rgba(124, 58, 237, 0.5);
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .promo-text {
+      font-size: 0.86rem;
+      color: var(--text-2);
+      letter-spacing: -0.005em;
+    }
+    .promo-text strong { color: var(--green-2); font-weight: 700; }
+    .promo-cta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #04121f;
+      background: var(--grad-cyan);
+      padding: 6px 14px;
+      border-radius: 8px;
+      white-space: nowrap;
+      transition: filter 0.15s ease;
+    }
+    .promo-bar-link:hover .promo-cta { filter: brightness(1.08); }
+    .promo-close {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--text-3);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 4px 8px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .promo-close:hover { color: var(--text); }
+    @media (max-width: 640px) {
+      .promo-bar { padding: 8px 40px 8px 12px; }
+      .promo-text { font-size: 0.78rem; }
+    }
+
     .mesh-canvas {
       position: fixed;
       inset: 0;
@@ -4843,6 +4920,29 @@
   <!-- GTM (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WGR2M6NF"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- September NFL bonus announcement bar (dismissible) -->
+  <div class="promo-bar" id="promo-bar">
+    <a href="#packages" class="promo-bar-link" onclick="var t=document.getElementById('packages');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth'});}">
+      <span class="promo-pill">&#127944; September Bonus</span>
+      <span class="promo-text">Free NFL tips from 2 expert tipsters, all month. <strong>Members up +8u in Week 1.</strong></span>
+      <span class="promo-cta">Join now &rarr;</span>
+    </a>
+    <button class="promo-close" id="promo-close" type="button" aria-label="Dismiss">&times;</button>
+  </div>
+  <script>
+    (function() {
+      var bar = document.getElementById('promo-bar');
+      var close = document.getElementById('promo-close');
+      if (!bar) return;
+      try { if (localStorage.getItem('fnf_promo_nfl_sep') === 'dismissed') { bar.hidden = true; return; } } catch (e) {}
+      if (close) close.addEventListener('click', function(e) {
+        e.preventDefault(); e.stopPropagation();
+        bar.hidden = true;
+        try { localStorage.setItem('fnf_promo_nfl_sep', 'dismissed'); } catch (_) {}
+      });
+    })();
+  </script>
 
   <canvas id="mesh-canvas" class="mesh-canvas" aria-hidden="true"></canvas>
   <div class="aurora" aria-hidden="true"></div>
