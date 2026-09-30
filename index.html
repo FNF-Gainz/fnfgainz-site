@@ -24,10 +24,10 @@
   <!-- End Google Tag Manager -->
 
   <title>FNF Gainz | Structured Sports Analysis. Facts Not Feelings.</title>
-  <meta name="description" content="Five years of publicly-tracked results across AFL, NRL, matched betting, and community strategies. Every bet posted in Discord with staking guidance and personal onboarding.">
+  <meta name="description" content="Five years of publicly-tracked results across AFL, NRL, racing, matched betting and community strategies. Every bet posted in Discord with staking guidance and personal onboarding.">
 
   <meta property="og:title" content="FNF Gainz | Structured Sports Analysis. Facts Not Feelings.">
-  <meta property="og:description" content="Five years of publicly-tracked results across AFL, NRL, matched betting, and community strategies. Every bet posted in Discord.">
+  <meta property="og:description" content="Five years of publicly-tracked results across AFL, NRL, racing, matched betting and community strategies. Every bet posted in Discord.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://fnfgainz.com/">
   <meta property="og:image" content="https://fnfgainz.com/assets/fnf-logo-main.png">
@@ -42,28 +42,23 @@
   <link rel="preconnect" href="https://www.launchpass.com">
   <link rel="dns-prefetch" href="https://www.launchpass.com">
 
-  <!-- LaunchPass embeds - all 5 packages preloaded so any Join button
-       has its handler ready before first tap on mobile. -->
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/afl/embed.js" fetchpriority="high">
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/champion/embed.js" fetchpriority="high">
+  <!-- LaunchPass embeds - every on-sale package preloaded so any Join
+       button has its handler ready before first tap on mobile.
+       AFL + Champion (afl, champion, afl-weekly, champion-weekly) are
+       OFF-SEASON and removed 2026-09-30; restore them from git history
+       for the 2027 season. -->
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/nrl/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/mb-sports/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/community/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/nrl-weekly/embed.js" fetchpriority="high">
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/afl-weekly/embed.js" fetchpriority="high">
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/champion-weekly/embed.js" fetchpriority="high">
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/afl/embed.js"></script>
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/champion/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/mb-sports/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/community/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl-weekly/embed.js"></script>
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/afl-weekly/embed.js"></script>
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/champion-weekly/embed.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
@@ -2799,6 +2794,28 @@
       line-height: 1.6;
     }
 
+    /* ==================== MEMBER STORIES (main page) ==================== */
+    /* Reuses the .testimonial card system above. Aligned to the 760px
+       membership column; no initials avatars; each card carries a sport
+       chip (colour = sport, matching the membership tiles) so the grid
+       stays honest as racing / NRL stories are added. */
+    .stories-grid {
+      max-width: 760px;
+      gap: 14px;
+    }
+    .stories-grid .testimonial { padding: 24px 24px 20px; }
+    .stories-grid .testimonial-quote { font-size: 1.02rem; margin-bottom: 16px; }
+    .stories-grid .testimonial-author { gap: 0; padding-top: 16px; }
+    .story-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .story-top .testimonial-badge { margin-bottom: 0; }
+    .story-top .mtag { font-size: 0.56rem; padding: 4px 8px; }
+    .stories-sub { margin-top: 14px; font-size: 0.98rem; }
+
     /* CLOSE */
     .close {
       max-width: 760px;
@@ -4989,23 +5006,15 @@
     <div class="mini-banner" aria-hidden="true">
       <div class="mini-banner-inner" id="mini-banner-inner">
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R14</span><span class="mini-banner-pos">+$839</span><span>46.7% ROI</span></span>
-        <span class="mini-banner-item"><span class="mini-banner-quote">"Made $27,500 from March to September."</span><span class="mini-banner-quote-author">Curtis</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R12</span><span class="mini-banner-pos">+$826</span><span>39.8% ROI</span></span>
-        <span class="mini-banner-item"><span class="mini-banner-quote">"$8k profit for the season."</span><span class="mini-banner-quote-author">Lorelius</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R15</span><span class="mini-banner-pos">+$665</span><span>36.2% ROI</span></span>
-        <span class="mini-banner-item"><span class="mini-banner-quote">"So much confidence in the picks."</span><span class="mini-banner-quote-author">iiDooblay</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R13</span><span class="mini-banner-pos">+$469</span><span>22.5% ROI</span></span>
-        <span class="mini-banner-item"><span class="mini-banner-quote">"Scaled to exponentially profitable levels."</span><span class="mini-banner-quote-author">Vitamin_GG</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round">All-time</span><span class="mini-banner-pos">+$44,759</span><span>5,940 bets</span></span>
         <!-- duplicated so the infinite scroll wraps seamlessly -->
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R14</span><span class="mini-banner-pos">+$839</span><span>46.7% ROI</span></span>
-        <span class="mini-banner-item"><span class="mini-banner-quote">"Made $27,500 from March to September."</span><span class="mini-banner-quote-author">Curtis</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R12</span><span class="mini-banner-pos">+$826</span><span>39.8% ROI</span></span>
-        <span class="mini-banner-item"><span class="mini-banner-quote">"$8k profit for the season."</span><span class="mini-banner-quote-author">Lorelius</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R15</span><span class="mini-banner-pos">+$665</span><span>36.2% ROI</span></span>
-        <span class="mini-banner-item"><span class="mini-banner-quote">"So much confidence in the picks."</span><span class="mini-banner-quote-author">iiDooblay</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round"><span class="mb-sport mb-afl">AFL</span> R13</span><span class="mini-banner-pos">+$469</span><span>22.5% ROI</span></span>
-        <span class="mini-banner-item"><span class="mini-banner-quote">"Scaled to exponentially profitable levels."</span><span class="mini-banner-quote-author">Vitamin_GG</span></span>
         <span class="mini-banner-item"><span class="mini-banner-round">All-time</span><span class="mini-banner-pos">+$44,759</span><span>5,940 bets</span></span>
       </div>
     </div>
@@ -5056,48 +5065,8 @@
            one line + Join, with Details linking to the full page. -->
       <div class="mgrid">
 
-        <!-- AFL (green) -->
-        <article class="mtile mtile--afl" data-reveal="up" data-reveal-delay="1">
-          <div class="mtile-top">
-            <span class="mdot mdot--green"></span>
-            <span class="mname">AFL</span>
-            <span class="mtag mtag--green">Flagship</span>
-          </div>
-          <div class="mprice"><span class="mprice-amt" id="afl-amt">$140</span><span class="mprice-per" id="afl-per">AUD / mo</span></div>
-          <p class="mdesc">Disposal-market system, 10-year record.</p>
-          <div class="plan-toggle plan-toggle--green" id="afl-toggle" role="group" aria-label="Choose an AFL plan">
-            <button type="button" class="plan-opt is-sel" data-plan="monthly">Monthly</button>
-            <button type="button" class="plan-opt" data-plan="weekly">Weekly</button>
-          </div>
-          <div class="mtile-foot">
-            <button class="mjoin mjoin--green afl-join is-active lp6640832616333312" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">Join AFL</button>
-            <button class="mjoin mjoin--green afl-join lp5732019967754240" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 50.00, currency: 'AUD', content_name: 'AFL Weekly', content_category: 'AFL Package', content_ids: ['afl-weekly'], content_type: 'product' });">Join AFL</button>
-            <a href="/afl/" class="mdetails">Details &rarr;</a>
-          </div>
-        </article>
-
-        <!-- Champion -->
-        <article class="mtile mtile--champion" data-reveal="up" data-reveal-delay="2">
-          <div class="mtile-top">
-            <span class="mdot mdot--gold"></span>
-            <span class="mname">Champion</span>
-            <span class="mtag mtag--gold">Best value</span>
-          </div>
-          <div class="mprice"><span class="mprice-amt" id="champion-amt">$200</span><span class="mprice-per" id="champion-per">AUD / mo</span></div>
-          <p class="mdesc">AFL + NRL combined. Save $80/mo.</p>
-          <div class="plan-toggle plan-toggle--gold" id="champion-toggle" role="group" aria-label="Choose a Champion plan">
-            <button type="button" class="plan-opt is-sel" data-plan="monthly">Monthly</button>
-            <button type="button" class="plan-opt" data-plan="weekly">Weekly</button>
-          </div>
-          <div class="mtile-foot">
-            <button class="mjoin mjoin--gold champion-join is-active lp4572582037028864" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">Join Champion</button>
-            <button class="mjoin mjoin--gold champion-join lp6453297716527104" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 75.00, currency: 'AUD', content_name: 'Champion Weekly', content_category: 'Champion', content_ids: ['champion-weekly'], content_type: 'product' });">Join Champion</button>
-            <a href="https://www.launchpass.com/fnf-gainz/champion" target="_blank" rel="noopener noreferrer" class="mdetails">Details &rarr;</a>
-          </div>
-        </article>
-
         <!-- Racing (yellow, plan picker) -->
-        <article class="mtile mtile--racing" data-reveal="up" data-reveal-delay="3">
+        <article class="mtile mtile--racing" data-reveal="up" data-reveal-delay="1">
           <div class="mtile-top">
             <span class="mdot mdot--yellow"></span>
             <span class="mname">Racing</span>
@@ -5117,7 +5086,7 @@
         </article>
 
         <!-- NRL (red, plan picker, hot streak) -->
-        <article class="mtile mtile--nrl" data-reveal="up" data-reveal-delay="4">
+        <article class="mtile mtile--nrl" data-reveal="up" data-reveal-delay="2">
           <div class="mtile-top">
             <span class="mdot mdot--red"></span>
             <span class="mname">NRL</span>
@@ -5137,7 +5106,7 @@
         </article>
 
         <!-- Matched Betting -->
-        <article class="mtile" data-reveal="up" data-reveal-delay="5">
+        <article class="mtile" data-reveal="up" data-reveal-delay="3">
           <div class="mtile-top">
             <span class="mdot mdot--violet"></span>
             <span class="mname">Matched Betting</span>
@@ -5151,7 +5120,7 @@
         </article>
 
         <!-- Community -->
-        <article class="mtile" data-reveal="up" data-reveal-delay="6">
+        <article class="mtile" data-reveal="up" data-reveal-delay="4">
           <div class="mtile-top">
             <span class="mdot mdot--slate"></span>
             <span class="mname">Community</span>
@@ -5190,14 +5159,6 @@
               });
             });
           }
-          initToggle('afl-toggle', 'afl-amt', 'afl-per', 'afl-join', {
-            monthly: { amt: '$140', per: 'AUD / mo' },
-            weekly:  { amt: '$50',  per: '/ wk' }
-          });
-          initToggle('champion-toggle', 'champion-amt', 'champion-per', 'champion-join', {
-            monthly: { amt: '$200', per: 'AUD / mo' },
-            weekly:  { amt: '$75',  per: '/ wk' }
-          });
           initToggle('racing-toggle', 'racing-amt', 'racing-per', 'racing-join', {
             monthly: { amt: '$145', per: 'AUD / mo' },
             weekly:  { amt: '$45',  per: '/ wk' }
@@ -5216,6 +5177,78 @@
         <span>&middot;</span>
         <span>18+ only</span>
       </div>
+    </section>
+
+    <!-- MEMBER STORIES. Testimonials posted by members in the FNF Discord,
+         moved out of the scrolling banner 2026-09-30. Member wording is kept
+         as posted (trimmed, never rewritten). Sport chip colour matches the
+         membership tiles: AFL green, NRL red, Racing yellow. -->
+    <section class="section section--tight-top" id="member-stories">
+      <div class="section-head compact-head">
+        <span class="section-eyebrow" data-reveal="pill">Member stories</span>
+        <h2 class="section-title compact-title" data-reveal-words>In their own words.</h2>
+        <p class="section-sub stories-sub" data-reveal="up">Shared by members in the FNF Discord.</p>
+      </div>
+
+      <div class="testimonials stories-grid">
+        <article class="testimonial testimonial--green" data-tilt data-reveal="deal" data-reveal-delay="1">
+          <div class="story-top">
+            <span class="testimonial-badge"><span class="testimonial-badge-value">+$27,500</span> March to September</span>
+            <span class="mtag mtag--green">AFL</span>
+          </div>
+          <p class="testimonial-quote">"Following the system through a full season completely changed how I approach betting."</p>
+          <div class="testimonial-author">
+            <div>
+              <div class="testimonial-author-name">Curtis</div>
+              <div class="testimonial-author-role">Member since 2022</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial testimonial--green" data-tilt data-reveal="deal-right" data-reveal-delay="2">
+          <div class="story-top">
+            <span class="testimonial-badge"><span class="testimonial-badge-value">Multiple seasons</span></span>
+            <span class="mtag mtag--green">AFL</span>
+          </div>
+          <p class="testimonial-quote">"So much confidence in the picks knowing the high level of research and analysis done beforehand."</p>
+          <div class="testimonial-author">
+            <div>
+              <div class="testimonial-author-name">iiDooblay</div>
+              <div class="testimonial-author-role">Ongoing member</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial testimonial--green" data-tilt data-reveal="deal" data-reveal-delay="3">
+          <div class="story-top">
+            <span class="testimonial-badge"><span class="testimonial-badge-value">+$8,000</span> Full season</span>
+            <span class="mtag mtag--green">AFL</span>
+          </div>
+          <p class="testimonial-quote">"Personally around $8k profit for the season. Couldn't recommend the AFL package more."</p>
+          <div class="testimonial-author">
+            <div>
+              <div class="testimonial-author-name">Lorelius</div>
+              <div class="testimonial-author-role">Full-season member</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial testimonial--green" data-tilt data-reveal="deal-right" data-reveal-delay="4">
+          <div class="story-top">
+            <span class="testimonial-badge"><span class="testimonial-badge-value">Scaled up</span></span>
+            <span class="mtag mtag--green">AFL</span>
+          </div>
+          <p class="testimonial-quote">"With the mountain of work FNF puts in I was easily able to scale to exponentially profitable levels."</p>
+          <div class="testimonial-author">
+            <div>
+              <div class="testimonial-author-name">Vitamin_GG</div>
+              <div class="testimonial-author-role">Long-term member</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p class="testimonials-disclaimer">Individual results vary. Past performance does not guarantee future results. Betting carries risk and losing periods are part of the process.</p>
     </section>
 
     <footer class="footer">
@@ -5239,24 +5272,12 @@
   </main>
 
 
-  <!-- Recent activity toast -->
-  <div class="activity-toast" id="activity-toast" role="status" aria-live="polite">
-    <div class="activity-toast-avatar" id="activity-toast-avatar" aria-hidden="true">C</div>
-    <div class="activity-toast-content">
-      <div class="activity-toast-text" id="activity-toast-text">
-        <strong>Curtis</strong> just joined AFL Premium
-      </div>
-      <div class="activity-toast-time" id="activity-toast-time">Just now</div>
-    </div>
-    <button class="activity-toast-close" id="activity-toast-close" aria-label="Dismiss">&times;</button>
-  </div>
-
   <!-- Sticky mobile CTA. Smooth-scrolls to the storefront WITHOUT
        leaving #packages in the URL (which would make reloads jump). -->
   <div class="sticky-cta" id="sticky-cta">
     <a href="#packages" class="btn btn-primary" onclick="var t=document.getElementById('packages');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth'});}">
       <span>See Memberships</span>
-      <span class="btn-price">6 packages</span>
+      <span class="btn-price">4 packages</span>
     </a>
   </div>
 
@@ -5270,12 +5291,8 @@
       var inner = document.getElementById('mini-banner-inner');
       if (!inner) return;
 
-      var TESTIMONIALS = [
-        { quote: '"Made $27,500 from March to September."',      author: 'Curtis' },
-        { quote: '"$8k profit for the season."', author: 'Lorelius' },
-        { quote: '"So much confidence in the picks."',           author: 'iiDooblay' },
-        { quote: '"Scaled to exponentially profitable levels."', author: 'Vitamin_GG' }
-      ];
+      // Member testimonials moved out of the banner into their own
+      // "Member stories" section below the memberships (2026-09-30).
 
       // NRL results are maintained here by hand until an NRL data feed
       // exists (AFL pulls live from Charlie's Vercel endpoint below; NRL
@@ -5295,7 +5312,7 @@
         var wins = (afl && Array.isArray(afl.recentRounds))
           ? afl.recentRounds.filter(function(r){ return Number(r.profit) > 0; }).reverse().slice(0, 4)
           : [];
-        var maxLen = Math.max(wins.length, TESTIMONIALS.length, NRL_ITEMS.length);
+        var maxLen = Math.max(wins.length, NRL_ITEMS.length);
         for (var i = 0; i < maxLen; i++) {
           if (wins[i]) {
             var r = wins[i];
@@ -5314,15 +5331,6 @@
                 '<span class="mini-banner-round"><span class="mb-sport mb-nrl">NRL</span> ' + n.wk + '</span>' +
                 '<span class="mini-banner-pos">' + n.pos + '</span>' +
                 '<span>' + n.note + '</span>' +
-              '</span>'
-            );
-          }
-          if (TESTIMONIALS[i]) {
-            var t = TESTIMONIALS[i];
-            items.push(
-              '<span class="mini-banner-item">' +
-                '<span class="mini-banner-quote">' + t.quote + '</span>' +
-                '<span class="mini-banner-quote-author">' + t.author + '</span>' +
               '</span>'
             );
           }
@@ -5380,16 +5388,12 @@
       if (!isMobile) return;
 
       var PACKAGES = [
-        { cls: 'lp6640832616333312', url: 'https://www.launchpass.com/fnf-gainz/afl/iframe',       key: 'afl',       value: 140.00, name: 'AFL Package' },
-        { cls: 'lp4572582037028864', url: 'https://www.launchpass.com/fnf-gainz/champion/iframe',  key: 'champion',  value: 200.00, name: 'Champion AFL + NRL' },
         { cls: 'lp6311659934711808', url: 'https://www.launchpass.com/fnf-gainz/nrl/iframe',       key: 'nrl',       value: 109.99, name: 'NRL Package' },
         { cls: 'lp4657629529505792', url: 'https://www.launchpass.com/fnf-gainz/mb-sports/iframe', key: 'mb',        value: 100.00, name: 'Matched Betting Package' },
         { cls: 'lp6290145106329600', url: 'https://www.launchpass.com/fnf-gainz/community/iframe', key: 'community', value:  25.00, name: 'Community Membership' },
         { cls: 'lp5053940233535488', url: 'https://www.launchpass.com/fnf-gainz/racing-weekly/iframe',   key: 'racing-weekly',   value:  45.00, name: 'Racing Weekly' },
         { cls: 'lp5468151011213312', url: 'https://www.launchpass.com/fnf-gainz/racing-monthly/iframe',  key: 'racing-monthly',  value: 145.00, name: 'Racing Monthly' },
-        { cls: 'lp5183312981524480', url: 'https://www.launchpass.com/fnf-gainz/nrl-weekly/iframe',      key: 'nrl-weekly',      value:  40.00, name: 'NRL Weekly' },
-        { cls: 'lp5732019967754240', url: 'https://www.launchpass.com/fnf-gainz/afl-weekly/iframe',      key: 'afl-weekly',      value:  50.00, name: 'AFL Weekly' },
-        { cls: 'lp6453297716527104', url: 'https://www.launchpass.com/fnf-gainz/champion-weekly/iframe', key: 'champion-weekly', value:  75.00, name: 'Champion Weekly' }
+        { cls: 'lp5183312981524480', url: 'https://www.launchpass.com/fnf-gainz/nrl-weekly/iframe',      key: 'nrl-weekly',      value:  40.00, name: 'NRL Weekly' }
       ];
 
       var currentModal = null;
@@ -5772,70 +5776,6 @@
           }
         })
         .catch(function() {});
-    })();
-  </script>
-
-  <!-- Recent activity toast rotator -->
-  <script>
-    (function() {
-      var toast = document.getElementById('activity-toast');
-      if (!toast) return;
-      var textEl = document.getElementById('activity-toast-text');
-      var timeEl = document.getElementById('activity-toast-time');
-      var avatarEl = document.getElementById('activity-toast-avatar');
-      var closeBtn = document.getElementById('activity-toast-close');
-      var hero = document.querySelector('.hero');
-      if (!textEl || !timeEl || !avatarEl || !hero) return;
-
-      // Only real, verifiable events: round results already published on the public dashboard,
-      // and Discord posts that actually happened. No fabricated signups.
-      var activities = [
-        { name: 'R17 result',   action: 'posted. <strong>+$122</strong> / +2.4u / 5.1% ROI',   time: 'Last round',    avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
-        { name: 'R14 result',   action: 'posted. <strong>+$839</strong> / +16.8u / 46.7% ROI', time: 'Round 14',      avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
-        { name: 'R12 result',   action: 'posted. <strong>+$826</strong> / +16.5u / 39.8% ROI', time: 'Round 12',      avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
-        { name: 'R15 result',   action: 'posted. <strong>+$665</strong> / +13.3u / 36.2% ROI', time: 'Round 15',      avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
-        { name: 'R13 result',   action: 'posted. <strong>+$469</strong> / +9.4u / 22.5% ROI',  time: 'Round 13',      avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
-        { name: 'Season 2026',  action: 'running at <strong>+$4,754</strong> / +95.1u / 14.5% ROI', time: 'In progress',   avatar: 'S', color: 'linear-gradient(135deg, #00d4ff, #3b82f6)' },
-        { name: 'All-time',     action: 'sitting at <strong>+$44,759</strong> / +895.2u / 18.3% ROI', time: 'Since 2022',    avatar: 'A', color: 'linear-gradient(135deg, #a78bfa, #7c3aed)' }
-      ];
-      var index = 0;
-      var dismissed = false;
-      var timer = null;
-
-      function show(activity) {
-        textEl.innerHTML = '<strong>' + activity.name + '</strong> ' + activity.action;
-        timeEl.textContent = activity.time;
-        avatarEl.textContent = activity.avatar;
-        avatarEl.style.background = activity.color;
-        toast.classList.add('is-visible');
-      }
-      function hide() {
-        toast.classList.remove('is-visible');
-      }
-      function cycle() {
-        if (dismissed) return;
-        show(activities[index]);
-        setTimeout(hide, 5500);
-        index = (index + 1) % activities.length;
-        timer = setTimeout(cycle, 12000);
-      }
-
-      closeBtn.addEventListener('click', function() {
-        dismissed = true;
-        hide();
-        if (timer) clearTimeout(timer);
-      });
-
-      // Start after hero has been scrolled past
-      function checkStart() {
-        if (dismissed) return;
-        var heroBottom = hero.getBoundingClientRect().bottom;
-        if (heroBottom < 0) {
-          window.removeEventListener('scroll', checkStart);
-          setTimeout(cycle, 800);
-        }
-      }
-      window.addEventListener('scroll', checkStart, { passive: true });
     })();
   </script>
 
