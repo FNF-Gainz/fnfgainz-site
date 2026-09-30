@@ -4222,6 +4222,20 @@
 
     /* Slim "read before you join" bar, sits just under the packages
        heading. One line, full-width to the grid. */
+    /* Read Before You Join + Public Results: two identical bars side by
+       side across the 760px membership column. */
+    .readfirst-row {
+      display: flex;
+      gap: 12px;
+      max-width: 760px;
+      margin: 0 auto 16px;
+    }
+    .readfirst-row .readfirst { flex: 1 1 0; min-width: 0; margin: 0; }
+    @media (max-width: 480px) {
+      .readfirst-row { gap: 10px; }
+      .readfirst-row .readfirst { padding: 11px 12px; gap: 9px; }
+      .readfirst-row .readfirst-title { font-size: 0.84rem; line-height: 1.2; }
+    }
     .readfirst {
       display: flex;
       align-items: center;
@@ -5019,31 +5033,6 @@
       </div>
     </div>
 
-    <!-- QUICK LINKS (moved to top - compact row above packages) -->
-    <section class="quick-links-section quick-links-section--top">
-      <div class="quick-links quick-links--compact">
-        <a href="https://app.fnfgainz.com/brownlow" target="_blank" rel="noopener noreferrer" class="quick-link quick-link--free">
-          <div class="quick-link-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="15" r="6"/><path d="M9 15l1 5 2-1.5L14 20l1-5"/><path d="M8.5 9.5L5 3"/><path d="M15.5 9.5L19 3"/><path d="M12 8V3"/></svg>
-          </div>
-          <div class="quick-link-body">
-            <div class="quick-link-tag">Free</div>
-            <div class="quick-link-title">Official Brownlow Dashboard (all markets)</div>
-          </div>
-          <svg class="quick-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-        <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="quick-link">
-          <div class="quick-link-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="7 12 12 7 16 11 21 6"/></svg>
-          </div>
-          <div class="quick-link-body">
-            <div class="quick-link-title">Public Results</div>
-          </div>
-          <svg class="quick-link-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </a>
-      </div>
-    </section>
-
     <!-- PACKAGES -->
     <section class="section section--tight-top" id="packages">
       <div class="section-head compact-head">
@@ -5054,12 +5043,19 @@
         </div>
       </div>
 
-      <!-- Read-first bar, directly under the heading -->
-      <a href="https://admitted-vinyl-11b.notion.site/BEFORE-YOU-JOIN-FNF-GAINZ-PLEASE-READ-2f015b7a5a1d80c883f5c2278dcf9ee3" target="_blank" rel="noopener noreferrer" class="readfirst">
-        <span class="readfirst-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
-        <span class="readfirst-title">Read Before You Join</span>
-        <svg class="readfirst-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
+      <!-- Read-first + Public Results bars, side by side under the heading -->
+      <div class="readfirst-row">
+        <a href="https://admitted-vinyl-11b.notion.site/BEFORE-YOU-JOIN-FNF-GAINZ-PLEASE-READ-2f015b7a5a1d80c883f5c2278dcf9ee3" target="_blank" rel="noopener noreferrer" class="readfirst">
+          <span class="readfirst-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+          <span class="readfirst-title">Read Before You Join</span>
+          <svg class="readfirst-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+        <a href="https://app.klipfolio.com/published/6a7c0fc65395ac675097d9aa013745e0/fnf-gainz" target="_blank" rel="noopener noreferrer" class="readfirst">
+          <span class="readfirst-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="7 12 12 7 16 11 21 6"/></svg></span>
+          <span class="readfirst-title">Public Results</span>
+          <svg class="readfirst-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
 
       <!-- Compact 2-up membership grid. Trimmed cards: name + price +
            one line + Join, with Details linking to the full page. -->
@@ -5181,8 +5177,8 @@
 
     <!-- MEMBER STORIES. Testimonials posted by members in the FNF Discord,
          moved out of the scrolling banner 2026-09-30. Member wording is kept
-         as posted (trimmed, never rewritten). Sport chip colour matches the
-         membership tiles: AFL green, NRL red, Racing yellow. -->
+         as posted (trimmed, never rewritten). No sport chips: the section
+         speaks for FNF as a whole. -->
     <section class="section section--tight-top" id="member-stories">
       <div class="section-head compact-head">
         <span class="section-eyebrow" data-reveal="pill">Member stories</span>
@@ -5191,10 +5187,9 @@
       </div>
 
       <div class="testimonials stories-grid">
-        <article class="testimonial testimonial--green" data-tilt data-reveal="deal" data-reveal-delay="1">
+        <article class="testimonial testimonial--cyan" data-tilt data-reveal="deal" data-reveal-delay="1">
           <div class="story-top">
             <span class="testimonial-badge"><span class="testimonial-badge-value">+$27,500</span> March to September</span>
-            <span class="mtag mtag--green">AFL</span>
           </div>
           <p class="testimonial-quote">"Following the system through a full season completely changed how I approach betting."</p>
           <div class="testimonial-author">
@@ -5205,10 +5200,9 @@
           </div>
         </article>
 
-        <article class="testimonial testimonial--green" data-tilt data-reveal="deal-right" data-reveal-delay="2">
+        <article class="testimonial testimonial--violet" data-tilt data-reveal="deal-right" data-reveal-delay="2">
           <div class="story-top">
             <span class="testimonial-badge"><span class="testimonial-badge-value">Multiple seasons</span></span>
-            <span class="mtag mtag--green">AFL</span>
           </div>
           <p class="testimonial-quote">"So much confidence in the picks knowing the high level of research and analysis done beforehand."</p>
           <div class="testimonial-author">
@@ -5219,10 +5213,9 @@
           </div>
         </article>
 
-        <article class="testimonial testimonial--green" data-tilt data-reveal="deal" data-reveal-delay="3">
+        <article class="testimonial testimonial--gold" data-tilt data-reveal="deal" data-reveal-delay="3">
           <div class="story-top">
             <span class="testimonial-badge"><span class="testimonial-badge-value">+$8,000</span> Full season</span>
-            <span class="mtag mtag--green">AFL</span>
           </div>
           <p class="testimonial-quote">"Personally around $8k profit for the season. Couldn't recommend the AFL package more."</p>
           <div class="testimonial-author">
@@ -5236,7 +5229,6 @@
         <article class="testimonial testimonial--green" data-tilt data-reveal="deal-right" data-reveal-delay="4">
           <div class="story-top">
             <span class="testimonial-badge"><span class="testimonial-badge-value">Scaled up</span></span>
-            <span class="mtag mtag--green">AFL</span>
           </div>
           <p class="testimonial-quote">"With the mountain of work FNF puts in I was easily able to scale to exponentially profitable levels."</p>
           <div class="testimonial-author">
