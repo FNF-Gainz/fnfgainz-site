@@ -34,14 +34,13 @@
   <!-- LaunchPass embeds. Preloaded at high priority so the browser fetches
        them immediately after the connection is warm, then executed via
        defer script tags. Handlers are ready well before DOMContentLoaded. -->
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/afl/embed.js" fetchpriority="high">
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/champion/embed.js" fetchpriority="high">
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/afl-weekly/embed.js" fetchpriority="high">
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/champion-weekly/embed.js" fetchpriority="high">
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/afl/embed.js"></script>
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/champion/embed.js"></script>
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/afl-weekly/embed.js"></script>
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/champion-weekly/embed.js"></script>
+
+  <!-- AFL off-season (2026-10-01): AFL + Champion packages are Hidden in
+       LaunchPass, so this page sells FNF Global until AFL 2027. -->
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/fnf-global/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/fnf-global-weekly/embed.js" fetchpriority="high">
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/fnf-global/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/fnf-global-weekly/embed.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 
@@ -3512,8 +3511,17 @@
     .plan-opt:hover { color: var(--text); }
     .plan-toggle--cyan .plan-opt.is-sel { background: var(--cyan); color: #04121f; }
     .plan-toggle--gold .plan-opt.is-sel { background: linear-gradient(135deg, #ffbb47, #ff9500); color: #1a1000; }
-    .compare-cta .afl-join, .compare-cta .champion-join { display: none; }
-    .compare-cta .afl-join.is-active, .compare-cta .champion-join.is-active { display: inline-flex; }
+    .compare-cta .afl-join, .compare-cta .champion-join, .compare-cta .global-join { display: none; }
+    .compare-cta .afl-join.is-active, .compare-cta .champion-join.is-active, .compare-cta .global-join.is-active { display: inline-flex; }
+    .compare--single { grid-template-columns: 1fr; max-width: 480px; }
+    .hero-offseason {
+      width: 100%;
+      text-align: left;
+      margin: 0 0 4px;
+      font-size: 0.92rem;
+      color: var(--text-2);
+    }
+    .hero-offseason strong { color: var(--cyan-2); font-weight: 700; }
 
     .compare-note {
       font-family: var(--font-mono);
@@ -3917,26 +3925,26 @@
                 <span class="round-pill-value--pos" data-stat="latestRound.units">+2.4u</span>
               </span>
             </div>
-            <div class="round-pill round-pill--next" id="next-round-pill">
+            <div class="round-pill round-pill--next">
               <span class="round-pill-dot"></span>
-              <span class="round-pill-label">Next</span>
+              <span class="round-pill-label">2026</span>
               <span class="round-pill-values">
-                <span class="round-pill-round" data-stat="nextRound.round">R17</span>
-                <span class="round-pill-kickoff" data-nextround-kickoff>Thu 7:20pm AEST</span>
-                <span class="round-pill-timer" data-nextround-timer>&nbsp;</span>
+                <span class="round-pill-round">Season complete</span>
+                <span class="round-pill-value--pos"><span data-stat="season2026.units">+130.5</span>u</span>
               </span>
             </div>
           </div>
 
           <div class="hero-cta-row">
+            <p class="hero-offseason">AFL is in the off-season. <strong>FNF Global</strong> keeps you covered until 2027.</p>
             <div class="hero-cta-buttons">
-              <button data-cursor="Join AFL" class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
-                <span>Join AFL Premium</span>
-                <span class="btn-price">$140 AUD / mo</span>
+              <button data-cursor="Join Global" class="btn btn-primary lp5370966829301760" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 110.00, currency: 'AUD', content_name: 'FNF Global', content_category: 'FNF Global', content_ids: ['fnf-global'], content_type: 'product' });">
+                <span>Join FNF Global</span>
+                <span class="btn-price">$110 AUD / mo</span>
               </button>
-              <button data-cursor="Weekly" class="hero-weekly lp5732019967754240" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 50.00, currency: 'AUD', content_name: 'AFL Weekly', content_category: 'AFL Package', content_ids: ['afl-weekly'], content_type: 'product' });">
+              <button data-cursor="Weekly" class="hero-weekly lp6612655900327936" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 40.00, currency: 'AUD', content_name: 'FNF Global Weekly', content_category: 'FNF Global', content_ids: ['fnf-global-weekly'], content_type: 'product' });">
                 <span class="hw-label">Weekly</span>
-                <span class="hw-price">$50 / wk</span>
+                <span class="hw-price">$40 / wk</span>
               </button>
             </div>
             <span class="hero-trust">5 years of member trust &middot; Cancel anytime</span>
@@ -4451,73 +4459,42 @@
         <div class="section-index" data-reveal="down" aria-hidden="true">06</div>
       </div>
       <div class="close">
-        <h2 class="close-title" data-reveal="rise">Choose your <span class="accent">system</span>.</h2>
-        <p class="close-sub" data-reveal="up" data-reveal-delay="3">One AFL-only package. One combined AFL + NRL package. Cancel either any time.</p>
+        <h2 class="close-title" data-reveal="rise">AFL returns in <span class="accent">2027</span>.</h2>
+        <p class="close-sub" data-reveal="up" data-reveal-delay="3">Until then, FNF Global keeps members covered all off-season. Cancel any time.</p>
 
-        <div class="compare">
+        <div class="compare compare--single">
 
-          <article class="compare-card compare-card--featured" data-reveal="left" data-reveal-delay="4">
-            <span class="compare-tag compare-tag--recommended">Recommended</span>
-            <div class="compare-name">AFL Premium</div>
-            <p class="compare-sub">The full AFL system in your private Discord.</p>
+          <article class="compare-card compare-card--featured" data-reveal="up" data-reveal-delay="4">
+            <span class="compare-tag compare-tag--recommended">Off-season membership</span>
+            <div class="compare-name">FNF Global</div>
+            <p class="compare-sub">Six services, one membership.</p>
             <div class="compare-price">
-              <span class="compare-price-amount" id="afl-amt">$140</span>
-              <span class="compare-price-period" id="afl-per">AUD / mo</span>
+              <span class="compare-price-amount" id="global-amt">$110</span>
+              <span class="compare-price-period" id="global-per">AUD / mo</span>
             </div>
-            <div class="plan-toggle plan-toggle--cyan" id="afl-toggle" role="group" aria-label="Choose an AFL plan">
+            <div class="plan-toggle plan-toggle--cyan" id="global-toggle" role="group" aria-label="Choose an FNF Global plan">
               <button type="button" class="plan-opt is-sel" data-plan="monthly">Monthly</button>
               <button type="button" class="plan-opt" data-plan="weekly">Weekly</button>
             </div>
             <ul class="compare-features">
-              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Every AFL bet posted live in Discord</li>
-              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Round breakdowns Thursday to Sunday</li>
-              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Personal onboarding &amp; unit sizing</li>
-              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Weekly reports &amp; public dashboard</li>
-              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Cancel anytime, no lock-in</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>NFL bets every game week</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>E-Sports bets across the major events</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>EV bets across sports</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Racing Bot alerts</li>
+              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Matched Betting guides and promo walkthroughs</li>
+              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>NBA EV picks once the NBA season starts</li>
             </ul>
             <div class="compare-cta">
-              <button data-cursor="Join AFL" class="btn btn-primary afl-join is-active lp6640832616333312" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
-                <span>Join AFL Premium</span>
-                <span class="btn-price">$140 / mo</span>
+              <button data-cursor="Join Global" class="btn btn-primary global-join is-active lp5370966829301760" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 110.00, currency: 'AUD', content_name: 'FNF Global', content_category: 'FNF Global', content_ids: ['fnf-global'], content_type: 'product' });">
+                <span>Join FNF Global</span>
+                <span class="btn-price">$110 / mo</span>
               </button>
-              <button data-cursor="Join AFL" class="btn btn-primary afl-join lp5732019967754240" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 50.00, currency: 'AUD', content_name: 'AFL Weekly', content_category: 'AFL Package', content_ids: ['afl-weekly'], content_type: 'product' });">
-                <span>Join AFL Premium</span>
-                <span class="btn-price">$50 / wk</span>
-              </button>
-            </div>
-            <div class="compare-note">5 years of member trust</div>
-          </article>
-
-          <article class="compare-card" data-reveal="right" data-reveal-delay="5">
-            <span class="compare-tag compare-tag--upgrade">Full Coverage</span>
-            <div class="compare-name">Champion</div>
-            <p class="compare-sub">The full AFL system + the full NRL system.</p>
-            <div class="compare-price">
-              <span class="compare-price-amount" id="champion-amt">$200</span>
-              <span class="compare-price-period" id="champion-per">AUD / mo</span>
-            </div>
-            <div class="plan-toggle plan-toggle--gold" id="champion-toggle" role="group" aria-label="Choose a Champion plan">
-              <button type="button" class="plan-opt is-sel" data-plan="monthly">Monthly</button>
-              <button type="button" class="plan-opt" data-plan="weekly">Weekly</button>
-            </div>
-            <ul class="compare-features">
-              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Everything in AFL Premium</li>
-              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Full NRL system, side by side</li>
-              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Separate staking per code</li>
-              <li class="compare-feature compare-feature--upgrade"><span class="compare-feature-check">&#43;</span>Combined season dashboard</li>
-              <li class="compare-feature"><span class="compare-feature-check">&#10003;</span>Save $80/mo vs both separately</li>
-            </ul>
-            <div class="compare-cta">
-              <button data-cursor="See Champion" class="btn btn-gold champion-join is-active lp4572582037028864" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 200.00, currency: 'AUD', content_name: 'Champion AFL + NRL' });">
-                <span>Join Champion</span>
-                <span class="btn-price">$200 / mo</span>
-              </button>
-              <button data-cursor="See Champion" class="btn btn-gold champion-join lp6453297716527104" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 75.00, currency: 'AUD', content_name: 'Champion Weekly', content_category: 'Champion', content_ids: ['champion-weekly'], content_type: 'product' });">
-                <span>Join Champion</span>
-                <span class="btn-price">$75 / wk</span>
+              <button data-cursor="Join Global" class="btn btn-primary global-join lp6612655900327936" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 40.00, currency: 'AUD', content_name: 'FNF Global Weekly', content_category: 'FNF Global', content_ids: ['fnf-global-weekly'], content_type: 'product' });">
+                <span>Join FNF Global</span>
+                <span class="btn-price">$40 / wk</span>
               </button>
             </div>
-            <div class="compare-note">Following both codes? Best value</div>
+            <div class="compare-note">AFL Premium returns for the 2027 season</div>
           </article>
 
         </div>
@@ -4580,23 +4557,11 @@
     </article>
   </div>
 
-  <!-- Recent activity toast -->
-  <div class="activity-toast" id="activity-toast" role="status" aria-live="polite">
-    <div class="activity-toast-avatar" id="activity-toast-avatar" aria-hidden="true">C</div>
-    <div class="activity-toast-content">
-      <div class="activity-toast-text" id="activity-toast-text">
-        <strong>Curtis</strong> just joined AFL Premium
-      </div>
-      <div class="activity-toast-time" id="activity-toast-time">Just now</div>
-    </div>
-    <button class="activity-toast-close" id="activity-toast-close" aria-label="Dismiss">&times;</button>
-  </div>
-
   <!-- Sticky mobile CTA -->
   <div class="sticky-cta" id="sticky-cta">
-    <button data-cursor="Join AFL" class="btn btn-primary lp6640832616333312" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 140.00, currency: 'AUD', content_name: 'AFL Package' });">
-      <span>Join AFL Premium</span>
-      <span class="btn-price">$140 AUD / mo</span>
+    <button data-cursor="Join Global" class="btn btn-primary lp5370966829301760" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 110.00, currency: 'AUD', content_name: 'FNF Global', content_category: 'FNF Global', content_ids: ['fnf-global'], content_type: 'product' });">
+      <span>Join FNF Global</span>
+      <span class="btn-price">$110 AUD / mo</span>
     </button>
   </div>
 
@@ -4616,10 +4581,8 @@
       if (!isMobile) return;
 
       var IFRAME_URLS = {
-        'lp6640832616333312': 'https://www.launchpass.com/fnf-gainz/afl/iframe',
-        'lp4572582037028864': 'https://www.launchpass.com/fnf-gainz/champion/iframe',
-        'lp5732019967754240': 'https://www.launchpass.com/fnf-gainz/afl-weekly/iframe',
-        'lp6453297716527104': 'https://www.launchpass.com/fnf-gainz/champion-weekly/iframe'
+        'lp5370966829301760': 'https://www.launchpass.com/fnf-gainz/fnf-global/iframe',
+        'lp6612655900327936': 'https://www.launchpass.com/fnf-gainz/fnf-global-weekly/iframe'
       };
 
       var currentModal = null;
@@ -4709,10 +4672,8 @@
 
       // Data table for both packages so we bind one code path.
       var PKG_META = {
-        'lp6640832616333312': { key: 'afl',             value: 140.00, name: 'AFL Package' },
-        'lp4572582037028864': { key: 'champion',        value: 200.00, name: 'Champion AFL + NRL' },
-        'lp5732019967754240': { key: 'afl-weekly',      value:  50.00, name: 'AFL Weekly' },
-        'lp6453297716527104': { key: 'champion-weekly', value:  75.00, name: 'Champion Weekly' }
+        'lp5370966829301760': { key: 'fnf-global',        value: 110.00, name: 'FNF Global' },
+        'lp6612655900327936': { key: 'fnf-global-weekly', value:  40.00, name: 'FNF Global Weekly' }
       };
 
       // Take total ownership of every Join button on mobile so LaunchPass
@@ -4770,7 +4731,7 @@
     })();
   </script>
 
-  <!-- Monthly/Weekly plan toggles on the AFL + Champion compare cards.
+  <!-- Monthly/Weekly plan toggle on the FNF Global compare card (off-season).
        Selecting a plan swaps the price display and the active checkout
        button; each plan keeps its own LaunchPass class so the desktop
        embed + mobile takeover both bind. -->
@@ -4794,13 +4755,9 @@
           });
         });
       }
-      initToggle('afl-toggle', 'afl-amt', 'afl-per', 'afl-join', {
-        monthly: { amt: '$140', per: 'AUD / mo' },
-        weekly:  { amt: '$50',  per: '/ wk' }
-      });
-      initToggle('champion-toggle', 'champion-amt', 'champion-per', 'champion-join', {
-        monthly: { amt: '$200', per: 'AUD / mo' },
-        weekly:  { amt: '$75',  per: '/ wk' }
+      initToggle('global-toggle', 'global-amt', 'global-per', 'global-join', {
+        monthly: { amt: '$110', per: 'AUD / mo' },
+        weekly:  { amt: '$40',  per: '/ wk' }
       });
     })();
   </script>
@@ -5102,70 +5059,6 @@
           update();
           setInterval(update, 60000);
         });
-    })();
-  </script>
-
-  <!-- Recent activity toast rotator -->
-  <script>
-    (function() {
-      var toast = document.getElementById('activity-toast');
-      if (!toast) return;
-      var textEl = document.getElementById('activity-toast-text');
-      var timeEl = document.getElementById('activity-toast-time');
-      var avatarEl = document.getElementById('activity-toast-avatar');
-      var closeBtn = document.getElementById('activity-toast-close');
-      var hero = document.querySelector('.hero');
-      if (!textEl || !timeEl || !avatarEl || !hero) return;
-
-      // Only real, verifiable events: round results already published on the public dashboard,
-      // and Discord posts that actually happened. No fabricated signups.
-      var activities = [
-        { name: 'R17 result',   action: 'posted. <strong>+$122</strong> / +2.4u / 5.1% ROI',   time: 'Last round',    avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
-        { name: 'R14 result',   action: 'posted. <strong>+$839</strong> / +16.8u / 46.7% ROI', time: 'Round 14',      avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
-        { name: 'R12 result',   action: 'posted. <strong>+$826</strong> / +16.5u / 39.8% ROI', time: 'Round 12',      avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
-        { name: 'R15 result',   action: 'posted. <strong>+$665</strong> / +13.3u / 36.2% ROI', time: 'Round 15',      avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
-        { name: 'R13 result',   action: 'posted. <strong>+$469</strong> / +9.4u / 22.5% ROI',  time: 'Round 13',      avatar: 'R', color: 'linear-gradient(135deg, #00ff9d, #10b981)' },
-        { name: 'Season 2026',  action: 'running at <strong>+$4,754</strong> / +95.1u / 14.5% ROI', time: 'In progress',   avatar: 'S', color: 'linear-gradient(135deg, #00d4ff, #3b82f6)' },
-        { name: 'All-time',     action: 'sitting at <strong>+$44,759</strong> / +895.2u / 18.3% ROI', time: 'Since 2022',    avatar: 'A', color: 'linear-gradient(135deg, #a78bfa, #7c3aed)' }
-      ];
-      var index = 0;
-      var dismissed = false;
-      var timer = null;
-
-      function show(activity) {
-        textEl.innerHTML = '<strong>' + activity.name + '</strong> ' + activity.action;
-        timeEl.textContent = activity.time;
-        avatarEl.textContent = activity.avatar;
-        avatarEl.style.background = activity.color;
-        toast.classList.add('is-visible');
-      }
-      function hide() {
-        toast.classList.remove('is-visible');
-      }
-      function cycle() {
-        if (dismissed) return;
-        show(activities[index]);
-        setTimeout(hide, 5500);
-        index = (index + 1) % activities.length;
-        timer = setTimeout(cycle, 12000);
-      }
-
-      closeBtn.addEventListener('click', function() {
-        dismissed = true;
-        hide();
-        if (timer) clearTimeout(timer);
-      });
-
-      // Start after hero has been scrolled past
-      function checkStart() {
-        if (dismissed) return;
-        var heroBottom = hero.getBoundingClientRect().bottom;
-        if (heroBottom < 0) {
-          window.removeEventListener('scroll', checkStart);
-          setTimeout(cycle, 800);
-        }
-      }
-      window.addEventListener('scroll', checkStart, { passive: true });
     })();
   </script>
 

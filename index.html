@@ -24,10 +24,10 @@
   <!-- End Google Tag Manager -->
 
   <title>FNF Gainz | Structured Sports Analysis. Facts Not Feelings.</title>
-  <meta name="description" content="Five years of publicly-tracked results across AFL, NRL, racing, matched betting and community strategies. Every bet posted in Discord with staking guidance and personal onboarding.">
+  <meta name="description" content="Five years of publicly-tracked results. FNF Global brings NFL, E-Sports, EV bets, the Racing Bot and Matched Betting into one membership, plus the FNF Racing Package. Every bet posted in Discord with staking guidance and personal onboarding.">
 
   <meta property="og:title" content="FNF Gainz | Structured Sports Analysis. Facts Not Feelings.">
-  <meta property="og:description" content="Five years of publicly-tracked results across AFL, NRL, racing, matched betting and community strategies. Every bet posted in Discord.">
+  <meta property="og:description" content="Five years of publicly-tracked results. FNF Global brings NFL, E-Sports, EV bets, the Racing Bot and Matched Betting into one membership, plus the FNF Racing Package. Every bet posted in Discord.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://fnfgainz.com/">
   <meta property="og:image" content="https://fnfgainz.com/assets/fnf-logo-main.png">
@@ -46,16 +46,17 @@
        button has its handler ready before first tap on mobile.
        AFL + Champion (afl, champion, afl-weekly, champion-weekly) are
        OFF-SEASON and removed 2026-09-30; restore them from git history
-       for the 2027 season. -->
+       for the 2027 season. Community + Matched Betting retired 2026-10-01
+       (MB is part of FNF Global). -->
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/fnf-global/embed.js" fetchpriority="high">
+  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/fnf-global-weekly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/nrl/embed.js" fetchpriority="high">
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/mb-sports/embed.js" fetchpriority="high">
-  <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/community/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js" fetchpriority="high">
   <link rel="preload" as="script" href="https://www.launchpass.com/fnf-gainz/nrl-weekly/embed.js" fetchpriority="high">
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/fnf-global/embed.js"></script>
+  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/fnf-global-weekly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl/embed.js"></script>
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/mb-sports/embed.js"></script>
-  <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/community/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-weekly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/racing-monthly/embed.js"></script>
   <script defer fetchpriority="high" src="https://www.launchpass.com/fnf-gainz/nrl-weekly/embed.js"></script>
@@ -4313,6 +4314,54 @@
       background: linear-gradient(150deg, rgba(255, 84, 112, 0.06), var(--surface) 60%);
     }
 
+    /* FNF Global: the primary membership. Spans the full 2-up grid,
+       details left / plan picker + Join right on desktop, stacked on
+       phones. FNF signature cyan so it doesn't read as any one sport. */
+    .mtile--global {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      align-items: center;
+      gap: 16px 28px;
+      padding: 24px 24px 20px;
+      border-color: rgba(0, 212, 255, 0.42);
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.11), var(--surface) 55%, rgba(59, 130, 246, 0.07));
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), 0 0 44px rgba(0, 212, 255, 0.10);
+    }
+    .mglobal-main, .mglobal-side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+    .mtile--global .mname { font-size: 1.2rem; }
+    .mtile--global .mprice-amt { font-size: 2rem; }
+    .mtile--global .mtile-foot { margin-top: 0; }
+    .mglobal-incl {
+      list-style: none;
+      margin: 2px 0 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .mglobal-incl li {
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--cyan-2);
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.24);
+      padding: 4px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .mglobal-incl li.is-soon {
+      color: var(--text-3);
+      background: transparent;
+      border-style: dashed;
+      border-color: var(--border-strong);
+    }
+    @media (max-width: 640px) {
+      .mtile--global { grid-template-columns: 1fr; gap: 14px; padding: 20px 16px 16px; }
+    }
+
     .mtile-top { display: flex; align-items: center; gap: 8px; }
     .mdot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
     .mdot--cyan { background: var(--cyan); }
@@ -4429,9 +4478,9 @@
     .mselect:focus { outline: none; border-color: var(--border-strong); box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.06); }
     .mselect option { background: #0d1526; color: var(--text); }
 
-    .racing-join, .nrl-join, .afl-join, .champion-join { display: none; }
+    .racing-join, .nrl-join, .afl-join, .champion-join, .global-join { display: none; }
     .racing-join.is-active, .nrl-join.is-active,
-    .afl-join.is-active, .champion-join.is-active { display: inline-flex; }
+    .afl-join.is-active, .champion-join.is-active, .global-join.is-active { display: inline-flex; }
 
     /* Visible plan toggle (replaces the dropdown) so the weekly/monthly
        options are obvious at a glance. Selected pill takes the tile
@@ -4468,6 +4517,7 @@
     .plan-toggle--red .plan-opt.is-sel { background: var(--red); color: #fff; }
     .plan-toggle--green .plan-opt.is-sel { background: var(--green); color: #01130b; }
     .plan-toggle--gold .plan-opt.is-sel { background: linear-gradient(135deg, #ffbb47, #ff9500); color: #1a1000; }
+    .plan-toggle--cyan .plan-opt.is-sel { background: var(--cyan); color: #04121f; }
     @media (max-width: 480px) {
       .plan-opt { font-size: 0.7rem; padding: 7px 3px; }
     }
@@ -4986,15 +5036,16 @@
         <span>Five years public.</span>
       </p>
 
-      <!-- September NFL bonus callout (dismissible), in the hero reading path -->
+      <!-- FNF Global launch callout (dismissible), in the hero reading path.
+           Replaced the September NFL bonus card 2026-10-01. -->
       <div class="promo-card" id="promo-card">
         <a href="#packages" class="promo-card-link" onclick="var t=document.getElementById('packages');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth'});}">
-          <span class="promo-card-flag">&#127944; September Bonus</span>
+          <span class="promo-card-flag">&#127758; New</span>
           <span class="promo-card-body">
-            <span class="promo-card-title">Free NFL tips all September</span>
-            <span class="promo-card-sub">2 expert tipsters &middot; <strong>members up +8u in Week 1</strong></span>
+            <span class="promo-card-title">FNF Global is live</span>
+            <span class="promo-card-sub">NFL, E-Sports, EV bets, the Racing Bot and Matched Betting in one membership.</span>
           </span>
-          <span class="promo-card-cta">Join now &rarr;</span>
+          <span class="promo-card-cta">See FNF Global &rarr;</span>
         </a>
         <button class="promo-card-close" id="promo-card-close" type="button" aria-label="Dismiss">&times;</button>
       </div>
@@ -5003,11 +5054,11 @@
           var card = document.getElementById('promo-card');
           var close = document.getElementById('promo-card-close');
           if (!card) return;
-          try { if (localStorage.getItem('fnf_promo_nfl_sep') === 'dismissed') { card.hidden = true; return; } } catch (e) {}
+          try { if (localStorage.getItem('fnf_promo_global') === 'dismissed') { card.hidden = true; return; } } catch (e) {}
           if (close) close.addEventListener('click', function(e) {
             e.preventDefault(); e.stopPropagation();
             card.hidden = true;
-            try { localStorage.setItem('fnf_promo_nfl_sep', 'dismissed'); } catch (_) {}
+            try { localStorage.setItem('fnf_promo_global', 'dismissed'); } catch (_) {}
           });
         })();
       </script>
@@ -5061,8 +5112,42 @@
            one line + Join, with Details linking to the full page. -->
       <div class="mgrid">
 
+        <!-- FNF Global (cyan, primary, full width). Off-season bundle:
+             NFL, E-Sports, EV bets, Racing Bot, Matched Betting, NBA soon.
+             Racing is sold separately (tile below). -->
+        <article class="mtile mtile--global" data-reveal="up" data-reveal-delay="1">
+          <div class="mglobal-main">
+            <div class="mtile-top">
+              <span class="mdot mdot--cyan"></span>
+              <span class="mname">FNF Global</span>
+              <span class="mtag mtag--cyan">New</span>
+            </div>
+            <div class="mprice"><span class="mprice-amt" id="global-amt">$110</span><span class="mprice-per" id="global-per">AUD / mo</span></div>
+            <p class="mdesc">Six services, one membership. Structured bets and clear staking, with every result tracked.</p>
+            <ul class="mglobal-incl" aria-label="Included in FNF Global">
+              <li>NFL</li>
+              <li>E-Sports</li>
+              <li>EV bets</li>
+              <li>Racing Bot</li>
+              <li>Matched Betting</li>
+              <li class="is-soon">NBA coming soon</li>
+            </ul>
+          </div>
+          <div class="mglobal-side">
+            <div class="plan-toggle plan-toggle--cyan" id="global-toggle" role="group" aria-label="Choose an FNF Global plan">
+              <button type="button" class="plan-opt is-sel" data-plan="monthly">Monthly</button>
+              <button type="button" class="plan-opt" data-plan="weekly">Weekly</button>
+            </div>
+            <div class="mtile-foot">
+              <button class="mjoin mjoin--cyan global-join is-active lp5370966829301760" data-plan="monthly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 110.00, currency: 'AUD', content_name: 'FNF Global', content_category: 'FNF Global', content_ids: ['fnf-global'], content_type: 'product' });">Join FNF Global</button>
+              <button class="mjoin mjoin--cyan global-join lp6612655900327936" data-plan="weekly" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 40.00, currency: 'AUD', content_name: 'FNF Global Weekly', content_category: 'FNF Global', content_ids: ['fnf-global-weekly'], content_type: 'product' });">Join FNF Global</button>
+              <a href="https://www.launchpass.com/fnf-gainz/fnf-global" target="_blank" rel="noopener noreferrer" class="mdetails">Details &rarr;</a>
+            </div>
+          </div>
+        </article>
+
         <!-- Racing (yellow, plan picker) -->
-        <article class="mtile mtile--racing" data-reveal="up" data-reveal-delay="1">
+        <article class="mtile mtile--racing" data-reveal="up" data-reveal-delay="2">
           <div class="mtile-top">
             <span class="mdot mdot--yellow"></span>
             <span class="mname">Racing</span>
@@ -5082,7 +5167,7 @@
         </article>
 
         <!-- NRL (red, plan picker, hot streak) -->
-        <article class="mtile mtile--nrl" data-reveal="up" data-reveal-delay="2">
+        <article class="mtile mtile--nrl" data-reveal="up" data-reveal-delay="3">
           <div class="mtile-top">
             <span class="mdot mdot--red"></span>
             <span class="mname">NRL</span>
@@ -5101,37 +5186,9 @@
           </div>
         </article>
 
-        <!-- Matched Betting -->
-        <article class="mtile" data-reveal="up" data-reveal-delay="3">
-          <div class="mtile-top">
-            <span class="mdot mdot--violet"></span>
-            <span class="mname">Matched Betting</span>
-          </div>
-          <div class="mprice"><span class="mprice-amt">$100</span><span class="mprice-per">AUD / mo</span></div>
-          <p class="mdesc">Low-risk bankroll foundations.</p>
-          <div class="mtile-foot">
-            <button class="mjoin mjoin--ghost lp4657629529505792" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 100.00, currency: 'AUD', content_name: 'Matched Betting Package' });">Join</button>
-            <a href="https://www.launchpass.com/fnf-gainz/mb-sports" target="_blank" rel="noopener noreferrer" class="mdetails">Details &rarr;</a>
-          </div>
-        </article>
-
-        <!-- Community -->
-        <article class="mtile" data-reveal="up" data-reveal-delay="4">
-          <div class="mtile-top">
-            <span class="mdot mdot--slate"></span>
-            <span class="mname">Community</span>
-          </div>
-          <div class="mprice"><span class="mprice-amt">$25</span><span class="mprice-per">AUD / mo</span></div>
-          <p class="mdesc">Chats, EV strategies &amp; Racing Bot.</p>
-          <div class="mtile-foot">
-            <button class="mjoin mjoin--ghost lp6290145106329600" onclick="if(window.fnfTrack)fnfTrack('InitiateCheckout', { value: 25.00, currency: 'AUD', content_name: 'Community Membership' });">Join</button>
-            <a href="https://www.launchpass.com/fnf-gainz/community" target="_blank" rel="noopener noreferrer" class="mdetails">Details &rarr;</a>
-          </div>
-        </article>
-
       </div>
 
-      <!-- Plan pickers (Racing + NRL): swap the active checkout button +
+      <!-- Plan pickers (FNF Global + Racing + NRL): swap the active checkout button +
            price display to match the selected plan. Each plan keeps its
            own LaunchPass class so desktop embed + mobile takeover both
            bind. -->
@@ -5155,6 +5212,10 @@
               });
             });
           }
+          initToggle('global-toggle', 'global-amt', 'global-per', 'global-join', {
+            monthly: { amt: '$110', per: 'AUD / mo' },
+            weekly:  { amt: '$40',  per: '/ wk' }
+          });
           initToggle('racing-toggle', 'racing-amt', 'racing-per', 'racing-join', {
             monthly: { amt: '$145', per: 'AUD / mo' },
             weekly:  { amt: '$45',  per: '/ wk' }
@@ -5269,7 +5330,7 @@
   <div class="sticky-cta" id="sticky-cta">
     <a href="#packages" class="btn btn-primary" onclick="var t=document.getElementById('packages');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth'});}">
       <span>See Memberships</span>
-      <span class="btn-price">4 packages</span>
+      <span class="btn-price">3 packages</span>
     </a>
   </div>
 
@@ -5380,9 +5441,9 @@
       if (!isMobile) return;
 
       var PACKAGES = [
+        { cls: 'lp5370966829301760', url: 'https://www.launchpass.com/fnf-gainz/fnf-global/iframe',        key: 'fnf-global',        value: 110.00, name: 'FNF Global' },
+        { cls: 'lp6612655900327936', url: 'https://www.launchpass.com/fnf-gainz/fnf-global-weekly/iframe', key: 'fnf-global-weekly', value:  40.00, name: 'FNF Global Weekly' },
         { cls: 'lp6311659934711808', url: 'https://www.launchpass.com/fnf-gainz/nrl/iframe',       key: 'nrl',       value: 109.99, name: 'NRL Package' },
-        { cls: 'lp4657629529505792', url: 'https://www.launchpass.com/fnf-gainz/mb-sports/iframe', key: 'mb',        value: 100.00, name: 'Matched Betting Package' },
-        { cls: 'lp6290145106329600', url: 'https://www.launchpass.com/fnf-gainz/community/iframe', key: 'community', value:  25.00, name: 'Community Membership' },
         { cls: 'lp5053940233535488', url: 'https://www.launchpass.com/fnf-gainz/racing-weekly/iframe',   key: 'racing-weekly',   value:  45.00, name: 'Racing Weekly' },
         { cls: 'lp5468151011213312', url: 'https://www.launchpass.com/fnf-gainz/racing-monthly/iframe',  key: 'racing-monthly',  value: 145.00, name: 'Racing Monthly' },
         { cls: 'lp5183312981524480', url: 'https://www.launchpass.com/fnf-gainz/nrl-weekly/iframe',      key: 'nrl-weekly',      value:  40.00, name: 'NRL Weekly' }

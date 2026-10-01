@@ -1,26 +1,82 @@
 {
   "_README": "Tier-2 fallback only. Primary data source is https://fnf-gainz-afl.vercel.app/api/afl-stats. Keep values roughly in sync so if Vercel is ever down, users still see close-to-current numbers rather than stale ones.",
   "allTime": {
-    "bets": 5940,
-    "profit": 44759,
-    "units": 895.2,
-    "roi": 18.3
+    "bets": 6461,
+    "profit": 46531,
+    "units": 930.6,
+    "roi": 17.5
   },
   "season2026": {
-    "bets": 775,
-    "profit": 4754,
-    "units": 95.1,
-    "roi": 14.5
+    "bets": 1296,
+    "profit": 6526,
+    "units": 130.5,
+    "roi": 12.1
   },
   "latestRound": {
-    "round": "R17",
-    "profit": 122,
-    "units": 2.4,
-    "roi": 5.1
+    "round": "R29",
+    "bets": 6,
+    "profit": -47,
+    "units": -0.9,
+    "roi": -19
   },
-  "nextRound": {
-    "round": "R18",
-    "kickoff": "2026-07-09T10:10:00.000Z"
-  },
-  "lastUpdated": "2026-07-09"
+  "nextRound": null,
+  "recentRounds": [
+    {
+      "round": "R22",
+      "bets": 57,
+      "profit": 504,
+      "units": 10.1,
+      "roi": 21.1
+    },
+    {
+      "round": "R23",
+      "bets": 58,
+      "profit": 66,
+      "units": 1.3,
+      "roi": 2.8
+    },
+    {
+      "round": "R24",
+      "bets": 43,
+      "profit": 84,
+      "units": 1.7,
+      "roi": 4.4
+    },
+    {
+      "round": "R25",
+      "bets": 21,
+      "profit": 487,
+      "units": 9.7,
+      "roi": 50.4
+    },
+    {
+      "round": "R26",
+      "bets": 38,
+      "profit": 68,
+      "units": 1.4,
+      "roi": 4.5
+    },
+    {
+      "round": "R27",
+      "bets": 15,
+      "profit": 207,
+      "units": 4.1,
+      "roi": 30.7
+    },
+    {
+      "round": "R28",
+      "bets": 8,
+      "profit": 89,
+      "units": 1.8,
+      "roi": 23.7
+    },
+    {
+      "round": "R29",
+      "bets": 6,
+      "profit": -47,
+      "units": -0.9,
+      "roi": -19
+    }
+  ],
+  "lastUpdated": "2026-10-01T10:34:20.839Z"
 }
